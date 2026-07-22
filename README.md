@@ -1,0 +1,89 @@
+# rv-monitoring-skill
+
+[![CI](https://github.com/moraneus/rv-monitoring-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/moraneus/rv-monitoring-skill/actions/workflows/ci.yml)
+[![behave-rv](https://img.shields.io/pypi/v/behave-rv?label=behave-rv)](https://pypi.org/project/behave-rv/)
+[![License](https://img.shields.io/badge/license-BSD--2--Clause-green)](LICENSE)
+
+**An agent skill that makes software *born monitorable*.** Loaded into a
+coding agent (Claude Code and compatible harnesses), it changes how the
+agent develops: the user's behavioural requirements become
+[behave-rv](https://github.com/moraneus/behave-rv) runtime-verification
+policies, instrumentation happens *while the code is written*, a two-sided
+stability contract gates every change, and the software that leaves
+development ships with a deterministic runtime monitor inside it.
+
+## What the agent does with this skill
+
+- **Understands requirements as policies.** When a prompt contains
+  behavioural requirements — lifecycles, deadlines, prohibitions, SLAs —
+  the agent maps them to behave-rv's temporal Gherkin fragment and drafts
+  policies. Anything outside the fragment is declared honestly, never
+  approximated silently.
+- **Instruments as it codes.** Every state transition, lifecycle boundary,
+  and external interaction emits an event, following the conventions the
+  stability analysis anchors on. Additive only — business logic is never
+  reshaped to be observable.
+- **Suggests, never imposes.** Draft policies land in
+  `monitoring/SUGGESTED_POLICIES.md` with rationale. The user owns
+  `monitoring/policies/`; the trust model is the skill's hardest rule: the
+  agent proposes, the human owns the spec, the deterministic engine decides.
+- **Keeps the user able to author.** `monitoring/STEPS.md` — generated from
+  the live step registry, never hand-written — documents every phrasing,
+  alias, parameter, and example scenario, so the user can write policies
+  without reading Python.
+- **Gates every change with the stability contract.** On each modification
+  (including new prompts against existing code) the agent runs
+  `catalog diff --app --fail-on-app-risk` and a deterministic replay check.
+  Breaks stop the work and are reported verbatim; the catalog is
+  regenerated only for intended contract changes, together with them.
+- **`/rv` — interactive consultation.** A structured interview (entities
+  and keys → lifecycles → prohibitions → deadlines → eventualities and
+  terminal events) that produces a proposed event vocabulary, steps, and
+  draft policies for the user's approval.
+
+## Install
+
+```bash
+git clone https://github.com/moraneus/rv-monitoring-skill.git
+cd rv-monitoring-skill
+./install.sh              # user-level:  ~/.claude/skills/rv
+./install.sh --project    # this project only: ./.claude/skills/rv
+```
+
+Target projects need `pip install behave-rv` (>= 0.1.1, Python 3.10+).
+After installing, the agent picks the skill up automatically when monitoring
+is relevant, and `/rv` starts the interactive consultation.
+
+## What's in the box
+
+```
+skills/rv/SKILL.md            the skill: workflow, guardrails, /rv
+skills/rv/references/         condensed behave-rv knowledge (operators,
+                              instrumentation, authoring, stability, files,
+                              questionnaire, cheatsheet)
+templates/monitoring/         the scaffold installed into projects: steps.py,
+                              example policy, replay gate, STEPS.md generator,
+                              CI snippet
+test/e2e.sh                   end-to-end validation of the templates and
+                              gates against the published behave-rv package
+```
+
+CI runs the end-to-end validation against the real PyPI `behave-rv` on every
+push and weekly — including a check that the stability gate actually catches
+an application-side change — so a behave-rv release that breaks the skill's
+mechanics turns the badge red.
+
+## The idea, in one paragraph
+
+Runtime verification is usually retrofitted. This skill inverts that: the
+agent performs the instrumentation while it writes the code, the catalog is
+committed from the first commit, and every regeneration-happy rewrite is
+held to the contract by machine-checked gates — which is precisely what
+makes it safe to let an agent develop aggressively. The full framework,
+its measured evidence (a 619-mutant campaign with zero missed behaviour
+changes, among others), and its documentation live in the
+[behave-rv repository](https://github.com/moraneus/behave-rv).
+
+## License
+
+BSD 2-Clause. See [LICENSE](LICENSE).
