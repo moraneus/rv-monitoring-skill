@@ -75,7 +75,7 @@ intentionally changed, and say so.
 ## CI
 
 Ship this job in the project (template: `templates/monitoring/ci-snippet.yml`
-in the skill repository): install the package, run `catalog diff` with
+next to this skill): install the package, run `catalog diff` with
 `--fail-on-app-risk`, run `replay_check.py`. Exit codes gate the merge. The
 live dashboard shows the same contract state at runtime when constructed
 with `registry=`, `catalog=`, and `app=`.

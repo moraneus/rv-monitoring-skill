@@ -11,7 +11,7 @@ trap 'rm -rf "$WORK"' EXIT
 echo "scaffolding into $WORK"
 
 mkdir -p "$WORK/app"
-cp -r templates/monitoring "$WORK/monitoring"
+cp -r skills/rv/templates/monitoring "$WORK/monitoring"
 
 # instantiate the placeholders the way the skill would for a ticket system
 for f in "$WORK"/monitoring/steps.py "$WORK"/monitoring/policies/01_example.feature \
@@ -123,6 +123,12 @@ fi
 grep -q "behavior-risk" diff_out.txt
 grep -q "TicketService.start" diff_out.txt
 echo "app-side change correctly flagged and named"
+
+echo "== 5. the shipped documentation the skill relies on is available offline"
+python -m behave_rv docs | grep -q "guide"
+python -m behave_rv docs operators | grep -q "temporal vocabulary"
+python -m behave_rv docs stability > /dev/null
+echo "python -m behave_rv docs OK (requires behave-rv >= 0.2.0)"
 
 echo
 echo "e2e: all checks passed against $(python -c 'import behave_rv; print("behave-rv", behave_rv.__version__)')"

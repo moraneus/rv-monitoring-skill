@@ -43,6 +43,15 @@ development ships with a deterministic runtime monitor inside it.
 
 ## Install
 
+### As a Claude Code plugin (recommended)
+
+```
+/plugin marketplace add moraneus/rv-monitoring-skill
+/plugin install rv-monitoring@rv-monitoring-skill
+```
+
+### Manually (Claude Code and compatible harnesses)
+
 ```bash
 git clone https://github.com/moraneus/rv-monitoring-skill.git
 cd rv-monitoring-skill
@@ -50,20 +59,25 @@ cd rv-monitoring-skill
 ./install.sh --project    # this project only: ./.claude/skills/rv
 ```
 
-Target projects need `pip install behave-rv` (>= 0.1.1, Python 3.10+).
-After installing, the agent picks the skill up automatically when monitoring
-is relevant, and `/rv` starts the interactive consultation.
+Either way, target projects need `pip install behave-rv` (>= 0.2.0,
+Python 3.10+) — version 0.2.0 ships the complete behave-rv documentation
+inside the package (`python -m behave_rv docs`), which the skill reads as
+its authoritative offline knowledge source. After installing, the agent
+picks the skill up automatically when monitoring is relevant, and `/rv`
+starts the interactive consultation.
 
 ## What's in the box
 
 ```
+.claude-plugin/               plugin + marketplace manifests for
+                              /plugin install
 skills/rv/SKILL.md            the skill: workflow, guardrails, /rv
 skills/rv/references/         condensed behave-rv knowledge (operators,
                               instrumentation, authoring, stability, files,
                               questionnaire, cheatsheet)
-templates/monitoring/         the scaffold installed into projects: steps.py,
-                              example policy, replay gate, STEPS.md generator,
-                              CI snippet
+skills/rv/templates/          the monitoring/ scaffold installed into
+                              projects: steps.py, example policy, replay
+                              gate, STEPS.md generator, CI snippet
 test/e2e.sh                   end-to-end validation of the templates and
                               gates against the published behave-rv package
 ```

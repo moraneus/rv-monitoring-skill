@@ -1,6 +1,7 @@
 # behave-rv in one page
 
-Package: `behave-rv` (PyPI), Python 3.10+. Import root: `behave_rv`.
+Package: `behave-rv` (PyPI, >= 0.2.0), Python 3.10+. Import root: `behave_rv`.
+Full documentation ships with the install: `python -m behave_rv docs [name]`.
 
 ## The event
 

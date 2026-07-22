@@ -17,8 +17,6 @@ fi
 mkdir -p "$(dirname "$TARGET")"
 rm -rf "$TARGET"
 cp -R skills/rv "$TARGET"
-mkdir -p "$TARGET/templates"
-cp -R templates/monitoring "$TARGET/templates/monitoring"
 
 echo "installed: $TARGET"
 echo "target projects need:  pip install behave-rv"

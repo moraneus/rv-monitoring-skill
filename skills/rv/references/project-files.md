@@ -13,9 +13,9 @@ monitoring/
   traces/                  # recorded .jsonl streams (TraceRecorder / record_events)
 ```
 
-Bootstrap from `templates/monitoring/` in the skill repository, replacing the
-`__PLACEHOLDER__` markers; then `pip install behave-rv` and run the gates
-once to produce the initial `catalog.json`.
+Bootstrap from the `templates/monitoring/` directory shipped next to this
+skill, replacing the `__PLACEHOLDER__` markers; then `pip install behave-rv`
+and run the gates once to produce the initial `catalog.json`.
 
 ## steps.py rules
 

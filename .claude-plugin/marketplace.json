@@ -1,0 +1,11 @@
+{
+  "name": "rv-monitoring-skill",
+  "owner": { "name": "moraneus", "url": "https://github.com/moraneus" },
+  "plugins": [
+    {
+      "name": "rv-monitoring",
+      "source": "./",
+      "description": "Develop software born monitorable with behave-rv: requirements become policies, instrumentation happens while coding, and every change is stability-gated. Invoke /rv for an interactive monitoring consultation."
+    }
+  ]
+}

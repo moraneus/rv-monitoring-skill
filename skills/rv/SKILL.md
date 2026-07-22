@@ -54,9 +54,9 @@ monitoring/
   traces/                  # recorded streams for liveness checks
 ```
 
-Bootstrap a project that lacks this layout from the templates shipped with
-this skill (`templates/monitoring/` in the skill repository), then run
-`pip install behave-rv` (>= 0.1.1, Python 3.10+). Full layout rules:
+Bootstrap a project that lacks this layout from the templates shipped
+next to this file (`templates/monitoring/`), then run
+`pip install behave-rv` (>= 0.2.0, Python 3.10+). Full layout rules:
 [references/project-files.md](references/project-files.md).
 
 ## The development loop
@@ -132,9 +132,14 @@ The condensed, self-contained references shipped with this skill:
 - [references/questionnaire.md](references/questionnaire.md) — the /rv
   interview and the answer-to-operator mapping.
 
-For anything deeper, the authoritative documentation lives in the behave-rv
-repository: the [usage guide](https://github.com/moraneus/behave-rv/blob/main/docs/GUIDE.md),
-[operator reference](https://github.com/moraneus/behave-rv/blob/main/docs/OPERATORS.md),
-[stability mechanism](https://github.com/moraneus/behave-rv/blob/main/docs/STABILITY.md),
-[formal semantics](https://github.com/moraneus/behave-rv/blob/main/docs/SEMANTICS.md), and
-[experiment record](https://github.com/moraneus/behave-rv/blob/main/docs/EXPERIMENTS.md).
+For anything deeper, the COMPLETE documentation ships inside the installed
+package and always matches its version — read it offline:
+
+```bash
+python -m behave_rv docs              # list: guide, operators, semantics,
+python -m behave_rv docs guide        #   stability, experiments, mutation,
+python -m behave_rv docs stability    #   app-surface-evaluation
+```
+
+Prefer these over web fetches. The same documents are also on GitHub:
+[behave-rv/docs](https://github.com/moraneus/behave-rv/tree/main/docs).
