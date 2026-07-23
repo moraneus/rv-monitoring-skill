@@ -75,7 +75,10 @@ request against existing code:
    [references/policy-authoring.md](references/policy-authoring.md).
    Requirements outside the fragment (cross-entity, aggregates, unbounded
    liveness needing a violated verdict) - tell the user honestly that they
-   are out of fragment and why; never approximate silently.
+   are out of fragment and why; never approximate silently. Check the
+   rules are JOINTLY satisfiable on the flows the user described: a pair
+   where one rule forbids what another requires is a conflict to surface
+   with options, never to ship.
 2. **Write the code, instrumented.** Every state transition, lifecycle
    boundary, and external interaction emits an `Event(...)` following the
    conventions in

@@ -23,6 +23,17 @@ in-fragment property as a labelled alternative (retries → often re-expressible
 as a scoped `never` on a distinct event; percentile SLAs → per-entity
 `within` plus offline analysis of verdicts).
 
+**Joint satisfiability.** Before shipping transcribed rules, walk every
+normal flow the user DESCRIBED through all the rules together, and check
+each path stays legal. Rules that are individually sensible can jointly
+forbid a lifecycle the user relies on - "after quarantine nothing but
+rejections may happen" plus "every retired device was wiped first" leaves
+a quarantined device no legal way out: wiping violates the first rule,
+retiring unwiped violates the second. Verify empirically (run the compiled
+policies over the described flows), and surface any conflict with concrete
+options BEFORE the policies ship - the user chooses the resolution; a
+conflict discovered by a production violation is a failure of this step.
+
 **Key projection.** Before declaring a rule cross-entity, check whether it
 becomes per-entity under a DIFFERENT correlation key. "A fined member's
 loans are never renewed" relates loans to members - but emitting a
