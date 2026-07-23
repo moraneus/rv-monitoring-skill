@@ -41,7 +41,7 @@ def main() -> int:
     registry = build_registry()
     aliases = getattr(registry, "_aliases", {})
     lines = [
-        "# The policy vocabulary (generated — do not edit)",
+        "# The policy vocabulary (generated - do not edit)",
         "",
         "Every phrasing below can be used in a `.feature` policy under",
         "`monitoring/policies/`. Quoted `<placeholders>` take concrete values.",
@@ -75,7 +75,7 @@ def main() -> int:
         "## Combining steps",
         "",
         "Any trigger phrasing can be the `When`, the `Then` operand, or the",
-        "`Given` scope of the temporal forms — see the operator reference in",
+        "`Given` scope of the temporal forms - see the operator reference in",
         "the rv skill (or docs/OPERATORS.md in behave-rv) for all nine forms",
         "and their exact semantics. One correlation key per scenario.",
         "",

@@ -1,9 +1,9 @@
-# /rv — the interactive monitoring consultation
+# /rv - the interactive monitoring consultation
 
 Run this interview when invoked as `/rv`. Use the AskUserQuestion tool where
 available (batch related questions; offer concrete options plus free text);
 otherwise ask in plain prose, a few questions at a time. Skip questions the
-codebase already answers — read it first and confirm rather than ask.
+codebase already answers - read it first and confirm rather than ask.
 
 ## The interview
 
@@ -17,9 +17,9 @@ is one tuple key.
 what legal order, and where does its story END (delivered? closed?
 logged-out? never)? → status-event vocabulary, `before`/`previously`
 candidates for legal ordering, and the terminal event type (or an explicit
-"no terminal — some verdicts stay pending" warning).
+"no terminal - some verdicts stay pending" warning).
 
-**3. Prohibitions.** What must NEVER happen — absolutely, or while some
+**3. Prohibitions.** What must NEVER happen - absolutely, or while some
 condition holds ("once cancelled, never shipped"; "while locked, no
 actions")? Does the condition ever end (until)? → plain and scoped `never`.
 
@@ -43,13 +43,13 @@ wish in SUGGESTED_POLICIES.md as future-fragment material.
 
 Write the plan for the user's approval:
 
-1. **Event vocabulary** — types, binding keys, payload fields, terminal
+1. **Event vocabulary** - types, binding keys, payload fields, terminal
    events, one line each on when it fires.
-2. **Steps** — the phrasings you will register, in the user's domain words.
-3. **Draft policies** — grouped by the interview sections, each with a
+2. **Steps** - the phrasings you will register, in the user's domain words.
+3. **Draft policies** - grouped by the interview sections, each with a
    one-line rationale; marked as SUGGESTIONS the user will own or reject.
-4. **Instrumentation points** — which functions/modules gain emissions.
-5. **Gates and the live view** — the catalog + replay wiring, CI if
+4. **Instrumentation points** - which functions/modules gain emissions.
+5. **Gates and the live view** - the catalog + replay wiring, CI if
    wanted, and the dashboard the user will watch (its URL and what it
    shows: policy cards with per-entity verdicts, violation explanations,
    the live event feed, the contract strip).

@@ -38,7 +38,7 @@ def build_registry() -> StepRegistry:          # side-effect-free factory
 registry.alias("order.status.is", 'the order reaches "{status}"')
 ```
 
-Placeholder names bind BY NAME to parameters — renaming the parameter while
+Placeholder names bind BY NAME to parameters - renaming the parameter while
 keeping `{status}` in the phrasing is a contract break the catalog reports.
 `step_id` is permanent identity: never reuse, never rename casually.
 
@@ -56,7 +56,7 @@ verdicts = engine.run(ReplaySource("trace.jsonl"), emit_pending=True)
 #          trigger_event, witnessing_trace, at
 ```
 
-Explanations: `from behave_rv.verdict.explain import explain_verdict` —
+Explanations: `from behave_rv.verdict.explain import explain_verdict` -
 renders the authored scenario with the failing step marked and the deciding
 events listed.
 
@@ -84,7 +84,7 @@ engine.run(source, sink=dashboard.sink)        # live verdict delivery
 
 - Verdicts are decided on EVENT time; equal timestamps are ordered
   canonically (by content), so two actions whose order matters must carry
-  distinct timestamps — tick the clock between them.
+  distinct timestamps - tick the clock between them.
 - `within` deadlines fire on absence (timer), including on wall time for
   quiet live streams; on replay, event time drives them.
 - Terminal events settle an entity: prohibitions → satisfied, unfulfilled

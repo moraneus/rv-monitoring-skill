@@ -10,7 +10,7 @@ Apply at every state transition, lifecycle boundary, status change, external
 call, and queue interaction:
 
 1. **Construct `Event(...)` directly at the site.** The construction is the
-   *anchor* the stability analysis keys on — it must be syntactically
+   *anchor* the stability analysis keys on - it must be syntactically
    visible. Do not wrap `Event` construction behind factories the analyzer
    cannot see through.
 2. **Event types are module-level string constants**, referenced by name:
@@ -44,11 +44,11 @@ call, and queue interaction:
    inside the dependency slice.
 5. **Declare a terminal event** per entity type where a lifecycle genuinely
    ends (`order.done`, `session.end`). It settles pending policies and frees
-   monitor state. Entities that never end (a task board) simply have none —
+   monitor state. Entities that never end (a task board) simply have none -
    then avoid proposing `has happened` policies without warning the user
    they can pend forever.
 6. **Distinct timestamps for ordered actions.** Equal event times are
-   ordered canonically (by content), not by arrival — two emissions whose
+   ordered canonically (by content), not by arrival - two emissions whose
    order matters must not share a timestamp. Emit the follow-up at
    `clock() + 1e-3`, or tick a fake clock between actions in scripted
    traffic.
@@ -74,19 +74,19 @@ unresolved, never silently skipped. Practical consequences:
 
 - Prefer plain calls and `self.method()` calls over passing functions as
   values on emit paths.
-- Keep emission-relevant thresholds as named constants — their values are
+- Keep emission-relevant thresholds as named constants - their values are
   fingerprinted.
 - A decorator on an emit-path function is part of the contract; changing it
   flags.
 
 ## Anti-patterns
 
-- Reshaping business logic to expose state — never.
-- Event types built with f-strings or concatenation — `<dynamic>`,
+- Reshaping business logic to expose state - never.
+- Event types built with f-strings or concatenation - `<dynamic>`,
   analyzability lost.
-- Sharing one timestamp across ordered emissions — ordering becomes
+- Sharing one timestamp across ordered emissions - ordering becomes
   content-canonical, `before` policies misread.
-- Emitting receipt time instead of event time — deadlines and ordering
+- Emitting receipt time instead of event time - deadlines and ordering
   silently wrong under lag.
-- Side effects inside step predicates — breaks determinism; predicates read
+- Side effects inside step predicates - breaks determinism; predicates read
   the event and return a boolean, nothing else.

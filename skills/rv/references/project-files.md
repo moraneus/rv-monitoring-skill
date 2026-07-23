@@ -6,7 +6,7 @@ monitoring/
   policies/                # USER-OWNED .feature files
     01_<policy>.feature
   catalog.json             # generated contract (catalog save), committed
-  STEPS.md                 # GENERATED vocabulary doc — regenerate, never edit
+  STEPS.md                 # GENERATED vocabulary doc - regenerate, never edit
   SUGGESTED_POLICIES.md    # your proposals (see policy-authoring.md)
   generate_steps_doc.py    # STEPS.md generator (from the skill's templates)
   replay_check.py          # deterministic verdict gate (exit-coded)
@@ -26,10 +26,10 @@ and run the gates once to produce the initial `catalog.json`.
   forever; never reused for a different meaning.
 - Predicates are pure: read the event, return a boolean. The placeholder
   names in the phrasing must match the parameter names (call-by-name).
-- One step per *condition*, not per event type — several steps may observe
+- One step per *condition*, not per event type - several steps may observe
   the same event type reading different fields.
 
-## STEPS.md — the user's authoring surface
+## STEPS.md - the user's authoring surface
 
 After ANY change to `steps.py`, run:
 
@@ -40,7 +40,7 @@ python monitoring/generate_steps_doc.py
 It renders, from the live registry: every phrasing and alias, its
 parameters, the event type and correlation key it observes, and ready-to-copy
 example scenarios for each applicable temporal form. This file is how the
-user writes policies without reading Python — keeping it complete and fresh
+user writes policies without reading Python - keeping it complete and fresh
 is part of the definition of done for every change. It is generated so it
 cannot drift; treat a hand edit to it as a bug.
 

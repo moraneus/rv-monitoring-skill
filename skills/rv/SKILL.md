@@ -9,7 +9,7 @@ You are developing with [behave-rv](https://github.com/moraneus/behave-rv):
 a runtime-verification framework where policies are controlled Gherkin
 scenarios compiled into deterministic per-entity monitors over the
 application's event stream. Your job is to make the software monitorable *as
-you write it* — not as an afterthought — while keeping three roles strictly
+you write it* - not as an afterthought - while keeping three roles strictly
 separate:
 
 1. **You (the agent)** write the application, the instrumentation, and the
@@ -27,7 +27,7 @@ serves it.
 - **Propose policies; never commit them.** Draft policies go to
   `monitoring/SUGGESTED_POLICIES.md` with a rationale each. The user decides
   what becomes a policy.
-- **Never edit a policy the user wrote** — not its text, not its meaning —
+- **Never edit a policy the user wrote** - not its text, not its meaning -
   without the user explicitly asking. Never weaken a policy to make code
   pass; if code violates a policy, the code is wrong until the user says
   otherwise.
@@ -61,7 +61,7 @@ next to this file (`templates/monitoring/`), then run
 
 ## The development loop
 
-Run this loop for EVERY change — a new feature, a refactor, or a new user
+Run this loop for EVERY change - a new feature, a refactor, or a new user
 request against existing code:
 
 1. **Extract requirements.** If the user's prompt contains behavioural
@@ -70,12 +70,12 @@ request against existing code:
    temporal fragment using
    [references/policy-authoring.md](references/policy-authoring.md).
    Requirements outside the fragment (cross-entity, aggregates, unbounded
-   liveness needing a violated verdict) — tell the user honestly that they
+   liveness needing a violated verdict) - tell the user honestly that they
    are out of fragment and why; never approximate silently.
 2. **Write the code, instrumented.** Every state transition, lifecycle
    boundary, and external interaction emits an `Event(...)` following the
    conventions in
-   [references/instrumentation.md](references/instrumentation.md) — those
+   [references/instrumentation.md](references/instrumentation.md) - those
    conventions are what the stability analysis anchors on. Over-expose:
    an unused event is cheap; a missing one is a policy nobody can write.
 3. **Expose steps.** Register or extend predicates in `monitoring/steps.py`
@@ -96,16 +96,16 @@ request against existing code:
    python monitoring/replay_check.py
    ```
 
-   A policy that fails to compile is a repair signal, not an obstacle — the
+   A policy that fails to compile is a repair signal, not an obstacle - the
    compiler's refusals state exactly what is wrong. On intended contract
    changes only: `catalog save --steps ... --catalog ... --app ...`,
    committed with the change, explained to the user.
-6. **Report.** Use this skeleton every time — fill every line ("none" is a
+6. **Report.** Use this skeleton every time - fill every line ("none" is a
    valid value); the diff/replay lines quote the tools, not your summary of
    them:
 
    ```markdown
-   ## Monitoring report — <the change>
+   ## Monitoring report - <the change>
    - Instrumented: <events added/changed, and where>
    - Vocabulary:   <steps added/aliased; STEPS.md regenerated>
    - Gates:        catalog diff <clean | N break(s)/risk(s), shown verbatim above>;
@@ -115,11 +115,11 @@ request against existing code:
    - At risk / out of fragment: <items>
    ```
 
-## The live view — expose it, and tell the user
+## The live view - expose it, and tell the user
 
 behave-rv ships a built-in web dashboard (`behave_rv.dashboard.Dashboard`,
-stdlib-only). Whenever you wire the application to run live — an entry
-point, a demo, a service startup — expose it. This is not optional: the
+stdlib-only). Whenever you wire the application to run live - an entry
+point, a demo, a service startup - expose it. This is not optional: the
 user follows their policies and the event log there, in their own words,
 while the app runs.
 
@@ -135,44 +135,44 @@ engine.run(source, sink=dashboard.sink)
 
 Then ALWAYS tell the user, in the report's "Live view" line and in prose
 the first time: the URL (default `http://127.0.0.1:7007`) and what they
-will see there — every policy as a card with its per-entity verdicts, the
+will see there - every policy as a card with its per-entity verdicts, the
 rendered explanation for each violation, the live event feed, and the
 stability strip showing whether the code still matches the committed
 contract. If the project currently runs only under the replay gate, say
 that the dashboard exists and will be wired the moment there is a live
 entry point.
 
-## /rv — the interactive consultation
+## /rv - the interactive consultation
 
 When invoked as `/rv`, run the structured interview in
 [references/questionnaire.md](references/questionnaire.md): entities and
 correlation keys first, then lifecycles, prohibitions, deadlines and SLAs,
 eventualities and terminal events. Use the AskUserQuestion tool when
 available. The output is a written plan: proposed event vocabulary, step
-phrasings, draft policies (as suggestions), and the instrumentation points —
+phrasings, draft policies (as suggestions), and the instrumentation points -
 then, on the user's go, execute it via the loop above.
 
 ## Knowing behave-rv
 
 The condensed, self-contained references shipped with this skill:
 
-- [references/cheatsheet.md](references/cheatsheet.md) — Event model, step
+- [references/cheatsheet.md](references/cheatsheet.md) - Event model, step
   decorators, engine options, live wiring, dashboard, CLI, in one page.
-- [references/operators.md](references/operators.md) — all nine temporal
+- [references/operators.md](references/operators.md) - all nine temporal
   forms with semantics, examples, and the compile-time refusals.
-- [references/instrumentation.md](references/instrumentation.md) — the
+- [references/instrumentation.md](references/instrumentation.md) - the
   emission conventions and why the analyzer needs each one.
-- [references/policy-authoring.md](references/policy-authoring.md) — from a
+- [references/policy-authoring.md](references/policy-authoring.md) - from a
   requirement sentence to a compiling scenario.
-- [references/stability.md](references/stability.md) — the two-sided
+- [references/stability.md](references/stability.md) - the two-sided
   catalog, reading diff output, the break protocol, CI wiring.
-- [references/project-files.md](references/project-files.md) — the
+- [references/project-files.md](references/project-files.md) - the
   monitoring/ layout and file conventions.
-- [references/questionnaire.md](references/questionnaire.md) — the /rv
+- [references/questionnaire.md](references/questionnaire.md) - the /rv
   interview and the answer-to-operator mapping.
 
 For anything deeper, the COMPLETE documentation ships inside the installed
-package and always matches its version — read it offline:
+package and always matches its version - read it offline:
 
 ```bash
 python -m behave_rv docs              # list: guide, operators, semantics,

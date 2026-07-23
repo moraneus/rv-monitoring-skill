@@ -2,7 +2,7 @@
 
 Every policy is one `Scenario` = one monitor per entity, three-valued
 verdicts (`satisfied` / `violated` / `pending`). Every form below has a
-defined verdict on a finite stream — that is the fragment's design rule.
+defined verdict on a finite stream - that is the fragment's design rule.
 
 ## Self-contained forms (a `Then` alone; no `When`)
 
@@ -77,7 +77,7 @@ accept or reject.
 
 ## Fragment notes agents get wrong
 
-- `has happened` stays honestly `pending` until the event or a terminal —
+- `has happened` stays honestly `pending` until the event or a terminal -
   configure a terminal event type or it may pend forever on a live stream
   (the engine warns).
 - `before` is any-past-event precedence; `previously` is the immediate

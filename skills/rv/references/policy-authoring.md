@@ -15,7 +15,7 @@ When a user prompt contains a behavioural requirement, classify it:
 | "always" / "every event is" | `always holds` | `Then <X> always holds` |
 | "from the moment Q, P stays true" | `since` | `Then <P> since <Q>` |
 
-Out of fragment — say so, do not approximate silently: relations between two
+Out of fragment - say so, do not approximate silently: relations between two
 independent entities ("every order belongs to an active user"), counting and
 aggregates ("no more than 3 retries", "95% of requests"), unbounded liveness
 that must produce a violation on a finite prefix. Offer the nearest
@@ -27,7 +27,7 @@ as a scoped `never` on a distinct event; percentile SLAs → per-entity
 
 - One `Feature` per `.feature` file, in `monitoring/policies/`, numbered for
   stable ordering: `01_paid_after_auth.feature`.
-- The **scenario name is the policy id** — unique across the project, and it
+- The **scenario name is the policy id** - unique across the project, and it
   is what verdicts, dashboards, and break reports display. Write it as the
   requirement in plain words: `an order may only be paid after it was
   authorized`.
@@ -35,7 +35,7 @@ as a scoped `never` on a distinct event; percentile SLAs → per-entity
   from the steps used; the `.feature` never mentions it.
 - Steps resolve by text against registered phrasings and their aliases. If
   you reword a phrasing in `steps.py`, KEEP the old wording as an alias or
-  every policy using it stops compiling — and that refusal is itself
+  every policy using it stops compiling - and that refusal is itself
   reported as a stability failure.
 
 ## Worked example
@@ -79,6 +79,6 @@ Feature: ...
 ```
 
 Verify every suggestion compiles against the current registry before
-proposing it (`compile_feature` on the draft — a refused suggestion is
+proposing it (`compile_feature` on the draft - a refused suggestion is
 noise). When the user accepts one, move it into `monitoring/policies/`
 yourself only when they say so, then rerun the gates.
