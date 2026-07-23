@@ -12,6 +12,10 @@ policies, instrumentation happens *while the code is written*, a two-sided
 stability contract gates every change, and the software that leaves
 development ships with a deterministic runtime monitor inside it.
 
+The complete guide — how the skill is triggered and used by the agent, the
+development loop, and how each part of behave-rv works inside it, with a
+worked example — is [docs/HOW_IT_WORKS.md](docs/HOW_IT_WORKS.md).
+
 ## What the agent does with this skill
 
 - **Understands requirements as policies.** When a prompt contains
@@ -78,6 +82,8 @@ skills/rv/references/         condensed behave-rv knowledge (operators,
 skills/rv/templates/          the monitoring/ scaffold installed into
                               projects: steps.py, example policy, replay
                               gate, STEPS.md generator, CI snippet
+docs/HOW_IT_WORKS.md          the complete guide to the skill and the
+                              behave-rv machinery behind it
 test/e2e.sh                   end-to-end validation of the templates and
                               gates against the published behave-rv package
 ```
