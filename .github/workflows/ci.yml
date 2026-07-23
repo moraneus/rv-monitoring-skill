@@ -24,6 +24,14 @@ jobs:
         run: python -m pip install behave-rv
       - name: End-to-end skill mechanics
         run: bash test/e2e.sh
+      - name: The agent-built demo project's gates hold
+        run: |
+          cd demo/lending
+          python monitoring/replay_check.py
+          python -m behave_rv catalog diff \
+            --steps monitoring/steps.py --catalog monitoring/catalog.json \
+            --policies monitoring/policies --app app/lending_service.py \
+            --fail-on-app-risk --trace monitoring/traces/demo_session.jsonl
 
   skill-format:
     name: skill format checks

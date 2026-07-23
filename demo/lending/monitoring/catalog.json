@@ -1,0 +1,235 @@
+{
+  "app_surface": [
+    {
+      "binding_keys": [
+        "loan_id"
+      ],
+      "event_type": "loan.closed",
+      "function": "LendingService._close",
+      "module": "lending_service",
+      "payload_fields": [],
+      "referenced_constants": {
+        "lending_service.EVENT_TYPE": "'loan.status'",
+        "lending_service.RETURNED": "'returned'",
+        "lending_service.SOURCE": "'lending-service'",
+        "lending_service.TERMINAL_TYPE": "'loan.closed'",
+        "lending_service._EPSILON": "0.001"
+      },
+      "site_id": "lending_service.LendingService._close#1",
+      "slice_fingerprint": "53593831c882a0d1",
+      "slice_functions": {
+        "lending_service.LendingService._close": "488db27d812d384b",
+        "lending_service.LendingService._status": "a2efa3f2386a5753",
+        "lending_service.LendingService.return_loan": "d0971da00faba2ef"
+      },
+      "unresolved_calls": [
+        "<dynamic>",
+        "self.clock",
+        "self.emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "member_id"
+      ],
+      "event_type": "member.fine",
+      "function": "LendingService._fine",
+      "module": "lending_service",
+      "payload_fields": [
+        "<splat>",
+        "state"
+      ],
+      "referenced_constants": {
+        "lending_service.FINE_OWED": "'owed'",
+        "lending_service.FINE_PAID": "'paid_off'",
+        "lending_service.FINE_TYPE": "'member.fine'",
+        "lending_service.SOURCE": "'lending-service'"
+      },
+      "site_id": "lending_service.LendingService._fine#1",
+      "slice_fingerprint": "925b28c680f857a1",
+      "slice_functions": {
+        "lending_service.LendingService._fine": "b1bc363f7956549e",
+        "lending_service.LendingService.pay_fine": "6a0da2f20f720b0c",
+        "lending_service.LendingService.record_fine": "ecc9e6fe4a78b032"
+      },
+      "unresolved_calls": [
+        "<dynamic>",
+        "self.clock",
+        "self.emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "loan_id"
+      ],
+      "event_type": "loan.status",
+      "function": "LendingService._status",
+      "module": "lending_service",
+      "payload_fields": [
+        "<splat>",
+        "status"
+      ],
+      "referenced_constants": {
+        "lending_service.BORROWED": "'borrowed'",
+        "lending_service.EVENT_TYPE": "'loan.status'",
+        "lending_service.LOST": "'lost'",
+        "lending_service.MEMBER_RENEWAL_TYPE": "'member.renewal'",
+        "lending_service.RENEWED": "'renewed'",
+        "lending_service.RETURNED": "'returned'",
+        "lending_service.SOURCE": "'lending-service'",
+        "lending_service.TERMINAL_TYPE": "'loan.closed'",
+        "lending_service._EPSILON": "0.001"
+      },
+      "site_id": "lending_service.LendingService._status#1",
+      "slice_fingerprint": "49a8252cf2ac955d",
+      "slice_functions": {
+        "lending_service.LendingService._close": "488db27d812d384b",
+        "lending_service.LendingService._status": "a2efa3f2386a5753",
+        "lending_service.LendingService.borrow": "486afafecad63945",
+        "lending_service.LendingService.owes_fine": "c288dc4f06295289",
+        "lending_service.LendingService.renew": "08aed1b1d416ed1d",
+        "lending_service.LendingService.report_lost": "c99af8b1b55a8a5c",
+        "lending_service.LendingService.return_loan": "d0971da00faba2ef"
+      },
+      "unresolved_calls": [
+        "<dynamic>",
+        "Loan",
+        "self.clock",
+        "self.emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "member_id"
+      ],
+      "event_type": "member.renewal",
+      "function": "LendingService.renew",
+      "module": "lending_service",
+      "payload_fields": [
+        "loan_id"
+      ],
+      "referenced_constants": {
+        "lending_service.EVENT_TYPE": "'loan.status'",
+        "lending_service.MEMBER_RENEWAL_TYPE": "'member.renewal'",
+        "lending_service.RENEWED": "'renewed'",
+        "lending_service.SOURCE": "'lending-service'"
+      },
+      "site_id": "lending_service.LendingService.renew#1",
+      "slice_fingerprint": "77eeac96be7c30a6",
+      "slice_functions": {
+        "lending_service.LendingService._status": "a2efa3f2386a5753",
+        "lending_service.LendingService.owes_fine": "c288dc4f06295289",
+        "lending_service.LendingService.renew": "08aed1b1d416ed1d"
+      },
+      "unresolved_calls": [
+        "<dynamic>",
+        "self.clock",
+        "self.emit"
+      ]
+    }
+  ],
+  "catalog_format_version": 3,
+  "entries": [
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a loan is \"{status}\"",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "1eb0b6f126568113",
+        "correlation_key": [
+          "loan_id"
+        ],
+        "event_type": "loan.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "status": "any"
+        },
+        "referenced_fields": [
+          "status"
+        ],
+        "trigger_condition": "a loan is \"{status}\"",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "loan.status.is",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a loan is renewed, returned or reported lost",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "68e1a8ec882267fd",
+        "correlation_key": [
+          "loan_id"
+        ],
+        "event_type": "loan.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "status": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "a loan is renewed, returned or reported lost",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "loan.status.settled_or_renewed",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a member's fine is \"{state}\"",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "d58208f42fd33eb8",
+        "correlation_key": [
+          "member_id"
+        ],
+        "event_type": "member.fine",
+        "helper_hashes": {},
+        "payload_fields": {
+          "state": "any"
+        },
+        "referenced_fields": [
+          "state"
+        ],
+        "trigger_condition": "a member's fine is \"{state}\"",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "member.fine.is",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a member renews a loan",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "865d69f6e953b713",
+        "correlation_key": [
+          "member_id"
+        ],
+        "event_type": "member.renewal",
+        "helper_hashes": {},
+        "payload_fields": {},
+        "referenced_fields": [],
+        "trigger_condition": "a member renews a loan",
+        "unresolved_calls": [
+          "ctx.bind"
+        ]
+      },
+      "step_id": "member.renewal.happened",
+      "version": 1
+    }
+  ]
+}

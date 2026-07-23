@@ -1,0 +1,20 @@
+{"type": "loan.status", "event_time": 0.015798091888427734, "bindings": {"loan_id": "L-1"}, "payload": {"status": "borrowed", "member_id": "Alice", "copy_id": "C-Dune"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 1.025926113128662, "bindings": {"loan_id": "L-2"}, "payload": {"status": "borrowed", "member_id": "Bob", "copy_id": "C-Neuromancer"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 2.0356578826904297, "bindings": {"loan_id": "L-1"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "member.renewal", "event_time": 2.0356578826904297, "bindings": {"member_id": "Alice"}, "payload": {"loan_id": "L-1"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 3.0431201457977295, "bindings": {"loan_id": "L-3"}, "payload": {"status": "borrowed", "member_id": "Carol", "copy_id": "C-Solaris"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 4.051638126373291, "bindings": {"loan_id": "L-3"}, "payload": {"status": "lost"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 5.057269096374512, "bindings": {"loan_id": "L-1"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.closed", "event_time": 5.058269096374512, "bindings": {"loan_id": "L-1"}, "payload": {}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 6.062658071517944, "bindings": {"loan_id": "L-3"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "member.renewal", "event_time": 6.062658071517944, "bindings": {"member_id": "Carol"}, "payload": {"loan_id": "L-3"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 7.071033000946045, "bindings": {"loan_id": "L-4"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.closed", "event_time": 7.072033000946045, "bindings": {"loan_id": "L-4"}, "payload": {}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 8.072965145111084, "bindings": {"loan_id": "L-6"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 9.07461404800415, "bindings": {"loan_id": "L-5"}, "payload": {"status": "borrowed", "member_id": "Dana", "copy_id": "C-Foundation"}, "source": "lending-service"}
+{"type": "member.fine", "event_time": 10.084253311157227, "bindings": {"member_id": "Dana"}, "payload": {"state": "owed", "amount": 2.5, "balance": 2.5}, "source": "lending-service"}
+{"type": "member.fine", "event_time": 12.093764066696167, "bindings": {"member_id": "Dana"}, "payload": {"state": "paid_off", "balance": 0.0}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 13.099945068359375, "bindings": {"loan_id": "L-5"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "member.renewal", "event_time": 13.099945068359375, "bindings": {"member_id": "Dana"}, "payload": {"loan_id": "L-5"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 14.106122016906738, "bindings": {"loan_id": "L-5"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.closed", "event_time": 14.107122016906738, "bindings": {"loan_id": "L-5"}, "payload": {}, "source": "lending-service"}
