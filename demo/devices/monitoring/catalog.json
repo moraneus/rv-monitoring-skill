@@ -250,6 +250,32 @@
     {
       "kind": "trigger",
       "observed": false,
+      "phrasing": "a device is rejected or decommissioned",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "e0ac7bd92bfd5b9c",
+        "correlation_key": [
+          "device_id"
+        ],
+        "event_type": "device.action",
+        "helper_hashes": {},
+        "payload_fields": {
+          "result": "any",
+          "status": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "a device is rejected or decommissioned",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "device.contained.is",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
       "phrasing": "a quarantine surge is flagged",
       "provenance": "llm",
       "signature": {

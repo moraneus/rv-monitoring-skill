@@ -72,3 +72,29 @@ not an interface break, and that the replay proved the original verdicts
 unchanged; the catalog was regenerated in the same change; the replay was
 re-pinned 14/4 -> 27/5, the one new violation being the surge alert
 firing on the fourth concurrent quarantine.
+
+## Turn 4 - a from-that-moment-on rule
+
+> One more rule of mine, and it's stronger than the containment one we
+> have: once a device is quarantined, it must never come back to normal
+> life. From that moment on, the only things that may ever happen to it
+> are blocked rejections or decommissioning (the wipe and the retirement).
+> A re-activation, a successful action, a fresh provisioning - anything
+> that isn't rejection or decommissioning - after a quarantine is a
+> violation. I'm told the 'since' temporal form fits this kind of
+> from-that-moment-on rule; use it if it does. This is my policy - put it
+> in policies/, make the demo exercise it with a healthy and a violating
+> device, rerun all gates and re-pin as needed.
+
+Outcome: the `since` form, verified against the engine rather than
+assumed - the agent checked which event types route to a `since` monitor
+and confirmed the disjunctive "rejected or decommissioned" predicate
+covers every forbidden post-quarantine event, with retirement settling
+healthy devices through the terminal path. One new step, the user-owned
+policy `06_quarantine_terminal.feature`, no app change; a purely additive
+intended contract change (pre-save diff: one step `added`, all emit sites
+unchanged). The existing containment rule was deliberately kept alongside
+(the agent does not remove a user policy unprompted). Replay re-pinned
+27/5 -> 43/7; the proof of strictness is dev-r2, which re-provisions
+after quarantine and violates ONLY the new rule while the original three
+device rules stay green.

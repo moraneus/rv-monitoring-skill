@@ -68,6 +68,35 @@ def build_registry() -> StepRegistry:
             return True
         return False
 
+    # 6. the post-quarantine "allowed" predicate for the `since` rule: an event
+    #    is a rejection (a blocked action) or a decommissioning (a wipe or a
+    #    retirement). Everything else - a successful action, a re-activation, a
+    #    fresh provisioning - makes this predicate false, which is what breaks
+    #    the since-chain after a quarantine.
+    #
+    #    It declares event_type "device.action" so device.action events are
+    #    routed to the monitor; the `since` policy's OTHER operand (quarantined,
+    #    a device.status event) routes device.status too, so between them the
+    #    monitor sees every action and every lifecycle transition for the device
+    #    - which is exactly the set that must stay within reject-or-decommission
+    #    once quarantine has occurred. (device.retired is the allowed terminal
+    #    and settles the entity directly.)
+    @registry.trigger('a device is rejected or decommissioned',
+                      step_id="device.contained.is",
+                      event_type="device.action", correlation_key="device_id")
+    def device_contained(ctx, event):
+        allowed = (
+            (event.type == "device.action"
+             and event.payload.get("result") == "blocked")
+            or (event.type == "device.status"
+                and event.payload.get("status") == "wiped")
+            or event.type == "device.retired"
+        )
+        if allowed:
+            ctx.bind(device_id=event.bindings["device_id"])
+            return True
+        return False
+
     # 5. the fleet-level quarantine surge. A THIRD entity: keyed on a singleton
     #    fleet_id. The application computes the concurrent-quarantine count and
     #    emits this event when it crosses the threshold; this step just reports

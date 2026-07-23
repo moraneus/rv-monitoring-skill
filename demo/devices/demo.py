@@ -107,6 +107,30 @@ def seed_traffic(svc: FleetService) -> None:
         svc.wipe(did); pause()
         svc.retire(did); pause()
 
+    # rule 6 (since): once quarantined, only blocked rejections or decommission.
+    # dev-r1 HEALTHY - after quarantine it only blocks, then is wiped/retired.
+    svc.provision("dev-r1"); pause()
+    svc.provision_passed("dev-r1"); pause()
+    svc.activate("dev-r1"); pause()
+    svc.act("dev-r1", "ok"); pause()
+    svc.quarantine("dev-r1"); pause()
+    svc.act("dev-r1", "blocked"); pause()
+    svc.act("dev-r1", "blocked"); pause()
+    svc.wipe("dev-r1"); pause()
+    svc.retire("dev-r1"); pause()
+
+    # dev-r2 VIOLATES ONLY rule 6 - a fresh provisioning after quarantine
+    # (normal life resumed). Rules 1 and 2 do not catch this; the since rule
+    # does. Watch its "quarantine is terminal" card go violated.
+    svc.provision("dev-r2"); pause()
+    svc.provision_passed("dev-r2"); pause()
+    svc.activate("dev-r2"); pause()
+    svc.act("dev-r2", "ok"); pause()
+    svc.quarantine("dev-r2"); pause()
+    svc.provision("dev-r2"); pause()     # forbidden after quarantine
+    svc.wipe("dev-r2"); pause()
+    svc.retire("dev-r2"); pause()
+
 
 def main() -> int:
     parser = argparse.ArgumentParser()

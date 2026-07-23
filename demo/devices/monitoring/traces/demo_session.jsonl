@@ -1,60 +1,77 @@
-{"type": "device.status", "event_time": 0.012233972549438477, "bindings": {"device_id": "dev-1"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 0.26712608337402344, "bindings": {"device_id": "dev-1"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 0.5234630107879639, "bindings": {"device_id": "dev-1"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
-{"type": "device.action", "event_time": 0.7789409160614014, "bindings": {"device_id": "dev-1"}, "payload": {"result": "ok"}, "source": "fleet-tracker"}
-{"type": "device.action", "event_time": 1.0321049690246582, "bindings": {"device_id": "dev-1"}, "payload": {"result": "ok"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 1.2843141555786133, "bindings": {"device_id": "dev-1"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
-{"type": "device.action", "event_time": 1.5396931171417236, "bindings": {"device_id": "dev-1"}, "payload": {"result": "blocked"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 1.7951710224151611, "bindings": {"device_id": "dev-1"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
-{"type": "device.retired", "event_time": 2.049861192703247, "bindings": {"device_id": "dev-1"}, "payload": {}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 2.3045430183410645, "bindings": {"device_id": "dev-2"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 2.5597620010375977, "bindings": {"device_id": "dev-2"}, "payload": {"status": "provision_fail"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 2.815013885498047, "bindings": {"device_id": "dev-2"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
-{"type": "device.action", "event_time": 3.0702688694000244, "bindings": {"device_id": "dev-2"}, "payload": {"result": "ok"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 3.325716972351074, "bindings": {"device_id": "dev-2"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 3.576817035675049, "bindings": {"device_id": "dev-2"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
-{"type": "device.retired", "event_time": 3.8322160243988037, "bindings": {"device_id": "dev-2"}, "payload": {}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 4.087672233581543, "bindings": {"device_id": "dev-3"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 4.338510036468506, "bindings": {"device_id": "dev-3"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 4.591655969619751, "bindings": {"device_id": "dev-3"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
-{"type": "device.action", "event_time": 4.847152233123779, "bindings": {"device_id": "dev-3"}, "payload": {"result": "ok"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 5.100527048110962, "bindings": {"device_id": "dev-3"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
-{"type": "device.action", "event_time": 5.355932950973511, "bindings": {"device_id": "dev-3"}, "payload": {"result": "ok"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 5.60663104057312, "bindings": {"device_id": "dev-3"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
-{"type": "device.retired", "event_time": 5.861776113510132, "bindings": {"device_id": "dev-3"}, "payload": {}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 6.115815877914429, "bindings": {"device_id": "dev-4"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 6.370445013046265, "bindings": {"device_id": "dev-4"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 6.623327016830444, "bindings": {"device_id": "dev-4"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
-{"type": "device.action", "event_time": 6.876803159713745, "bindings": {"device_id": "dev-4"}, "payload": {"result": "ok"}, "source": "fleet-tracker"}
-{"type": "device.retired", "event_time": 7.130401134490967, "bindings": {"device_id": "dev-4"}, "payload": {}, "source": "fleet-tracker"}
-{"type": "sensor.reading", "event_time": 7.384592294692993, "bindings": {"sensor_id": "sensor-1"}, "payload": {"status": "ok"}, "source": "fleet-tracker"}
-{"type": "sensor.reading", "event_time": 7.636339902877808, "bindings": {"sensor_id": "sensor-1"}, "payload": {"status": "ok"}, "source": "fleet-tracker"}
-{"type": "sensor.reading", "event_time": 7.88870096206665, "bindings": {"sensor_id": "sensor-1"}, "payload": {"status": "ok"}, "source": "fleet-tracker"}
-{"type": "sensor.reading", "event_time": 8.13940715789795, "bindings": {"sensor_id": "sensor-2"}, "payload": {"status": "ok"}, "source": "fleet-tracker"}
-{"type": "sensor.reading", "event_time": 8.391866207122803, "bindings": {"sensor_id": "sensor-2"}, "payload": {"status": "ok"}, "source": "fleet-tracker"}
-{"type": "sensor.reading", "event_time": 8.647166967391968, "bindings": {"sensor_id": "sensor-2"}, "payload": {"status": "error"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 8.902539014816284, "bindings": {"device_id": "dev-q1"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 9.157757997512817, "bindings": {"device_id": "dev-q1"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 9.409507036209106, "bindings": {"device_id": "dev-q1"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 9.663592100143433, "bindings": {"device_id": "dev-q1"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 9.91808795928955, "bindings": {"device_id": "dev-q2"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 10.168750047683716, "bindings": {"device_id": "dev-q2"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 10.420310020446777, "bindings": {"device_id": "dev-q2"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 10.671180009841919, "bindings": {"device_id": "dev-q2"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 10.923269271850586, "bindings": {"device_id": "dev-q3"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 11.175007104873657, "bindings": {"device_id": "dev-q3"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 11.430706024169922, "bindings": {"device_id": "dev-q3"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 11.68343210220337, "bindings": {"device_id": "dev-q3"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 11.936764001846313, "bindings": {"device_id": "dev-q4"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 12.188501119613647, "bindings": {"device_id": "dev-q4"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 12.441771984100342, "bindings": {"device_id": "dev-q4"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 12.69403600692749, "bindings": {"device_id": "dev-q4"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
-{"type": "fleet.quarantine", "event_time": 12.695427251815795, "bindings": {"fleet_id": "fleet"}, "payload": {"level": "surge", "count": "4"}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 12.94557499885559, "bindings": {"device_id": "dev-q1"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
-{"type": "device.retired", "event_time": 13.200940132141113, "bindings": {"device_id": "dev-q1"}, "payload": {}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 13.456278085708618, "bindings": {"device_id": "dev-q2"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
-{"type": "device.retired", "event_time": 13.710598945617676, "bindings": {"device_id": "dev-q2"}, "payload": {}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 13.96593689918518, "bindings": {"device_id": "dev-q3"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
-{"type": "device.retired", "event_time": 14.221333980560303, "bindings": {"device_id": "dev-q3"}, "payload": {}, "source": "fleet-tracker"}
-{"type": "device.status", "event_time": 14.47631311416626, "bindings": {"device_id": "dev-q4"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
-{"type": "device.retired", "event_time": 14.726992845535278, "bindings": {"device_id": "dev-q4"}, "payload": {}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 0.01559901237487793, "bindings": {"device_id": "dev-1"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 0.27077317237854004, "bindings": {"device_id": "dev-1"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 0.5247941017150879, "bindings": {"device_id": "dev-1"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
+{"type": "device.action", "event_time": 0.7758088111877441, "bindings": {"device_id": "dev-1"}, "payload": {"result": "ok"}, "source": "fleet-tracker"}
+{"type": "device.action", "event_time": 1.0311379432678223, "bindings": {"device_id": "dev-1"}, "payload": {"result": "ok"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 1.2831699848175049, "bindings": {"device_id": "dev-1"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
+{"type": "device.action", "event_time": 1.5367839336395264, "bindings": {"device_id": "dev-1"}, "payload": {"result": "blocked"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 1.78855299949646, "bindings": {"device_id": "dev-1"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
+{"type": "device.retired", "event_time": 2.0418989658355713, "bindings": {"device_id": "dev-1"}, "payload": {}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 2.294516086578369, "bindings": {"device_id": "dev-2"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 2.548628091812134, "bindings": {"device_id": "dev-2"}, "payload": {"status": "provision_fail"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 2.803086996078491, "bindings": {"device_id": "dev-2"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
+{"type": "device.action", "event_time": 3.0559959411621094, "bindings": {"device_id": "dev-2"}, "payload": {"result": "ok"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 3.307934045791626, "bindings": {"device_id": "dev-2"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 3.563159942626953, "bindings": {"device_id": "dev-2"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
+{"type": "device.retired", "event_time": 3.8142261505126953, "bindings": {"device_id": "dev-2"}, "payload": {}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 4.0684239864349365, "bindings": {"device_id": "dev-3"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 4.3235931396484375, "bindings": {"device_id": "dev-3"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 4.5789830684661865, "bindings": {"device_id": "dev-3"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
+{"type": "device.action", "event_time": 4.834392070770264, "bindings": {"device_id": "dev-3"}, "payload": {"result": "ok"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 5.088298797607422, "bindings": {"device_id": "dev-3"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
+{"type": "device.action", "event_time": 5.339614152908325, "bindings": {"device_id": "dev-3"}, "payload": {"result": "ok"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 5.592053174972534, "bindings": {"device_id": "dev-3"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
+{"type": "device.retired", "event_time": 5.845335006713867, "bindings": {"device_id": "dev-3"}, "payload": {}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 6.099853038787842, "bindings": {"device_id": "dev-4"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 6.35102915763855, "bindings": {"device_id": "dev-4"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 6.60151481628418, "bindings": {"device_id": "dev-4"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
+{"type": "device.action", "event_time": 6.856140851974487, "bindings": {"device_id": "dev-4"}, "payload": {"result": "ok"}, "source": "fleet-tracker"}
+{"type": "device.retired", "event_time": 7.111432075500488, "bindings": {"device_id": "dev-4"}, "payload": {}, "source": "fleet-tracker"}
+{"type": "sensor.reading", "event_time": 7.365013837814331, "bindings": {"sensor_id": "sensor-1"}, "payload": {"status": "ok"}, "source": "fleet-tracker"}
+{"type": "sensor.reading", "event_time": 7.6179680824279785, "bindings": {"sensor_id": "sensor-1"}, "payload": {"status": "ok"}, "source": "fleet-tracker"}
+{"type": "sensor.reading", "event_time": 7.871776103973389, "bindings": {"sensor_id": "sensor-1"}, "payload": {"status": "ok"}, "source": "fleet-tracker"}
+{"type": "sensor.reading", "event_time": 8.127263069152832, "bindings": {"sensor_id": "sensor-2"}, "payload": {"status": "ok"}, "source": "fleet-tracker"}
+{"type": "sensor.reading", "event_time": 8.382419109344482, "bindings": {"sensor_id": "sensor-2"}, "payload": {"status": "ok"}, "source": "fleet-tracker"}
+{"type": "sensor.reading", "event_time": 8.637628078460693, "bindings": {"sensor_id": "sensor-2"}, "payload": {"status": "error"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 8.891199111938477, "bindings": {"device_id": "dev-q1"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 9.14508605003357, "bindings": {"device_id": "dev-q1"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 9.40044617652893, "bindings": {"device_id": "dev-q1"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 9.652740955352783, "bindings": {"device_id": "dev-q1"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 9.903352975845337, "bindings": {"device_id": "dev-q2"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 10.15860104560852, "bindings": {"device_id": "dev-q2"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 10.414031982421875, "bindings": {"device_id": "dev-q2"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 10.668650150299072, "bindings": {"device_id": "dev-q2"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 10.924046039581299, "bindings": {"device_id": "dev-q3"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 11.174823999404907, "bindings": {"device_id": "dev-q3"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 11.426613092422485, "bindings": {"device_id": "dev-q3"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 11.678370952606201, "bindings": {"device_id": "dev-q3"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 11.932438850402832, "bindings": {"device_id": "dev-q4"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 12.184870958328247, "bindings": {"device_id": "dev-q4"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 12.438467979431152, "bindings": {"device_id": "dev-q4"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 12.69058108329773, "bindings": {"device_id": "dev-q4"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
+{"type": "fleet.quarantine", "event_time": 12.691937042236328, "bindings": {"fleet_id": "fleet"}, "payload": {"level": "surge", "count": "4"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 12.946136951446533, "bindings": {"device_id": "dev-q1"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
+{"type": "device.retired", "event_time": 13.200740098953247, "bindings": {"device_id": "dev-q1"}, "payload": {}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 13.455894947052002, "bindings": {"device_id": "dev-q2"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
+{"type": "device.retired", "event_time": 13.711333990097046, "bindings": {"device_id": "dev-q2"}, "payload": {}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 13.962389945983887, "bindings": {"device_id": "dev-q3"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
+{"type": "device.retired", "event_time": 14.283077955245972, "bindings": {"device_id": "dev-q3"}, "payload": {}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 14.537238836288452, "bindings": {"device_id": "dev-q4"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
+{"type": "device.retired", "event_time": 14.792603969573975, "bindings": {"device_id": "dev-q4"}, "payload": {}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 15.047805070877075, "bindings": {"device_id": "dev-r1"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 15.302982091903687, "bindings": {"device_id": "dev-r1"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 15.555699110031128, "bindings": {"device_id": "dev-r1"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
+{"type": "device.action", "event_time": 15.811169862747192, "bindings": {"device_id": "dev-r1"}, "payload": {"result": "ok"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 16.06434392929077, "bindings": {"device_id": "dev-r1"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
+{"type": "device.action", "event_time": 16.31954288482666, "bindings": {"device_id": "dev-r1"}, "payload": {"result": "blocked"}, "source": "fleet-tracker"}
+{"type": "device.action", "event_time": 16.57491898536682, "bindings": {"device_id": "dev-r1"}, "payload": {"result": "blocked"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 16.83033800125122, "bindings": {"device_id": "dev-r1"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
+{"type": "device.retired", "event_time": 17.085525035858154, "bindings": {"device_id": "dev-r1"}, "payload": {}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 17.34079599380493, "bindings": {"device_id": "dev-r2"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 17.595834016799927, "bindings": {"device_id": "dev-r2"}, "payload": {"status": "provision_ok"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 17.848505973815918, "bindings": {"device_id": "dev-r2"}, "payload": {"status": "activated"}, "source": "fleet-tracker"}
+{"type": "device.action", "event_time": 18.101902961730957, "bindings": {"device_id": "dev-r2"}, "payload": {"result": "ok"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 18.355581045150757, "bindings": {"device_id": "dev-r2"}, "payload": {"status": "quarantined", "reason": "policy"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 18.607563972473145, "bindings": {"device_id": "dev-r2"}, "payload": {"status": "provisioned"}, "source": "fleet-tracker"}
+{"type": "device.status", "event_time": 18.863002061843872, "bindings": {"device_id": "dev-r2"}, "payload": {"status": "wiped"}, "source": "fleet-tracker"}
+{"type": "device.retired", "event_time": 19.11669397354126, "bindings": {"device_id": "dev-r2"}, "payload": {}, "source": "fleet-tracker"}

@@ -24,7 +24,7 @@ from app.service import FleetService                            # noqa: E402
 from steps import build_registry, load_policies                # noqa: E402
 
 TERMINAL_TYPES = {"device.retired"}     # a device's life ends at retirement
-EXPECTED = {"verdicts": 27, "violations": 5}
+EXPECTED = {"verdicts": 43, "violations": 7}
 
 
 class FakeClock:
@@ -108,6 +108,30 @@ def simulate_traffic(emit) -> None:
     for did in surge:
         step(svc.wipe, did)
         step(svc.retire, did)
+
+    # dev-r1: HEALTHY under the stronger since rule (rule 6) - after quarantine
+    # it does nothing but blocked rejections, then is decommissioned.
+    step(svc.provision, "dev-r1")
+    step(svc.provision_passed, "dev-r1")
+    step(svc.activate, "dev-r1")
+    step(svc.act, "dev-r1", "ok")
+    step(svc.quarantine, "dev-r1")
+    step(svc.act, "dev-r1", "blocked")
+    step(svc.act, "dev-r1", "blocked")
+    step(svc.wipe, "dev-r1")
+    step(svc.retire, "dev-r1")
+
+    # dev-r2: VIOLATES ONLY rule 6 - a FRESH PROVISIONING after quarantine.
+    # Rule 2 (no ok action) and rule 1 (activation ordering) do not catch this;
+    # the stronger since rule does - normal life resumed after quarantine.
+    step(svc.provision, "dev-r2")
+    step(svc.provision_passed, "dev-r2")
+    step(svc.activate, "dev-r2")
+    step(svc.act, "dev-r2", "ok")
+    step(svc.quarantine, "dev-r2")
+    step(svc.provision, "dev-r2")        # forbidden: back to normal life
+    step(svc.wipe, "dev-r2")
+    step(svc.retire, "dev-r2")
 
 
 def main() -> int:

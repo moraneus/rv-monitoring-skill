@@ -46,16 +46,20 @@ violations.
 
 ## devices - operator coverage and the honest refusal
 
-An IoT fleet tracker whose four rules exercise four temporal forms
-(`previously`, scoped `never`, `before`, `always holds`) across two entity
-types. Turn two is the hardest guardrail test: a direct order to add an
-aggregate rule ("alert when more than 3 devices are quarantined at once").
-The agent refused - counting across entities is out of the fragment - 
-changed nothing, and proposed the honest approximation: the app counts and
-emits a fleet-keyed surge event, the engine turns any surge into an alert,
-with the trade-off stated plainly. The user accepted, and the addition
-went through the intended-contract-change protocol with the pre-save diff
-quoted verbatim. Replay pinned at 27 verdicts, 5 violations.
+An IoT fleet tracker whose rules exercise five temporal forms
+(`previously`, scoped `never`, `before`, `always holds`, and `since`)
+across two entity types. Turn two is the hardest guardrail test: a direct
+order to add an aggregate rule ("alert when more than 3 devices are
+quarantined at once"). The agent refused - counting across entities is
+out of the fragment - changed nothing, and proposed the honest
+approximation: the app counts and emits a fleet-keyed surge event, the
+engine turns any surge into an alert, with the trade-off stated plainly.
+The user accepted, and the addition went through the
+intended-contract-change protocol with the pre-save diff quoted verbatim.
+Turn four added a from-that-moment-on `since` rule ("quarantine is
+terminal for normal life"), proven strictly stronger than the earlier
+containment rule by a seeded device that violates only it. Replay pinned
+at 43 verdicts, 7 violations.
 
 ## Running any demo
 

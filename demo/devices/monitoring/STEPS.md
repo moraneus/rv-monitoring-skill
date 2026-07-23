@@ -103,6 +103,30 @@ Example scenarios:
 
 ```
 
+## `a device is rejected or decommissioned`
+
+- **identity**: `device.contained.is` (trigger)
+- **observes**: event `device.action`, entity key `device_id`
+
+Example scenarios:
+
+```gherkin
+  Scenario: <your policy name>  # prohibition
+    Then a device is rejected or decommissioned never happens
+
+  Scenario: <your policy name>  # eventuality
+    Then a device is rejected or decommissioned has happened
+
+  Scenario: <your policy name>  # precedence
+    When a device is rejected or decommissioned
+    Then a device is rejected or decommissioned before
+
+  Scenario: <your policy name>  # deadline
+    When a device is rejected or decommissioned
+    Then a device is rejected or decommissioned within "30" seconds
+
+```
+
 ## `a quarantine surge is flagged`
 
 - **identity**: `fleet.quarantine.surge` (trigger)
