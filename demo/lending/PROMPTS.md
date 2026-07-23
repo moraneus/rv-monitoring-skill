@@ -1,12 +1,11 @@
 # The prompts that produced this project
 
-Every file in this directory was created by coding agents that had only two
-things: the rv skill (pointed at `skills/rv/SKILL.md`, exactly as a
+Every file in this directory was created by a coding agent that had only
+two things: the rv skill (pointed at `skills/rv/SKILL.md`, exactly as a
 non-Claude-Code platform would load it) and behave-rv 0.2.0 installed from
-PyPI. The human side of the conversation is reproduced below, verbatim -
-six turns, the last two run by a second agent with no memory of the first
-four. The project was not hand-edited afterwards; a separate session
-independently re-ran every gate to verify the agents' reports.
+PyPI. The human side of the conversation is reproduced below, verbatim,
+across six turns. The project was not hand-edited afterwards; a separate
+session independently re-ran every gate to verify the agent's reports.
 
 ## Turn 1 - the build request
 
@@ -74,13 +73,6 @@ tripwire nature as the user's call.
 Outcome: policy 06 adopted, replay extended with a fined-member flow that
 drives the guard (renew refused while owing, allowed after paying),
 re-pinned at 33 verdicts and 6 violations, both catalog sides clean.
-
-Reviewing turns 1-4 produced four sharpenings of the skill text (the
-transcription rule for user-stated requirements, the strict definition of
-an "intended" contract change, the key-projection pattern, and an
-entry-point import snippet). Turns 5 and 6 were run afterwards, by a fresh
-agent with no memory of the first four, against the sharpened skill - and
-were designed as an adversarial test of the break protocol.
 
 ## Turn 5 - a "no behaviour change" cleanup (the trap)
 
