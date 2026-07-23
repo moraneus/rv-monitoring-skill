@@ -16,14 +16,54 @@
         "lending_service._EPSILON": "0.001"
       },
       "site_id": "lending_service.LendingService._close#1",
-      "slice_fingerprint": "53593831c882a0d1",
+      "slice_fingerprint": "4139debb0cb64f25",
       "slice_functions": {
         "lending_service.LendingService._close": "488db27d812d384b",
-        "lending_service.LendingService._status": "a2efa3f2386a5753",
-        "lending_service.LendingService.return_loan": "d0971da00faba2ef"
+        "lending_service.LendingService._emit_status": "a2efa3f2386a5753",
+        "lending_service.LendingService.return_loan": "19a7c27ec2f32951"
       },
       "unresolved_calls": [
         "<dynamic>",
+        "self.clock",
+        "self.emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "loan_id"
+      ],
+      "event_type": "loan.status",
+      "function": "LendingService._emit_status",
+      "module": "lending_service",
+      "payload_fields": [
+        "<splat>",
+        "status"
+      ],
+      "referenced_constants": {
+        "lending_service.BORROWED": "'borrowed'",
+        "lending_service.EVENT_TYPE": "'loan.status'",
+        "lending_service.LOST": "'lost'",
+        "lending_service.MEMBER_RENEWAL_TYPE": "'member.renewal'",
+        "lending_service.RENEWED": "'renewed'",
+        "lending_service.RETURNED": "'returned'",
+        "lending_service.SOURCE": "'lending-service'",
+        "lending_service.TERMINAL_TYPE": "'loan.closed'",
+        "lending_service._EPSILON": "0.001"
+      },
+      "site_id": "lending_service.LendingService._emit_status#1",
+      "slice_fingerprint": "cbd70de79ba66897",
+      "slice_functions": {
+        "lending_service.LendingService._close": "488db27d812d384b",
+        "lending_service.LendingService._emit_status": "a2efa3f2386a5753",
+        "lending_service.LendingService.borrow": "ceef4ba801e6b3b6",
+        "lending_service.LendingService.owes_fine": "c288dc4f06295289",
+        "lending_service.LendingService.renew": "3443d5fcc7b32d1e",
+        "lending_service.LendingService.report_lost": "a666474c813668b7",
+        "lending_service.LendingService.return_loan": "19a7c27ec2f32951"
+      },
+      "unresolved_calls": [
+        "<dynamic>",
+        "Loan",
         "self.clock",
         "self.emit"
       ]
@@ -60,46 +100,6 @@
     },
     {
       "binding_keys": [
-        "loan_id"
-      ],
-      "event_type": "loan.status",
-      "function": "LendingService._status",
-      "module": "lending_service",
-      "payload_fields": [
-        "<splat>",
-        "status"
-      ],
-      "referenced_constants": {
-        "lending_service.BORROWED": "'borrowed'",
-        "lending_service.EVENT_TYPE": "'loan.status'",
-        "lending_service.LOST": "'lost'",
-        "lending_service.MEMBER_RENEWAL_TYPE": "'member.renewal'",
-        "lending_service.RENEWED": "'renewed'",
-        "lending_service.RETURNED": "'returned'",
-        "lending_service.SOURCE": "'lending-service'",
-        "lending_service.TERMINAL_TYPE": "'loan.closed'",
-        "lending_service._EPSILON": "0.001"
-      },
-      "site_id": "lending_service.LendingService._status#1",
-      "slice_fingerprint": "49a8252cf2ac955d",
-      "slice_functions": {
-        "lending_service.LendingService._close": "488db27d812d384b",
-        "lending_service.LendingService._status": "a2efa3f2386a5753",
-        "lending_service.LendingService.borrow": "486afafecad63945",
-        "lending_service.LendingService.owes_fine": "c288dc4f06295289",
-        "lending_service.LendingService.renew": "08aed1b1d416ed1d",
-        "lending_service.LendingService.report_lost": "c99af8b1b55a8a5c",
-        "lending_service.LendingService.return_loan": "d0971da00faba2ef"
-      },
-      "unresolved_calls": [
-        "<dynamic>",
-        "Loan",
-        "self.clock",
-        "self.emit"
-      ]
-    },
-    {
-      "binding_keys": [
         "member_id"
       ],
       "event_type": "member.renewal",
@@ -115,11 +115,11 @@
         "lending_service.SOURCE": "'lending-service'"
       },
       "site_id": "lending_service.LendingService.renew#1",
-      "slice_fingerprint": "77eeac96be7c30a6",
+      "slice_fingerprint": "791beb096439aaf8",
       "slice_functions": {
-        "lending_service.LendingService._status": "a2efa3f2386a5753",
+        "lending_service.LendingService._emit_status": "a2efa3f2386a5753",
         "lending_service.LendingService.owes_fine": "c288dc4f06295289",
-        "lending_service.LendingService.renew": "08aed1b1d416ed1d"
+        "lending_service.LendingService.renew": "3443d5fcc7b32d1e"
       },
       "unresolved_calls": [
         "<dynamic>",

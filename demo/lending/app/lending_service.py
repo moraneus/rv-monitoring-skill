@@ -21,6 +21,7 @@ under the deterministic replay gate (a list + a fake clock).
 from __future__ import annotations
 
 import time
+from collections import deque
 from dataclasses import dataclass, field
 from typing import Callable
 
@@ -85,9 +86,11 @@ class LendingService:
     clock: Callable[[], float] = time.time
     loans: dict[str, Loan] = field(default_factory=dict)
     fines: dict[str, float] = field(default_factory=dict)
-    warnings: list[str] = field(default_factory=list)
+    # Bounded so a long-running service does not accumulate warnings forever;
+    # the deque keeps only the 50 most recent, evicting the oldest on append.
+    warnings: deque[str] = field(default_factory=lambda: deque(maxlen=50))
 
-    def _status(self, loan_id: str, status: str, at: float, **payload) -> None:
+    def _emit_status(self, loan_id: str, status: str, at: float, **payload) -> None:
         self.emit(Event(EVENT_TYPE, at, {"loan_id": loan_id},
                         {"status": status, **payload}, SOURCE))
 
@@ -104,7 +107,7 @@ class LendingService:
     def borrow(self, loan_id: str, member_id: str, copy_id: str) -> None:
         """A member borrows a copy - this starts the loan."""
         self.loans[loan_id] = Loan(loan_id, member_id, copy_id, BORROWED)
-        self._status(loan_id, BORROWED, self.clock(),
+        self._emit_status(loan_id, BORROWED, self.clock(),
                      member_id=member_id, copy_id=copy_id)
 
     def renew(self, loan_id: str) -> None:
@@ -127,7 +130,7 @@ class LendingService:
         else:
             loan.status = RENEWED
         at = self.clock()
-        self._status(loan_id, RENEWED, at)
+        self._emit_status(loan_id, RENEWED, at)
         if loan is not None:
             # Attribute the successful renewal to the member, so the fine guard
             # is monitorable on the member key (loans use loan_id).
@@ -144,7 +147,7 @@ class LendingService:
             loan.status = RETURNED
             loan.open = False
         at = self.clock()
-        self._status(loan_id, RETURNED, at)
+        self._emit_status(loan_id, RETURNED, at)
         self._close(loan_id, at + _EPSILON)
 
     def report_lost(self, loan_id: str) -> None:
@@ -159,7 +162,7 @@ class LendingService:
         else:
             loan.status = LOST
             loan.open = False
-        self._status(loan_id, LOST, self.clock())
+        self._emit_status(loan_id, LOST, self.clock())
 
     def record_fine(self, member_id: str, amount: float = 1.0) -> None:
         """Record that a member owes a fine (adds to their balance)."""

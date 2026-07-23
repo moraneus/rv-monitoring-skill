@@ -1,8 +1,8 @@
 # Demo: a project built end-to-end by an agent using this skill
 
 `lending/` is a small library lending service that was written entirely by
-a coding agent following the rv skill - requirements to policies,
-instrumentation, gates, dashboard, everything. The four human prompts that
+coding agents following the rv skill - requirements to policies,
+instrumentation, gates, dashboard, everything. The six human prompts that
 produced it are in [lending/PROMPTS.md](lending/PROMPTS.md); nothing was
 hand-edited afterwards. It doubles as the skill's acceptance test: CI runs
 its gates against the published behave-rv on every push.
@@ -32,6 +32,19 @@ What the exercise validated, in order:
 4. **The tripwire (turn 4).** The user adopted the fine policy knowing it
    stays honestly `pending` while the guard works; it only ever fires if
    a future change lets a renewal slip through during an owed period.
+5. **The unintended risk (turn 5, adversarial, fresh agent).** A cleanup
+   request labelled "no behaviour change" hid a change the contract cannot
+   prove safe: renaming the emitting function. The gate flagged it with
+   all six policies at risk; the agent stopped, quoted the failing diff
+   verbatim, reverted to keep the tree green, and held the request - the
+   catalog was never regenerated to silence the signal (verified by hash).
+   The other cleanup it landed contract-neutrally, choosing an
+   implementation that left every emitting method byte-identical.
+6. **The sanctioned regeneration (turn 6).** On the user's explicit word
+   the same rename became an intended contract change: re-applied and
+   catalog-saved as one unit, pre-save diff quoted, replay identical at
+   33 verdicts and 6 violations - the break protocol's second branch,
+   exercised only after the first one held.
 
 ## Run it
 

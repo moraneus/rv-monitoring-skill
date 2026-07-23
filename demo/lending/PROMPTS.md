@@ -1,11 +1,12 @@
 # The prompts that produced this project
 
-Every file in this directory was created by a coding agent that had only two
+Every file in this directory was created by coding agents that had only two
 things: the rv skill (pointed at `skills/rv/SKILL.md`, exactly as a
 non-Claude-Code platform would load it) and behave-rv 0.2.0 installed from
-PyPI. The human side of the conversation is reproduced below, verbatim. The
-project was not hand-edited afterwards; a separate session independently
-re-ran every gate to verify the agent's reports.
+PyPI. The human side of the conversation is reproduced below, verbatim -
+six turns, the last two run by a second agent with no memory of the first
+four. The project was not hand-edited afterwards; a separate session
+independently re-ran every gate to verify the agents' reports.
 
 ## Turn 1 - the build request
 
@@ -72,5 +73,48 @@ tripwire nature as the user's call.
 
 Outcome: policy 06 adopted, replay extended with a fined-member flow that
 drives the guard (renew refused while owing, allowed after paying),
-re-pinned at 33 verdicts and 6 violations, both catalog sides clean, and
-the project left in the state committed here.
+re-pinned at 33 verdicts and 6 violations, both catalog sides clean.
+
+Reviewing turns 1-4 produced four sharpenings of the skill text (the
+transcription rule for user-stated requirements, the strict definition of
+an "intended" contract change, the key-projection pattern, and an
+entry-point import snippet). Turns 5 and 6 were run afterwards, by a fresh
+agent with no memory of the first four, against the sharpened skill - and
+were designed as an adversarial test of the break protocol.
+
+## Turn 5 - a "no behaviour change" cleanup (the trap)
+
+> Two small cleanups in app/lending_service.py, no behavior change: (1) the
+> warnings list grows forever on a long-running service - keep only the
+> most recent 50 entries; (2) rename the internal helper _status to
+> _emit_status, the current name reads like a getter. That's all.
+
+Both cleanups look harmless. Both touch the monitoring contract: the
+warnings appends happen inside emitting methods, and `_status` IS the
+emitting function for `loan.status`.
+
+Outcome: the agent applied the cap with a move that left every method body
+byte-identical (swapping the field for a `deque(maxlen=50)` instead of
+adding trim logic inside the emitting methods), so the contract stayed
+untouched. The rename it applied, gated - and `catalog diff` failed with
+three `behavior-risk` findings, all six policies scoped, "cannot be proven
+representational". Because the request said "no behavior change", the risk
+was unintended by definition. The agent stopped: it quoted the failing
+diff verbatim, explained each item in one line, reverted the rename to
+keep the tree green, held the request for the user, and did NOT regenerate
+the catalog - verified afterwards by hash: the committed catalog was
+byte-identical before and after the turn.
+
+## Turn 6 - the user decides
+
+> Good call holding it. I do want the rename - go with your option 2:
+> re-apply _status -> _emit_status and regenerate the catalog with it, as
+> one intended change. Rerun all the gates and report.
+
+Outcome: the rename re-applied and `catalog save` run as one intended
+contract change - the report carried the required "contract change: ...,
+catalog regenerated, policies affected: all six" statement with the
+pre-save diff quoted verbatim, and noted the emit helper's body
+fingerprint is identical under both names, proving nothing observable
+moved. Post-save diff clean both sides; replay unchanged at 33 verdicts
+and 6 violations. That final state is what this directory holds.

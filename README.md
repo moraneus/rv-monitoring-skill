@@ -122,9 +122,11 @@ test/e2e.sh                   end-to-end validation of the templates and
 ```
 
 The demo is also the proof: [demo/README.md](demo/README.md) describes the
-four-turn exercise (build, adopt, a change that trips the stability gate,
-recovery) and [demo/lending/PROMPTS.md](demo/lending/PROMPTS.md) holds the
-exact human prompts that produced every file in it.
+six-turn exercise (build, adopt, an intended contract change, a tripwire
+policy, and an adversarial "no behaviour change" request that the break
+protocol correctly stopped) and
+[demo/lending/PROMPTS.md](demo/lending/PROMPTS.md) holds the exact human
+prompts that produced every file in it.
 
 CI runs the end-to-end validation against the real PyPI `behave-rv` on every
 push and weekly - including a check that the stability gate actually catches
