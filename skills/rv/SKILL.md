@@ -26,7 +26,11 @@ serves it.
 
 - **Propose policies; never commit them.** Draft policies go to
   `monitoring/SUGGESTED_POLICIES.md` with a rationale each. The user decides
-  what becomes a policy.
+  what becomes a policy. One exception, transcription: a rule the user
+  states imperatively in their request ("orders must never ship after
+  cancel") is user-authored. Transcribe it faithfully into
+  `monitoring/policies/` and say so in your report. Everything YOU thought
+  of goes through `SUGGESTED_POLICIES.md`.
 - **Never edit a policy the user wrote** - not its text, not its meaning -
   without the user explicitly asking. Never weaken a policy to make code
   pass; if code violates a policy, the code is wrong until the user says
@@ -99,7 +103,11 @@ request against existing code:
    A policy that fails to compile is a repair signal, not an obstacle - the
    compiler's refusals state exactly what is wrong. On intended contract
    changes only: `catalog save --steps ... --catalog ... --app ...`,
-   committed with the change, explained to the user.
+   committed with the change, explained to the user. A flagged change is
+   INTENDED only when the observable behaviour it names is itself what the
+   user asked for - not a side effect of how you implemented something
+   else. When in doubt, treat it as unintended: stop and report. Either
+   way, quote the pre-save diff output verbatim in your report.
 6. **Report.** Use this skeleton every time - fill every line ("none" is a
    valid value); the diff/replay lines quote the tools, not your summary of
    them:

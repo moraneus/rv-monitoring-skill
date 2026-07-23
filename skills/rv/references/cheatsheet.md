@@ -63,6 +63,12 @@ events listed.
 ## Live wiring
 
 ```python
+# entry point at the project root: make monitoring/ importable first
+import sys, time
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent / "monitoring"))
+from steps import build_registry, load_policies
+
 from behave_rv.events.sources.subscription import QueueSource
 from behave_rv.events.sources.replay import TraceRecorder
 from behave_rv.dashboard import Dashboard

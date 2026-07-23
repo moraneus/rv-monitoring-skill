@@ -23,6 +23,16 @@ in-fragment property as a labelled alternative (retries → often re-expressible
 as a scoped `never` on a distinct event; percentile SLAs → per-entity
 `within` plus offline analysis of verdicts).
 
+**Key projection.** Before declaring a rule cross-entity, check whether it
+becomes per-entity under a DIFFERENT correlation key. "A fined member's
+loans are never renewed" relates loans to members - but emitting a
+member-keyed event at the renewal site (`member.renewal`) turns it into one
+rule about members: `Given a member's fine is "owed" until a member's fine
+is "paid_off"` / `Then a member renews a loan never happens`. Adding an
+emission under the right key is additive instrumentation, not reshaping.
+Flag the added event in your report as part of the proposal, so the user
+can reject the extra surface along with the policy.
+
 ## File and naming conventions
 
 - One `Feature` per `.feature` file, in `monitoring/policies/`, numbered for

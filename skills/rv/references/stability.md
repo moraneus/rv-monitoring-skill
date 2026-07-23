@@ -57,7 +57,12 @@ net for value renames on the application side.
    for) → make the change, `catalog save`, commit both together, and state
    in your report: "contract change: <what>, catalog regenerated, policies
    affected: <which>". If a policy's phrasing must change too, that is the
-   user's call - propose the edit, do not make it.
+   user's call - propose the edit, do not make it. A change is intended
+   only when the flagged observable behaviour is ITSELF what the user
+   requested; a risk that appears as a side effect of a refactor, cleanup,
+   or "no behaviour change" request is unintended by definition - protocol
+   1 applies. When in doubt, it is unintended. Always quote the pre-save
+   diff verbatim in the report, even for intended changes.
 3. Rewording a step phrasing → add the old wording as an alias in the same
    change; verify the diff shows `renamed`, not a break.
 4. NEVER: hand-edit catalog.json, regenerate it to silence an unintended
