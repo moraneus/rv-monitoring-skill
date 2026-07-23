@@ -46,12 +46,14 @@ deadline verdict). With `--trace`, liveness warnings flag policies whose
 event types or bound values never appear in a representative stream - the
 net for value renames on the application side.
 
-One asymmetry to know BEFORE renaming anything: renaming the EMITTING
-function itself changes the emit-site identity and is conservatively
-flagged as a behavior-risk ("cannot be proven representational") even when
-its body is untouched - unlike class renames and renames of non-emitting
-helpers, which are absorbed. Plan an emitting-function rename as an
-intended contract change, or leave the name alone.
+Renames on the app side, precisely: as of behave-rv 0.3.0 a PURE rename of
+any function in an emit slice - including the emitting function itself - is
+proven representational by the rename-invariant fingerprint and absorbed as
+`renamed`. A rename combined with ANY logic change fails the proof and
+flags. Two caveats: a catalog saved by behave-rv < 0.3.0 lacks the proof
+field, so renames flag conservatively until the catalog is next
+regenerated for an intended change; and renaming a CONSTANT still flags
+(names of constants are contract).
 
 ## The break protocol (follow exactly)
 

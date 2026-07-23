@@ -52,15 +52,19 @@ call, and queue interaction:
    order matters must not share a timestamp. Emit the follow-up at
    `clock() + 1e-3`, or tick a fake clock between actions in scripted
    traffic.
-7. **Service-relative time for live runs.** Pass
-   `clock=lambda: time.time() - start` so live wall-clock deadlines behave;
-   raw epoch timestamps and `within` do not mix.
+7. **One clock everywhere.** Any timestamp magnitude works live (raw
+   `time.time()` included, since behave-rv 0.3.0); what matters is that the
+   service, the recorder, and the demo traffic share ONE clock. A
+   service-relative clock (`time.time() - start`) keeps dashboards and
+   traces readable.
 8. **Over-expose.** Emit generously: an unused event costs nothing; a
    missing one is a policy the user can never write. When you deliberately
    skip exposing something, note it in the commit or report so the gap is a
    visible decision.
 9. **Record traces.** Tee live streams through
-   `TraceRecorder("monitoring/traces/....jsonl")`; recorded traces feed
+   `TraceRecorder("monitoring/traces/....jsonl", clock=clock)` and close it
+   on shutdown - the closing clock-horizon marker makes wall-fired deadline
+   verdicts reproducible on replay. Recorded traces feed
    `catalog diff --trace` liveness checks and pre-deployment policy replay.
 
 ## What the analyzer follows (so keep changes inside this fragment)
@@ -78,10 +82,9 @@ unresolved, never silently skipped. Practical consequences:
   fingerprinted.
 - A decorator on an emit-path function is part of the contract; changing it
   flags.
-- Name the emitting function well the FIRST time: renaming it later
-  changes the emit-site identity and flags as a behavior-risk (see the
-  stability reference), unlike renames of classes or non-emitting helpers,
-  which are absorbed.
+- Function renames on emit paths are absorbed when pure (behave-rv >=
+  0.3.0 proves them via the rename-invariant fingerprint); a rename mixed
+  into the same change as logic edits flags. Rename in its own change.
 
 ## Anti-patterns
 

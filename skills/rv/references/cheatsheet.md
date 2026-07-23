@@ -1,6 +1,6 @@
 # behave-rv in one page
 
-Package: `behave-rv` (PyPI, >= 0.2.0), Python 3.10+. Import root: `behave_rv`.
+Package: `behave-rv` (PyPI, >= 0.3.0), Python 3.10+. Import root: `behave_rv`.
 Full documentation ships with the install: `python -m behave_rv docs [name]`.
 
 ## The event
@@ -73,14 +73,18 @@ from behave_rv.events.sources.subscription import QueueSource
 from behave_rv.events.sources.replay import TraceRecorder
 from behave_rv.dashboard import Dashboard
 
-start = time.time()                            # SERVICE-RELATIVE clock for live
+start = time.time()                            # service-relative clock (optional
+                                               # since 0.3.0; raw time.time() works)
 source = QueueSource()
 dashboard = Dashboard(policies, registry=registry,
                       catalog="monitoring/catalog.json",
                       app=["app/service.py"])  # two-sided stability strip
-recorder = TraceRecorder("monitoring/traces/live_session.jsonl")
+clock = lambda: time.time() - start
+recorder = TraceRecorder("monitoring/traces/live_session.jsonl", clock=clock)
+# on recorder.close(): a clock-horizon marker makes wall-fired deadline
+# verdicts reproducible on replay instead of replaying as pending
 service = Service(lambda e: source.push(dashboard.tap(recorder(e))),
-                  clock=lambda: time.time() - start)
+                  clock=clock)
 url = dashboard.start(port=7007)
 print("live monitor:", url)                    # always tell the user this URL
 engine.run(source, sink=dashboard.sink)        # live verdict delivery

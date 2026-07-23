@@ -93,10 +93,10 @@ to "run the rv consultation". The gates, the templates, the dashboard, and
 `python -m behave_rv docs` behave identically everywhere, because they are
 ordinary Python tooling.
 
-Either way, target projects need `pip install behave-rv` (>= 0.2.0,
-Python 3.10+) - version 0.2.0 ships the complete behave-rv documentation
-inside the package (`python -m behave_rv docs`), which the skill reads as
-its authoritative offline knowledge source. After installing, the agent
+Either way, target projects need `pip install behave-rv` (>= 0.3.0,
+Python 3.10+) - the package ships the complete behave-rv documentation
+(`python -m behave_rv docs`), which the skill reads as its authoritative
+offline knowledge source. After installing, the agent
 picks the skill up automatically when monitoring is relevant, and `/rv`
 starts the interactive consultation.
 
