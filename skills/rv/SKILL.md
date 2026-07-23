@@ -100,8 +100,47 @@ request against existing code:
    compiler's refusals state exactly what is wrong. On intended contract
    changes only: `catalog save --steps ... --catalog ... --app ...`,
    committed with the change, explained to the user.
-6. **Report.** Tell the user what was instrumented, what the gates said,
-   what you suggested, and anything at risk.
+6. **Report.** Use this skeleton every time — fill every line ("none" is a
+   valid value); the diff/replay lines quote the tools, not your summary of
+   them:
+
+   ```markdown
+   ## Monitoring report — <the change>
+   - Instrumented: <events added/changed, and where>
+   - Vocabulary:   <steps added/aliased; STEPS.md regenerated>
+   - Gates:        catalog diff <clean | N break(s)/risk(s), shown verbatim above>;
+                   replay <N verdicts, N violation(s) vs pinned>
+   - Suggested:    <new SUGGESTED_POLICIES.md entries, by title>
+   - Live view:    <dashboard URL | how to start it>
+   - At risk / out of fragment: <items>
+   ```
+
+## The live view — expose it, and tell the user
+
+behave-rv ships a built-in web dashboard (`behave_rv.dashboard.Dashboard`,
+stdlib-only). Whenever you wire the application to run live — an entry
+point, a demo, a service startup — expose it. This is not optional: the
+user follows their policies and the event log there, in their own words,
+while the app runs.
+
+```python
+dashboard = Dashboard(policies, registry=registry,
+                      catalog="monitoring/catalog.json",
+                      app=["app/service.py"])      # both contract sides on-page
+url = dashboard.start(port=7007)
+print("live monitor:", url)                        # the app announces it too
+# feed it events where you emit: source.push(dashboard.tap(event))
+engine.run(source, sink=dashboard.sink)
+```
+
+Then ALWAYS tell the user, in the report's "Live view" line and in prose
+the first time: the URL (default `http://127.0.0.1:7007`) and what they
+will see there — every policy as a card with its per-entity verdicts, the
+rendered explanation for each violation, the live event feed, and the
+stability strip showing whether the code still matches the committed
+contract. If the project currently runs only under the replay gate, say
+that the dashboard exists and will be wired the moment there is a live
+entry point.
 
 ## /rv — the interactive consultation
 

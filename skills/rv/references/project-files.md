@@ -58,3 +58,7 @@ cannot drift; treat a hand edit to it as a bug.
    behaviour changes, stated in the report).
 7. Traces refreshed if the event vocabulary grew (`--trace` liveness stays
    meaningful only on representative streams).
+8. If the change touched a live entry point: the dashboard is wired
+   (`Dashboard(policies, registry=, catalog=, app=)`, events tapped,
+   verdicts sinked) and the report's "Live view" line gives the user the
+   URL.

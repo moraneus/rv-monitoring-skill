@@ -75,7 +75,8 @@ dashboard = Dashboard(policies, registry=registry,
 recorder = TraceRecorder("monitoring/traces/live_session.jsonl")
 service = Service(lambda e: source.push(dashboard.tap(recorder(e))),
                   clock=lambda: time.time() - start)
-dashboard.start(port=7007)
+url = dashboard.start(port=7007)
+print("live monitor:", url)                    # always tell the user this URL
 engine.run(source, sink=dashboard.sink)        # live verdict delivery
 ```
 

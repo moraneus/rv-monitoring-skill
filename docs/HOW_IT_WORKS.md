@@ -156,8 +156,9 @@ a refactor, or a new prompt against existing code:
    the dynamic one (section 7.7). `catalog save` — regenerating the
    contract — is permitted only for an *intended* contract change, in the
    same commit, stated in the report.
-6. **Report.** What was instrumented, what the gates said, what was
-   suggested, what is at risk.
+6. **Report.** A fixed skeleton, not free prose: what was instrumented,
+   what the gates said (quoting the tools verbatim), what was suggested,
+   the live-view URL, and anything at risk or out of fragment.
 
 ## 6. `/rv` — the interactive consultation
 
@@ -350,15 +351,24 @@ cannot see, a value renamed on the application side (the code still emits
 `order.status`, but the status is now `"complete"` while the policy says
 `"completed"`).
 
-### 7.9 The dashboard and CI
+### 7.9 The dashboard — the user's window, and CI
 
-`Dashboard(policies, registry=..., catalog=..., app=...)` serves live
-verdicts and — because it is constructed with the registry, the committed
-catalog, and the application files — shows the same two-sided contract
-state at runtime that the diff checks at build time. In CI, the shipped
-`ci-snippet.yml` template runs the diff with `--fail-on-app-risk` plus the
-replay gate on every push, so the contract gates the merge, not just the
-conversation.
+behave-rv ships a stdlib-only web dashboard. The skill makes wiring it
+mandatory whenever the application runs live: the agent constructs
+`Dashboard(policies, registry=..., catalog=..., app=...)`, taps the event
+stream into it, delivers verdicts through `dashboard.sink`, starts it
+(default `http://127.0.0.1:7007`), and — just as mandatory — *tells the
+user the URL* and what is on it. The page shows every policy as a card
+with its per-entity verdicts, the rendered explanation for each violation,
+the live event feed, and — because the dashboard is constructed with the
+registry, the committed catalog, and the application files — the same
+two-sided contract state at runtime that the diff checks at build time.
+This is how the user follows their policies in their own words while the
+system runs, without asking the agent.
+
+In CI, the shipped `ci-snippet.yml` template runs the diff with
+`--fail-on-app-risk` plus the replay gate on every push, so the contract
+gates the merge, not just the conversation.
 
 ## 8. A worked pass through the loop
 

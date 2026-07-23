@@ -49,7 +49,10 @@ Write the plan for the user's approval:
 3. **Draft policies** — grouped by the interview sections, each with a
    one-line rationale; marked as SUGGESTIONS the user will own or reject.
 4. **Instrumentation points** — which functions/modules gain emissions.
-5. **Gates** — the catalog + replay wiring, and CI if wanted.
+5. **Gates and the live view** — the catalog + replay wiring, CI if
+   wanted, and the dashboard the user will watch (its URL and what it
+   shows: policy cards with per-entity verdicts, violation explanations,
+   the live event feed, the contract strip).
 
 On approval, execute via the development loop in SKILL.md. The interview's
 rejected or out-of-fragment items go to `SUGGESTED_POLICIES.md` with their
