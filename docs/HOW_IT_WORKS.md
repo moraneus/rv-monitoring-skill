@@ -202,8 +202,10 @@ The skill's instrumentation conventions all exist to keep these emissions
   gate (fake clock, scripted traffic) with identical code.
 - Ordered actions carry distinct timestamps, because the engine orders
   equal timestamps canonically by content, not by arrival.
-- Live services use a service-relative clock (`time.time() - start`) so
-  wall-clock deadlines behave.
+- One clock everywhere: the service, the recorder, and the traffic share
+  the same callable. Any magnitude works (behave-rv 0.3.0 fires wall-clock
+  deadlines exactly at raw `time.time()` scale); a service-relative clock
+  (`time.time() - start`) simply keeps timelines readable.
 
 ### 7.2 The `StepRegistry` - the vocabulary policies bind to
 
@@ -309,9 +311,11 @@ fingerprint of *both* sides of the monitoring bridge:
 `catalog diff --app --fail-on-app-risk` compares the current code against
 the committed contract and classifies every change:
 
-- `renamed` - a pure representational change (function renamed, code
-  reformatted, class renamed). **Absorbed silently.** This is what lets
-  refactoring stay free.
+- `renamed` - a pure representational change. **Absorbed silently.** This
+  is what lets refactoring stay free. As of behave-rv 0.3.0 this includes
+  renaming functions on emit paths - even the emitting function itself -
+  proven safe by a rename-invariant fingerprint; a rename mixed with any
+  logic change fails the proof and flags.
 - `changed` / `removed` (step side) and `interface-break` / `removed`
   (app side) - the contract itself moved. **A break**, scoped to exactly
   the policies whose steps or observed event types are affected.
@@ -341,7 +345,9 @@ them only for intended behaviour changes, and says so.
 
 ### 7.8 Traces and liveness - the net under everything
 
-`TraceRecorder` tees a live stream into `monitoring/traces/*.jsonl`;
+`TraceRecorder(path, clock=clock)` tees a live stream into
+`monitoring/traces/*.jsonl`, closing with a clock-horizon marker so
+wall-fired deadline verdicts replay as verdicts, not as `pending`;
 `ReplaySource` runs the identical pipeline over a recorded file. The skill
 uses traces twice: a new policy can be tested against last week's traffic
 before it is deployed, and `catalog diff --trace` raises a *liveness
