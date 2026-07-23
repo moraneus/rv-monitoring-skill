@@ -46,13 +46,24 @@ deadline verdict). With `--trace`, liveness warnings flag policies whose
 event types or bound values never appear in a representative stream - the
 net for value renames on the application side.
 
+One asymmetry to know BEFORE renaming anything: renaming the EMITTING
+function itself changes the emit-site identity and is conservatively
+flagged as a behavior-risk ("cannot be proven representational") even when
+its body is untouched - unlike class renames and renames of non-emitting
+helpers, which are absorbed. Plan an emitting-function rename as an
+intended contract change, or leave the name alone.
+
 ## The break protocol (follow exactly)
 
 1. A break or risk you did NOT intend → **stop. Show the user the diff
    output verbatim.** Explain in one sentence per item what moved and which
    policies are at risk. Propose either (a) restoring the contract in code,
    or (b) if the change is genuinely intended, regenerating the catalog.
-   Wait for the user on (b).
+   Wait for the user on (b). You MAY execute (a) unilaterally - reverting
+   the offending edit so the tree stays green while you wait - but then
+   your report must state prominently that the requested change is NOT
+   applied and is held for the user's decision. Never present a reverted
+   request as done.
 2. An INTENDED contract change (new event, renamed field the user asked
    for) → make the change, `catalog save`, commit both together, and state
    in your report: "contract change: <what>, catalog regenerated, policies

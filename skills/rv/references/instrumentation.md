@@ -78,6 +78,10 @@ unresolved, never silently skipped. Practical consequences:
   fingerprinted.
 - A decorator on an emit-path function is part of the contract; changing it
   flags.
+- Name the emitting function well the FIRST time: renaming it later
+  changes the emit-site identity and flags as a behavior-risk (see the
+  stability reference), unlike renames of classes or non-emitting helpers,
+  which are absorbed.
 
 ## Anti-patterns
 
