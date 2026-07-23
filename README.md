@@ -114,19 +114,20 @@ skills/rv/templates/          the monitoring/ scaffold installed into
                               gate, STEPS.md generator, CI snippet
 docs/HOW_IT_WORKS.md          the complete guide to the skill and the
                               behave-rv machinery behind it
-demo/lending/                 a full project built end-to-end BY an agent
-                              using this skill (prompts included); its
+demo/                         four projects built end-to-end BY agents
+                              using this skill (prompts included); their
                               gates run in CI
 test/e2e.sh                   end-to-end validation of the templates and
                               gates against the published behave-rv package
 ```
 
-The demo is also the proof: [demo/README.md](demo/README.md) describes the
-six-turn exercise (build, adopt, an intended contract change, a tripwire
-policy, and an adversarial "no behaviour change" request that the break
-protocol correctly stopped) and
-[demo/lending/PROMPTS.md](demo/lending/PROMPTS.md) holds the exact human
-prompts that produced every file in it.
+The demos are also the proof: [demo/README.md](demo/README.md) indexes
+four projects, each testing a different part of the skill - the full
+development loop and break protocol (lending), brownfield instrumentation
+and the alias flow (parcels), the /rv consultation (bookings), and
+operator coverage with the honest refusal of an out-of-fragment rule
+(devices). Each project's PROMPTS.md holds the exact human prompts that
+produced every file in it.
 
 CI runs the end-to-end validation against the real PyPI `behave-rv` on every
 push and weekly - including a check that the stability gate actually catches

@@ -1,0 +1,203 @@
+{
+  "app_surface": [
+    {
+      "binding_keys": [
+        "booking_id"
+      ],
+      "event_type": "booking.done",
+      "function": "BookingService._end",
+      "module": "booking_service",
+      "payload_fields": [
+        "class_id",
+        "final_status",
+        "member_id"
+      ],
+      "referenced_constants": {
+        "booking_service.EVENT_TYPE": "'booking.status'",
+        "booking_service.TERMINAL_TYPE": "'booking.done'"
+      },
+      "site_id": "booking_service.BookingService._end#1",
+      "slice_fingerprint": "c7a27a3bf9ed3f95",
+      "slice_functions": {
+        "booking_service.BookingService.__init__": "16b1e1570a95adf9",
+        "booking_service.BookingService._end": "da8ebf565e4e57f9",
+        "booking_service.BookingService._status": "b400ed77181e2ba3",
+        "booking_service.BookingService.mark_attended": "8581d528a85351c1",
+        "booking_service.BookingService.mark_no_show": "52836fd7a0ab2566"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "booking_id"
+      ],
+      "event_type": "booking.status",
+      "function": "BookingService._status",
+      "module": "booking_service",
+      "payload_fields": [
+        "<splat>",
+        "class_id",
+        "member_id",
+        "status"
+      ],
+      "referenced_constants": {
+        "booking_service.EVENT_TYPE": "'booking.status'",
+        "booking_service.TERMINAL_TYPE": "'booking.done'"
+      },
+      "site_id": "booking_service.BookingService._status#1",
+      "slice_fingerprint": "d1f8dc0326aa9e35",
+      "slice_functions": {
+        "booking_service.BookingService.__init__": "16b1e1570a95adf9",
+        "booking_service.BookingService._end": "da8ebf565e4e57f9",
+        "booking_service.BookingService._status": "b400ed77181e2ba3",
+        "booking_service.BookingService.cancel": "473c3806cef4cd1d",
+        "booking_service.BookingService.check_in": "3a2487369f6253fb",
+        "booking_service.BookingService.confirm": "a919e8e687fc3b96",
+        "booking_service.BookingService.mark_attended": "8581d528a85351c1",
+        "booking_service.BookingService.mark_no_show": "52836fd7a0ab2566",
+        "booking_service.BookingService.promote": "67e9342cf40334fc",
+        "booking_service.BookingService.reserve": "09cc2883e4992463",
+        "booking_service.BookingService.waitlist": "1aecd85296e5201c"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    }
+  ],
+  "catalog_format_version": 3,
+  "entries": [
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a booking is \"{status}\"",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "d094359012df4498",
+        "correlation_key": [
+          "booking_id"
+        ],
+        "event_type": "booking.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "status": "any"
+        },
+        "referenced_fields": [
+          "status"
+        ],
+        "trigger_condition": "a booking is \"{status}\"",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "booking.status.is",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a booking is confirmed while the member owes money",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "a7bc32a4f4901fec",
+        "correlation_key": [
+          "booking_id"
+        ],
+        "event_type": "booking.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "balance_state": "any",
+          "status": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "a booking is confirmed while the member owes money",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "booking.confirmed.owing",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a booking is confirmed despite a capacity or duplicate flag",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "39fa4103b7c8a382",
+        "correlation_key": [
+          "booking_id"
+        ],
+        "event_type": "booking.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "flag": "any",
+          "status": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "a booking is confirmed despite a capacity or duplicate flag",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "booking.confirmed.flagged",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a booking is confirmed or cancelled",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "9f306c970921fa44",
+        "correlation_key": [
+          "booking_id"
+        ],
+        "event_type": "booking.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "status": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "a booking is confirmed or cancelled",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "booking.resolution",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a booking reaches an end state",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "24f025c9e8a536a9",
+        "correlation_key": [
+          "booking_id"
+        ],
+        "event_type": "booking.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "status": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "a booking reaches an end state",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "booking.ended",
+      "version": 1
+    }
+  ]
+}

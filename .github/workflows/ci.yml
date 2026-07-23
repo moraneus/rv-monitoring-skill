@@ -24,14 +24,21 @@ jobs:
         run: python -m pip install behave-rv
       - name: End-to-end skill mechanics
         run: bash test/e2e.sh
-      - name: The agent-built demo project's gates hold
+      - name: The agent-built demo projects' gates hold
         run: |
-          cd demo/lending
-          python monitoring/replay_check.py
-          python -m behave_rv catalog diff \
-            --steps monitoring/steps.py --catalog monitoring/catalog.json \
-            --policies monitoring/policies --app app/lending_service.py \
-            --fail-on-app-risk --trace monitoring/traces/demo_session.jsonl
+          set -e
+          for d in demo/*/; do
+            [ -d "${d}monitoring" ] || continue
+            echo "== ${d}"
+            app=$(cd "$d" && ls app/*.py | grep -v __init__ | head -1)
+            trace=$(cd "$d" && ls monitoring/traces/*.jsonl | head -1)
+            (cd "$d" && python monitoring/replay_check.py > /dev/null)
+            (cd "$d" && python -m behave_rv catalog diff \
+              --steps monitoring/steps.py --catalog monitoring/catalog.json \
+              --policies monitoring/policies --app "$app" \
+              --fail-on-app-risk --trace "$trace" > /dev/null)
+            echo "   gates green"
+          done
 
   skill-format:
     name: skill format checks

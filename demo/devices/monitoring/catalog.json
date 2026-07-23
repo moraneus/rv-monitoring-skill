@@ -1,0 +1,276 @@
+{
+  "app_surface": [
+    {
+      "binding_keys": [
+        "device_id"
+      ],
+      "event_type": "device.status",
+      "function": "FleetService._device_status",
+      "module": "service",
+      "payload_fields": [
+        "<splat>",
+        "status"
+      ],
+      "referenced_constants": {
+        "service.DEVICE_STATUS": "'device.status'",
+        "service.FLEET_ID": "'fleet'",
+        "service.FLEET_QUARANTINE": "'fleet.quarantine'",
+        "service.QUARANTINE_SURGE_THRESHOLD": "3",
+        "service.SOURCE": "'fleet-tracker'"
+      },
+      "site_id": "service.FleetService._device_status#1",
+      "slice_fingerprint": "a05caf778fb11ecb",
+      "slice_functions": {
+        "service.FleetService.__init__": "65f1db84e4179e26",
+        "service.FleetService._device_status": "44bd19da8c66bf46",
+        "service.FleetService.activate": "3d431fe055e83d9a",
+        "service.FleetService.provision": "bf4385fec395b353",
+        "service.FleetService.provision_failed": "d3587840a03f84d2",
+        "service.FleetService.provision_passed": "50b823d18e2d368e",
+        "service.FleetService.quarantine": "e45c0db9e64ad990",
+        "service.FleetService.wipe": "4ffd31f06c6e976e"
+      },
+      "unresolved_calls": [
+        "<dynamic>",
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "device_id"
+      ],
+      "event_type": "device.action",
+      "function": "FleetService.act",
+      "module": "service",
+      "payload_fields": [
+        "result"
+      ],
+      "referenced_constants": {
+        "service.DEVICE_ACTION": "'device.action'",
+        "service.SOURCE": "'fleet-tracker'"
+      },
+      "site_id": "service.FleetService.act#1",
+      "slice_fingerprint": "abe756a4c153494c",
+      "slice_functions": {
+        "service.FleetService.__init__": "65f1db84e4179e26",
+        "service.FleetService.act": "f2b12e354405b8d4"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "fleet_id"
+      ],
+      "event_type": "fleet.quarantine",
+      "function": "FleetService.quarantine",
+      "module": "service",
+      "payload_fields": [
+        "count",
+        "level"
+      ],
+      "referenced_constants": {
+        "service.DEVICE_STATUS": "'device.status'",
+        "service.FLEET_ID": "'fleet'",
+        "service.FLEET_QUARANTINE": "'fleet.quarantine'",
+        "service.QUARANTINE_SURGE_THRESHOLD": "3",
+        "service.SOURCE": "'fleet-tracker'"
+      },
+      "site_id": "service.FleetService.quarantine#1",
+      "slice_fingerprint": "6c979c0237a09d0e",
+      "slice_functions": {
+        "service.FleetService.__init__": "65f1db84e4179e26",
+        "service.FleetService._device_status": "44bd19da8c66bf46",
+        "service.FleetService.quarantine": "e45c0db9e64ad990"
+      },
+      "unresolved_calls": [
+        "<dynamic>",
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "device_id"
+      ],
+      "event_type": "device.retired",
+      "function": "FleetService.retire",
+      "module": "service",
+      "payload_fields": [],
+      "referenced_constants": {
+        "service.DEVICE_RETIRED": "'device.retired'",
+        "service.SOURCE": "'fleet-tracker'"
+      },
+      "site_id": "service.FleetService.retire#1",
+      "slice_fingerprint": "90bbb99e49fa509d",
+      "slice_functions": {
+        "service.FleetService.__init__": "65f1db84e4179e26",
+        "service.FleetService.retire": "9732390f376359c0"
+      },
+      "unresolved_calls": [
+        "<dynamic>",
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "sensor_id"
+      ],
+      "event_type": "sensor.reading",
+      "function": "FleetService.sensor_reading",
+      "module": "service",
+      "payload_fields": [
+        "status"
+      ],
+      "referenced_constants": {
+        "service.SENSOR_READING": "'sensor.reading'",
+        "service.SOURCE": "'fleet-tracker'"
+      },
+      "site_id": "service.FleetService.sensor_reading#1",
+      "slice_fingerprint": "f570209ee1f0c92c",
+      "slice_functions": {
+        "service.FleetService.__init__": "65f1db84e4179e26",
+        "service.FleetService.sensor_reading": "44231b7af01c5d6c"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    }
+  ],
+  "catalog_format_version": 3,
+  "entries": [
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a device is \"{status}\"",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "c9379e691b1731c9",
+        "correlation_key": [
+          "device_id"
+        ],
+        "event_type": "device.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "status": "any"
+        },
+        "referenced_fields": [
+          "status"
+        ],
+        "trigger_condition": "a device is \"{status}\"",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "device.status.is",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a device acts \"{result}\"",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "2fe5acb724a8cbd6",
+        "correlation_key": [
+          "device_id"
+        ],
+        "event_type": "device.action",
+        "helper_hashes": {},
+        "payload_fields": {
+          "result": "any"
+        },
+        "referenced_fields": [
+          "result"
+        ],
+        "trigger_condition": "a device acts \"{result}\"",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "device.action.result",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a device is retired",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "66f19cf593e7a369",
+        "correlation_key": [
+          "device_id"
+        ],
+        "event_type": "device.retired",
+        "helper_hashes": {},
+        "payload_fields": {},
+        "referenced_fields": [],
+        "trigger_condition": "a device is retired",
+        "unresolved_calls": [
+          "ctx.bind"
+        ]
+      },
+      "step_id": "device.retired.is",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a sensor reading is \"{status}\"",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "edcb93fa1e552ad1",
+        "correlation_key": [
+          "sensor_id"
+        ],
+        "event_type": "sensor.reading",
+        "helper_hashes": {},
+        "payload_fields": {
+          "status": "any"
+        },
+        "referenced_fields": [
+          "status"
+        ],
+        "trigger_condition": "a sensor reading is \"{status}\"",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "sensor.reading.is",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a quarantine surge is flagged",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "da5b9e0eedb92537",
+        "correlation_key": [
+          "fleet_id"
+        ],
+        "event_type": "fleet.quarantine",
+        "helper_hashes": {},
+        "payload_fields": {
+          "level": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "a quarantine surge is flagged",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "fleet.quarantine.surge",
+      "version": 1
+    }
+  ]
+}

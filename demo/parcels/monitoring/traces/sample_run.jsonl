@@ -1,0 +1,24 @@
+{"type": "parcel.status", "event_time": 0.0, "bindings": {"parcel_id": "P-1"}, "payload": {"status": "registered", "destination": "Berlin"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 1.0, "bindings": {"parcel_id": "P-1"}, "payload": {"status": "scanned", "hub": "HUB-A"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 2.0, "bindings": {"parcel_id": "P-1"}, "payload": {"status": "out_for_delivery"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 3.0, "bindings": {"parcel_id": "P-1"}, "payload": {"status": "delivered"}, "source": "parcel-service"}
+{"type": "parcel.finished", "event_time": 3.001, "bindings": {"parcel_id": "P-1"}, "payload": {}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 4.0, "bindings": {"parcel_id": "P-2"}, "payload": {"status": "registered", "destination": "Munich"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 5.0, "bindings": {"parcel_id": "P-2"}, "payload": {"status": "scanned", "hub": "HUB-B"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 6.0, "bindings": {"parcel_id": "P-2"}, "payload": {"status": "out_for_delivery"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 7.0, "bindings": {"parcel_id": "P-2"}, "payload": {"status": "returned"}, "source": "parcel-service"}
+{"type": "parcel.finished", "event_time": 7.001, "bindings": {"parcel_id": "P-2"}, "payload": {}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 8.0, "bindings": {"parcel_id": "P-3"}, "payload": {"status": "registered", "destination": "Hamburg"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 9.0, "bindings": {"parcel_id": "P-3"}, "payload": {"status": "out_for_delivery"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 10.0, "bindings": {"parcel_id": "P-3"}, "payload": {"status": "delivered"}, "source": "parcel-service"}
+{"type": "parcel.finished", "event_time": 10.001, "bindings": {"parcel_id": "P-3"}, "payload": {}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 11.0, "bindings": {"parcel_id": "P-4"}, "payload": {"status": "registered", "destination": "Cologne"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 12.0, "bindings": {"parcel_id": "P-4"}, "payload": {"status": "scanned", "hub": "HUB-C"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 13.0, "bindings": {"parcel_id": "P-4"}, "payload": {"status": "out_for_delivery"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 14.0, "bindings": {"parcel_id": "P-4"}, "payload": {"status": "delivered"}, "source": "parcel-service"}
+{"type": "parcel.finished", "event_time": 14.001, "bindings": {"parcel_id": "P-4"}, "payload": {}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 15.0, "bindings": {"parcel_id": "P-4"}, "payload": {"status": "rerouted", "hub": "HUB-D"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 16.0, "bindings": {"parcel_id": "P-5"}, "payload": {"status": "registered", "destination": "Bremen"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 17.0, "bindings": {"parcel_id": "P-5"}, "payload": {"status": "scanned", "hub": "HUB-A"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 18.0, "bindings": {"parcel_id": "P-5"}, "payload": {"status": "out_for_delivery"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 38.0, "bindings": {"parcel_id": "P-6"}, "payload": {"status": "registered", "destination": "Leipzig"}, "source": "parcel-service"}
