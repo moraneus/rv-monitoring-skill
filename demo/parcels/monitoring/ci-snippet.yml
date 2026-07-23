@@ -1,0 +1,32 @@
+# Add these jobs to the project's CI workflow. They gate merges on the
+# two-sided stability contract and on replayed verdicts.
+
+  rv-stability:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m pip install behave-rv
+      # exit 1 on step-side breaks, app-side interface breaks, or behaviour
+      # risks on emission paths (--fail-on-app-risk)
+      - name: Contract diff, both sides of the event boundary
+        run: |
+          python -m behave_rv catalog diff \
+            --steps monitoring/steps.py \
+            --catalog monitoring/catalog.json \
+            --policies monitoring/policies \
+            --app app/parcel_service.py \
+            --fail-on-app-risk
+
+  rv-replay:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m pip install behave-rv
+      - name: Replayed verdicts match the pinned expectations
+        run: python monitoring/replay_check.py

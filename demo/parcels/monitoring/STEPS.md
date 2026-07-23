@@ -30,28 +30,27 @@ Example scenarios:
 
 ```
 
-## `the parcel becomes delivered or returned`
+## `a parcel is finished`
 
-- **identity**: `parcel.status.settled` (trigger)
+- **identity**: `parcel.status.finished` (trigger)
 - **observes**: event `parcel.status`, entity key `parcel_id`
-- **also writable as**: `a parcel is delivered or returned`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then the parcel becomes delivered or returned never happens
+    Then a parcel is finished never happens
 
   Scenario: <your policy name>  # eventuality
-    Then the parcel becomes delivered or returned has happened
+    Then a parcel is finished has happened
 
   Scenario: <your policy name>  # precedence
-    When the parcel becomes delivered or returned
-    Then the parcel becomes delivered or returned before
+    When a parcel is finished
+    Then a parcel is finished before
 
   Scenario: <your policy name>  # deadline
-    When the parcel becomes delivered or returned
-    Then the parcel becomes delivered or returned within "30" seconds
+    When a parcel is finished
+    Then a parcel is finished within "30" seconds
 
 ```
 

@@ -4,26 +4,35 @@
       "binding_keys": [
         "booking_id"
       ],
-      "event_type": "booking.done",
-      "function": "BookingService._end",
+      "event_type": "booking.status",
+      "function": "BookingService._status",
       "module": "booking_service",
       "payload_fields": [
-        "class_id",
-        "final_status",
-        "member_id"
+        "<splat>",
+        "status"
       ],
       "referenced_constants": {
-        "booking_service.EVENT_TYPE": "'booking.status'",
+        "booking_service.MEMBER_CONFIRM_TYPE": "'member.booking_confirmed'",
+        "booking_service.SEAT_TYPE": "'seat.confirmed'",
+        "booking_service.SOURCE": "'booking-service'",
+        "booking_service.STATUS_TYPE": "'booking.status'",
         "booking_service.TERMINAL_TYPE": "'booking.done'"
       },
-      "site_id": "booking_service.BookingService._end#1",
-      "slice_fingerprint": "c7a27a3bf9ed3f95",
+      "rename_fingerprint": "7e354f52a83d231c",
+      "site_id": "booking_service.BookingService._status#1",
+      "slice_fingerprint": "3c0393858fdd4166",
       "slice_functions": {
         "booking_service.BookingService.__init__": "16b1e1570a95adf9",
-        "booking_service.BookingService._end": "da8ebf565e4e57f9",
-        "booking_service.BookingService._status": "b400ed77181e2ba3",
-        "booking_service.BookingService.mark_attended": "8581d528a85351c1",
-        "booking_service.BookingService.mark_no_show": "52836fd7a0ab2566"
+        "booking_service.BookingService._status": "8f54f6f9b9eb8f13",
+        "booking_service.BookingService._terminate": "65054e4b017f80b2",
+        "booking_service.BookingService.cancel": "fbf8863d35243dab",
+        "booking_service.BookingService.check_in": "e75e46f3a8fe2259",
+        "booking_service.BookingService.confirm": "eaca95b439027f25",
+        "booking_service.BookingService.mark_attended": "2446334920201923",
+        "booking_service.BookingService.mark_no_show": "c90ed96ef5769372",
+        "booking_service.BookingService.promote": "ecaa23c249b09435",
+        "booking_service.BookingService.reserve": "43dfa9bbcf294347",
+        "booking_service.BookingService.waitlist": "d881e655ffeaa1b3"
       },
       "unresolved_calls": [
         "self._clock",
@@ -34,33 +43,135 @@
       "binding_keys": [
         "booking_id"
       ],
-      "event_type": "booking.status",
-      "function": "BookingService._status",
+      "event_type": "booking.done",
+      "function": "BookingService._terminate",
       "module": "booking_service",
-      "payload_fields": [
-        "<splat>",
-        "class_id",
-        "member_id",
-        "status"
-      ],
+      "payload_fields": [],
       "referenced_constants": {
-        "booking_service.EVENT_TYPE": "'booking.status'",
+        "booking_service.SOURCE": "'booking-service'",
+        "booking_service.STATUS_TYPE": "'booking.status'",
         "booking_service.TERMINAL_TYPE": "'booking.done'"
       },
-      "site_id": "booking_service.BookingService._status#1",
-      "slice_fingerprint": "d1f8dc0326aa9e35",
+      "rename_fingerprint": "0bc4ae88efe5e034",
+      "site_id": "booking_service.BookingService._terminate#1",
+      "slice_fingerprint": "5ea277c1e2590f9d",
       "slice_functions": {
         "booking_service.BookingService.__init__": "16b1e1570a95adf9",
-        "booking_service.BookingService._end": "da8ebf565e4e57f9",
-        "booking_service.BookingService._status": "b400ed77181e2ba3",
-        "booking_service.BookingService.cancel": "473c3806cef4cd1d",
-        "booking_service.BookingService.check_in": "3a2487369f6253fb",
-        "booking_service.BookingService.confirm": "a919e8e687fc3b96",
-        "booking_service.BookingService.mark_attended": "8581d528a85351c1",
-        "booking_service.BookingService.mark_no_show": "52836fd7a0ab2566",
-        "booking_service.BookingService.promote": "67e9342cf40334fc",
-        "booking_service.BookingService.reserve": "09cc2883e4992463",
-        "booking_service.BookingService.waitlist": "1aecd85296e5201c"
+        "booking_service.BookingService._status": "8f54f6f9b9eb8f13",
+        "booking_service.BookingService._terminate": "65054e4b017f80b2",
+        "booking_service.BookingService.mark_attended": "2446334920201923",
+        "booking_service.BookingService.mark_no_show": "c90ed96ef5769372"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "member_id"
+      ],
+      "event_type": "member.booking_confirmed",
+      "function": "BookingService.confirm",
+      "module": "booking_service",
+      "payload_fields": [
+        "booking_id"
+      ],
+      "referenced_constants": {
+        "booking_service.MEMBER_CONFIRM_TYPE": "'member.booking_confirmed'",
+        "booking_service.SEAT_TYPE": "'seat.confirmed'",
+        "booking_service.SOURCE": "'booking-service'",
+        "booking_service.STATUS_TYPE": "'booking.status'"
+      },
+      "rename_fingerprint": "9c225a85ec37284e",
+      "site_id": "booking_service.BookingService.confirm#1",
+      "slice_fingerprint": "254fb892c99d2849",
+      "slice_functions": {
+        "booking_service.BookingService.__init__": "16b1e1570a95adf9",
+        "booking_service.BookingService._status": "8f54f6f9b9eb8f13",
+        "booking_service.BookingService.confirm": "eaca95b439027f25"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "class_id",
+        "member_id"
+      ],
+      "event_type": "seat.confirmed",
+      "function": "BookingService.confirm",
+      "module": "booking_service",
+      "payload_fields": [
+        "booking_id"
+      ],
+      "referenced_constants": {
+        "booking_service.MEMBER_CONFIRM_TYPE": "'member.booking_confirmed'",
+        "booking_service.SEAT_TYPE": "'seat.confirmed'",
+        "booking_service.SOURCE": "'booking-service'",
+        "booking_service.STATUS_TYPE": "'booking.status'"
+      },
+      "rename_fingerprint": "9c225a85ec37284e",
+      "site_id": "booking_service.BookingService.confirm#2",
+      "slice_fingerprint": "254fb892c99d2849",
+      "slice_functions": {
+        "booking_service.BookingService.__init__": "16b1e1570a95adf9",
+        "booking_service.BookingService._status": "8f54f6f9b9eb8f13",
+        "booking_service.BookingService.confirm": "eaca95b439027f25"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "member_id"
+      ],
+      "event_type": "member.balance",
+      "function": "BookingService.incur_balance",
+      "module": "booking_service",
+      "payload_fields": [
+        "state"
+      ],
+      "referenced_constants": {
+        "booking_service.BALANCE_TYPE": "'member.balance'",
+        "booking_service.SOURCE": "'booking-service'"
+      },
+      "rename_fingerprint": "7dcc9bd32d6e452d",
+      "site_id": "booking_service.BookingService.incur_balance#1",
+      "slice_fingerprint": "7dcc9bd32d6e452d",
+      "slice_functions": {
+        "booking_service.BookingService.__init__": "16b1e1570a95adf9",
+        "booking_service.BookingService.incur_balance": "9181abf794de737f"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "member_id"
+      ],
+      "event_type": "member.balance",
+      "function": "BookingService.settle_balance",
+      "module": "booking_service",
+      "payload_fields": [
+        "state"
+      ],
+      "referenced_constants": {
+        "booking_service.BALANCE_TYPE": "'member.balance'",
+        "booking_service.SOURCE": "'booking-service'"
+      },
+      "rename_fingerprint": "4c1268153032141a",
+      "site_id": "booking_service.BookingService.settle_balance#1",
+      "slice_fingerprint": "4c1268153032141a",
+      "slice_functions": {
+        "booking_service.BookingService.__init__": "16b1e1570a95adf9",
+        "booking_service.BookingService.settle_balance": "db73be671e9bf4e7"
       },
       "unresolved_calls": [
         "self._clock",
@@ -76,7 +187,7 @@
       "phrasing": "a booking is \"{status}\"",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "d094359012df4498",
+        "condition_fingerprint": "a88848630122a6b2",
         "correlation_key": [
           "booking_id"
         ],
@@ -100,53 +211,26 @@
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "a booking is confirmed while the member owes money",
+      "phrasing": "a booking reaches a final state",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "a7bc32a4f4901fec",
+        "condition_fingerprint": "739d1386435739db",
         "correlation_key": [
           "booking_id"
         ],
         "event_type": "booking.status",
         "helper_hashes": {},
         "payload_fields": {
-          "balance_state": "any",
           "status": "any"
         },
         "referenced_fields": [],
-        "trigger_condition": "a booking is confirmed while the member owes money",
+        "trigger_condition": "a booking reaches a final state",
         "unresolved_calls": [
           "ctx.bind",
           "get"
         ]
       },
-      "step_id": "booking.confirmed.owing",
-      "version": 1
-    },
-    {
-      "kind": "trigger",
-      "observed": false,
-      "phrasing": "a booking is confirmed despite a capacity or duplicate flag",
-      "provenance": "llm",
-      "signature": {
-        "condition_fingerprint": "39fa4103b7c8a382",
-        "correlation_key": [
-          "booking_id"
-        ],
-        "event_type": "booking.status",
-        "helper_hashes": {},
-        "payload_fields": {
-          "flag": "any",
-          "status": "any"
-        },
-        "referenced_fields": [],
-        "trigger_condition": "a booking is confirmed despite a capacity or duplicate flag",
-        "unresolved_calls": [
-          "ctx.bind",
-          "get"
-        ]
-      },
-      "step_id": "booking.confirmed.flagged",
+      "step_id": "booking.final.reached",
       "version": 1
     },
     {
@@ -155,7 +239,7 @@
       "phrasing": "a booking is confirmed or cancelled",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "9f306c970921fa44",
+        "condition_fingerprint": "4059e9699b0632a8",
         "correlation_key": [
           "booking_id"
         ],
@@ -171,32 +255,79 @@
           "get"
         ]
       },
-      "step_id": "booking.resolution",
+      "step_id": "booking.promo.answered",
       "version": 1
     },
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "a booking reaches an end state",
+      "phrasing": "a member's balance is \"{state}\"",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "24f025c9e8a536a9",
+        "condition_fingerprint": "66ba3dc5ecdd7bba",
         "correlation_key": [
-          "booking_id"
+          "member_id"
         ],
-        "event_type": "booking.status",
+        "event_type": "member.balance",
         "helper_hashes": {},
         "payload_fields": {
-          "status": "any"
+          "state": "any"
         },
-        "referenced_fields": [],
-        "trigger_condition": "a booking reaches an end state",
+        "referenced_fields": [
+          "state"
+        ],
+        "trigger_condition": "a member's balance is \"{state}\"",
         "unresolved_calls": [
           "ctx.bind",
           "get"
         ]
       },
-      "step_id": "booking.ended",
+      "step_id": "member.balance.is",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a member confirms a booking",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "f5ce37ec0ce671c4",
+        "correlation_key": [
+          "member_id"
+        ],
+        "event_type": "member.booking_confirmed",
+        "helper_hashes": {},
+        "payload_fields": {},
+        "referenced_fields": [],
+        "trigger_condition": "a member confirms a booking",
+        "unresolved_calls": [
+          "ctx.bind"
+        ]
+      },
+      "step_id": "member.booking.confirmed",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a seat is \"confirmed\"",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "c518835a49651b58",
+        "correlation_key": [
+          "member_id",
+          "class_id"
+        ],
+        "event_type": "seat.confirmed",
+        "helper_hashes": {},
+        "payload_fields": {},
+        "referenced_fields": [],
+        "trigger_condition": "a seat is \"confirmed\"",
+        "unresolved_calls": [
+          "ctx.bind"
+        ]
+      },
+      "step_id": "seat.confirmed.is",
       "version": 1
     }
   ]

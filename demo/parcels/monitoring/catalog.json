@@ -4,25 +4,24 @@
       "binding_keys": [
         "parcel_id"
       ],
-      "event_type": "parcel.finished",
-      "function": "ParcelService._finish",
+      "event_type": "parcel.status",
+      "function": "ParcelService.deliver",
       "module": "parcel_service",
-      "payload_fields": [],
+      "payload_fields": [
+        "status"
+      ],
       "referenced_constants": {
-        "parcel_service.EVENT_TYPE": "'parcel.status'",
-        "parcel_service.TERMINAL_TYPE": "'parcel.finished'"
+        "parcel_service.EVENT_TYPE": "'parcel.status'"
       },
-      "site_id": "parcel_service.ParcelService._finish#1",
-      "slice_fingerprint": "484e9b167d6b2fe5",
+      "rename_fingerprint": "51c756507cf44f81",
+      "site_id": "parcel_service.ParcelService.deliver#1",
+      "slice_fingerprint": "51c756507cf44f81",
       "slice_functions": {
-        "parcel_service.ParcelService.__init__": "10fce21fd65239d5",
-        "parcel_service.ParcelService._finish": "f20b252382dcb8d4",
-        "parcel_service.ParcelService._status": "996d60828ccfc45b",
-        "parcel_service.ParcelService.deliver": "e0c26f6df93425bd",
-        "parcel_service.ParcelService.return_to_sender": "41a7c1f59bf2916c"
+        "parcel_service.ParcelService.__init__": "5cd560ffc6efec02",
+        "parcel_service.ParcelService.deliver": "e88220ecda18b208"
       },
       "unresolved_calls": [
-        "<dynamic>",
+        "parcel.history.append",
         "self._clock",
         "self._emit"
       ]
@@ -32,32 +31,131 @@
         "parcel_id"
       ],
       "event_type": "parcel.status",
-      "function": "ParcelService._status",
+      "function": "ParcelService.hub_scan",
       "module": "parcel_service",
       "payload_fields": [
-        "<splat>",
+        "hub",
         "status"
       ],
       "referenced_constants": {
-        "parcel_service.EVENT_TYPE": "'parcel.status'",
-        "parcel_service.TERMINAL_TYPE": "'parcel.finished'"
+        "parcel_service.EVENT_TYPE": "'parcel.status'"
       },
-      "site_id": "parcel_service.ParcelService._status#1",
-      "slice_fingerprint": "36f219cfa0f85ce9",
+      "rename_fingerprint": "09ac31c832a8ecb8",
+      "site_id": "parcel_service.ParcelService.hub_scan#1",
+      "slice_fingerprint": "09ac31c832a8ecb8",
       "slice_functions": {
-        "parcel_service.ParcelService.__init__": "10fce21fd65239d5",
-        "parcel_service.ParcelService._finish": "f20b252382dcb8d4",
-        "parcel_service.ParcelService._status": "996d60828ccfc45b",
-        "parcel_service.ParcelService.deliver": "e0c26f6df93425bd",
-        "parcel_service.ParcelService.hub_scan": "81eef534708b6bce",
-        "parcel_service.ParcelService.out_for_delivery": "0df58c46eac3f4fe",
-        "parcel_service.ParcelService.register": "c1604a65bb4edeb5",
-        "parcel_service.ParcelService.return_to_sender": "41a7c1f59bf2916c",
-        "parcel_service.ParcelService.route_to": "73cf48cc98cde1a4"
+        "parcel_service.ParcelService.__init__": "5cd560ffc6efec02",
+        "parcel_service.ParcelService.hub_scan": "125d2fb70e2ba4fa"
       },
       "unresolved_calls": [
-        "<dynamic>",
+        "parcel.history.append",
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "parcel_id"
+      ],
+      "event_type": "parcel.status",
+      "function": "ParcelService.out_for_delivery",
+      "module": "parcel_service",
+      "payload_fields": [
+        "status"
+      ],
+      "referenced_constants": {
+        "parcel_service.EVENT_TYPE": "'parcel.status'"
+      },
+      "rename_fingerprint": "eb66f1da1fc8d31e",
+      "site_id": "parcel_service.ParcelService.out_for_delivery#1",
+      "slice_fingerprint": "eb66f1da1fc8d31e",
+      "slice_functions": {
+        "parcel_service.ParcelService.__init__": "5cd560ffc6efec02",
+        "parcel_service.ParcelService.out_for_delivery": "c0e7bd846e284c71"
+      },
+      "unresolved_calls": [
+        "parcel.history.append",
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "parcel_id"
+      ],
+      "event_type": "parcel.status",
+      "function": "ParcelService.register",
+      "module": "parcel_service",
+      "payload_fields": [
+        "destination",
+        "status"
+      ],
+      "referenced_constants": {
+        "parcel_service.EVENT_TYPE": "'parcel.status'"
+      },
+      "rename_fingerprint": "3365cbea1e8ede35",
+      "site_id": "parcel_service.ParcelService.register#1",
+      "slice_fingerprint": "3365cbea1e8ede35",
+      "slice_functions": {
+        "parcel_service.ParcelService.__init__": "5cd560ffc6efec02",
+        "parcel_service.ParcelService.register": "c0e174b41a0e4c63"
+      },
+      "unresolved_calls": [
         "Parcel",
+        "parcel.history.append",
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "parcel_id"
+      ],
+      "event_type": "parcel.status",
+      "function": "ParcelService.return_to_sender",
+      "module": "parcel_service",
+      "payload_fields": [
+        "status"
+      ],
+      "referenced_constants": {
+        "parcel_service.EVENT_TYPE": "'parcel.status'"
+      },
+      "rename_fingerprint": "5bbe70562886c39f",
+      "site_id": "parcel_service.ParcelService.return_to_sender#1",
+      "slice_fingerprint": "5bbe70562886c39f",
+      "slice_functions": {
+        "parcel_service.ParcelService.__init__": "5cd560ffc6efec02",
+        "parcel_service.ParcelService.return_to_sender": "fc95ae87bb17bda7"
+      },
+      "unresolved_calls": [
+        "parcel.history.append",
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "parcel_id"
+      ],
+      "event_type": "parcel.status",
+      "function": "ParcelService.route_to",
+      "module": "parcel_service",
+      "payload_fields": [
+        "hub",
+        "status"
+      ],
+      "referenced_constants": {
+        "parcel_service.EVENT_TYPE": "'parcel.status'"
+      },
+      "rename_fingerprint": "fca36e7acc2df8e3",
+      "site_id": "parcel_service.ParcelService.route_to#1",
+      "slice_fingerprint": "fca36e7acc2df8e3",
+      "slice_functions": {
+        "parcel_service.ParcelService.__init__": "5cd560ffc6efec02",
+        "parcel_service.ParcelService.route_to": "1fcdd57cecab1c08"
+      },
+      "unresolved_calls": [
+        "parcel.history.append",
         "self._clock",
         "self._emit"
       ]
@@ -95,7 +193,7 @@
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "a parcel is delivered or returned",
+      "phrasing": "a parcel is finished",
       "provenance": "llm",
       "signature": {
         "condition_fingerprint": "811c65584ec74847",
@@ -108,13 +206,13 @@
           "status": "any"
         },
         "referenced_fields": [],
-        "trigger_condition": "a parcel is delivered or returned",
+        "trigger_condition": "a parcel is finished",
         "unresolved_calls": [
           "ctx.bind",
           "get"
         ]
       },
-      "step_id": "parcel.status.settled",
+      "step_id": "parcel.status.finished",
       "version": 1
     }
   ]

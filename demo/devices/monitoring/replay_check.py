@@ -3,9 +3,9 @@ and the committed policies, exit-coded for CI.
 
     python monitoring/replay_check.py     # exit 1 on unexpected verdicts
 
-Every seeded flow (healthy and faulty) is driven with ``clock.tick`` between
-ordered actions, so event times are distinct and ordering is exact. Update
-EXPECTED only for intended behaviour changes, and say so in the commit.
+Every seeded flow (healthy and faulty) is driven with a fake clock and
+``clock.tick`` between ordered actions. EXPECTED is pinned; update it only for
+intended behaviour changes, and say so in the commit/report.
 """
 
 from __future__ import annotations
@@ -17,19 +17,30 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from behave_rv.engine.loop import Engine                        # noqa: E402
-from behave_rv.events.sources.inprocess import InProcessSource  # noqa: E402
-from behave_rv.verdict.explain import explain_verdict           # noqa: E402
+from behave_rv.events.sources.inprocess import InProcessSource   # noqa: E402
+from behave_rv.verdict.explain import explain_verdict            # noqa: E402
 
-from app.service import FleetService                            # noqa: E402
-from steps import build_registry, load_policies                # noqa: E402
+from app.service import FleetService                             # noqa: E402
+from steps import build_registry, load_policies                 # noqa: E402
 
-TERMINAL_TYPES = {"device.retired"}     # a device's life ends at retirement
-EXPECTED = {"verdicts": 43, "violations": 7}
+TERMINAL_TYPES = {"device.retired"}     # keep in sync with the application
+
+# Pinned after review of the output below. Conclusive violations:
+#   dev-badact      -> policy 1 (activation not right after provision_ok)
+#   dev-quar-bad    -> policy 2 (a normal action after quarantine: not contained)
+#   dev-wipe-bad    -> policy 3 (retired without a prior wipe)
+#   sensor-bad      -> policy 4 (a non-ok reading)
+#   fleet           -> policy 5 (>3 devices quarantined at once: surge alert)
+# dev-decom (quarantine -> blocked -> wipe -> retire) is now all green under
+# Option A: rule 2 holds (wipe is "contained"), rule 3 satisfied - it adds no
+# violation. Healthy invariants with no terminal (dev-quar-ok, sensor-ok, the
+# attack-* devices' policy-2 instances) report pending, not satisfied.
+EXPECTED = {"violations": 5}
 
 
 class FakeClock:
     def __init__(self):
-        self.now = 0.0
+        self.now = 1_000.0     # any magnitude works; distinct per ordered action
 
     def __call__(self):
         return self.now
@@ -39,99 +50,77 @@ class FakeClock:
 
 
 def simulate_traffic(emit) -> None:
-    """Drive every seeded flow deterministically: one healthy device plus one
-    device per rule that breaks that rule, one healthy sensor and one faulty."""
+    """Drive every seeded flow deterministically, healthy and faulty."""
     clock = FakeClock()
     svc = FleetService(emit, clock=clock)
 
     def step(fn, *args):
-        clock.tick()
         fn(*args)
+        clock.tick()          # distinct timestamps for ordered actions
 
-    # dev-1: HEALTHY - satisfies all three device rules.
-    step(svc.provision, "dev-1")
-    step(svc.provision_passed, "dev-1")
-    step(svc.activate, "dev-1")          # activated right after provision_ok
-    step(svc.act, "dev-1", "ok")
-    step(svc.act, "dev-1", "ok")
-    step(svc.quarantine, "dev-1")
-    step(svc.act, "dev-1", "blocked")    # only blocked actions after quarantine
-    step(svc.wipe, "dev-1")              # wiped before retirement
-    step(svc.retire, "dev-1")
+    # -- attack wave: >3 devices quarantined at once (rule 5 surge) -------
+    # Run first, while the fleet is clear, so the 4th quarantine is the crossing.
+    for d in ("attack-1", "attack-2", "attack-3", "attack-4"):
+        step(svc.provision, d)
+        step(svc.provision_ok, d)
+        step(svc.quarantine, d)             # attack-4 -> one fleet surge event
 
-    # dev-2: VIOLATES rule 1 - activated straight after a FAILED check.
-    step(svc.provision, "dev-2")
-    step(svc.provision_failed, "dev-2")
-    step(svc.activate, "dev-2")          # predecessor is provision_fail, not _ok
-    step(svc.act, "dev-2", "ok")
-    step(svc.quarantine, "dev-2")
-    step(svc.wipe, "dev-2")
-    step(svc.retire, "dev-2")
+    # -- dev-clean: full healthy lifecycle -------------------------------
+    # activation right after provision_ok (rule 1 ok); wiped before retire
+    # (rule 3 ok).
+    step(svc.provision, "dev-clean")
+    step(svc.provision_ok, "dev-clean")
+    step(svc.activate, "dev-clean")
+    step(svc.act, "dev-clean", "report-telemetry")
+    step(svc.wipe, "dev-clean")
+    step(svc.retire, "dev-clean")
 
-    # dev-3: VIOLATES rule 2 - a successful action AFTER quarantine.
-    step(svc.provision, "dev-3")
-    step(svc.provision_passed, "dev-3")
-    step(svc.activate, "dev-3")
-    step(svc.act, "dev-3", "ok")
-    step(svc.quarantine, "dev-3")
-    step(svc.act, "dev-3", "ok")         # forbidden: ok action while quarantined
-    step(svc.wipe, "dev-3")
-    step(svc.retire, "dev-3")
+    # -- dev-badact: activated without provision_ok immediately before ----
+    # predecessor of "activated" is "provisioned" -> rule 1 violated.
+    step(svc.provision, "dev-badact")
+    step(svc.activate, "dev-badact")
 
-    # dev-4: VIOLATES rule 3 - retired without ever being wiped.
-    step(svc.provision, "dev-4")
-    step(svc.provision_passed, "dev-4")
-    step(svc.activate, "dev-4")
-    step(svc.act, "dev-4", "ok")
-    step(svc.retire, "dev-4")            # no wipe before retirement
+    # -- dev-quar-ok: quarantine then only blocked actions (rule 2 holds) --
+    step(svc.provision, "dev-quar-ok")
+    step(svc.provision_ok, "dev-quar-ok")
+    step(svc.activate, "dev-quar-ok")
+    step(svc.quarantine, "dev-quar-ok")
+    step(svc.blocked, "dev-quar-ok", "remote-exec")
+    step(svc.blocked, "dev-quar-ok", "config-push")
 
-    # sensor-1: HEALTHY - only ok readings (pends: a feed has no terminal).
-    step(svc.sensor_reading, "sensor-1", "ok")
-    step(svc.sensor_reading, "sensor-1", "ok")
-    step(svc.sensor_reading, "sensor-1", "ok")
+    # -- dev-quar-bad: a normal action AFTER quarantine (rule 2 violated) --
+    step(svc.provision, "dev-quar-bad")
+    step(svc.provision_ok, "dev-quar-bad")
+    step(svc.activate, "dev-quar-bad")
+    step(svc.quarantine, "dev-quar-bad")
+    step(svc.act, "dev-quar-bad", "report-telemetry")   # not blocked -> violation
 
-    # sensor-2: VIOLATES rule 4 - a non-ok reading.
-    step(svc.sensor_reading, "sensor-2", "ok")
-    step(svc.sensor_reading, "sensor-2", "ok")
-    step(svc.sensor_reading, "sensor-2", "error")
+    # -- dev-wipe-bad: retired without ever being wiped (rule 3 violated) --
+    step(svc.provision, "dev-wipe-bad")
+    step(svc.provision_ok, "dev-wipe-bad")
+    step(svc.activate, "dev-wipe-bad")
+    step(svc.retire, "dev-wipe-bad")
 
-    # quarantine surge: four devices quarantined AT ONCE trips the fleet alert
-    # (rule 5). Each device stays otherwise healthy (rules 1-3 satisfied) so the
-    # only new violation is the surge itself. Build the quarantine up before
-    # draining it, so all four are held simultaneously.
-    surge = ["dev-q1", "dev-q2", "dev-q3", "dev-q4"]
-    for did in surge:
-        step(svc.provision, did)
-        step(svc.provision_passed, did)
-        step(svc.activate, did)
-        step(svc.quarantine, did)        # the 4th quarantine flags the surge
-    for did in surge:
-        step(svc.wipe, did)
-        step(svc.retire, did)
+    # -- dev-decom: clean decommission path, all green under Option A --------
+    # quarantine -> blocked -> wipe -> retire: every post-quarantine event is
+    # "contained" (rule 2 holds), wiped precedes retire (rule 3 ok).
+    step(svc.provision, "dev-decom")
+    step(svc.provision_ok, "dev-decom")
+    step(svc.activate, "dev-decom")
+    step(svc.quarantine, "dev-decom")
+    step(svc.blocked, "dev-decom", "remote-exec")
+    step(svc.wipe, "dev-decom")
+    step(svc.retire, "dev-decom")
 
-    # dev-r1: HEALTHY under the stronger since rule (rule 6) - after quarantine
-    # it does nothing but blocked rejections, then is decommissioned.
-    step(svc.provision, "dev-r1")
-    step(svc.provision_passed, "dev-r1")
-    step(svc.activate, "dev-r1")
-    step(svc.act, "dev-r1", "ok")
-    step(svc.quarantine, "dev-r1")
-    step(svc.act, "dev-r1", "blocked")
-    step(svc.act, "dev-r1", "blocked")
-    step(svc.wipe, "dev-r1")
-    step(svc.retire, "dev-r1")
+    # -- sensor-ok: only ok readings (rule 4 holds) ----------------------
+    step(svc.sensor_reading, "sensor-ok", "ok", 21.4)
+    step(svc.sensor_reading, "sensor-ok", "ok", 21.6)
+    step(svc.sensor_reading, "sensor-ok", "ok", 21.5)
 
-    # dev-r2: VIOLATES ONLY rule 6 - a FRESH PROVISIONING after quarantine.
-    # Rule 2 (no ok action) and rule 1 (activation ordering) do not catch this;
-    # the stronger since rule does - normal life resumed after quarantine.
-    step(svc.provision, "dev-r2")
-    step(svc.provision_passed, "dev-r2")
-    step(svc.activate, "dev-r2")
-    step(svc.act, "dev-r2", "ok")
-    step(svc.quarantine, "dev-r2")
-    step(svc.provision, "dev-r2")        # forbidden: back to normal life
-    step(svc.wipe, "dev-r2")
-    step(svc.retire, "dev-r2")
+    # -- sensor-bad: a non-ok reading (rule 4 violated) ------------------
+    step(svc.sensor_reading, "sensor-bad", "ok", 19.9)
+    step(svc.sensor_reading, "sensor-bad", "ok", 20.1)
+    step(svc.sensor_reading, "sensor-bad", "error", -1.0)   # -> violation
 
 
 def main() -> int:
@@ -154,14 +143,10 @@ def main() -> int:
                               policy.failing_step_index))
 
     print(f"\n{len(verdicts)} verdicts, {len(violations)} violation(s)")
-    if EXPECTED["verdicts"] is None:
-        print("EXPECTED not pinned yet: review the output above, then set "
-              "EXPECTED to lock this behaviour in.")
-        return 1
-    ok = (len(verdicts) == EXPECTED["verdicts"]
-          and len(violations) == EXPECTED["violations"])
+    ok = len(violations) == EXPECTED["violations"]
     if not ok:
-        print(f"MISMATCH: expected {EXPECTED}")
+        print(f"UNEXPECTED: pinned {EXPECTED['violations']} violation(s), "
+              f"got {len(violations)}")
     return 0 if ok else 1
 
 

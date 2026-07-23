@@ -29,58 +29,58 @@ Example scenarios:
 
 ```
 
-## `a loan is renewed, returned or reported lost`
+## `a loan is renewed, returned, or reported lost`
 
-- **identity**: `loan.status.settled_or_renewed` (trigger)
+- **identity**: `loan.status.settled` (trigger)
 - **observes**: event `loan.status`, entity key `loan_id`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a loan is renewed, returned or reported lost never happens
+    Then a loan is renewed, returned, or reported lost never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a loan is renewed, returned or reported lost has happened
+    Then a loan is renewed, returned, or reported lost has happened
 
   Scenario: <your policy name>  # precedence
-    When a loan is renewed, returned or reported lost
-    Then a loan is renewed, returned or reported lost before
+    When a loan is renewed, returned, or reported lost
+    Then a loan is renewed, returned, or reported lost before
 
   Scenario: <your policy name>  # deadline
-    When a loan is renewed, returned or reported lost
-    Then a loan is renewed, returned or reported lost within "30" seconds
+    When a loan is renewed, returned, or reported lost
+    Then a loan is renewed, returned, or reported lost within "30" seconds
 
 ```
 
-## `a member's fine is "{state}"`
+## `a member's fine is "{status}"`
 
 - **identity**: `member.fine.is` (trigger)
 - **observes**: event `member.fine`, entity key `member_id`
-- **parameters**: `state`
+- **parameters**: `status`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a member's fine is "<state>" never happens
+    Then a member's fine is "<status>" never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a member's fine is "<state>" has happened
+    Then a member's fine is "<status>" has happened
 
   Scenario: <your policy name>  # precedence
-    When a member's fine is "<state>"
-    Then a member's fine is "<state>" before
+    When a member's fine is "<status>"
+    Then a member's fine is "<status>" before
 
   Scenario: <your policy name>  # deadline
-    When a member's fine is "<state>"
-    Then a member's fine is "<state>" within "30" seconds
+    When a member's fine is "<status>"
+    Then a member's fine is "<status>" within "30" seconds
 
 ```
 
 ## `a member renews a loan`
 
-- **identity**: `member.renewal.happened` (trigger)
+- **identity**: `member.renewal.any` (trigger)
 - **observes**: event `member.renewal`, entity key `member_id`
 
 Example scenarios:

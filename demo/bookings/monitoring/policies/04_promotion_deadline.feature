@@ -1,4 +1,4 @@
-Feature: Promotions get a prompt response
+Feature: waitlist promotion deadline
 
   Scenario: a promoted booking is confirmed or cancelled within 15 seconds
     When a booking is "promoted"

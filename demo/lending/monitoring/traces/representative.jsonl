@@ -1,0 +1,24 @@
+{"type": "loan.status", "event_time": 0.0, "bindings": {"loan_id": "L1"}, "payload": {"status": "borrowed", "member_id": "M1", "book_copy": "C1"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 1.0, "bindings": {"loan_id": "L2"}, "payload": {"status": "borrowed", "member_id": "M2", "book_copy": "C2"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 2.0, "bindings": {"loan_id": "L3"}, "payload": {"status": "borrowed", "member_id": "M3", "book_copy": "C3"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 3.0, "bindings": {"loan_id": "L4"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.closed", "event_time": 3.001, "bindings": {"loan_id": "L4"}, "payload": {"reason": "returned"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 4.0, "bindings": {"loan_id": "L1"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "member.renewal", "event_time": 4.001, "bindings": {"member_id": "M1"}, "payload": {"loan_id": "L1"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 5.0, "bindings": {"loan_id": "L3"}, "payload": {"status": "lost"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 8.0, "bindings": {"loan_id": "L3"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "member.renewal", "event_time": 8.001, "bindings": {"member_id": "M3"}, "payload": {"loan_id": "L3"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 10.0, "bindings": {"loan_id": "L1"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.closed", "event_time": 10.001, "bindings": {"loan_id": "L1"}, "payload": {"reason": "returned"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 13.0, "bindings": {"loan_id": "L6"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 14.0, "bindings": {"loan_id": "L7"}, "payload": {"status": "borrowed", "member_id": "M7", "book_copy": "C7"}, "source": "lending-service"}
+{"type": "member.fine", "event_time": 15.0, "bindings": {"member_id": "M7"}, "payload": {"status": "owed"}, "source": "lending-service"}
+{"type": "member.fine", "event_time": 17.0, "bindings": {"member_id": "M7"}, "payload": {"status": "paid_off"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 18.0, "bindings": {"loan_id": "L7"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "member.renewal", "event_time": 18.001, "bindings": {"member_id": "M7"}, "payload": {"loan_id": "L7"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 28.0, "bindings": {"loan_id": "L5"}, "payload": {"status": "borrowed", "member_id": "M5", "book_copy": "C5"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 29.0, "bindings": {"loan_id": "L5"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "member.renewal", "event_time": 29.001, "bindings": {"member_id": "M5"}, "payload": {"loan_id": "L5"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 30.0, "bindings": {"loan_id": "L5"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.closed", "event_time": 30.001, "bindings": {"loan_id": "L5"}, "payload": {"reason": "returned"}, "source": "lending-service"}
+{"type": "behave_rv.clock", "event_time": 35.0, "bindings": {}, "payload": {}, "source": "clock"}

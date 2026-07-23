@@ -29,34 +29,33 @@ Example scenarios:
 
 ```
 
-## `a device acts "{result}"`
+## `a device is contained`
 
-- **identity**: `device.action.result` (trigger)
-- **observes**: event `device.action`, entity key `device_id`
-- **parameters**: `result`
+- **identity**: `device.status.contained` (trigger)
+- **observes**: event `device.status`, entity key `device_id`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a device acts "<result>" never happens
+    Then a device is contained never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a device acts "<result>" has happened
+    Then a device is contained has happened
 
   Scenario: <your policy name>  # precedence
-    When a device acts "<result>"
-    Then a device acts "<result>" before
+    When a device is contained
+    Then a device is contained before
 
   Scenario: <your policy name>  # deadline
-    When a device acts "<result>"
-    Then a device acts "<result>" within "30" seconds
+    When a device is contained
+    Then a device is contained within "30" seconds
 
 ```
 
 ## `a device is retired`
 
-- **identity**: `device.retired.is` (trigger)
+- **identity**: `device.retired` (trigger)
 - **observes**: event `device.retired`, entity key `device_id`
 
 Example scenarios:
@@ -103,51 +102,28 @@ Example scenarios:
 
 ```
 
-## `a device is rejected or decommissioned`
+## `the fleet quarantine level is "{level}"`
 
-- **identity**: `device.contained.is` (trigger)
-- **observes**: event `device.action`, entity key `device_id`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then a device is rejected or decommissioned never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then a device is rejected or decommissioned has happened
-
-  Scenario: <your policy name>  # precedence
-    When a device is rejected or decommissioned
-    Then a device is rejected or decommissioned before
-
-  Scenario: <your policy name>  # deadline
-    When a device is rejected or decommissioned
-    Then a device is rejected or decommissioned within "30" seconds
-
-```
-
-## `a quarantine surge is flagged`
-
-- **identity**: `fleet.quarantine.surge` (trigger)
+- **identity**: `fleet.quarantine.level` (trigger)
 - **observes**: event `fleet.quarantine`, entity key `fleet_id`
+- **parameters**: `level`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a quarantine surge is flagged never happens
+    Then the fleet quarantine level is "<level>" never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a quarantine surge is flagged has happened
+    Then the fleet quarantine level is "<level>" has happened
 
   Scenario: <your policy name>  # precedence
-    When a quarantine surge is flagged
-    Then a quarantine surge is flagged before
+    When the fleet quarantine level is "<level>"
+    Then the fleet quarantine level is "<level>" before
 
   Scenario: <your policy name>  # deadline
-    When a quarantine surge is flagged
-    Then a quarantine surge is flagged within "30" seconds
+    When the fleet quarantine level is "<level>"
+    Then the fleet quarantine level is "<level>" within "30" seconds
 
 ```
 

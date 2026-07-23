@@ -1,99 +1,65 @@
-# Suggested policies
+# Suggested policies (proposals - you decide what becomes a policy)
 
-These are proposals only. Nothing here is monitored until you move it into
-`monitoring/policies/` yourself. Each entry compiles against the current
-registry.
+The four rules you stated are already transcribed into `monitoring/policies/`
+as user-authored policies. The items below are extra coverage I noticed while
+instrumenting; none is committed. Each compiles against the current registry.
 
-## 2026-07-23: a device must have been provisioned before activation
+## ACCEPTED (moved to policies/): fleet-wide quarantine surge
 
-**Observes:** `device.status` (provisioned, activated), key `device_id`
-**Why:** Rule 1 checks the *immediate* predecessor of activation is a passed
-check (`previously`). It does not catch a device that was never provisioned at
-all if some other event happens to sit right before activation. This `before`
-companion asserts a provisioning event exists somewhere in the device's past,
-closing that gap.
+The "alert when >3 devices are quarantined at once" rule was out of fragment as
+literally stated (cross-entity counting). You accepted the key-projection
+reformulation: the application counts concurrent quarantines (`FleetCounter` in
+`app/service.py`) and emits a singleton `fleet.quarantine` "surge" event on the
+upward crossing; the policy turns that surge into the alert. It now lives in
+`monitoring/policies/05_fleet_quarantine_surge.feature` as your policy, with the
+step `the fleet quarantine level is "{level}"` and the new event fingerprinted
+into the catalog. It is single-shot per fleet (first surge alerts, then
+settles), which you accepted.
+
+## 2026-07-23: a device is only activated after it was provisioned
+
+**Observes:** `device.status` (device_id)
+**Why:** rule 1 pins activation to the *immediate* predecessor (`previously`).
+A weaker companion catches a device that is activated having never been
+provisioned at all - useful if a future refactor can emit `activated` for an
+unknown device. `before` fires on any missing precedent, not just an
+out-of-order one.
 
 ```gherkin
-Feature: activation prerequisite
-  Scenario: a device must have been provisioned before it is activated
+Feature: device provisioning precedence
+
+  Scenario: a device is only activated after it was provisioned
     When a device is "activated"
     Then a device is "provisioned" before
 ```
 
-## 2026-07-23: a wiped device is never activated again
+## 2026-07-23: a wiped device is never acted on again
 
-**Observes:** `device.status` (wiped, activated), key `device_id`
-**Why:** A wipe is a decommissioning step. Re-activating a wiped device (reusing
-a device that was meant to be torn down) is a likely fleet-management bug and a
-security concern. This scoped `never` latches at the first wipe and forbids any
-later activation for that device.
-Caveat: if your fleet legitimately re-commissions a wiped device under the same
-`device_id`, this would flag it - decide whether that flow is intended before
-adopting.
+**Observes:** `device.status` (device_id)
+**Why:** a wipe is meant to be final before retirement; an `acted` event after
+a `wipe` would mean the device kept working post-wipe. Scoped `never` catches
+that without touching rule 3.
 
 ```gherkin
-Feature: no reuse after wipe
-  Scenario: a wiped device is never activated again
+Feature: post-wipe containment
+
+  Scenario: a wiped device performs no further actions
     Given a device is "wiped"
-    Then a device is "activated" never happens
+    Then a device is "acted" never happens
 ```
 
-## 2026-07-23: OUT OF FRAGMENT - "more than 3 devices in quarantine at once"
+## 2026-07-23: a sensor feed eventually reports at least one reading
 
-**Status: ACCEPTED (2026-07-23).** You chose the app-side-counting approximation
-below and made the policy yours. It now lives at
-`monitoring/policies/05_quarantine_surge.feature`; the counting and surge event
-are instrumented in `FleetService`, and the `a quarantine surge is flagged` step
-is in the registry. The caveat in this entry (the "more than 3" threshold lives
-in the application, not the engine) is the design you accepted. Kept here as the
-record of the decision. Original analysis follows.
-
-The rule as you originally stated it CANNOT be monitored by the engine as a
-count across devices. Here is why, and the approximation you adopted.
-
-**Why it is out of fragment.** behave-rv's engine is a per-entity monitor: one
-scenario compiles to one independent state machine *per correlation key value*,
-and the fragment has no operator that counts or relates across different
-entities. "More than 3 devices" is a count over the whole device *population*,
-and "at the same time" is a concurrency condition across those separate
-`device_id` monitors. There is no per-device restatement of it - no single
-device's own event history tells you how many *other* devices are quarantined.
-Counting and cross-entity aggregation are exactly what the fragment refuses, on
-purpose: it is the price of a deterministic, per-key engine. I will not fake it
-with a per-device policy that looks like it checks this but does not.
-
-**Nearest in-fragment approximation (requires new instrumentation - your call).**
-Move the counting to the application (the "shouter" side), where it is allowed,
-and let the engine verify the *result* deterministically:
-
-1. `FleetService` keeps a live set of currently-quarantined devices: add on
-   `quarantine`, remove on `wipe` and `retire` (a wiped/retired device is no
-   longer quarantined). This is additive - it does not reshape existing logic.
-2. When that count crosses above 3, emit a NEW fleet-keyed event:
-   `Event("fleet.quarantine", clock(), {"fleet_id": "fleet"}, {"level": "surge"},
-   "fleet-tracker")` (a singleton `fleet_id`). Optionally emit `{"level": "clear"}`
-   when it drops back to 3 or fewer.
-3. Add one step to `monitoring/steps.py`:
-   `a quarantine surge is flagged` -> `fleet.quarantine.surge`, event
-   `fleet.quarantine`, key `fleet_id`.
-4. The alerting policy (verified to compile against that step):
+**Observes:** `sensor.reading` (sensor_id)
+**Why:** rule 4 says every reading must be ok, but a feed that goes silent
+(emits nothing) satisfies it vacuously. This flags a provisioned feed that
+never reports. NOTE: needs a terminal event for sensors to ever produce a
+`violated` verdict - sensors currently have none, so this would sit `pending`
+on a live stream. Offered only if you want to add a `sensor.closed` terminal.
 
 ```gherkin
-Feature: quarantine surge alert
-  Scenario: no more than 3 devices are quarantined at once
-    Then a quarantine surge is flagged never happens
+Feature: sensor liveness
+
+  Scenario: a sensor feed reports at least one reading
+    Then a sensor reading is "ok" has happened
 ```
-
-It goes `violated` the instant the app emits a surge - that violation IS your
-alert, delivered through the same dashboard, sink, and explanation path as every
-other policy.
-
-**The honest caveat you are accepting if you adopt this:** the "more than 3"
-threshold logic lives in the application code, NOT in the deterministic engine.
-The engine only verifies that a surge event, once emitted, is reported - it does
-not itself count devices. That moves a piece of the specification into the
-shouter side (a new event surface you would be trusting the app to compute
-correctly, and which the stability catalog would then track). If you want the
-counting itself to be engine-owned and deterministic across entities, that needs
-the first-order / multi-entity backend behave-rv leaves a slot for - not the
-current single-key engine. Tell me which way you want to go and I will wire it.

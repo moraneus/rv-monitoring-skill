@@ -4,9 +4,9 @@ This demo tests the BROWNFIELD path: `app/parcel_service.py` existed before
 the agent arrived - a plain service written with no thought of monitoring -
 and the agent's job was to make it monitorable without changing how it
 behaves. Everything else here was created by a coding agent that had only
-the rv skill and behave-rv from PyPI. Two turns, verbatim below; a separate
-session independently re-ran every gate and verified that legacy callers of
-the original service still run identically.
+the rv skill and behave-rv 0.3.0 from PyPI. Two turns, verbatim below; a
+separate session independently re-ran every gate and verified that legacy
+callers of the original service still run identically.
 
 ## Turn 1 - monitor my existing code
 
@@ -25,15 +25,21 @@ Outcome: additive instrumentation only - injected `emit`/`clock` with
 production-safe defaults, so existing `ParcelService()` callers run
 unchanged; a `parcel.status` event at every transition; the three rules
 transcribed as policies (before / scoped never / within); a pinned replay
-gate (18 verdicts, 3 violations, one seeded fault per rule); the live
-dashboard; and two extra policies proposed.
+gate (15 verdicts, 3 violations, one seeded fault per rule); the live
+dashboard; and three extra policies proposed.
 
 The judgment call worth reading: the user said delivered parcels are
 "finished", but making delivery an engine terminal would settle rule 2 at
-that instant and blind the monitor to exactly the post-delivery reroute the
-rule forbids. The agent verified this actually happened, refused the hard
-terminal in favour of quiescence-TTL reclamation, and surfaced the
-trade-off as the user's decision. The safety rule won over the memory hint.
+that instant and blind the monitor to exactly the post-delivery reroute
+the rule forbids. The agent refused the hard terminal in favour of
+quiescence-TTL reclamation and stated the decision. The safety rule won
+over the memory hint.
+
+Also worth noticing, because it was impossible in earlier behave-rv
+versions: the recorder is wired with the service clock, so the recorded
+live session ends with a clock-horizon marker - and REPLAYING the live
+trace reproduces all three violations, including the 12-second deadline
+that fired on the wall clock in the silence after the last event.
 
 ## Turn 2 - reword the vocabulary, break nothing
 
@@ -44,10 +50,13 @@ trade-off as the user's decision. The safety rule won over the memory hint.
 > are mine and must keep compiling exactly as written, and I don't want any
 > contract alarms out of this.
 
-Outcome: the alias protocol, exactly as the skill prescribes. Both step
-phrasings were reworded to the new style with the old wordings kept as
-aliases in the same edit; the user's policy files were not touched and
-compile verbatim through the aliases; `catalog diff` reports both steps as
-`renamed` - absorbed, not a break - with the app side unchanged; the replay
-oracle is identical at 18 verdicts and 3 violations. `STEPS.md` shows each
-phrasing with its "also writable as" form.
+Outcome: the alias protocol, exactly as the skill prescribes. The step's
+primary phrasing became `the parcel becomes "{status}"` with the old
+wording kept as an alias in the same edit; the user's policy files were
+not touched and compile verbatim through the alias; `catalog diff` reports
+the step as `renamed` - absorbed, not a break - with all six app emit
+sites unchanged; no `catalog save` (a phrasing reword is not a contract
+change); the replay oracle identical at 15 verdicts and 3 violations. The
+agent scoped the reword to the step the user actually complained about and
+offered the second step's rewording as a follow-up rather than assuming
+it.

@@ -1,124 +1,134 @@
-"""Runnable demo: drive the LendingService live with behave-rv monitoring.
+"""Runnable live demo of the library lending service under behave-rv.
 
     python demo.py
 
-It starts the built-in web dashboard, prints its URL, then drives a handful
-of loans in real time so you can watch the three policies decide per loan and
-watch the event log fill. The 21-second deadline (rule 3) is real wall-clock
-time here, so one deliberately-abandoned loan trips it while you watch.
+It starts the built-in web dashboard, then drives five loans in real time so
+you can watch the three policies and the event log update live in the browser:
 
-Open the printed URL. Each policy is a card with its per-loan verdicts; each
-violation renders your own scenario with the failing step marked and the
-deciding events; the live feed shows every emitted event; the strip at the
-top shows whether the running code still matches the committed contract.
+  * L1  healthy: borrow -> renew -> return, all in time (satisfies every rule)
+  * L2  borrowed and then abandoned -> breaches the 21-second deadline (rule 3)
+  * L3  reported lost and then renewed anyway -> breaks "never renew a lost
+        loan" (rule 2)
+  * L4  returned with no prior borrow -> breaks "return only after borrow"
+        (rule 1)
+  * L6  renewed with no prior borrow -> breaks "renew only after borrow"
+        (rule 4)
+  * M7  owes a fine, so renewing L7 is refused (nothing happens) until the
+        fine is paid off -> "no renewal while fined" stays satisfied
 
-Press Ctrl+C to stop.
+The 21-second deadline for L2 fires on wall time while the stream is quiet, so
+leave the demo running a few seconds past the last borrow to watch it flip to
+violated. A service-relative clock (time.time() - start) keeps the dashboard
+and the recorded trace readable and lets the wall-fired deadline resolve.
+
+Set DEMO_AUTOEXIT=<seconds> to auto-shut-down for scripted runs; otherwise the
+dashboard stays open until you press Ctrl-C.
 """
 
 from __future__ import annotations
 
+import os
+import sys
 import threading
 import time
 from pathlib import Path
 
-from behave_rv.engine.loop import Engine
-from behave_rv.events.sources.replay import TraceRecorder
-from behave_rv.events.sources.subscription import QueueSource
-from behave_rv.dashboard import Dashboard
+ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "monitoring"))
 
-from app.lending_service import LendingService, TERMINAL_TYPE
+from behave_rv.dashboard import Dashboard                       # noqa: E402
+from behave_rv.engine.loop import Engine                        # noqa: E402
+from behave_rv.events.sources.replay import TraceRecorder       # noqa: E402
+from behave_rv.events.sources.subscription import QueueSource   # noqa: E402
 
-HERE = Path(__file__).resolve().parent
-import sys
-sys.path.insert(0, str(HERE / "monitoring"))
-from steps import build_registry, load_policies  # noqa: E402
+from app.service import LendingService, LOAN_CLOSED             # noqa: E402
+from steps import build_registry, load_policies                 # noqa: E402
 
+TERMINAL_TYPES = {LOAN_CLOSED}
 PORT = 7007
-TRACE = HERE / "monitoring" / "traces" / "demo_session.jsonl"
 
 
-def drive(svc: LendingService) -> None:
-    """Real-time scripted traffic. Sleeps make each step watchable."""
+def scripted_flows(svc: LendingService, until: float) -> None:
+    """Drive the loans on a wall-time schedule (seconds from start)."""
+    start = time.monotonic()
 
-    def wait(dt: float) -> None:
-        time.sleep(dt)
+    def at(when: float, action) -> None:
+        delay = when - (time.monotonic() - start)
+        if delay > 0:
+            time.sleep(delay)
+        action()
 
-    # L-1 healthy: borrowed, renewed, returned - all three policies stay green.
-    svc.borrow("L-1", member_id="Alice", copy_id="C-Dune")
-    wait(1)
-    # L-2 will be ABANDONED: borrowed and never acted on -> trips the 21s
-    # deadline (rule 3) while you watch.
-    svc.borrow("L-2", member_id="Bob", copy_id="C-Neuromancer")
-    wait(1)
-    svc.renew("L-1")
-    wait(1)
-    # L-3 borrowed then reported lost.
-    svc.borrow("L-3", member_id="Carol", copy_id="C-Solaris")
-    wait(1)
-    svc.report_lost("L-3")
-    wait(1)
-    svc.return_loan("L-1")               # L-1 completes cleanly
-    wait(1)
-    svc.renew("L-3")                     # rule 2 violation: renew after lost
-    wait(1)
-    svc.return_loan("L-4")               # rule 1 violation: return, never borrowed
-    wait(1)
-    svc.renew("L-6")                     # renew-after-borrow violation: never borrowed
-    wait(1)
-    # The fine guard, watchable in the event feed: Dana borrows, then owes a
-    # fine, so her renewal is REFUSED (no renewed event appears); once she pays
-    # it off the renewal goes through, and she returns the book in time.
-    svc.borrow("L-5", member_id="Dana", copy_id="C-Foundation")
-    wait(1)
-    svc.record_fine("Dana", amount=2.50)
-    wait(1)
-    svc.renew("L-5")                     # refused: Dana owes -> nothing emitted
-    wait(1)
-    svc.pay_fine("Dana")
-    wait(1)
-    svc.renew("L-5")                     # now allowed
-    wait(1)
-    svc.return_loan("L-5")               # completes cleanly, well within 21s
-    # Now go quiet. Around t=22s the abandoned L-2 trips the settle-within
-    # deadline on the timer; a little later the never-settled renewals of L-3
-    # and L-6 trip the renewal-window deadline too.
+    at(0.0, lambda: svc.borrow("L1", "M1", "C1"))
+    at(1.0, lambda: svc.borrow("L2", "M2", "C2"))     # never acted on -> rule 3
+    at(2.0, lambda: svc.borrow("L3", "M3", "C3"))
+    at(3.0, lambda: svc.return_loan("L4"))            # no prior borrow -> rule 1
+    at(5.0, lambda: svc.renew("L1"))
+    at(7.0, lambda: svc.mark_lost("L3"))
+    at(9.0, lambda: svc.renew("L3"))                  # renew after lost -> rule 2
+    at(11.0, lambda: svc.return_loan("L1"))           # settles cleanly
+    at(13.0, lambda: svc.renew("L6"))                 # no prior borrow -> rule 4
+
+    # M7 owes a fine: the renew is refused (nothing happens) until they pay off.
+    at(14.0, lambda: svc.borrow("L7", "M7", "C7"))
+    at(15.0, lambda: svc.record_fine("M7"))           # M7 now owes
+    at(16.0, lambda: svc.renew("L7"))                 # refused: no renewal while fined
+    at(17.0, lambda: svc.pay_fine("M7"))              # M7 pays off
+    at(18.0, lambda: svc.renew("L7"))                 # allowed now
+
+    # Idle past L2's 21s deadline (armed at ~1s) so the timer fires live.
+    while time.monotonic() - start < until:
+        time.sleep(0.2)
 
 
 def main() -> int:
     registry = build_registry()
     policies = load_policies(registry)
 
-    start = time.time()
     source = QueueSource()
     dashboard = Dashboard(policies, registry=registry,
-                          catalog=str(HERE / "monitoring" / "catalog.json"),
-                          app=[str(HERE / "app" / "lending_service.py")])
-    recorder = TraceRecorder(str(TRACE))
+                          catalog=str(ROOT / "monitoring" / "catalog.json"),
+                          app=[str(ROOT / "app" / "service.py")])
 
-    # Live wiring: every emitted event is recorded, shown on the dashboard,
-    # and pushed to the engine. Service-relative clock so wall-clock deadlines
-    # behave.
-    svc = LendingService(lambda e: source.push(dashboard.tap(recorder(e))),
-                         clock=lambda: time.time() - start)
+    start = time.time()
+    clock = lambda: time.time() - start
+    # TraceRecorder appends; start each session's trace fresh so replaying it
+    # reflects exactly this run.
+    live_trace = ROOT / "monitoring" / "traces" / "live_session.jsonl"
+    live_trace.unlink(missing_ok=True)
+    recorder = TraceRecorder(str(live_trace), clock=clock)
+    svc = LendingService(
+        lambda e: source.push(dashboard.tap(recorder(e))),
+        clock=clock,
+    )
 
-    engine = Engine(policies, terminal_event_types={TERMINAL_TYPE}, grace=0.5)
+    engine = Engine(policies, terminal_event_types=TERMINAL_TYPES)
+    runner = threading.Thread(target=engine.run,
+                              kwargs={"source": source, "sink": dashboard.sink},
+                              daemon=True)
+    runner.start()
+
     url = dashboard.start(port=PORT)
-    print(f"live monitor: {url}")
-    print("watch the three policy cards and the event feed; Ctrl+C to stop.")
+    print("live monitor:", url)
+    print("Watch the three policy cards and the event feed. L2's 21-second")
+    print("deadline fires ~22s in; leave it running to see it flip to violated.")
 
-    threading.Thread(target=lambda: engine.run(source, sink=dashboard.sink),
-                     daemon=True).start()
-
-    driver = threading.Thread(target=drive, args=(svc,), daemon=True)
-    driver.start()
-
+    autoexit = os.environ.get("DEMO_AUTOEXIT")
+    horizon = float(autoexit) if autoexit else 26.0
     try:
-        while True:
-            time.sleep(1)
+        scripted_flows(svc, until=horizon)
+        if autoexit:
+            print(f"\nauto-exit after {horizon:.0f}s")
+        else:
+            print("\nScripted flows done. Dashboard still live - Ctrl-C to stop.")
+            while True:
+                time.sleep(1.0)
     except KeyboardInterrupt:
-        print("\nstopping.")
+        print("\nstopping...")
     finally:
         source.close()
+        runner.join(timeout=5.0)
+        recorder.close()
         dashboard.stop()
     return 0
 

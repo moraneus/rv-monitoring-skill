@@ -125,9 +125,10 @@ The demos are also the proof: [demo/README.md](demo/README.md) indexes
 four projects, each testing a different part of the skill - the full
 development loop and break protocol (lending), brownfield instrumentation
 and the alias flow (parcels), the /rv consultation (bookings), and
-operator coverage with the honest refusal of an out-of-fragment rule
-(devices). Each project's PROMPTS.md holds the exact human prompts that
-produced every file in it.
+operator coverage with the honest refusal of an out-of-fragment rule plus
+a user-driven policy repair of two contradictory rules (devices). Each
+project's PROMPTS.md holds the exact human prompts that produced every
+file in it.
 
 CI runs the end-to-end validation against the real PyPI `behave-rv` on every
 push and weekly - including a check that the stability gate actually catches

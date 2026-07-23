@@ -1,5 +1,5 @@
-Feature: delivered parcels are never re-routed
+Feature: delivery is final
 
-  Scenario: once a parcel is delivered it must never be re-routed
+  Scenario: a delivered parcel is never re-routed
     Given a parcel is "delivered"
     Then a parcel is "rerouted" never happens

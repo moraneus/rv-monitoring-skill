@@ -2,94 +2,205 @@
   "app_surface": [
     {
       "binding_keys": [
-        "device_id"
-      ],
-      "event_type": "device.status",
-      "function": "FleetService._device_status",
-      "module": "service",
-      "payload_fields": [
-        "<splat>",
-        "status"
-      ],
-      "referenced_constants": {
-        "service.DEVICE_STATUS": "'device.status'",
-        "service.FLEET_ID": "'fleet'",
-        "service.FLEET_QUARANTINE": "'fleet.quarantine'",
-        "service.QUARANTINE_SURGE_THRESHOLD": "3",
-        "service.SOURCE": "'fleet-tracker'"
-      },
-      "site_id": "service.FleetService._device_status#1",
-      "slice_fingerprint": "a05caf778fb11ecb",
-      "slice_functions": {
-        "service.FleetService.__init__": "65f1db84e4179e26",
-        "service.FleetService._device_status": "44bd19da8c66bf46",
-        "service.FleetService.activate": "3d431fe055e83d9a",
-        "service.FleetService.provision": "bf4385fec395b353",
-        "service.FleetService.provision_failed": "d3587840a03f84d2",
-        "service.FleetService.provision_passed": "50b823d18e2d368e",
-        "service.FleetService.quarantine": "e45c0db9e64ad990",
-        "service.FleetService.wipe": "4ffd31f06c6e976e"
-      },
-      "unresolved_calls": [
-        "<dynamic>",
-        "self._clock",
-        "self._emit"
-      ]
-    },
-    {
-      "binding_keys": [
-        "device_id"
-      ],
-      "event_type": "device.action",
-      "function": "FleetService.act",
-      "module": "service",
-      "payload_fields": [
-        "result"
-      ],
-      "referenced_constants": {
-        "service.DEVICE_ACTION": "'device.action'",
-        "service.SOURCE": "'fleet-tracker'"
-      },
-      "site_id": "service.FleetService.act#1",
-      "slice_fingerprint": "abe756a4c153494c",
-      "slice_functions": {
-        "service.FleetService.__init__": "65f1db84e4179e26",
-        "service.FleetService.act": "f2b12e354405b8d4"
-      },
-      "unresolved_calls": [
-        "self._clock",
-        "self._emit"
-      ]
-    },
-    {
-      "binding_keys": [
         "fleet_id"
       ],
       "event_type": "fleet.quarantine",
-      "function": "FleetService.quarantine",
+      "function": "FleetCounter._recount",
       "module": "service",
       "payload_fields": [
         "count",
         "level"
       ],
       "referenced_constants": {
-        "service.DEVICE_STATUS": "'device.status'",
-        "service.FLEET_ID": "'fleet'",
         "service.FLEET_QUARANTINE": "'fleet.quarantine'",
         "service.QUARANTINE_SURGE_THRESHOLD": "3",
-        "service.SOURCE": "'fleet-tracker'"
+        "service.SOURCE": "'fleet-service'"
       },
-      "site_id": "service.FleetService.quarantine#1",
-      "slice_fingerprint": "6c979c0237a09d0e",
+      "rename_fingerprint": "368c38a9a2ed2e7d",
+      "site_id": "service.FleetCounter._recount#1",
+      "slice_fingerprint": "cb6c20160739ace0",
       "slice_functions": {
-        "service.FleetService.__init__": "65f1db84e4179e26",
-        "service.FleetService._device_status": "44bd19da8c66bf46",
-        "service.FleetService.quarantine": "e45c0db9e64ad990"
+        "service.FleetCounter.__init__": "f85d972ced3c6099",
+        "service.FleetCounter._recount": "7b363c7f3ea07bdd",
+        "service.FleetCounter.cleared": "a51bf3cabfeccad4",
+        "service.FleetCounter.quarantine": "2c948746714e80ca"
       },
       "unresolved_calls": [
-        "<dynamic>",
+        "self._clock",
+        "self._emit",
+        "self._quarantined.add",
+        "self._quarantined.discard"
+      ]
+    },
+    {
+      "binding_keys": [
+        "device_id"
+      ],
+      "event_type": "device.status",
+      "function": "FleetService.act",
+      "module": "service",
+      "payload_fields": [
+        "action",
+        "status"
+      ],
+      "referenced_constants": {
+        "service.ACTED": "'acted'",
+        "service.DEVICE_STATUS": "'device.status'",
+        "service.SOURCE": "'fleet-service'"
+      },
+      "rename_fingerprint": "e55d1c90ff32c0e5",
+      "site_id": "service.FleetService.act#1",
+      "slice_fingerprint": "e55d1c90ff32c0e5",
+      "slice_functions": {
+        "service.FleetService.__init__": "c48e231ed376d053",
+        "service.FleetService.act": "712d862a4eb8f559"
+      },
+      "unresolved_calls": [
+        "FleetCounter",
         "self._clock",
         "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "device_id"
+      ],
+      "event_type": "device.status",
+      "function": "FleetService.activate",
+      "module": "service",
+      "payload_fields": [
+        "status"
+      ],
+      "referenced_constants": {
+        "service.ACTIVATED": "'activated'",
+        "service.DEVICE_STATUS": "'device.status'",
+        "service.SOURCE": "'fleet-service'"
+      },
+      "rename_fingerprint": "e1d0633f9cc7ec87",
+      "site_id": "service.FleetService.activate#1",
+      "slice_fingerprint": "e1d0633f9cc7ec87",
+      "slice_functions": {
+        "service.FleetService.__init__": "c48e231ed376d053",
+        "service.FleetService.activate": "9051c6e78b621faf"
+      },
+      "unresolved_calls": [
+        "FleetCounter",
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "device_id"
+      ],
+      "event_type": "device.status",
+      "function": "FleetService.blocked",
+      "module": "service",
+      "payload_fields": [
+        "action",
+        "status"
+      ],
+      "referenced_constants": {
+        "service.BLOCKED": "'blocked'",
+        "service.DEVICE_STATUS": "'device.status'",
+        "service.SOURCE": "'fleet-service'"
+      },
+      "rename_fingerprint": "d1cfed0e38df1d72",
+      "site_id": "service.FleetService.blocked#1",
+      "slice_fingerprint": "d1cfed0e38df1d72",
+      "slice_functions": {
+        "service.FleetService.__init__": "c48e231ed376d053",
+        "service.FleetService.blocked": "712d862a4eb8f559"
+      },
+      "unresolved_calls": [
+        "FleetCounter",
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "device_id"
+      ],
+      "event_type": "device.status",
+      "function": "FleetService.provision",
+      "module": "service",
+      "payload_fields": [
+        "status"
+      ],
+      "referenced_constants": {
+        "service.DEVICE_STATUS": "'device.status'",
+        "service.PROVISIONED": "'provisioned'",
+        "service.SOURCE": "'fleet-service'"
+      },
+      "rename_fingerprint": "c8bd111f52f7e57b",
+      "site_id": "service.FleetService.provision#1",
+      "slice_fingerprint": "c8bd111f52f7e57b",
+      "slice_functions": {
+        "service.FleetService.__init__": "c48e231ed376d053",
+        "service.FleetService.provision": "9051c6e78b621faf"
+      },
+      "unresolved_calls": [
+        "FleetCounter",
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "device_id"
+      ],
+      "event_type": "device.status",
+      "function": "FleetService.provision_ok",
+      "module": "service",
+      "payload_fields": [
+        "status"
+      ],
+      "referenced_constants": {
+        "service.DEVICE_STATUS": "'device.status'",
+        "service.PROVISION_OK": "'provision_ok'",
+        "service.SOURCE": "'fleet-service'"
+      },
+      "rename_fingerprint": "0353b97b01ad7b51",
+      "site_id": "service.FleetService.provision_ok#1",
+      "slice_fingerprint": "0353b97b01ad7b51",
+      "slice_functions": {
+        "service.FleetService.__init__": "c48e231ed376d053",
+        "service.FleetService.provision_ok": "9051c6e78b621faf"
+      },
+      "unresolved_calls": [
+        "FleetCounter",
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "device_id"
+      ],
+      "event_type": "device.status",
+      "function": "FleetService.quarantine",
+      "module": "service",
+      "payload_fields": [
+        "status"
+      ],
+      "referenced_constants": {
+        "service.DEVICE_STATUS": "'device.status'",
+        "service.QUARANTINED": "'quarantined'",
+        "service.SOURCE": "'fleet-service'"
+      },
+      "rename_fingerprint": "ad12465b337bb6a1",
+      "site_id": "service.FleetService.quarantine#1",
+      "slice_fingerprint": "ad12465b337bb6a1",
+      "slice_functions": {
+        "service.FleetService.__init__": "c48e231ed376d053",
+        "service.FleetService.quarantine": "8f636062dd031d2c"
+      },
+      "unresolved_calls": [
+        "FleetCounter",
+        "self._clock",
+        "self._emit",
+        "self._fleet.quarantine"
       ]
     },
     {
@@ -102,18 +213,20 @@
       "payload_fields": [],
       "referenced_constants": {
         "service.DEVICE_RETIRED": "'device.retired'",
-        "service.SOURCE": "'fleet-tracker'"
+        "service.SOURCE": "'fleet-service'"
       },
+      "rename_fingerprint": "bf9887155a00d414",
       "site_id": "service.FleetService.retire#1",
-      "slice_fingerprint": "90bbb99e49fa509d",
+      "slice_fingerprint": "bf9887155a00d414",
       "slice_functions": {
-        "service.FleetService.__init__": "65f1db84e4179e26",
-        "service.FleetService.retire": "9732390f376359c0"
+        "service.FleetService.__init__": "c48e231ed376d053",
+        "service.FleetService.retire": "7abb866bf33a015d"
       },
       "unresolved_calls": [
-        "<dynamic>",
+        "FleetCounter",
         "self._clock",
-        "self._emit"
+        "self._emit",
+        "self._fleet.cleared"
       ]
     },
     {
@@ -124,21 +237,53 @@
       "function": "FleetService.sensor_reading",
       "module": "service",
       "payload_fields": [
-        "status"
+        "status",
+        "value"
       ],
       "referenced_constants": {
         "service.SENSOR_READING": "'sensor.reading'",
-        "service.SOURCE": "'fleet-tracker'"
+        "service.SOURCE": "'fleet-service'"
       },
+      "rename_fingerprint": "d168bffa3fc3636a",
       "site_id": "service.FleetService.sensor_reading#1",
-      "slice_fingerprint": "f570209ee1f0c92c",
+      "slice_fingerprint": "d168bffa3fc3636a",
       "slice_functions": {
-        "service.FleetService.__init__": "65f1db84e4179e26",
-        "service.FleetService.sensor_reading": "44231b7af01c5d6c"
+        "service.FleetService.__init__": "c48e231ed376d053",
+        "service.FleetService.sensor_reading": "6aafd3b706f675ec"
       },
       "unresolved_calls": [
+        "FleetCounter",
         "self._clock",
         "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "device_id"
+      ],
+      "event_type": "device.status",
+      "function": "FleetService.wipe",
+      "module": "service",
+      "payload_fields": [
+        "status"
+      ],
+      "referenced_constants": {
+        "service.DEVICE_STATUS": "'device.status'",
+        "service.SOURCE": "'fleet-service'",
+        "service.WIPED": "'wiped'"
+      },
+      "rename_fingerprint": "7c76d424e456131f",
+      "site_id": "service.FleetService.wipe#1",
+      "slice_fingerprint": "7c76d424e456131f",
+      "slice_functions": {
+        "service.FleetService.__init__": "c48e231ed376d053",
+        "service.FleetService.wipe": "9a2def7133fc7b3b"
+      },
+      "unresolved_calls": [
+        "FleetCounter",
+        "self._clock",
+        "self._emit",
+        "self._fleet.cleared"
       ]
     }
   ],
@@ -150,7 +295,7 @@
       "phrasing": "a device is \"{status}\"",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "c9379e691b1731c9",
+        "condition_fingerprint": "d8fb6ec2b771367e",
         "correlation_key": [
           "device_id"
         ],
@@ -164,7 +309,6 @@
         ],
         "trigger_condition": "a device is \"{status}\"",
         "unresolved_calls": [
-          "ctx.bind",
           "get"
         ]
       },
@@ -174,28 +318,25 @@
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "a device acts \"{result}\"",
+      "phrasing": "a device is contained",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "2fe5acb724a8cbd6",
+        "condition_fingerprint": "d9a6634f0800e716",
         "correlation_key": [
           "device_id"
         ],
-        "event_type": "device.action",
+        "event_type": "device.status",
         "helper_hashes": {},
         "payload_fields": {
-          "result": "any"
+          "status": "any"
         },
-        "referenced_fields": [
-          "result"
-        ],
-        "trigger_condition": "a device acts \"{result}\"",
+        "referenced_fields": [],
+        "trigger_condition": "a device is contained",
         "unresolved_calls": [
-          "ctx.bind",
           "get"
         ]
       },
-      "step_id": "device.action.result",
+      "step_id": "device.status.contained",
       "version": 1
     },
     {
@@ -204,7 +345,7 @@
       "phrasing": "a device is retired",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "66f19cf593e7a369",
+        "condition_fingerprint": "c735692aaa571067",
         "correlation_key": [
           "device_id"
         ],
@@ -213,11 +354,9 @@
         "payload_fields": {},
         "referenced_fields": [],
         "trigger_condition": "a device is retired",
-        "unresolved_calls": [
-          "ctx.bind"
-        ]
+        "unresolved_calls": []
       },
-      "step_id": "device.retired.is",
+      "step_id": "device.retired",
       "version": 1
     },
     {
@@ -226,7 +365,7 @@
       "phrasing": "a sensor reading is \"{status}\"",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "edcb93fa1e552ad1",
+        "condition_fingerprint": "9989cb900c636dbd",
         "correlation_key": [
           "sensor_id"
         ],
@@ -240,7 +379,6 @@
         ],
         "trigger_condition": "a sensor reading is \"{status}\"",
         "unresolved_calls": [
-          "ctx.bind",
           "get"
         ]
       },
@@ -250,36 +388,10 @@
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "a device is rejected or decommissioned",
+      "phrasing": "the fleet quarantine level is \"{level}\"",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "e0ac7bd92bfd5b9c",
-        "correlation_key": [
-          "device_id"
-        ],
-        "event_type": "device.action",
-        "helper_hashes": {},
-        "payload_fields": {
-          "result": "any",
-          "status": "any"
-        },
-        "referenced_fields": [],
-        "trigger_condition": "a device is rejected or decommissioned",
-        "unresolved_calls": [
-          "ctx.bind",
-          "get"
-        ]
-      },
-      "step_id": "device.contained.is",
-      "version": 1
-    },
-    {
-      "kind": "trigger",
-      "observed": false,
-      "phrasing": "a quarantine surge is flagged",
-      "provenance": "llm",
-      "signature": {
-        "condition_fingerprint": "da5b9e0eedb92537",
+        "condition_fingerprint": "d498a62a7783d334",
         "correlation_key": [
           "fleet_id"
         ],
@@ -288,14 +400,15 @@
         "payload_fields": {
           "level": "any"
         },
-        "referenced_fields": [],
-        "trigger_condition": "a quarantine surge is flagged",
+        "referenced_fields": [
+          "level"
+        ],
+        "trigger_condition": "the fleet quarantine level is \"{level}\"",
         "unresolved_calls": [
-          "ctx.bind",
           "get"
         ]
       },
-      "step_id": "fleet.quarantine.surge",
+      "step_id": "fleet.quarantine.level",
       "version": 1
     }
   ]

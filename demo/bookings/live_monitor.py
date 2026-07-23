@@ -1,20 +1,25 @@
-"""Run the booking monitor live, with the built-in dashboard.
+"""Run the studio's booking service LIVE with the monitor and the web
+dashboard attached.
 
-    python live_monitor.py        # then open the printed URL
+    python live_monitor.py                 # serves ~35s of seeded traffic
+    python live_monitor.py --seconds 60
 
-Your app threads push booking events into a thread-safe QueueSource; the
-engine consumes them on its own thread; every verdict lands on the dashboard.
-The dashboard shows each policy as a card with its per-booking verdicts, the
-authored scenario replayed with real values for any violation, the live event
-feed, and the two-sided stability strip (does the running code still match the
-committed contract). Nothing here blocks the studio's booking logic.
+Open the printed URL (default http://127.0.0.1:7007). You will see each of
+your policies as a card with its per-booking verdicts, the explanation for
+every violation rendered as your own scenario with the real booking's events,
+the live event feed, and a strip showing whether the code still matches the
+committed contract.
 
-Timestamps use a SERVICE-RELATIVE clock (time.time() - start) so the 15-second
-promotion deadline fires correctly on wall time when a booking goes quiet.
+Wiring (nothing blocks the app):
+
+  app thread --push--> QueueSource --> Engine (own thread)
+                                          |
+        browser <-- Dashboard (http) <-- sink
 """
 
 from __future__ import annotations
 
+import argparse
 import sys
 import threading
 import time
@@ -24,97 +29,98 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "monitoring"))
 
-from behave_rv.dashboard import Dashboard                       # noqa: E402
-from behave_rv.engine.loop import Engine                        # noqa: E402
-from behave_rv.events.sources.subscription import QueueSource   # noqa: E402
-from behave_rv.events.sources.replay import TraceRecorder       # noqa: E402
+from app.booking_service import TERMINAL_TYPE, BookingService       # noqa: E402
+from steps import build_registry, load_policies                    # noqa: E402
 
-from app.booking_service import BookingService, TERMINAL_TYPE   # noqa: E402
-from steps import build_registry, load_policies                 # noqa: E402
+from behave_rv.dashboard import Dashboard                          # noqa: E402
+from behave_rv.engine.loop import Engine                           # noqa: E402
+from behave_rv.events.sources.replay import TraceRecorder          # noqa: E402
+from behave_rv.events.sources.subscription import QueueSource      # noqa: E402
 
-PORT = 7007
-C = "spin-0700"            # the class session everyone in this demo books into
-
-
-def drive(svc, pace=0.6):
-    """Seed a representative afternoon, paced so the page updates visibly."""
-    def beat(fn, *args):
-        fn(*args)
-        time.sleep(pace)
-
-    # Healthy: reserve -> confirm -> check in -> attend (all green).
-    beat(svc.reserve, "B-100", "M-alice", C)
-    beat(svc.confirm, "B-100", "M-alice", C)
-    beat(svc.check_in, "B-100", "M-alice", C)
-    beat(svc.mark_attended, "B-100", "M-alice", C)
-
-    # P4: confirmed while the member still owes money.
-    beat(svc.reserve, "B-OWING", "M-dan", C)
-    beat(svc.confirm, "B-OWING", "M-dan", C, "owing", "none")
-
-    # P5: confirmed despite the app's duplicate flag.
-    beat(svc.reserve, "B-FLAGGED", "M-erin", C)
-    beat(svc.confirm, "B-FLAGGED", "M-erin", C, "clear", "duplicate")
-
-    # P3: checked in without ever being confirmed.
-    beat(svc.reserve, "B-NOCONFIRM", "M-gina", C)
-    beat(svc.check_in, "B-NOCONFIRM", "M-gina", C)
-
-    # P7: marked attended with no check-in.
-    beat(svc.reserve, "B-ATTEND-NOCHECK", "M-hank", C)
-    beat(svc.confirm, "B-ATTEND-NOCHECK", "M-hank", C)
-    beat(svc.mark_attended, "B-ATTEND-NOCHECK", "M-hank", C)
-
-    # P6 amber: a booking that just sits, never reaching an end state.
-    beat(svc.reserve, "B-STUCK", "M-ivy", C)
-
-    # P2: promoted, then left to time out - the 15s wall-clock timer fires it.
-    beat(svc.waitlist, "B-PROMO-LATE", "M-carol", C)
-    beat(svc.promote, "B-PROMO-LATE", "M-carol", C)
-
-    # P1 (the 3am nightmare): cancel, then still show up and check in.
-    beat(svc.reserve, "B-CANCEL-RETURN", "M-fred", C)
-    beat(svc.confirm, "B-CANCEL-RETURN", "M-fred", C)
-    beat(svc.cancel, "B-CANCEL-RETURN", "M-fred", C)
-    time.sleep(2.0)
-    beat(svc.check_in, "B-CANCEL-RETURN", "M-fred", C)
+PROMOTION_DEADLINE = 15.0   # matches policy 04; the timeout booking waits past it
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--seconds", type=float, default=35.0,
+                        help="how long to keep serving before shutting down")
+    parser.add_argument("--port", type=int, default=7007)
+    args = parser.parse_args()
+
     registry = build_registry()
     policies = load_policies(registry)
 
+    # service-relative event times keep the dashboard timeline readable (raw
+    # time.time() also works since 0.3.0; this is a readability choice).
+    start = time.time()
     source = QueueSource()
     dashboard = Dashboard(policies, registry=registry,
-                          catalog=str(ROOT / "monitoring" / "catalog.json"),
-                          app=[str(ROOT / "app" / "booking_service.py")])
+                          catalog=ROOT / "monitoring" / "catalog.json",
+                          app=[ROOT / "app" / "booking_service.py"])
     recorder = TraceRecorder(ROOT / "monitoring" / "traces" / "live_session.jsonl")
-
-    start = time.time()
     svc = BookingService(lambda e: source.push(dashboard.tap(recorder(e))),
                          clock=lambda: time.time() - start)
 
-    engine = Engine(policies, terminal_event_types={TERMINAL_TYPE},
-                    quiescence_ttl=3600.0, grace=0.5)
-    threading.Thread(target=lambda: engine.run(source, sink=dashboard.sink),
-                     daemon=True).start()
-
-    url = dashboard.start(port=PORT)
+    url = dashboard.start(port=args.port)
     print("live monitor:", url)
-    print("driving seeded booking traffic; watch the policy cards update...")
+    engine = Engine(policies, terminal_event_types={TERMINAL_TYPE}, grace=0.5)
+    engine_thread = threading.Thread(
+        target=lambda: engine.run(source, sink=dashboard.sink), daemon=True)
+    engine_thread.start()
 
-    drive(svc)
+    def traffic():
+        # A healthy booking: reserve -> confirm -> check in -> attended.
+        svc.reserve("B-1001", "M-1", "C-1"); time.sleep(0.4)
+        svc.confirm("B-1001", "M-1", "C-1"); time.sleep(0.4)
 
-    # Keep the process (and the page) alive long enough for the 15s promotion
-    # deadline to fire and for you to explore. Ctrl-C to stop.
-    print("seeding done. the promotion deadline will fire ~15s after promote; "
-          "leaving the monitor up. Ctrl-C to quit.")
+        # A waitlisted booking promoted and confirmed IN TIME (satisfies 04).
+        svc.reserve("B-1002", "M-2", "C-1"); time.sleep(0.3)
+        svc.waitlist("B-1002"); time.sleep(0.3)
+        svc.promote("B-1002"); time.sleep(0.3)
+
+        # The nightmare: a booking cancelled, then someone checks in anyway.
+        svc.reserve("B-1004", "M-4", "C-3"); time.sleep(0.3)
+        svc.confirm("B-1004", "M-4", "C-3"); time.sleep(0.3)
+
+        # A member who owes a balance, then a booking gets confirmed for them.
+        svc.incur_balance("M-7"); time.sleep(0.3)
+        svc.reserve("B-1007", "M-7", "C-5"); time.sleep(0.3)
+
+        # The booking whose promotion will TIME OUT: promote and then leave it.
+        # The engine's timer fires the violation ~15s later, with nothing else
+        # needing to happen - the absence is the violation.
+        svc.reserve("B-1003", "M-3", "C-2"); time.sleep(0.3)
+        svc.waitlist("B-1003"); time.sleep(0.3)
+        svc.promote("B-1003"); time.sleep(0.6)
+
+        # Finish the healthy flows.
+        svc.check_in("B-1001"); time.sleep(0.4)
+        svc.mark_attended("B-1001"); time.sleep(0.4)
+        svc.confirm("B-1002", "M-2", "C-1"); time.sleep(0.3)
+        svc.check_in("B-1002"); time.sleep(0.3)
+        svc.mark_attended("B-1002"); time.sleep(0.3)
+
+        # The forbidden confirmation while the balance is still owed (violates 03).
+        svc.confirm("B-1007", "M-7", "C-5"); time.sleep(0.4)
+
+        # Spring the nightmare: check in the already-cancelled booking (violates 01).
+        svc.cancel("B-1004"); time.sleep(0.6)
+        svc.check_in("B-1004")
+        # ...and now everyone waits for B-1003's 15s promotion timer to fire.
+
+    threading.Thread(target=traffic, daemon=True).start()
+
     try:
-        while True:
-            time.sleep(1.0)
+        time.sleep(args.seconds)
     except KeyboardInterrupt:
-        print("\nstopping.")
-        source.close()
+        pass
+    source.close()
+    engine_thread.join(timeout=5)
+    dashboard.stop()
+    recorder.close()
+    counts = dashboard.state()["counts"]
+    print(f"done: {engine.verdicts_delivered} verdicts delivered "
+          f"({counts['violations']} violations)")
     return 0
 
 

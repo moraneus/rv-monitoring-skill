@@ -1,0 +1,44 @@
+{"type": "booking.status", "event_time": 0.0, "bindings": {"booking_id": "B-1001"}, "payload": {"status": "reserved", "member_id": "M-1", "class_id": "C-1"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 2.0, "bindings": {"booking_id": "B-1001"}, "payload": {"status": "confirmed", "member_id": "M-1", "class_id": "C-1"}, "source": "booking-service"}
+{"type": "member.booking_confirmed", "event_time": 2.0, "bindings": {"member_id": "M-1"}, "payload": {"booking_id": "B-1001"}, "source": "booking-service"}
+{"type": "seat.confirmed", "event_time": 2.0, "bindings": {"member_id": "M-1", "class_id": "C-1"}, "payload": {"booking_id": "B-1001"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 4.0, "bindings": {"booking_id": "B-1001"}, "payload": {"status": "checked_in"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 6.0, "bindings": {"booking_id": "B-1001"}, "payload": {"status": "attended"}, "source": "booking-service"}
+{"type": "booking.done", "event_time": 6.001, "bindings": {"booking_id": "B-1001"}, "payload": {}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 8.0, "bindings": {"booking_id": "B-1002"}, "payload": {"status": "reserved", "member_id": "M-2", "class_id": "C-1"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 9.0, "bindings": {"booking_id": "B-1002"}, "payload": {"status": "waitlisted"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 10.0, "bindings": {"booking_id": "B-1002"}, "payload": {"status": "promoted"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 15.0, "bindings": {"booking_id": "B-1002"}, "payload": {"status": "confirmed", "member_id": "M-2", "class_id": "C-1"}, "source": "booking-service"}
+{"type": "member.booking_confirmed", "event_time": 15.0, "bindings": {"member_id": "M-2"}, "payload": {"booking_id": "B-1002"}, "source": "booking-service"}
+{"type": "seat.confirmed", "event_time": 15.0, "bindings": {"member_id": "M-2", "class_id": "C-1"}, "payload": {"booking_id": "B-1002"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 17.0, "bindings": {"booking_id": "B-1002"}, "payload": {"status": "checked_in"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 19.0, "bindings": {"booking_id": "B-1002"}, "payload": {"status": "attended"}, "source": "booking-service"}
+{"type": "booking.done", "event_time": 19.001, "bindings": {"booking_id": "B-1002"}, "payload": {}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 21.0, "bindings": {"booking_id": "B-1003"}, "payload": {"status": "reserved", "member_id": "M-3", "class_id": "C-2"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 22.0, "bindings": {"booking_id": "B-1003"}, "payload": {"status": "waitlisted"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 23.0, "bindings": {"booking_id": "B-1003"}, "payload": {"status": "promoted"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 43.0, "bindings": {"booking_id": "B-1004"}, "payload": {"status": "reserved", "member_id": "M-4", "class_id": "C-3"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 45.0, "bindings": {"booking_id": "B-1004"}, "payload": {"status": "confirmed", "member_id": "M-4", "class_id": "C-3"}, "source": "booking-service"}
+{"type": "member.booking_confirmed", "event_time": 45.0, "bindings": {"member_id": "M-4"}, "payload": {"booking_id": "B-1004"}, "source": "booking-service"}
+{"type": "seat.confirmed", "event_time": 45.0, "bindings": {"member_id": "M-4", "class_id": "C-3"}, "payload": {"booking_id": "B-1004"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 47.0, "bindings": {"booking_id": "B-1004"}, "payload": {"status": "cancelled"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 49.0, "bindings": {"booking_id": "B-1004"}, "payload": {"status": "checked_in"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 51.0, "bindings": {"booking_id": "B-1005"}, "payload": {"status": "reserved", "member_id": "M-5", "class_id": "C-3"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 53.0, "bindings": {"booking_id": "B-1005"}, "payload": {"status": "checked_in"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 55.0, "bindings": {"booking_id": "B-1006"}, "payload": {"status": "reserved", "member_id": "M-6", "class_id": "C-4"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 57.0, "bindings": {"booking_id": "B-1006"}, "payload": {"status": "confirmed", "member_id": "M-6", "class_id": "C-4"}, "source": "booking-service"}
+{"type": "member.booking_confirmed", "event_time": 57.0, "bindings": {"member_id": "M-6"}, "payload": {"booking_id": "B-1006"}, "source": "booking-service"}
+{"type": "seat.confirmed", "event_time": 57.0, "bindings": {"member_id": "M-6", "class_id": "C-4"}, "payload": {"booking_id": "B-1006"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 59.0, "bindings": {"booking_id": "B-1006"}, "payload": {"status": "attended"}, "source": "booking-service"}
+{"type": "booking.done", "event_time": 59.001, "bindings": {"booking_id": "B-1006"}, "payload": {}, "source": "booking-service"}
+{"type": "member.balance", "event_time": 61.0, "bindings": {"member_id": "M-7"}, "payload": {"state": "owed"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 62.0, "bindings": {"booking_id": "B-1007"}, "payload": {"status": "reserved", "member_id": "M-7", "class_id": "C-5"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 63.0, "bindings": {"booking_id": "B-1007"}, "payload": {"status": "confirmed", "member_id": "M-7", "class_id": "C-5"}, "source": "booking-service"}
+{"type": "member.booking_confirmed", "event_time": 63.0, "bindings": {"member_id": "M-7"}, "payload": {"booking_id": "B-1007"}, "source": "booking-service"}
+{"type": "seat.confirmed", "event_time": 63.0, "bindings": {"member_id": "M-7", "class_id": "C-5"}, "payload": {"booking_id": "B-1007"}, "source": "booking-service"}
+{"type": "member.balance", "event_time": 65.0, "bindings": {"member_id": "M-8"}, "payload": {"state": "owed"}, "source": "booking-service"}
+{"type": "member.balance", "event_time": 66.0, "bindings": {"member_id": "M-8"}, "payload": {"state": "settled"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 67.0, "bindings": {"booking_id": "B-1008"}, "payload": {"status": "reserved", "member_id": "M-8", "class_id": "C-5"}, "source": "booking-service"}
+{"type": "booking.status", "event_time": 68.0, "bindings": {"booking_id": "B-1008"}, "payload": {"status": "confirmed", "member_id": "M-8", "class_id": "C-5"}, "source": "booking-service"}
+{"type": "member.booking_confirmed", "event_time": 68.0, "bindings": {"member_id": "M-8"}, "payload": {"booking_id": "B-1008"}, "source": "booking-service"}
+{"type": "seat.confirmed", "event_time": 68.0, "bindings": {"member_id": "M-8", "class_id": "C-5"}, "payload": {"booking_id": "B-1008"}, "source": "booking-service"}
