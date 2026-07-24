@@ -55,7 +55,11 @@ cannot drift; treat a hand edit to it as a bug.
    user; `catalog save` only for intended contract changes, committed
    together.
 6. `replay_check.py` green (expectations updated only for intended
-   behaviour changes, stated in the report).
+   behaviour changes, stated in the report). The scripted traffic MUST
+   include every normal flow the user described, and those healthy flows
+   must produce ZERO violations - a violation on a described healthy flow
+   is a rule conflict to surface with options (see the joint-satisfiability
+   rule in policy-authoring.md), never a count to accept into the pins.
 7. Traces refreshed if the event vocabulary grew (`--trace` liveness stays
    meaningful only on representative streams).
 8. If the change touched a live entry point: the dashboard is wired

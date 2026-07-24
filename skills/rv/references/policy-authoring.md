@@ -33,6 +33,18 @@ retiring unwiped violates the second. Verify empirically (run the compiled
 policies over the described flows), and surface any conflict with concrete
 options BEFORE the policies ship - the user chooses the resolution; a
 conflict discovered by a production violation is a failure of this step.
+The replay gate enforces this mechanically: every described healthy flow
+belongs in ``replay_check.py``'s scripted traffic with zero violations
+expected, so a jointly-unsatisfiable rule set turns the gate red at build
+time instead of paging someone in production.
+
+**Blind spots are contract.** A policy only sees the event types its
+steps observe; everything else bypasses it. Whenever plain language
+suggests total coverage ("nothing else may happen", "only ever", "at
+every step") - the `since`, `always holds`, and scoped `never` forms -
+state in your report which event types the policy observes and which
+bypass it ("retirement is a separate event type and is invisible to this
+rule"), so the user learns the boundary from you, not from an incident.
 
 **Key projection.** Before declaring a rule cross-entity, check whether it
 becomes per-entity under a DIFFERENT correlation key. "A fined member's
@@ -43,6 +55,15 @@ is "paid_off"` / `Then a member renews a loan never happens`. Adding an
 emission under the right key is additive instrumentation, not reshaping.
 Flag the added event in your report as part of the proposal, so the user
 can reject the extra surface along with the policy.
+
+**Occurrence keying.** A `never happens` prohibition settles at its first
+violation, so a singleton entity alerts once, ever. When the user wants an
+alert PER occurrence (each attack wave, each breach episode), key the
+event by the occurrence instead of the singleton: the app stamps each
+episode with a fresh id (`wave_id`) and emits under that key, every
+episode becomes a new entity whose policy violates exactly once, and the
+quiescence TTL reclaims old episodes. Alert-per-wave, still fully
+in-fragment.
 
 ## File and naming conventions
 

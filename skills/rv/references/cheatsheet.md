@@ -85,7 +85,7 @@ recorder = TraceRecorder("monitoring/traces/live_session.jsonl", clock=clock)
 # verdicts reproducible on replay instead of replaying as pending
 service = Service(lambda e: source.push(dashboard.tap(recorder(e))),
                   clock=clock)
-url = dashboard.start(port=7007)
+url = dashboard.start(port=7007)               # port=0 lets the OS pick one
 print("live monitor:", url)                    # always tell the user this URL
 engine.run(source, sink=dashboard.sink)        # live verdict delivery
 ```

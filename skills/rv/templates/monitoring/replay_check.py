@@ -4,8 +4,12 @@ policies, exit-coded for CI.
     python monitoring/replay_check.py     # exit 1 on unexpected verdicts
 
 Maintain ``simulate_traffic`` alongside the application: every seeded flow
-(healthy and faulty) with ``clock.tick`` between ordered actions. Update
-EXPECTED only for intended behaviour changes, and say so in the commit.
+(healthy and faulty) with ``clock.tick`` between ordered actions. Include
+EVERY normal flow the user described - those must produce zero violations;
+a violation on a described healthy flow means the policies jointly forbid
+a lifecycle the user relies on, which is a rule conflict to surface, never
+a count to pin. Update EXPECTED only for intended behaviour changes, and
+say so in the commit.
 """
 
 from __future__ import annotations

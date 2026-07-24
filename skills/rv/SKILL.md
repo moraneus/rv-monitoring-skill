@@ -113,7 +113,11 @@ request against existing code:
    way, quote the pre-save diff output verbatim in your report.
 6. **Report.** Use this skeleton every time - fill every line ("none" is a
    valid value); the diff/replay lines quote the tools, not your summary of
-   them:
+   them. A build-time modeling decision that NARROWS what the user can
+   later express - terminal-event choices, event granularity, key
+   structure - may be made on your judgment, but the report must name it
+   as a decision AND state the rejected alternative, so the user can
+   reverse it cheaply:
 
    ```markdown
    ## Monitoring report - <the change>
