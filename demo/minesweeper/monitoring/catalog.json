@@ -1,0 +1,474 @@
+{
+  "app_surface": [
+    {
+      "binding_keys": [
+        "game_id"
+      ],
+      "event_type": "game.started",
+      "function": "Minesweeper.__init__",
+      "module": "minesweeper",
+      "payload_fields": [
+        "cols",
+        "mines",
+        "rows"
+      ],
+      "referenced_constants": {
+        "minesweeper.COLS": "8",
+        "minesweeper.GAME_STARTED": "'game.started'",
+        "minesweeper.MINES": "10",
+        "minesweeper.ROWS": "8",
+        "minesweeper.SOURCE": "'minesweeper'"
+      },
+      "rename_fingerprint": "e02cd6a57832fc06",
+      "site_id": "minesweeper.Minesweeper.__init__#1",
+      "slice_fingerprint": "e02cd6a57832fc06",
+      "slice_functions": {
+        "minesweeper.Minesweeper.__init__": "fa58cbac648b2172"
+      },
+      "unresolved_calls": [
+        "random.Random",
+        "rng.sample",
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "game_id"
+      ],
+      "event_type": "game.over",
+      "function": "Minesweeper._check_win",
+      "module": "minesweeper",
+      "payload_fields": [
+        "result"
+      ],
+      "referenced_constants": {
+        "minesweeper.CELL_REVEAL": "'cell.reveal'",
+        "minesweeper.CELL_REVEALED": "'cell.revealed'",
+        "minesweeper.COLS": "8",
+        "minesweeper.GAME_OVER": "'game.over'",
+        "minesweeper.GAME_STARTED": "'game.started'",
+        "minesweeper.MINES": "10",
+        "minesweeper.MINE_EXPLODED": "'mine.exploded'",
+        "minesweeper.ROWS": "8",
+        "minesweeper.SOURCE": "'minesweeper'"
+      },
+      "rename_fingerprint": "d54a492821f9c599",
+      "site_id": "minesweeper.Minesweeper._check_win#1",
+      "slice_fingerprint": "63417f17b39eaa9b",
+      "slice_functions": {
+        "minesweeper.Minesweeper.__init__": "fa58cbac648b2172",
+        "minesweeper.Minesweeper._adjacent_mines": "e420ac2405f12573",
+        "minesweeper.Minesweeper._check_win": "2a42f65d20fb8bca",
+        "minesweeper.Minesweeper._neighbors": "76198d55c119b11e",
+        "minesweeper.Minesweeper._reveal_cell": "2965709217ec329b",
+        "minesweeper.Minesweeper.reveal": "afe69244bce04605",
+        "minesweeper._cell_id": "84d0b7490899de3f"
+      },
+      "unresolved_calls": [
+        "random.Random",
+        "rng.sample",
+        "self._clock",
+        "self._emit",
+        "self.revealed.add"
+      ]
+    },
+    {
+      "binding_keys": [
+        "cell",
+        "game_id"
+      ],
+      "event_type": "cell.reveal",
+      "function": "Minesweeper._reveal_cell",
+      "module": "minesweeper",
+      "payload_fields": [
+        "col",
+        "mine",
+        "row"
+      ],
+      "referenced_constants": {
+        "minesweeper.CELL_REVEAL": "'cell.reveal'",
+        "minesweeper.CELL_REVEALED": "'cell.revealed'",
+        "minesweeper.COLS": "8",
+        "minesweeper.GAME_OVER": "'game.over'",
+        "minesweeper.GAME_STARTED": "'game.started'",
+        "minesweeper.MINES": "10",
+        "minesweeper.MINE_EXPLODED": "'mine.exploded'",
+        "minesweeper.ROWS": "8",
+        "minesweeper.SOURCE": "'minesweeper'"
+      },
+      "rename_fingerprint": "d54a492821f9c599",
+      "site_id": "minesweeper.Minesweeper._reveal_cell#1",
+      "slice_fingerprint": "63417f17b39eaa9b",
+      "slice_functions": {
+        "minesweeper.Minesweeper.__init__": "fa58cbac648b2172",
+        "minesweeper.Minesweeper._adjacent_mines": "e420ac2405f12573",
+        "minesweeper.Minesweeper._check_win": "2a42f65d20fb8bca",
+        "minesweeper.Minesweeper._neighbors": "76198d55c119b11e",
+        "minesweeper.Minesweeper._reveal_cell": "2965709217ec329b",
+        "minesweeper.Minesweeper.reveal": "afe69244bce04605",
+        "minesweeper._cell_id": "84d0b7490899de3f"
+      },
+      "unresolved_calls": [
+        "random.Random",
+        "rng.sample",
+        "self._clock",
+        "self._emit",
+        "self.revealed.add"
+      ]
+    },
+    {
+      "binding_keys": [
+        "game_id"
+      ],
+      "event_type": "mine.exploded",
+      "function": "Minesweeper._reveal_cell",
+      "module": "minesweeper",
+      "payload_fields": [
+        "cell"
+      ],
+      "referenced_constants": {
+        "minesweeper.CELL_REVEAL": "'cell.reveal'",
+        "minesweeper.CELL_REVEALED": "'cell.revealed'",
+        "minesweeper.COLS": "8",
+        "minesweeper.GAME_OVER": "'game.over'",
+        "minesweeper.GAME_STARTED": "'game.started'",
+        "minesweeper.MINES": "10",
+        "minesweeper.MINE_EXPLODED": "'mine.exploded'",
+        "minesweeper.ROWS": "8",
+        "minesweeper.SOURCE": "'minesweeper'"
+      },
+      "rename_fingerprint": "d54a492821f9c599",
+      "site_id": "minesweeper.Minesweeper._reveal_cell#2",
+      "slice_fingerprint": "63417f17b39eaa9b",
+      "slice_functions": {
+        "minesweeper.Minesweeper.__init__": "fa58cbac648b2172",
+        "minesweeper.Minesweeper._adjacent_mines": "e420ac2405f12573",
+        "minesweeper.Minesweeper._check_win": "2a42f65d20fb8bca",
+        "minesweeper.Minesweeper._neighbors": "76198d55c119b11e",
+        "minesweeper.Minesweeper._reveal_cell": "2965709217ec329b",
+        "minesweeper.Minesweeper.reveal": "afe69244bce04605",
+        "minesweeper._cell_id": "84d0b7490899de3f"
+      },
+      "unresolved_calls": [
+        "random.Random",
+        "rng.sample",
+        "self._clock",
+        "self._emit",
+        "self.revealed.add"
+      ]
+    },
+    {
+      "binding_keys": [
+        "game_id"
+      ],
+      "event_type": "game.over",
+      "function": "Minesweeper._reveal_cell",
+      "module": "minesweeper",
+      "payload_fields": [
+        "result"
+      ],
+      "referenced_constants": {
+        "minesweeper.CELL_REVEAL": "'cell.reveal'",
+        "minesweeper.CELL_REVEALED": "'cell.revealed'",
+        "minesweeper.COLS": "8",
+        "minesweeper.GAME_OVER": "'game.over'",
+        "minesweeper.GAME_STARTED": "'game.started'",
+        "minesweeper.MINES": "10",
+        "minesweeper.MINE_EXPLODED": "'mine.exploded'",
+        "minesweeper.ROWS": "8",
+        "minesweeper.SOURCE": "'minesweeper'"
+      },
+      "rename_fingerprint": "d54a492821f9c599",
+      "site_id": "minesweeper.Minesweeper._reveal_cell#3",
+      "slice_fingerprint": "63417f17b39eaa9b",
+      "slice_functions": {
+        "minesweeper.Minesweeper.__init__": "fa58cbac648b2172",
+        "minesweeper.Minesweeper._adjacent_mines": "e420ac2405f12573",
+        "minesweeper.Minesweeper._check_win": "2a42f65d20fb8bca",
+        "minesweeper.Minesweeper._neighbors": "76198d55c119b11e",
+        "minesweeper.Minesweeper._reveal_cell": "2965709217ec329b",
+        "minesweeper.Minesweeper.reveal": "afe69244bce04605",
+        "minesweeper._cell_id": "84d0b7490899de3f"
+      },
+      "unresolved_calls": [
+        "random.Random",
+        "rng.sample",
+        "self._clock",
+        "self._emit",
+        "self.revealed.add"
+      ]
+    },
+    {
+      "binding_keys": [
+        "cell",
+        "game_id"
+      ],
+      "event_type": "cell.revealed",
+      "function": "Minesweeper._reveal_cell",
+      "module": "minesweeper",
+      "payload_fields": [
+        "adjacent",
+        "col",
+        "row"
+      ],
+      "referenced_constants": {
+        "minesweeper.CELL_REVEAL": "'cell.reveal'",
+        "minesweeper.CELL_REVEALED": "'cell.revealed'",
+        "minesweeper.COLS": "8",
+        "minesweeper.GAME_OVER": "'game.over'",
+        "minesweeper.GAME_STARTED": "'game.started'",
+        "minesweeper.MINES": "10",
+        "minesweeper.MINE_EXPLODED": "'mine.exploded'",
+        "minesweeper.ROWS": "8",
+        "minesweeper.SOURCE": "'minesweeper'"
+      },
+      "rename_fingerprint": "d54a492821f9c599",
+      "site_id": "minesweeper.Minesweeper._reveal_cell#4",
+      "slice_fingerprint": "63417f17b39eaa9b",
+      "slice_functions": {
+        "minesweeper.Minesweeper.__init__": "fa58cbac648b2172",
+        "minesweeper.Minesweeper._adjacent_mines": "e420ac2405f12573",
+        "minesweeper.Minesweeper._check_win": "2a42f65d20fb8bca",
+        "minesweeper.Minesweeper._neighbors": "76198d55c119b11e",
+        "minesweeper.Minesweeper._reveal_cell": "2965709217ec329b",
+        "minesweeper.Minesweeper.reveal": "afe69244bce04605",
+        "minesweeper._cell_id": "84d0b7490899de3f"
+      },
+      "unresolved_calls": [
+        "random.Random",
+        "rng.sample",
+        "self._clock",
+        "self._emit",
+        "self.revealed.add"
+      ]
+    },
+    {
+      "binding_keys": [
+        "game_id"
+      ],
+      "event_type": "flag.removed",
+      "function": "Minesweeper.flag",
+      "module": "minesweeper",
+      "payload_fields": [
+        "cell",
+        "flags",
+        "mines"
+      ],
+      "referenced_constants": {
+        "minesweeper.CELL_REVEAL": "'cell.reveal'",
+        "minesweeper.CELL_REVEALED": "'cell.revealed'",
+        "minesweeper.COLS": "8",
+        "minesweeper.FLAG_PLACED": "'flag.placed'",
+        "minesweeper.FLAG_REMOVED": "'flag.removed'",
+        "minesweeper.GAME_OVER": "'game.over'",
+        "minesweeper.GAME_STARTED": "'game.started'",
+        "minesweeper.MINES": "10",
+        "minesweeper.MINE_EXPLODED": "'mine.exploded'",
+        "minesweeper.ROWS": "8",
+        "minesweeper.SOURCE": "'minesweeper'"
+      },
+      "rename_fingerprint": "0ce0c44ea7885fc3",
+      "site_id": "minesweeper.Minesweeper.flag#1",
+      "slice_fingerprint": "4a1711c397915a56",
+      "slice_functions": {
+        "minesweeper.Minesweeper.__init__": "fa58cbac648b2172",
+        "minesweeper.Minesweeper._adjacent_mines": "e420ac2405f12573",
+        "minesweeper.Minesweeper._check_win": "2a42f65d20fb8bca",
+        "minesweeper.Minesweeper._neighbors": "76198d55c119b11e",
+        "minesweeper.Minesweeper._reveal_cell": "2965709217ec329b",
+        "minesweeper.Minesweeper.flag": "b255e2d8992233de",
+        "minesweeper.Minesweeper.reveal": "afe69244bce04605",
+        "minesweeper._cell_id": "84d0b7490899de3f"
+      },
+      "unresolved_calls": [
+        "random.Random",
+        "rng.sample",
+        "self._clock",
+        "self._emit",
+        "self.flagged.add",
+        "self.flagged.discard",
+        "self.revealed.add"
+      ]
+    },
+    {
+      "binding_keys": [
+        "game_id"
+      ],
+      "event_type": "flag.placed",
+      "function": "Minesweeper.flag",
+      "module": "minesweeper",
+      "payload_fields": [
+        "cell",
+        "flags",
+        "mines"
+      ],
+      "referenced_constants": {
+        "minesweeper.CELL_REVEAL": "'cell.reveal'",
+        "minesweeper.CELL_REVEALED": "'cell.revealed'",
+        "minesweeper.COLS": "8",
+        "minesweeper.FLAG_PLACED": "'flag.placed'",
+        "minesweeper.FLAG_REMOVED": "'flag.removed'",
+        "minesweeper.GAME_OVER": "'game.over'",
+        "minesweeper.GAME_STARTED": "'game.started'",
+        "minesweeper.MINES": "10",
+        "minesweeper.MINE_EXPLODED": "'mine.exploded'",
+        "minesweeper.ROWS": "8",
+        "minesweeper.SOURCE": "'minesweeper'"
+      },
+      "rename_fingerprint": "0ce0c44ea7885fc3",
+      "site_id": "minesweeper.Minesweeper.flag#2",
+      "slice_fingerprint": "4a1711c397915a56",
+      "slice_functions": {
+        "minesweeper.Minesweeper.__init__": "fa58cbac648b2172",
+        "minesweeper.Minesweeper._adjacent_mines": "e420ac2405f12573",
+        "minesweeper.Minesweeper._check_win": "2a42f65d20fb8bca",
+        "minesweeper.Minesweeper._neighbors": "76198d55c119b11e",
+        "minesweeper.Minesweeper._reveal_cell": "2965709217ec329b",
+        "minesweeper.Minesweeper.flag": "b255e2d8992233de",
+        "minesweeper.Minesweeper.reveal": "afe69244bce04605",
+        "minesweeper._cell_id": "84d0b7490899de3f"
+      },
+      "unresolved_calls": [
+        "random.Random",
+        "rng.sample",
+        "self._clock",
+        "self._emit",
+        "self.flagged.add",
+        "self.flagged.discard",
+        "self.revealed.add"
+      ]
+    }
+  ],
+  "catalog_format_version": 3,
+  "entries": [
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "the game has started",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "e6d1803c0e9d30a7",
+        "correlation_key": [
+          "game_id"
+        ],
+        "event_type": "game.started",
+        "helper_hashes": {},
+        "payload_fields": {},
+        "referenced_fields": [],
+        "trigger_condition": "the game has started",
+        "unresolved_calls": []
+      },
+      "step_id": "game.lifecycle.started",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a mine explodes",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "f4aab224df0bd03b",
+        "correlation_key": [
+          "game_id"
+        ],
+        "event_type": "mine.exploded",
+        "helper_hashes": {},
+        "payload_fields": {},
+        "referenced_fields": [],
+        "trigger_condition": "a mine explodes",
+        "unresolved_calls": []
+      },
+      "step_id": "game.mine.exploded",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a cell is revealed",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "b485d93bae5f2eae",
+        "correlation_key": [
+          "game_id"
+        ],
+        "event_type": "cell.reveal",
+        "helper_hashes": {},
+        "payload_fields": {},
+        "referenced_fields": [],
+        "trigger_condition": "a cell is revealed",
+        "unresolved_calls": []
+      },
+      "step_id": "game.cell.reveal",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "the same cell has been revealed",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "e9b10af023c9386a",
+        "correlation_key": [
+          "game_id",
+          "cell"
+        ],
+        "event_type": "cell.revealed",
+        "helper_hashes": {},
+        "payload_fields": {},
+        "referenced_fields": [],
+        "trigger_condition": "the same cell has been revealed",
+        "unresolved_calls": []
+      },
+      "step_id": "cell.state.revealed",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "the same cell is revealed again",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "b485d93bae5f2eae",
+        "correlation_key": [
+          "game_id",
+          "cell"
+        ],
+        "event_type": "cell.reveal",
+        "helper_hashes": {},
+        "payload_fields": {},
+        "referenced_fields": [],
+        "trigger_condition": "the same cell is revealed again",
+        "unresolved_calls": []
+      },
+      "step_id": "cell.reveal.repeat",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "more flags are planted than there are mines",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "3c8d025f0dfb9d64",
+        "correlation_key": [
+          "game_id"
+        ],
+        "event_type": "flag.placed",
+        "helper_hashes": {},
+        "payload_fields": {
+          "flags": "any",
+          "mines": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "more flags are planted than there are mines",
+        "unresolved_calls": [
+          "get",
+          "int"
+        ]
+      },
+      "step_id": "game.flags.exceed_mines",
+      "version": 1
+    }
+  ]
+}

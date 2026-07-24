@@ -1,0 +1,464 @@
+{
+  "app_surface": [
+    {
+      "binding_keys": [
+        "game_id"
+      ],
+      "event_type": "game.move",
+      "function": "TicTacToeService._emit_move",
+      "module": "game_service",
+      "payload_fields": [
+        "cell",
+        "player",
+        "prev_player"
+      ],
+      "referenced_constants": {
+        "game_service.ABANDONED": "'abandoned'",
+        "game_service.DRAW": "'draw'",
+        "game_service.ENDED_TYPE": "'game.ended'",
+        "game_service.MOVE_TYPE": "'game.move'",
+        "game_service.NONE": "'none'",
+        "game_service.O": "'O'",
+        "game_service.SOURCE": "'tictactoe'",
+        "game_service.STARTED": "'started'",
+        "game_service.STATUS_TYPE": "'game.status'",
+        "game_service.WON": "'won'",
+        "game_service.X": "'X'"
+      },
+      "rename_fingerprint": "1dcb04ae00fffbb4",
+      "site_id": "game_service.TicTacToeService._emit_move#1",
+      "slice_fingerprint": "0d25960b9b70520b",
+      "slice_functions": {
+        "game_service.TicTacToeService.__init__": "401526426e1cef9a",
+        "game_service.TicTacToeService._emit_move": "71b48b2550def92f",
+        "game_service.TicTacToeService._is_win": "8b71c5739122ead4",
+        "game_service.TicTacToeService._now": "d590af13cbe1b68e",
+        "game_service.TicTacToeService._place": "d01888a463ce4926",
+        "game_service.TicTacToeService.end_game": "3ff5b27dc716d6dd",
+        "game_service.TicTacToeService.force_move": "747144706c7b1c81",
+        "game_service.TicTacToeService.new_game": "d1f04c08685be398",
+        "game_service.TicTacToeService.play": "ab2608e2bc8398fd"
+      },
+      "unresolved_calls": [
+        "_Game",
+        "self._clock",
+        "self._emit",
+        "self._games.get",
+        "self._games.pop"
+      ]
+    },
+    {
+      "binding_keys": [
+        "game_id"
+      ],
+      "event_type": "game.status",
+      "function": "TicTacToeService._place",
+      "module": "game_service",
+      "payload_fields": [
+        "state",
+        "winner"
+      ],
+      "referenced_constants": {
+        "game_service.ABANDONED": "'abandoned'",
+        "game_service.DRAW": "'draw'",
+        "game_service.ENDED_TYPE": "'game.ended'",
+        "game_service.MOVE_TYPE": "'game.move'",
+        "game_service.NONE": "'none'",
+        "game_service.O": "'O'",
+        "game_service.SOURCE": "'tictactoe'",
+        "game_service.STARTED": "'started'",
+        "game_service.STATUS_TYPE": "'game.status'",
+        "game_service.WON": "'won'",
+        "game_service.X": "'X'"
+      },
+      "rename_fingerprint": "1dcb04ae00fffbb4",
+      "site_id": "game_service.TicTacToeService._place#1",
+      "slice_fingerprint": "0d25960b9b70520b",
+      "slice_functions": {
+        "game_service.TicTacToeService.__init__": "401526426e1cef9a",
+        "game_service.TicTacToeService._emit_move": "71b48b2550def92f",
+        "game_service.TicTacToeService._is_win": "8b71c5739122ead4",
+        "game_service.TicTacToeService._now": "d590af13cbe1b68e",
+        "game_service.TicTacToeService._place": "d01888a463ce4926",
+        "game_service.TicTacToeService.end_game": "3ff5b27dc716d6dd",
+        "game_service.TicTacToeService.force_move": "747144706c7b1c81",
+        "game_service.TicTacToeService.new_game": "d1f04c08685be398",
+        "game_service.TicTacToeService.play": "ab2608e2bc8398fd"
+      },
+      "unresolved_calls": [
+        "_Game",
+        "self._clock",
+        "self._emit",
+        "self._games.get",
+        "self._games.pop"
+      ]
+    },
+    {
+      "binding_keys": [
+        "game_id"
+      ],
+      "event_type": "game.status",
+      "function": "TicTacToeService._place",
+      "module": "game_service",
+      "payload_fields": [
+        "state"
+      ],
+      "referenced_constants": {
+        "game_service.ABANDONED": "'abandoned'",
+        "game_service.DRAW": "'draw'",
+        "game_service.ENDED_TYPE": "'game.ended'",
+        "game_service.MOVE_TYPE": "'game.move'",
+        "game_service.NONE": "'none'",
+        "game_service.O": "'O'",
+        "game_service.SOURCE": "'tictactoe'",
+        "game_service.STARTED": "'started'",
+        "game_service.STATUS_TYPE": "'game.status'",
+        "game_service.WON": "'won'",
+        "game_service.X": "'X'"
+      },
+      "rename_fingerprint": "1dcb04ae00fffbb4",
+      "site_id": "game_service.TicTacToeService._place#2",
+      "slice_fingerprint": "0d25960b9b70520b",
+      "slice_functions": {
+        "game_service.TicTacToeService.__init__": "401526426e1cef9a",
+        "game_service.TicTacToeService._emit_move": "71b48b2550def92f",
+        "game_service.TicTacToeService._is_win": "8b71c5739122ead4",
+        "game_service.TicTacToeService._now": "d590af13cbe1b68e",
+        "game_service.TicTacToeService._place": "d01888a463ce4926",
+        "game_service.TicTacToeService.end_game": "3ff5b27dc716d6dd",
+        "game_service.TicTacToeService.force_move": "747144706c7b1c81",
+        "game_service.TicTacToeService.new_game": "d1f04c08685be398",
+        "game_service.TicTacToeService.play": "ab2608e2bc8398fd"
+      },
+      "unresolved_calls": [
+        "_Game",
+        "self._clock",
+        "self._emit",
+        "self._games.get",
+        "self._games.pop"
+      ]
+    },
+    {
+      "binding_keys": [
+        "game_id"
+      ],
+      "event_type": "game.ended",
+      "function": "TicTacToeService.end_game",
+      "module": "game_service",
+      "payload_fields": [
+        "outcome"
+      ],
+      "referenced_constants": {
+        "game_service.ABANDONED": "'abandoned'",
+        "game_service.DRAW": "'draw'",
+        "game_service.ENDED_TYPE": "'game.ended'",
+        "game_service.MOVE_TYPE": "'game.move'",
+        "game_service.NONE": "'none'",
+        "game_service.O": "'O'",
+        "game_service.SOURCE": "'tictactoe'",
+        "game_service.STARTED": "'started'",
+        "game_service.STATUS_TYPE": "'game.status'",
+        "game_service.WON": "'won'",
+        "game_service.X": "'X'"
+      },
+      "rename_fingerprint": "1dcb04ae00fffbb4",
+      "site_id": "game_service.TicTacToeService.end_game#1",
+      "slice_fingerprint": "0d25960b9b70520b",
+      "slice_functions": {
+        "game_service.TicTacToeService.__init__": "401526426e1cef9a",
+        "game_service.TicTacToeService._emit_move": "71b48b2550def92f",
+        "game_service.TicTacToeService._is_win": "8b71c5739122ead4",
+        "game_service.TicTacToeService._now": "d590af13cbe1b68e",
+        "game_service.TicTacToeService._place": "d01888a463ce4926",
+        "game_service.TicTacToeService.end_game": "3ff5b27dc716d6dd",
+        "game_service.TicTacToeService.force_move": "747144706c7b1c81",
+        "game_service.TicTacToeService.new_game": "d1f04c08685be398",
+        "game_service.TicTacToeService.play": "ab2608e2bc8398fd"
+      },
+      "unresolved_calls": [
+        "_Game",
+        "self._clock",
+        "self._emit",
+        "self._games.get",
+        "self._games.pop"
+      ]
+    },
+    {
+      "binding_keys": [
+        "game_id"
+      ],
+      "event_type": "game.status",
+      "function": "TicTacToeService.new_game",
+      "module": "game_service",
+      "payload_fields": [
+        "state"
+      ],
+      "referenced_constants": {
+        "game_service.ABANDONED": "'abandoned'",
+        "game_service.DRAW": "'draw'",
+        "game_service.ENDED_TYPE": "'game.ended'",
+        "game_service.MOVE_TYPE": "'game.move'",
+        "game_service.NONE": "'none'",
+        "game_service.O": "'O'",
+        "game_service.SOURCE": "'tictactoe'",
+        "game_service.STARTED": "'started'",
+        "game_service.STATUS_TYPE": "'game.status'",
+        "game_service.WON": "'won'",
+        "game_service.X": "'X'"
+      },
+      "rename_fingerprint": "1dcb04ae00fffbb4",
+      "site_id": "game_service.TicTacToeService.new_game#1",
+      "slice_fingerprint": "0d25960b9b70520b",
+      "slice_functions": {
+        "game_service.TicTacToeService.__init__": "401526426e1cef9a",
+        "game_service.TicTacToeService._emit_move": "71b48b2550def92f",
+        "game_service.TicTacToeService._is_win": "8b71c5739122ead4",
+        "game_service.TicTacToeService._now": "d590af13cbe1b68e",
+        "game_service.TicTacToeService._place": "d01888a463ce4926",
+        "game_service.TicTacToeService.end_game": "3ff5b27dc716d6dd",
+        "game_service.TicTacToeService.force_move": "747144706c7b1c81",
+        "game_service.TicTacToeService.new_game": "d1f04c08685be398",
+        "game_service.TicTacToeService.play": "ab2608e2bc8398fd"
+      },
+      "unresolved_calls": [
+        "_Game",
+        "self._clock",
+        "self._emit",
+        "self._games.get",
+        "self._games.pop"
+      ]
+    }
+  ],
+  "catalog_format_version": 3,
+  "entries": [
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a move is made",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "4f1562af6f2ff738",
+        "correlation_key": [
+          "game_id"
+        ],
+        "event_type": "game.move",
+        "helper_hashes": {},
+        "payload_fields": {},
+        "referenced_fields": [],
+        "trigger_condition": "a move is made",
+        "unresolved_calls": [
+          "ctx.bind"
+        ]
+      },
+      "step_id": "game.move.any",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a move is made by \"{player}\"",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "1acb3ba9eaeac7a1",
+        "correlation_key": [
+          "game_id"
+        ],
+        "event_type": "game.move",
+        "helper_hashes": {},
+        "payload_fields": {
+          "player": "any"
+        },
+        "referenced_fields": [
+          "player"
+        ],
+        "trigger_condition": "a move is made by \"{player}\"",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "game.move.byplayer",
+      "version": 1
+    },
+    {
+      "kind": "obligation",
+      "observed": false,
+      "phrasing": "the same player moves twice in a row",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "e71041ca10e5a67b",
+        "correlation_key": [
+          "game_id"
+        ],
+        "event_type": "game.move",
+        "helper_hashes": {},
+        "payload_fields": {
+          "player": "any",
+          "prev_player": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "the same player moves twice in a row",
+        "unresolved_calls": [
+          "get"
+        ]
+      },
+      "step_id": "game.move.repeat",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a game is finished",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "42d8238b6408731a",
+        "correlation_key": [
+          "game_id"
+        ],
+        "event_type": "game.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "state": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "a game is finished",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "game.status.finished",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a game is started",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "6e98dc68e96c7214",
+        "correlation_key": [
+          "game_id"
+        ],
+        "event_type": "game.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "state": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "a game is started",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "game.status.started",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a game is won",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "1662b03d1ec7ccd5",
+        "correlation_key": [
+          "game_id"
+        ],
+        "event_type": "game.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "state": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "a game is won",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "game.status.won",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a game is won by \"{player}\"",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "70b6febd05128288",
+        "correlation_key": [
+          "game_id"
+        ],
+        "event_type": "game.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "state": "any",
+          "winner": "any"
+        },
+        "referenced_fields": [
+          "player"
+        ],
+        "trigger_condition": "a game is won by \"{player}\"",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "game.status.wonby",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a game is a draw",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "aec22d4c4bd230b2",
+        "correlation_key": [
+          "game_id"
+        ],
+        "event_type": "game.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "state": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "a game is a draw",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "game.status.draw",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a game ends as \"{outcome}\"",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "91ec8868abef2e69",
+        "correlation_key": [
+          "game_id"
+        ],
+        "event_type": "game.ended",
+        "helper_hashes": {},
+        "payload_fields": {
+          "outcome": "any"
+        },
+        "referenced_fields": [
+          "outcome"
+        ],
+        "trigger_condition": "a game ends as \"{outcome}\"",
+        "unresolved_calls": [
+          "ctx.bind",
+          "get"
+        ]
+      },
+      "step_id": "game.ended.outcome",
+      "version": 1
+    }
+  ]
+}

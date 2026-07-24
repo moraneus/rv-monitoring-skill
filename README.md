@@ -114,21 +114,23 @@ skills/rv/templates/          the monitoring/ scaffold installed into
                               gate, STEPS.md generator, CI snippet
 docs/HOW_IT_WORKS.md          the complete guide to the skill and the
                               behave-rv machinery behind it
-demo/                         four projects built end-to-end BY agents
-                              using this skill (prompts included); their
-                              gates run in CI
+demo/                         nine projects built end-to-end BY agents
+                              using this skill (prompts included) - four
+                              services and five browser games with live
+                              RV dashboards; all gates run in CI
 test/e2e.sh                   end-to-end validation of the templates and
                               gates against the published behave-rv package
 ```
 
 The demos are also the proof: [demo/README.md](demo/README.md) indexes
-four projects, each testing a different part of the skill - the full
-development loop and break protocol (lending), brownfield instrumentation
-and the alias flow (parcels), the /rv consultation (bookings), and
-operator coverage with the honest refusal of an out-of-fragment rule plus
-a user-driven policy repair of two contradictory rules (devices). Each
-project's PROMPTS.md holds the exact human prompts that produced every
-file in it.
+nine projects, each testing a different part of the skill - four services
+(the full development loop and break protocol, brownfield instrumentation
+and the alias flow, the /rv consultation, and conflict detection with a
+user-driven policy repair) and five browser games (snake, blackjack,
+minesweeper, tic-tac-toe, memory) that ship with live RV dashboards and
+in-browser cheat injection, covering the terminal-window, at-most-once,
+history-stamping, and counting-projection patterns. Each project's
+PROMPTS.md holds the exact human prompts that produced every file in it.
 
 CI runs the end-to-end validation against the real PyPI `behave-rv` on every
 push and weekly - including a check that the stability gate actually catches

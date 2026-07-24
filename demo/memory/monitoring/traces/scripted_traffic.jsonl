@@ -1,0 +1,246 @@
+{"type": "game.start", "event_time": 0.0001, "bindings": {"game_id": "G1"}, "payload": {"pairs": 8}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.05, "bindings": {"game_id": "G1", "position": 0}, "payload": {"symbol": "bee", "attempt_id": "G1-a1"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.050100000000000006, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.1, "bindings": {"game_id": "G1", "position": 1}, "payload": {"symbol": "bee", "attempt_id": "G1-a1"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.10010000000000001, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 0.10020000000000001, "bindings": {"attempt_id": "G1-a1"}, "payload": {"game_id": "G1", "first": 0, "second": 1}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.10030000000000001, "bindings": {"game_id": "G1", "position": 0}, "payload": {"symbol": "bee", "attempt_id": "G1-a1"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.10040000000000002, "bindings": {"game_id": "G1", "position": 1}, "payload": {"symbol": "bee", "attempt_id": "G1-a1"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 0.10050000000000002, "bindings": {"attempt_id": "G1-a1"}, "payload": {"game_id": "G1", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.10060000000000002, "bindings": {"game_id": "G1"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.15000000000000002, "bindings": {"game_id": "G1", "position": 3}, "payload": {"symbol": "ram", "attempt_id": "G1-a2"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.1501, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.2, "bindings": {"game_id": "G1", "position": 4}, "payload": {"symbol": "ram", "attempt_id": "G1-a2"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.2001, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 0.2002, "bindings": {"attempt_id": "G1-a2"}, "payload": {"game_id": "G1", "first": 3, "second": 4}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.20029999999999998, "bindings": {"game_id": "G1", "position": 3}, "payload": {"symbol": "ram", "attempt_id": "G1-a2"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.20039999999999997, "bindings": {"game_id": "G1", "position": 4}, "payload": {"symbol": "ram", "attempt_id": "G1-a2"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 0.20049999999999996, "bindings": {"attempt_id": "G1-a2"}, "payload": {"game_id": "G1", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.20059999999999995, "bindings": {"game_id": "G1"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.25, "bindings": {"game_id": "G1", "position": 2}, "payload": {"symbol": "fox", "attempt_id": "G1-a3"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.2501, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.3, "bindings": {"game_id": "G1", "position": 7}, "payload": {"symbol": "fox", "attempt_id": "G1-a3"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.3001, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 0.30019999999999997, "bindings": {"attempt_id": "G1-a3"}, "payload": {"game_id": "G1", "first": 2, "second": 7}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.30029999999999996, "bindings": {"game_id": "G1", "position": 2}, "payload": {"symbol": "fox", "attempt_id": "G1-a3"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.30039999999999994, "bindings": {"game_id": "G1", "position": 7}, "payload": {"symbol": "fox", "attempt_id": "G1-a3"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 0.30049999999999993, "bindings": {"attempt_id": "G1-a3"}, "payload": {"game_id": "G1", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.3005999999999999, "bindings": {"game_id": "G1"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.35, "bindings": {"game_id": "G1", "position": 6}, "payload": {"symbol": "cat", "attempt_id": "G1-a4"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.35009999999999997, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.39999999999999997, "bindings": {"game_id": "G1", "position": 9}, "payload": {"symbol": "cat", "attempt_id": "G1-a4"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.40009999999999996, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 0.40019999999999994, "bindings": {"attempt_id": "G1-a4"}, "payload": {"game_id": "G1", "first": 6, "second": 9}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.40029999999999993, "bindings": {"game_id": "G1", "position": 6}, "payload": {"symbol": "cat", "attempt_id": "G1-a4"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.4003999999999999, "bindings": {"game_id": "G1", "position": 9}, "payload": {"symbol": "cat", "attempt_id": "G1-a4"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 0.4004999999999999, "bindings": {"attempt_id": "G1-a4"}, "payload": {"game_id": "G1", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.4005999999999999, "bindings": {"game_id": "G1"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.44999999999999996, "bindings": {"game_id": "G1", "position": 8}, "payload": {"symbol": "jay", "attempt_id": "G1-a5"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.45009999999999994, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.49999999999999994, "bindings": {"game_id": "G1", "position": 10}, "payload": {"symbol": "jay", "attempt_id": "G1-a5"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.5001, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 0.5002, "bindings": {"attempt_id": "G1-a5"}, "payload": {"game_id": "G1", "first": 8, "second": 10}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.5003, "bindings": {"game_id": "G1", "position": 8}, "payload": {"symbol": "jay", "attempt_id": "G1-a5"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.5004, "bindings": {"game_id": "G1", "position": 10}, "payload": {"symbol": "jay", "attempt_id": "G1-a5"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 0.5005, "bindings": {"attempt_id": "G1-a5"}, "payload": {"game_id": "G1", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.5005999999999999, "bindings": {"game_id": "G1"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.5499999999999999, "bindings": {"game_id": "G1", "position": 5}, "payload": {"symbol": "elk", "attempt_id": "G1-a6"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.5500999999999999, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.6, "bindings": {"game_id": "G1", "position": 13}, "payload": {"symbol": "elk", "attempt_id": "G1-a6"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.6001, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 0.6002, "bindings": {"attempt_id": "G1-a6"}, "payload": {"game_id": "G1", "first": 5, "second": 13}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.6003, "bindings": {"game_id": "G1", "position": 5}, "payload": {"symbol": "elk", "attempt_id": "G1-a6"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.6003999999999999, "bindings": {"game_id": "G1", "position": 13}, "payload": {"symbol": "elk", "attempt_id": "G1-a6"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 0.6004999999999999, "bindings": {"attempt_id": "G1-a6"}, "payload": {"game_id": "G1", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.6005999999999999, "bindings": {"game_id": "G1"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.65, "bindings": {"game_id": "G1", "position": 11}, "payload": {"symbol": "owl", "attempt_id": "G1-a7"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.6501, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.7000000000000001, "bindings": {"game_id": "G1", "position": 14}, "payload": {"symbol": "owl", "attempt_id": "G1-a7"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.7001000000000001, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 0.7002, "bindings": {"attempt_id": "G1-a7"}, "payload": {"game_id": "G1", "first": 11, "second": 14}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.7003, "bindings": {"game_id": "G1", "position": 11}, "payload": {"symbol": "owl", "attempt_id": "G1-a7"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.7004, "bindings": {"game_id": "G1", "position": 14}, "payload": {"symbol": "owl", "attempt_id": "G1-a7"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 0.7005, "bindings": {"attempt_id": "G1-a7"}, "payload": {"game_id": "G1", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.7006, "bindings": {"game_id": "G1"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.7500000000000001, "bindings": {"game_id": "G1", "position": 12}, "payload": {"symbol": "koi", "attempt_id": "G1-a8"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.7501000000000001, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.8000000000000002, "bindings": {"game_id": "G1", "position": 15}, "payload": {"symbol": "koi", "attempt_id": "G1-a8"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.8001000000000001, "bindings": {"game_id": "G1"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 0.8002000000000001, "bindings": {"attempt_id": "G1-a8"}, "payload": {"game_id": "G1", "first": 12, "second": 15}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.8003000000000001, "bindings": {"game_id": "G1", "position": 12}, "payload": {"symbol": "koi", "attempt_id": "G1-a8"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.8004000000000001, "bindings": {"game_id": "G1", "position": 15}, "payload": {"symbol": "koi", "attempt_id": "G1-a8"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 0.8005000000000001, "bindings": {"attempt_id": "G1-a8"}, "payload": {"game_id": "G1", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.8006000000000001, "bindings": {"game_id": "G1"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "game.complete", "event_time": 0.8007000000000001, "bindings": {"game_id": "G1"}, "payload": {"pairs": 8}, "source": "memory-game"}
+{"type": "game.start", "event_time": 0.8008000000000001, "bindings": {"game_id": "G2"}, "payload": {"pairs": 8}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.8500000000000002, "bindings": {"game_id": "G2", "position": 5}, "payload": {"symbol": "fox", "attempt_id": "G2-a1"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.8501000000000002, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.9000000000000002, "bindings": {"game_id": "G2", "position": 6}, "payload": {"symbol": "fox", "attempt_id": "G2-a1"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.9001000000000002, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 0.9002000000000002, "bindings": {"attempt_id": "G2-a1"}, "payload": {"game_id": "G2", "first": 5, "second": 6}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.9003000000000002, "bindings": {"game_id": "G2", "position": 5}, "payload": {"symbol": "fox", "attempt_id": "G2-a1"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 0.9004000000000002, "bindings": {"game_id": "G2", "position": 6}, "payload": {"symbol": "fox", "attempt_id": "G2-a1"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 0.9005000000000002, "bindings": {"attempt_id": "G2-a1"}, "payload": {"game_id": "G2", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.9006000000000002, "bindings": {"game_id": "G2"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 0.9500000000000003, "bindings": {"game_id": "G2", "position": 1}, "payload": {"symbol": "cat", "attempt_id": "G2-a2"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 0.9501000000000003, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 1.0000000000000002, "bindings": {"game_id": "G2", "position": 7}, "payload": {"symbol": "cat", "attempt_id": "G2-a2"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.0001000000000002, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 1.0002000000000002, "bindings": {"attempt_id": "G2-a2"}, "payload": {"game_id": "G2", "first": 1, "second": 7}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 1.0003000000000002, "bindings": {"game_id": "G2", "position": 1}, "payload": {"symbol": "cat", "attempt_id": "G2-a2"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 1.0004000000000002, "bindings": {"game_id": "G2", "position": 7}, "payload": {"symbol": "cat", "attempt_id": "G2-a2"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 1.0005000000000002, "bindings": {"attempt_id": "G2-a2"}, "payload": {"game_id": "G2", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.0006000000000002, "bindings": {"game_id": "G2"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 1.0500000000000003, "bindings": {"game_id": "G2", "position": 0}, "payload": {"symbol": "koi", "attempt_id": "G2-a3"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.0501000000000003, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 1.1000000000000003, "bindings": {"game_id": "G2", "position": 9}, "payload": {"symbol": "koi", "attempt_id": "G2-a3"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.1001000000000003, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 1.1002000000000003, "bindings": {"attempt_id": "G2-a3"}, "payload": {"game_id": "G2", "first": 0, "second": 9}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 1.1003000000000003, "bindings": {"game_id": "G2", "position": 0}, "payload": {"symbol": "koi", "attempt_id": "G2-a3"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 1.1004000000000003, "bindings": {"game_id": "G2", "position": 9}, "payload": {"symbol": "koi", "attempt_id": "G2-a3"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 1.1005000000000003, "bindings": {"attempt_id": "G2-a3"}, "payload": {"game_id": "G2", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.1006000000000002, "bindings": {"game_id": "G2"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 1.1500000000000004, "bindings": {"game_id": "G2", "position": 10}, "payload": {"symbol": "bee", "attempt_id": "G2-a4"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.1501000000000003, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 1.2000000000000004, "bindings": {"game_id": "G2", "position": 11}, "payload": {"symbol": "bee", "attempt_id": "G2-a4"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.2001000000000004, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 1.2002000000000004, "bindings": {"attempt_id": "G2-a4"}, "payload": {"game_id": "G2", "first": 10, "second": 11}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 1.2003000000000004, "bindings": {"game_id": "G2", "position": 10}, "payload": {"symbol": "bee", "attempt_id": "G2-a4"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 1.2004000000000004, "bindings": {"game_id": "G2", "position": 11}, "payload": {"symbol": "bee", "attempt_id": "G2-a4"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 1.2005000000000003, "bindings": {"attempt_id": "G2-a4"}, "payload": {"game_id": "G2", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.2006000000000003, "bindings": {"game_id": "G2"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 1.2500000000000004, "bindings": {"game_id": "G2", "position": 3}, "payload": {"symbol": "elk", "attempt_id": "G2-a5"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.2501000000000004, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 1.3000000000000005, "bindings": {"game_id": "G2", "position": 12}, "payload": {"symbol": "elk", "attempt_id": "G2-a5"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.3001000000000005, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 1.3002000000000005, "bindings": {"attempt_id": "G2-a5"}, "payload": {"game_id": "G2", "first": 3, "second": 12}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 1.3003000000000005, "bindings": {"game_id": "G2", "position": 3}, "payload": {"symbol": "elk", "attempt_id": "G2-a5"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 1.3004000000000004, "bindings": {"game_id": "G2", "position": 12}, "payload": {"symbol": "elk", "attempt_id": "G2-a5"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 1.3005000000000004, "bindings": {"attempt_id": "G2-a5"}, "payload": {"game_id": "G2", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.3006000000000004, "bindings": {"game_id": "G2"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 1.3500000000000005, "bindings": {"game_id": "G2", "position": 4}, "payload": {"symbol": "ram", "attempt_id": "G2-a6"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.3501000000000005, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 1.4000000000000006, "bindings": {"game_id": "G2", "position": 13}, "payload": {"symbol": "ram", "attempt_id": "G2-a6"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.4001000000000006, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 1.4002000000000006, "bindings": {"attempt_id": "G2-a6"}, "payload": {"game_id": "G2", "first": 4, "second": 13}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 1.4003000000000005, "bindings": {"game_id": "G2", "position": 4}, "payload": {"symbol": "ram", "attempt_id": "G2-a6"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 1.4004000000000005, "bindings": {"game_id": "G2", "position": 13}, "payload": {"symbol": "ram", "attempt_id": "G2-a6"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 1.4005000000000005, "bindings": {"attempt_id": "G2-a6"}, "payload": {"game_id": "G2", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.4006000000000005, "bindings": {"game_id": "G2"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 1.4500000000000006, "bindings": {"game_id": "G2", "position": 2}, "payload": {"symbol": "jay", "attempt_id": "G2-a7"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.4501000000000006, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 1.5000000000000007, "bindings": {"game_id": "G2", "position": 14}, "payload": {"symbol": "jay", "attempt_id": "G2-a7"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.5001000000000007, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 1.5002000000000006, "bindings": {"attempt_id": "G2-a7"}, "payload": {"game_id": "G2", "first": 2, "second": 14}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 1.5003000000000006, "bindings": {"game_id": "G2", "position": 2}, "payload": {"symbol": "jay", "attempt_id": "G2-a7"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 1.5004000000000006, "bindings": {"game_id": "G2", "position": 14}, "payload": {"symbol": "jay", "attempt_id": "G2-a7"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 1.5005000000000006, "bindings": {"attempt_id": "G2-a7"}, "payload": {"game_id": "G2", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.5006000000000006, "bindings": {"game_id": "G2"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 1.5500000000000007, "bindings": {"game_id": "G2", "position": 8}, "payload": {"symbol": "owl", "attempt_id": "G2-a8"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.5501000000000007, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 1.6000000000000008, "bindings": {"game_id": "G2", "position": 15}, "payload": {"symbol": "owl", "attempt_id": "G2-a8"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.6001000000000007, "bindings": {"game_id": "G2"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 1.6002000000000007, "bindings": {"attempt_id": "G2-a8"}, "payload": {"game_id": "G2", "first": 8, "second": 15}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 1.6003000000000007, "bindings": {"game_id": "G2", "position": 8}, "payload": {"symbol": "owl", "attempt_id": "G2-a8"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 1.6004000000000007, "bindings": {"game_id": "G2", "position": 15}, "payload": {"symbol": "owl", "attempt_id": "G2-a8"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 1.6005000000000007, "bindings": {"attempt_id": "G2-a8"}, "payload": {"game_id": "G2", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 1.6006000000000007, "bindings": {"game_id": "G2"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "game.complete", "event_time": 1.6007000000000007, "bindings": {"game_id": "G2"}, "payload": {"pairs": 8}, "source": "memory-game"}
+{"type": "game.start", "event_time": 2.6000000000000005, "bindings": {"game_id": "G3"}, "payload": {"pairs": 8}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 2.6500000000000004, "bindings": {"game_id": "G3", "position": 0}, "payload": {"symbol": "koi", "attempt_id": "G3-a1"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 2.6501000000000006, "bindings": {"game_id": "G3"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 2.7, "bindings": {"game_id": "G3", "position": 4}, "payload": {"symbol": "koi", "attempt_id": "G3-a1"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 2.7001000000000004, "bindings": {"game_id": "G3"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 2.7002000000000006, "bindings": {"attempt_id": "G3-a1"}, "payload": {"game_id": "G3", "first": 0, "second": 4}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 2.700300000000001, "bindings": {"game_id": "G3", "position": 0}, "payload": {"symbol": "koi", "attempt_id": "G3-a1"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 2.700400000000001, "bindings": {"game_id": "G3", "position": 4}, "payload": {"symbol": "koi", "attempt_id": "G3-a1"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 2.7005000000000012, "bindings": {"attempt_id": "G3-a1"}, "payload": {"game_id": "G3", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 2.7006000000000014, "bindings": {"game_id": "G3"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 2.75, "bindings": {"game_id": "G3", "position": 1}, "payload": {"symbol": "cat", "attempt_id": "G3-a2"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 2.7501, "bindings": {"game_id": "G3"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 2.8, "bindings": {"game_id": "G3", "position": 5}, "payload": {"symbol": "cat", "attempt_id": "G3-a2"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 2.8001, "bindings": {"game_id": "G3"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 2.8002000000000002, "bindings": {"attempt_id": "G3-a2"}, "payload": {"game_id": "G3", "first": 1, "second": 5}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 2.8003000000000005, "bindings": {"game_id": "G3", "position": 1}, "payload": {"symbol": "cat", "attempt_id": "G3-a2"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 2.8004000000000007, "bindings": {"game_id": "G3", "position": 5}, "payload": {"symbol": "cat", "attempt_id": "G3-a2"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 2.800500000000001, "bindings": {"attempt_id": "G3-a2"}, "payload": {"game_id": "G3", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 2.800600000000001, "bindings": {"game_id": "G3"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 3.3, "bindings": {"game_id": "G3", "position": 0}, "payload": {"symbol": "koi", "attempt_id": "G3-cheat"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 4.3, "bindings": {"game_id": "G1"}, "payload": {"kind": "ghost"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 5.3, "bindings": {"game_id": "G6", "position": 0}, "payload": {"symbol": "ghost", "attempt_id": "G6-cheat"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 6.3, "bindings": {"attempt_id": "G4-hang"}, "payload": {"game_id": "G4", "first": 0, "second": 1}, "source": "memory-game"}
+{"type": "game.start", "event_time": 10.3, "bindings": {"game_id": "G5"}, "payload": {"pairs": 8}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 10.350000000000001, "bindings": {"game_id": "G5", "position": 4}, "payload": {"symbol": "owl", "attempt_id": "G5-a1"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.350100000000001, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 10.400000000000002, "bindings": {"game_id": "G5", "position": 5}, "payload": {"symbol": "owl", "attempt_id": "G5-a1"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.400100000000002, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 10.400200000000002, "bindings": {"attempt_id": "G5-a1"}, "payload": {"game_id": "G5", "first": 4, "second": 5}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 10.400300000000001, "bindings": {"game_id": "G5", "position": 4}, "payload": {"symbol": "owl", "attempt_id": "G5-a1"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 10.400400000000001, "bindings": {"game_id": "G5", "position": 5}, "payload": {"symbol": "owl", "attempt_id": "G5-a1"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 10.400500000000001, "bindings": {"attempt_id": "G5-a1"}, "payload": {"game_id": "G5", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.4006, "bindings": {"game_id": "G5"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 10.450000000000003, "bindings": {"game_id": "G5", "position": 7}, "payload": {"symbol": "jay", "attempt_id": "G5-a2"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.450100000000003, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 10.500000000000004, "bindings": {"game_id": "G5", "position": 9}, "payload": {"symbol": "jay", "attempt_id": "G5-a2"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.500100000000003, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 10.500200000000003, "bindings": {"attempt_id": "G5-a2"}, "payload": {"game_id": "G5", "first": 7, "second": 9}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 10.500300000000003, "bindings": {"game_id": "G5", "position": 7}, "payload": {"symbol": "jay", "attempt_id": "G5-a2"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 10.500400000000003, "bindings": {"game_id": "G5", "position": 9}, "payload": {"symbol": "jay", "attempt_id": "G5-a2"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 10.500500000000002, "bindings": {"attempt_id": "G5-a2"}, "payload": {"game_id": "G5", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.500600000000002, "bindings": {"game_id": "G5"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 10.550000000000004, "bindings": {"game_id": "G5", "position": 0}, "payload": {"symbol": "bee", "attempt_id": "G5-a3"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.550100000000004, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 10.600000000000005, "bindings": {"game_id": "G5", "position": 10}, "payload": {"symbol": "bee", "attempt_id": "G5-a3"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.600100000000005, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 10.600200000000005, "bindings": {"attempt_id": "G5-a3"}, "payload": {"game_id": "G5", "first": 0, "second": 10}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 10.600300000000004, "bindings": {"game_id": "G5", "position": 0}, "payload": {"symbol": "bee", "attempt_id": "G5-a3"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 10.600400000000004, "bindings": {"game_id": "G5", "position": 10}, "payload": {"symbol": "bee", "attempt_id": "G5-a3"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 10.600500000000004, "bindings": {"attempt_id": "G5-a3"}, "payload": {"game_id": "G5", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.600600000000004, "bindings": {"game_id": "G5"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 10.650000000000006, "bindings": {"game_id": "G5", "position": 6}, "payload": {"symbol": "ram", "attempt_id": "G5-a4"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.650100000000005, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 10.700000000000006, "bindings": {"game_id": "G5", "position": 11}, "payload": {"symbol": "ram", "attempt_id": "G5-a4"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.700100000000006, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 10.700200000000006, "bindings": {"attempt_id": "G5-a4"}, "payload": {"game_id": "G5", "first": 6, "second": 11}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 10.700300000000006, "bindings": {"game_id": "G5", "position": 6}, "payload": {"symbol": "ram", "attempt_id": "G5-a4"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 10.700400000000005, "bindings": {"game_id": "G5", "position": 11}, "payload": {"symbol": "ram", "attempt_id": "G5-a4"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 10.700500000000005, "bindings": {"attempt_id": "G5-a4"}, "payload": {"game_id": "G5", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.700600000000005, "bindings": {"game_id": "G5"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 10.750000000000007, "bindings": {"game_id": "G5", "position": 2}, "payload": {"symbol": "koi", "attempt_id": "G5-a5"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.750100000000007, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 10.800000000000008, "bindings": {"game_id": "G5", "position": 12}, "payload": {"symbol": "koi", "attempt_id": "G5-a5"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.800100000000008, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 10.800200000000007, "bindings": {"attempt_id": "G5-a5"}, "payload": {"game_id": "G5", "first": 2, "second": 12}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 10.800300000000007, "bindings": {"game_id": "G5", "position": 2}, "payload": {"symbol": "koi", "attempt_id": "G5-a5"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 10.800400000000007, "bindings": {"game_id": "G5", "position": 12}, "payload": {"symbol": "koi", "attempt_id": "G5-a5"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 10.800500000000007, "bindings": {"attempt_id": "G5-a5"}, "payload": {"game_id": "G5", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.800600000000006, "bindings": {"game_id": "G5"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 10.850000000000009, "bindings": {"game_id": "G5", "position": 3}, "payload": {"symbol": "elk", "attempt_id": "G5-a6"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.850100000000008, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 10.90000000000001, "bindings": {"game_id": "G5", "position": 13}, "payload": {"symbol": "elk", "attempt_id": "G5-a6"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.900100000000009, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 10.900200000000009, "bindings": {"attempt_id": "G5-a6"}, "payload": {"game_id": "G5", "first": 3, "second": 13}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 10.900300000000009, "bindings": {"game_id": "G5", "position": 3}, "payload": {"symbol": "elk", "attempt_id": "G5-a6"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 10.900400000000008, "bindings": {"game_id": "G5", "position": 13}, "payload": {"symbol": "elk", "attempt_id": "G5-a6"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 10.900500000000008, "bindings": {"attempt_id": "G5-a6"}, "payload": {"game_id": "G5", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.900600000000008, "bindings": {"game_id": "G5"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 10.95000000000001, "bindings": {"game_id": "G5", "position": 1}, "payload": {"symbol": "cat", "attempt_id": "G5-a7"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 10.95010000000001, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 11.00000000000001, "bindings": {"game_id": "G5", "position": 14}, "payload": {"symbol": "cat", "attempt_id": "G5-a7"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 11.00010000000001, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 11.00020000000001, "bindings": {"attempt_id": "G5-a7"}, "payload": {"game_id": "G5", "first": 1, "second": 14}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 11.00030000000001, "bindings": {"game_id": "G5", "position": 1}, "payload": {"symbol": "cat", "attempt_id": "G5-a7"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 11.00040000000001, "bindings": {"game_id": "G5", "position": 14}, "payload": {"symbol": "cat", "attempt_id": "G5-a7"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 11.00050000000001, "bindings": {"attempt_id": "G5-a7"}, "payload": {"game_id": "G5", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 11.00060000000001, "bindings": {"game_id": "G5"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 11.050000000000011, "bindings": {"game_id": "G5", "position": 8}, "payload": {"symbol": "fox", "attempt_id": "G5-a8"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 11.050100000000011, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "card.flip", "event_time": 11.100000000000012, "bindings": {"game_id": "G5", "position": 15}, "payload": {"symbol": "fox", "attempt_id": "G5-a8"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 11.100100000000012, "bindings": {"game_id": "G5"}, "payload": {"kind": "flip"}, "source": "memory-game"}
+{"type": "attempt.pending", "event_time": 11.100200000000012, "bindings": {"attempt_id": "G5-a8"}, "payload": {"game_id": "G5", "first": 8, "second": 15}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 11.100300000000011, "bindings": {"game_id": "G5", "position": 8}, "payload": {"symbol": "fox", "attempt_id": "G5-a8"}, "source": "memory-game"}
+{"type": "card.matched", "event_time": 11.100400000000011, "bindings": {"game_id": "G5", "position": 15}, "payload": {"symbol": "fox", "attempt_id": "G5-a8"}, "source": "memory-game"}
+{"type": "attempt.resolved", "event_time": 11.100500000000011, "bindings": {"attempt_id": "G5-a8"}, "payload": {"game_id": "G5", "outcome": "matched"}, "source": "memory-game"}
+{"type": "game.action", "event_time": 11.10060000000001, "bindings": {"game_id": "G5"}, "payload": {"kind": "resolve"}, "source": "memory-game"}
+{"type": "game.complete", "event_time": 11.10070000000001, "bindings": {"game_id": "G5"}, "payload": {"pairs": 8}, "source": "memory-game"}
+{"type": "behave_rv.clock", "event_time": 11.10070000000001, "bindings": {}, "payload": {}, "source": "clock"}

@@ -1,0 +1,25 @@
+{"type": "hand.dealt", "event_time": 2.6582579612731934, "bindings": {"hand_id": "h1"}, "payload": {"bet": 10}, "source": "blackjack"}
+{"type": "hand.card", "event_time": 2.6585240364074707, "bindings": {"hand_id": "h1"}, "payload": {"to": "player", "rank": "5", "total": 5}, "source": "blackjack"}
+{"type": "hand.card", "event_time": 2.6585848331451416, "bindings": {"hand_id": "h1"}, "payload": {"to": "dealer", "rank": "10", "total": 10}, "source": "blackjack"}
+{"type": "hand.card", "event_time": 2.6586179733276367, "bindings": {"hand_id": "h1"}, "payload": {"to": "player", "rank": "8", "total": 13}, "source": "blackjack"}
+{"type": "hand.card", "event_time": 2.6586360931396484, "bindings": {"hand_id": "h1"}, "payload": {"to": "dealer", "rank": "3", "total": 13}, "source": "blackjack"}
+{"type": "hand.stand", "event_time": 2.6680610179901123, "bindings": {"hand_id": "h1"}, "payload": {"player_total": 13}, "source": "blackjack"}
+{"type": "hand.card", "event_time": 2.6681320667266846, "bindings": {"hand_id": "h1"}, "payload": {"to": "dealer", "rank": "7", "total": 20}, "source": "blackjack"}
+{"type": "hand.settled", "event_time": 2.668184280395508, "bindings": {"hand_id": "h1"}, "payload": {"outcome": "lose"}, "source": "blackjack"}
+{"type": "hand.closed", "event_time": 2.6682300567626953, "bindings": {"hand_id": "h1"}, "payload": {}, "source": "blackjack"}
+{"type": "hand.dealt", "event_time": 2.676440954208374, "bindings": {"hand_id": "h2"}, "payload": {"bet": 10}, "source": "blackjack"}
+{"type": "hand.card", "event_time": 2.6765079498291016, "bindings": {"hand_id": "h2"}, "payload": {"to": "player", "rank": "10", "total": 10}, "source": "blackjack"}
+{"type": "hand.card", "event_time": 2.6765451431274414, "bindings": {"hand_id": "h2"}, "payload": {"to": "dealer", "rank": "K", "total": 10}, "source": "blackjack"}
+{"type": "hand.card", "event_time": 2.67657208442688, "bindings": {"hand_id": "h2"}, "payload": {"to": "player", "rank": "2", "total": 12}, "source": "blackjack"}
+{"type": "hand.card", "event_time": 2.676596164703369, "bindings": {"hand_id": "h2"}, "payload": {"to": "dealer", "rank": "9", "total": 19}, "source": "blackjack"}
+{"type": "hand.stand", "event_time": 2.6850860118865967, "bindings": {"hand_id": "h2"}, "payload": {"player_total": 12}, "source": "blackjack"}
+{"type": "hand.settled", "event_time": 2.6851449012756348, "bindings": {"hand_id": "h2"}, "payload": {"outcome": "lose"}, "source": "blackjack"}
+{"type": "hand.closed", "event_time": 2.6851789951324463, "bindings": {"hand_id": "h2"}, "payload": {}, "source": "blackjack"}
+{"type": "hand.dealt", "event_time": 2.6679677963256836, "bindings": {"hand_id": "h1"}, "payload": {"bet": 10}, "source": "blackjack"}
+{"type": "hand.card", "event_time": 2.6681928634643555, "bindings": {"hand_id": "h1"}, "payload": {"to": "player", "rank": "2", "total": 2}, "source": "blackjack"}
+{"type": "hand.card", "event_time": 2.668262004852295, "bindings": {"hand_id": "h1"}, "payload": {"to": "dealer", "rank": "10", "total": 10}, "source": "blackjack"}
+{"type": "hand.card", "event_time": 2.6683170795440674, "bindings": {"hand_id": "h1"}, "payload": {"to": "player", "rank": "9", "total": 11}, "source": "blackjack"}
+{"type": "hand.card", "event_time": 2.6683690547943115, "bindings": {"hand_id": "h1"}, "payload": {"to": "dealer", "rank": "J", "total": 20}, "source": "blackjack"}
+{"type": "hand.stand", "event_time": 2.6770331859588623, "bindings": {"hand_id": "h1"}, "payload": {"player_total": 11}, "source": "blackjack"}
+{"type": "hand.settled", "event_time": 2.6771061420440674, "bindings": {"hand_id": "h1"}, "payload": {"outcome": "lose"}, "source": "blackjack"}
+{"type": "hand.closed", "event_time": 2.6771490573883057, "bindings": {"hand_id": "h1"}, "payload": {}, "source": "blackjack"}

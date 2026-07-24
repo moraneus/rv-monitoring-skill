@@ -1,0 +1,1 @@
+{"type": "game.started", "event_time": 0.16550016403198242, "bindings": {"game_id": "game-1"}, "payload": {"rows": 8, "cols": 8, "mines": 10}, "source": "minesweeper"}

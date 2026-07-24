@@ -79,6 +79,42 @@ goes green while every attacker case still violates. This finding is why
 the skill now requires a joint-satisfiability check on transcribed rules.
 Replay pinned at 33 verdicts, 5 violations.
 
+## The game demos: software born monitorable, with a UI
+
+Five browser games, each built by an agent from a single user request,
+each shipping with its own live RV dashboard and in-browser
+cheat-injection buttons so violations are watchable as they happen.
+Stdlib-only; every game serves its own inline HTML/JS UI. Beyond being
+playable, each one earned its keep by exercising a different edge of the
+fragment:
+
+- **snake** (game :8801, monitor :7101) - the no-terminal false-green
+  trap answered at build time; the 180-degree-turn rule done
+  classify-not-enumerate via a stamped boolean. 4 policies, replay 28/6.
+- **blackjack** (:8802/:7102) - player-scoped rules (dealer draws after a
+  stand are the game, not a violation); the agent refused to ship an
+  "at most once" rule whose naive transcription misfires on every honest
+  settlement, and the accepted re-occurrence marker proved that a
+  self-contained never has no terminal blind spot. 5 policies, replay
+  38/6.
+- **minesweeper** (:8803/:7103) - per-cell composite keys; the
+  at-most-once reveal solved with an action/state split; the
+  flags-vs-mines counting wish projected honestly through payload-stamped
+  counts. 4 policies, replay 124/4.
+- **tictactoe** (:8804/:7104) - the build that discovered triggered forms
+  arm once per entity, and invented history stamping (a `prev_player`
+  field plus a self-contained never) so alternation is checked at every
+  move. 4 policies, replay 23/5.
+- **memory** (:8805/:7105) - three entity kinds with disciplined keys
+  (cards on composite keys, attempts deliberately unkeyed from games);
+  the grace-vs-deadline interaction that produced the cheatsheet's
+  fast-stream guidance. 4 policies, replay 137/4.
+
+Each game's `PROMPTS.md` holds its verbatim prompts and what happened.
+Start any of them with `python app/server.py`, `python server.py`,
+`python run_live.py`, or `python live_monitor.py` (each README says
+which), then open the game and monitor URLs it prints.
+
 ## Running any demo
 
 ```bash
