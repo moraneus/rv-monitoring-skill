@@ -175,6 +175,12 @@ the plan executes through the development loop above.
 
 ## 7. How each part of behave-rv is used
 
+A note on authority: the engine facts in this section are a summary,
+accurate as of behave-rv 0.3.0. The authoritative, always-version-matched
+source is the documentation shipped inside the installed package
+(`python -m behave_rv docs`) - when this page and the shipped docs
+disagree, the shipped docs win.
+
 ### 7.1 The `Event` - the observable unit
 
 Everything the monitor sees is one frozen record:
