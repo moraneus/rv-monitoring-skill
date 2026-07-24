@@ -82,5 +82,14 @@ accept or reject.
   (the engine warns).
 - `before` is any-past-event precedence; `previously` is the immediate
   predecessor. Do not use `previously` for "at some point earlier".
+- Triggered forms (`before`, `previously`, `within`) arm ONCE per entity:
+  the monitor decides at the FIRST trigger occurrence and settles. That is
+  exactly right for precedence ("started before the first move" implies
+  started before every move) and wrong for every-occurrence checks
+  ("players alternate" checked at each move). For per-occurrence checks,
+  use HISTORY STAMPING: expose the relevant history as a payload field at
+  the emit site (`prev_player` stamped from true move order) and write a
+  self-contained `never` over a predicate on that field - it checks every
+  event and never settles early.
 - One trigger, one obligation per scenario. Compound requirements become
   several scenarios.

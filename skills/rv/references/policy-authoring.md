@@ -73,7 +73,15 @@ really `min(time-to-terminal, quiescence TTL)` - surface that window to
 the user as a decision (keep the terminal and accept the window, drop the
 terminal and guard with a TTL, or re-key the rule to a longer-lived
 entity). Never let a demo "prove" a prohibition with seeds that dodge the
-terminal the real path emits.
+terminal the real path emits. Precision per form: the window applies to
+SCOPED prohibitions and `since` (the terminal settles them as satisfied
+and a fresh post-terminal instance never sees the scope open). A
+SELF-CONTAINED `never` has no terminal window - a post-terminal
+occurrence spawns a fresh instance that still violates immediately. And
+when the application itself refuses the forbidden action after the close
+(a guard that emits a rejection instead), the post-close guarantee may
+legitimately rest on that guard rather than the monitor - state whose
+guarantee it is.
 
 **Key projection.** Before declaring a rule cross-entity, check whether it
 becomes per-entity under a DIFFERENT correlation key. "A fined member's
@@ -84,6 +92,20 @@ is "paid_off"` / `Then a member renews a loan never happens`. Adding an
 emission under the right key is additive instrumentation, not reshaping.
 Flag the added event in your report as part of the proposal, so the user
 can reject the extra surface along with the policy.
+
+**At most once.** "X must never happen twice" is a COUNTING property and
+out of fragment - and the tempting scoped-never transcription
+(`Given X / Then X never happens`) misfires: the scope opens on the first
+X and that same event matches the prohibition, so every FIRST legitimate
+occurrence violates (scope updates before the forbidden check). Two honest
+in-fragment shapes: (a) an action/state split - emit a state event
+strictly after the first occurrence and scope the prohibition on the
+STATE, so the first action is legal and only a repeat violates; (b) a
+re-occurrence marker - the code path guards against repeats and emits a
+dedicated marker event when one is attempted, with a self-contained
+`never` on the marker. Both move the "twice" detection to the app side;
+say so. A raw stream-level duplicate of the same event remains uncatchable
+by any single-occurrence rule.
 
 **Occurrence keying.** A `never happens` prohibition settles at its first
 violation, so a singleton entity alerts once, ever. When the user wants an
