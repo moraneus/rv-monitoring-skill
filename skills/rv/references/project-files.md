@@ -60,6 +60,10 @@ cannot drift; treat a hand edit to it as a bug.
    must produce ZERO violations - a violation on a described healthy flow
    is a rule conflict to surface with options (see the joint-satisfiability
    rule in policy-authoring.md), never a count to accept into the pins.
+   For every scoped prohibition on an entity with a terminal, the fault
+   seeds must include a post-terminal occurrence through the real closing
+   path (the terminal-windows rule) - a prohibition proven only by seeds
+   that dodge the terminal is not proven.
 7. Traces refreshed if the event vocabulary grew (`--trace` liveness stays
    meaningful only on representative streams).
 8. If the change touched a live entry point: the dashboard is wired

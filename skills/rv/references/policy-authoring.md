@@ -59,6 +59,22 @@ added later - say so, and prefer phrasing the predicate over an intent
 ("new charge activity") so a future status lands inside the rule by being
 classified, not outside it by being unlisted.
 
+**Terminal windows.** A terminal event does not just free memory - it
+SETTLES every open policy on the entity, prohibitions included, and a
+scoped `never` settles as `satisfied`. So a prohibition on an entity whose
+lifecycle emits a terminal is only armed from its scope opening until the
+terminal: a forbidden event arriving after the close is invisible, and the
+dashboard showed green first - a false-green, worse than a miss. The rule:
+for every scoped prohibition (`Given ... never`, `since`) on an entity
+with a terminal, the FAULT seeds in `replay_check.py` must include an
+occurrence arriving AFTER the entity's real closing behaviour, through the
+real service path. If that seed is not caught, the policy's guarantee is
+really `min(time-to-terminal, quiescence TTL)` - surface that window to
+the user as a decision (keep the terminal and accept the window, drop the
+terminal and guard with a TTL, or re-key the rule to a longer-lived
+entity). Never let a demo "prove" a prohibition with seeds that dodge the
+terminal the real path emits.
+
 **Key projection.** Before declaring a rule cross-entity, check whether it
 becomes per-entity under a DIFFERENT correlation key. "A fined member's
 loans are never renewed" relates loans to members - but emitting a

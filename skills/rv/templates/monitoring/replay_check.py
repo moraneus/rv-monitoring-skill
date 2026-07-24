@@ -8,7 +8,11 @@ Maintain ``simulate_traffic`` alongside the application: every seeded flow
 EVERY normal flow the user described - those must produce zero violations;
 a violation on a described healthy flow means the policies jointly forbid
 a lifecycle the user relies on, which is a rule conflict to surface, never
-a count to pin. Update EXPECTED only for intended behaviour changes, and
+a count to pin. For every scoped prohibition on an entity with a terminal
+event, include a fault that arrives AFTER the real closing behaviour: a
+terminal settles prohibitions as satisfied, so a seed that dodges it can
+"prove" a rule whose real detection window is milliseconds (see the
+terminal-windows rule in the policy-authoring reference). Update EXPECTED only for intended behaviour changes, and
 say so in the commit.
 """
 
