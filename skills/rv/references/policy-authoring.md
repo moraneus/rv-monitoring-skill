@@ -45,6 +45,11 @@ every step") - the `since`, `always holds`, and scoped `never` forms -
 state in your report which event types the policy observes and which
 bypass it ("retirement is a separate event type and is invisible to this
 rule"), so the user learns the boundary from you, not from an incident.
+The same applies to ENUMERATED VALUES: a predicate that lists forbidden
+statuses ("captured" or "authorized") is silently bypassed by any status
+added later - say so, and prefer phrasing the predicate over an intent
+("new charge activity") so a future status lands inside the rule by being
+classified, not outside it by being unlisted.
 
 **Key projection.** Before declaring a rule cross-entity, check whether it
 becomes per-entity under a DIFFERENT correlation key. "A fined member's
@@ -72,7 +77,11 @@ in-fragment.
 - The **scenario name is the policy id** - unique across the project, and it
   is what verdicts, dashboards, and break reports display. Write it as the
   requirement in plain words: `an order may only be paid after it was
-  authorized`.
+  authorized`. Because the name is the id, renaming a scenario ORPHANS its
+  verdict history: dashboards and recorded verdicts show the old and new
+  names as unrelated policies. When a user-requested reword changes a
+  scenario name, state that continuity cost in your report so the break in
+  the timeline is a known decision, not a surprise.
 - One correlation key per scenario (composite tuple allowed). The key comes
   from the steps used; the `.feature` never mentions it.
 - Steps resolve by text against registered phrasings and their aliases. If
