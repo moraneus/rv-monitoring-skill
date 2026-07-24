@@ -21,7 +21,11 @@ aggregates ("no more than 3 retries", "95% of requests"), unbounded liveness
 that must produce a violation on a finite prefix. Offer the nearest
 in-fragment property as a labelled alternative (retries → often re-expressible
 as a scoped `never` on a distinct event; percentile SLAs → per-entity
-`within` plus offline analysis of verdicts).
+`within` plus offline analysis of verdicts), and build it only after the
+user accepts it - unless the user's request itself already specifies the
+approximated behaviour (an explicit "alert me per wave" is an acceptance
+of occurrence keying), in which case ship it with the fragment split
+stated plainly in the report.
 
 **Joint satisfiability.** Before shipping transcribed rules, walk every
 normal flow the user DESCRIBED through all the rules together, and check
@@ -36,7 +40,11 @@ conflict discovered by a production violation is a failure of this step.
 The replay gate enforces this mechanically: every described healthy flow
 belongs in ``replay_check.py``'s scripted traffic with zero violations
 expected, so a jointly-unsatisfiable rule set turns the gate red at build
-time instead of paging someone in production.
+time instead of paging someone in production. THE WAITING POSTURE: while
+a conflict awaits the user, the user's LITERAL transcription stays in
+``policies/`` - with the gate red if that is the cost - and your candidate
+readings stay in ``SUGGESTED_POLICIES.md`` as options. The policy files
+hold the user's words, never your interpretation of them.
 
 **Blind spots are contract.** A policy only sees the event types its
 steps observe; everything else bypasses it. Whenever plain language

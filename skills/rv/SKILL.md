@@ -195,5 +195,9 @@ python -m behave_rv docs guide        #   stability, experiments, mutation,
 python -m behave_rv docs stability    #   app-surface-evaluation
 ```
 
-Prefer these over web fetches. The same documents are also on GitHub:
+Prefer these over web fetches. Before asserting ANY engine limitation,
+bug, or workaround requirement in code comments, plans, or reports, verify
+it against these shipped docs - stale priors about already-fixed issues
+are a known failure mode, and the shipped docs always match the installed
+version. The same documents are also on GitHub:
 [behave-rv/docs](https://github.com/moraneus/behave-rv/tree/main/docs).

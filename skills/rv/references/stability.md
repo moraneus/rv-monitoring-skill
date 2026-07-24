@@ -77,7 +77,12 @@ regenerated for an intended change; and renaming a CONSTANT still flags
    1 applies. When in doubt, it is unintended. Always quote the pre-save
    diff verbatim in the report, even for intended changes.
 3. Rewording a step phrasing → add the old wording as an alias in the same
-   change; verify the diff shows `renamed`, not a break.
+   change; verify the diff shows `renamed`, not a break. A `renamed`
+   status is absorbed and requires nothing further; you MAY `catalog save`
+   afterwards to re-baseline the recorded phrasing so future diffs read
+   `unchanged` instead of carrying a permanent `renamed` line - if you do,
+   say so in the report. Never fold that re-baseline into the same save as
+   an unresolved break.
 4. NEVER: hand-edit catalog.json, regenerate it to silence an unintended
    break, or delete a policy to make the diff pass.
 
