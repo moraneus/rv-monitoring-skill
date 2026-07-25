@@ -1,7 +1,9 @@
 # The policy vocabulary (generated - do not edit)
 
 Every phrasing below can be used in a `.feature` policy under
-`monitoring/policies/`. Quoted `<placeholders>` take concrete values.
+`monitoring/policies/`. Quoted `<placeholders>` take concrete values -
+use the exact strings listed under each step (a value the app never
+emits will compile but silently never match).
 Regenerate this file with `python monitoring/generate_steps_doc.py`.
 
 ## `a matched card is flipped again`
@@ -81,6 +83,7 @@ Example scenarios:
 - **identity**: `attempt.resolved.outcome` (trigger)
 - **observes**: event `attempt.resolved`, entity key `game_id, attempt_id`
 - **parameters**: `outcome`
+  - `outcome` values seen in the recorded trace: `matched`, `mismatched`
 
 Example scenarios:
 

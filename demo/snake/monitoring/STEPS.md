@@ -1,7 +1,9 @@
 # The policy vocabulary (generated - do not edit)
 
 Every phrasing below can be used in a `.feature` policy under
-`monitoring/policies/`. Quoted `<placeholders>` take concrete values.
+`monitoring/policies/`. Quoted `<placeholders>` take concrete values -
+use the exact strings listed under each step (a value the app never
+emits will compile but silently never match).
 Regenerate this file with `python monitoring/generate_steps_doc.py`.
 
 ## `a game is "{status}"`
@@ -9,6 +11,7 @@ Regenerate this file with `python monitoring/generate_steps_doc.py`.
 - **identity**: `game.status.is` (trigger)
 - **observes**: event `game.status`, entity key `game_id`
 - **parameters**: `status`
+  - `status` values seen in the recorded trace: `over`, `started`
 
 Example scenarios:
 

@@ -37,14 +37,45 @@ def _example_phrase(phrasing: str) -> str:
     return re.sub(r"\{(\w+)(?::\w+)?\}", lambda m: f'<{m.group(1)}>', phrasing)
 
 
+def _observed_values() -> dict:
+    """Map (event_type, field) -> sorted distinct values seen in a
+    representative recorded trace, so authors write real status strings
+    instead of guessing. Placeholder values that never appear in the real
+    stream compile fine but silently never match at runtime -- listing the
+    observed values is the guard against that silent-dormancy gap."""
+    import json
+    seen: dict = {}
+    traces = Path(__file__).parent / "traces"
+    files = sorted(traces.glob("*.jsonl")) if traces.is_dir() else []
+    # prefer a file named representative*, else use all
+    rep = [f for f in files if f.name.startswith("representative")] or files
+    for f in rep:
+        for line in f.read_text().splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                ev = json.loads(line)
+            except ValueError:
+                continue
+            etype = ev.get("type")
+            for field, value in (ev.get("payload") or {}).items():
+                if isinstance(value, (str, int, float, bool)):
+                    seen.setdefault((etype, field), set()).add(str(value))
+    return {k: sorted(v) for k, v in seen.items()}
+
+
 def main() -> int:
     registry = build_registry()
     aliases = getattr(registry, "_aliases", {})
+    observed = _observed_values()
     lines = [
         "# The policy vocabulary (generated - do not edit)",
         "",
         "Every phrasing below can be used in a `.feature` policy under",
-        "`monitoring/policies/`. Quoted `<placeholders>` take concrete values.",
+        "`monitoring/policies/`. Quoted `<placeholders>` take concrete values -",
+        "use the exact strings listed under each step (a value the app never",
+        "emits will compile but silently never match).",
         "Regenerate this file with `python monitoring/generate_steps_doc.py`.",
         "",
     ]
@@ -61,6 +92,16 @@ def main() -> int:
         params = sorted(signature.referenced_fields)
         if params:
             lines.append(f"- **parameters**: {', '.join(f'`{p}`' for p in params)}")
+            for field in params:
+                vals = observed.get((signature.event_type, field))
+                if vals:
+                    shown = ", ".join(f"`{v}`" for v in vals)
+                    lines.append(f"  - `{field}` values seen in the recorded "
+                                 f"trace: {shown}")
+                else:
+                    lines.append(f"  - `{field}`: no values recorded yet - "
+                                 f"confirm the exact string the app emits, or "
+                                 f"a policy may compile but silently never match")
         step_aliases = aliases.get(entry.step_id, [])
         if step_aliases:
             lines.append("- **also writable as**: "

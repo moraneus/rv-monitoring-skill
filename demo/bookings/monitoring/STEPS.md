@@ -1,7 +1,9 @@
 # The policy vocabulary (generated - do not edit)
 
 Every phrasing below can be used in a `.feature` policy under
-`monitoring/policies/`. Quoted `<placeholders>` take concrete values.
+`monitoring/policies/`. Quoted `<placeholders>` take concrete values -
+use the exact strings listed under each step (a value the app never
+emits will compile but silently never match).
 Regenerate this file with `python monitoring/generate_steps_doc.py`.
 
 ## `a booking is "{status}"`
@@ -9,6 +11,7 @@ Regenerate this file with `python monitoring/generate_steps_doc.py`.
 - **identity**: `booking.status.is` (trigger)
 - **observes**: event `booking.status`, entity key `booking_id`
 - **parameters**: `status`
+  - `status` values seen in the recorded trace: `attended`, `cancelled`, `checked_in`, `confirmed`, `no_show`, `promoted`, `reserved`, `waitlisted`
 
 Example scenarios:
 

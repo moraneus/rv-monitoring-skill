@@ -1,7 +1,9 @@
 # The policy vocabulary (generated - do not edit)
 
 Every phrasing below can be used in a `.feature` policy under
-`monitoring/policies/`. Quoted `<placeholders>` take concrete values.
+`monitoring/policies/`. Quoted `<placeholders>` take concrete values -
+use the exact strings listed under each step (a value the app never
+emits will compile but silently never match).
 Regenerate this file with `python monitoring/generate_steps_doc.py`.
 
 ## `a device is "{state}"`
@@ -9,6 +11,7 @@ Regenerate this file with `python monitoring/generate_steps_doc.py`.
 - **identity**: `device.lifecycle.is` (trigger)
 - **observes**: event `device.lifecycle`, entity key `device_id`
 - **parameters**: `state`
+  - `state` values seen in the recorded trace: `activated`, `provision_failed`, `provision_ok`, `provisioned`, `quarantined`, `retired`, `wipe`, `wiped`
 
 Example scenarios:
 
@@ -34,6 +37,7 @@ Example scenarios:
 - **identity**: `device.action.is` (trigger)
 - **observes**: event `device.action`, entity key `device_id`
 - **parameters**: `result`
+  - `result` values seen in the recorded trace: `blocked`, `ok`
 
 Example scenarios:
 
@@ -83,6 +87,7 @@ Example scenarios:
 - **identity**: `sensor.reading.is` (trigger)
 - **observes**: event `sensor.reading`, entity key `sensor_id`
 - **parameters**: `status`
+  - `status` values seen in the recorded trace: `fault`, `ok`
 
 Example scenarios:
 
