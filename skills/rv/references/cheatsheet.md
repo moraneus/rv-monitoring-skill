@@ -1,6 +1,6 @@
 # behave-rv in one page
 
-Package: `behave-rv` (PyPI, >= 0.3.0), Python 3.10+. Import root: `behave_rv`.
+Package: `behave-rv` (PyPI, >= 0.3.1), Python 3.10+. Import root: `behave_rv`.
 Full documentation ships with the install: `python -m behave_rv docs [name]`.
 
 ## The event
@@ -98,10 +98,12 @@ engine.run(source, sink=dashboard.sink)        # live verdict delivery
 - `within` deadlines fire on absence (timer), including on wall time for
   quiet live streams; on replay, event time drives them.
 - The default reorder grace (5.0s) is sized for laggy telemetry. On a
-  fast LIVE stream (sub-second game/UI dynamics) use a small grace, and
-  keep it well below your tightest `within` deadline - a large grace
-  delays verdict delivery by up to the grace window and crowds the
-  deadline's wall firing.
+  fast LIVE stream (sub-second game/UI dynamics) use a small grace - a
+  large grace delays verdict delivery by up to the grace window. (The
+  false-timeout that grace > deadline used to cause was an engine bug,
+  fixed in behave-rv 0.3.1; correctness no longer depends on the grace
+  sizing.) Never drive a live source with simulated or compressed
+  timestamps - live mode assumes event time progresses at wall rate.
 - Terminal events settle an entity: prohibitions → satisfied, unfulfilled
   obligations → violated; configure `terminal_event_types` or the engine
   warns for operators that need settlement.

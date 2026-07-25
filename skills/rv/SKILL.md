@@ -60,7 +60,7 @@ monitoring/
 
 Bootstrap a project that lacks this layout from the templates shipped
 next to this file (`templates/monitoring/`), then run
-`pip install behave-rv` (>= 0.3.0, Python 3.10+). Full layout rules:
+`pip install behave-rv` (>= 0.3.1, Python 3.10+). Full layout rules:
 [references/project-files.md](references/project-files.md).
 
 ## The development loop
