@@ -90,6 +90,39 @@ print("live monitor:", url)                    # always tell the user this URL
 engine.run(source, sink=dashboard.sink)        # live verdict delivery
 ```
 
+## Attaching to an existing service (no in-process emits)
+
+When the target is ALREADY instrumented, or only writes structured JSON logs,
+monitor it without adding any emit calls to its code. Both sources feed the
+same `engine.run(...)`; the mapping (not the code) says which field is the
+event type, the correlation key, and the payload.
+
+```python
+# OpenTelemetry: register as a span processor on the running provider
+from opentelemetry.sdk.trace import TracerProvider          # needs behave-rv[otel]
+from behave_rv.events.sources.otel import OTelSpanSource, SpanMapping
+
+source = OTelSpanSource(SpanMapping(key_attributes={"order.id": "order_id"}))
+provider.add_span_processor(source)            # span.name -> type,
+engine.run(source, sink=dashboard.sink)        # attributes -> bindings/payload
+
+# Structured JSON logs: map a foreign log schema (batch, like replay)
+from behave_rv.events.sources.logs import StructuredLogSource, LogMapping
+
+source = StructuredLogSource("var/log/orders.jsonl",
+    LogMapping(type_field="event", time_field="ts",
+               key_fields={"order_id": "order_id"}))
+verdicts = engine.run(source, emit_pending=True)
+```
+
+A span or record missing the correlation key is dropped and COUNTED
+(`source.dropped`, plus `source.malformed` for unparseable log lines), never
+merged silently - a rising count means the mapping does not match the real
+stream. Use these for a service you did not write; when you ARE writing the
+instrumentation, prefer the in-process emit path above. Both sources require
+behave-rv >= 0.4.0 (the OTel one also needs the `[otel]` extra); the core
+in-process, queue, and replay paths do not.
+
 ## Engine facts that matter
 
 - Verdicts are decided on EVENT time; equal timestamps are ordered
