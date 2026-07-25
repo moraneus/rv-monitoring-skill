@@ -1,48 +1,73 @@
-"""Deterministic verdict gate: scripted booking traffic through the real
-service and the committed policies, exit-coded for CI.
+"""Deterministic replay gate for the class-bookings policies.
 
-    python monitoring/replay_check.py     # exit 1 on unexpected verdicts
+    python monitoring/replay_check.py        # exit 0 clean, exit 1 on drift
 
-A FakeClock makes the run reproducible byte for byte (sleep just advances
-time), so the same traffic always produces the same verdicts. ``clock.tick``
-sits between every ordered action: with equal event times the engine orders
-canonically (by content, not arrival), so actions whose order matters must
-carry distinct timestamps.
+It simulates studio traffic with a fake clock (so the run is byte-for-byte
+reproducible), records it to a trace, replays it through the same engine the
+live monitor uses, and checks the verdicts against a PINNED expectation:
 
-EXPECTED pins the verdict/violation counts once green. Update it only for an
-intended behaviour change, and say so in the report.
+  * every healthy flow the owner described produces ZERO violations, and
+  * every seeded fault produces exactly the one violation it is meant to.
+
+If the actual violation set ever differs from the pin, the gate fails and
+prints the difference - a red gate is the signal that code or policy moved.
+
+Design notes worth knowing when reading the verdicts:
+
+  * There is NO terminal event type (see app/booking_service.py). That is what
+    keeps the "cancelled is never checked in" monitor alive to catch a
+    post-cancellation check-in. The cost: `never` and `has happened` policies
+    never settle inside a bounded replay - they report an honest `pending` for
+    every booking. Pending is not a violation; the gate only pins violations.
+  * The guarantee window for the post-cancellation check-in is the quiescence
+    TTL (60s here, standing in for end-of-day). The B-CANCEL seed deliberately
+    lands the check-in AFTER the cancellation, through the real service path,
+    so the gate proves the rule catches exactly the owner's #1 worry.
 """
 
 from __future__ import annotations
 
 import sys
+from collections import Counter
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))   # project root
 sys.path.insert(0, str(Path(__file__).resolve().parent))          # monitoring/
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))      # project root
 
-from app.booking_service import TERMINAL_TYPE, BookingService      # noqa: E402
-from steps import build_registry, load_policies                   # noqa: E402
+from app.booking_service import BookingService                     # noqa: E402
+from steps import build_registry, load_policies                    # noqa: E402
 
-from behave_rv.engine.loop import Engine                          # noqa: E402
+from behave_rv.engine.loop import Engine                           # noqa: E402
 from behave_rv.events.sources.replay import ReplaySource, record_events  # noqa: E402
-from behave_rv.verdict.explain import explain_verdict             # noqa: E402
+from behave_rv.verdict.explain import explain_verdict              # noqa: E402
 
-TRACE = Path(__file__).parent / "traces" / "replay_check.jsonl"
-
-# Pinned after the first green run. (verdicts, violations)
-EXPECTED = {"verdicts": 43, "violations": 5}
+QUIESCENCE_TTL = 60.0   # demo: keep watching each booking 60s past its last
+                        # activity, standing in for the real "until end of day".
 
 
 class FakeClock:
+    """Deterministic time: tick() advances it; the same traffic always yields
+    the same trace, so the gate is reproducible."""
+
     def __init__(self):
         self.now = 0.0
 
     def __call__(self):
         return self.now
 
-    def tick(self, dt: float = 1.0):
+    def tick(self, dt: float):
         self.now += dt
+
+
+# The one violation each seeded fault is meant to raise: (policy_id, booking_id).
+EXPECTED_VIOLATIONS = {
+    ("a cancelled booking is never checked in", "B-CANCEL"),
+    ("a booking is only checked in after it was confirmed", "B-NOCONF"),
+    ("a booking is only marked attended after check-in", "B-NOCHK"),
+    ("a booking is never confirmed while the member owes money", "B-OWES"),
+    ("a promoted booking is confirmed or cancelled within 15 seconds", "B-PROMO"),
+    ("a booking never pushes its class over capacity", "B-C13"),
+}
 
 
 def simulate_traffic(path: Path) -> None:
@@ -50,94 +75,120 @@ def simulate_traffic(path: Path) -> None:
     events: list = []
     svc = BookingService(events.append, clock=clock)
 
-    # -- B-1001: fully healthy lifecycle -----------------------------------
-    # reserve -> confirm -> check_in -> attended. Satisfies 02, 05, 06.
-    svc.reserve("B-1001", "M-1", "C-1"); clock.tick(2)
-    svc.confirm("B-1001", "M-1", "C-1"); clock.tick(2)
-    svc.check_in("B-1001"); clock.tick(2)
-    svc.mark_attended("B-1001"); clock.tick(2)
+    # tick between every ordered action: equal event times order canonically,
+    # so actions whose order matters must carry distinct timestamps.
 
-    # -- B-1002: waitlisted, promoted, confirmed IN TIME -------------------
-    # promote -> confirm within 15s. Satisfies 04 (and 02, 05, 06).
-    svc.reserve("B-1002", "M-2", "C-1"); clock.tick(1)
-    svc.waitlist("B-1002"); clock.tick(1)
-    svc.promote("B-1002"); clock.tick(5)          # 5s < 15s deadline
-    svc.confirm("B-1002", "M-2", "C-1"); clock.tick(2)
-    svc.check_in("B-1002"); clock.tick(2)
-    svc.mark_attended("B-1002"); clock.tick(2)
+    # ---- healthy flows the owner described (expect ZERO violations) --------
 
-    # -- B-1003: promotion times out ---------------------------------------
-    # promote, then nothing for 20s. VIOLATES 04 (timer). 06 stays pending.
-    svc.reserve("B-1003", "M-3", "C-2"); clock.tick(1)
-    svc.waitlist("B-1003"); clock.tick(1)
-    svc.promote("B-1003"); clock.tick(20)         # 20s > 15s deadline
+    # B-1 straight through: reserve -> confirm -> check in -> attend
+    svc.reserve("B-1")
+    clock.tick(2.0); svc.confirm("B-1")
+    clock.tick(3.0); svc.check_in("B-1")
+    clock.tick(1.0); svc.mark_attended("B-1")
 
-    # -- B-1004: the nightmare - cancelled, then checked in ----------------
-    # cancel is NOT a monitor-terminal, so the illegal check-in is still seen.
-    # VIOLATES 01. (02 satisfied: it WAS confirmed. 06 satisfied: cancelled.)
-    svc.reserve("B-1004", "M-4", "C-3"); clock.tick(2)
-    svc.confirm("B-1004", "M-4", "C-3"); clock.tick(2)
-    svc.cancel("B-1004"); clock.tick(2)
-    svc.check_in("B-1004"); clock.tick(2)         # <- the anomaly
+    # B-2 the waitlist path: waitlisted -> promoted -> confirmed in time -> ...
+    clock.tick(1.0); svc.reserve("B-2")
+    clock.tick(1.0); svc.waitlist("B-2")
+    clock.tick(5.0); svc.promote("B-2")
+    clock.tick(4.0); svc.confirm("B-2")            # 4s < 15s deadline: in time
+    clock.tick(2.0); svc.check_in("B-2")
+    clock.tick(1.0); svc.mark_attended("B-2")
 
-    # -- B-1005: checked in without ever being confirmed -------------------
-    # VIOLATES 02.
-    svc.reserve("B-1005", "M-5", "C-3"); clock.tick(2)
-    svc.check_in("B-1005"); clock.tick(2)
+    # B-3 a clean cancellation before check-in
+    clock.tick(1.0); svc.reserve("B-3")
+    clock.tick(2.0); svc.confirm("B-3")
+    clock.tick(2.0); svc.cancel("B-3")
 
-    # -- B-1006: marked attended without a check-in ------------------------
-    # sloppy front-desk marking. VIOLATES 05.
-    svc.reserve("B-1006", "M-6", "C-4"); clock.tick(2)
-    svc.confirm("B-1006", "M-6", "C-4"); clock.tick(2)
-    svc.mark_attended("B-1006"); clock.tick(2)
+    # B-4 confirmed but a genuine no-show
+    clock.tick(1.0); svc.reserve("B-4")
+    clock.tick(2.0); svc.confirm("B-4")
+    clock.tick(3.0); svc.mark_no_show("B-4")
 
-    # -- M-7: confirmation while the member owes a balance -----------------
-    # VIOLATES 03 (member-keyed).
-    svc.incur_balance("M-7"); clock.tick(1)
-    svc.reserve("B-1007", "M-7", "C-5"); clock.tick(1)
-    svc.confirm("B-1007", "M-7", "C-5"); clock.tick(2)   # <- confirmed while owed
+    # ---- seeded faults (expect exactly one violation each) ----------------
 
-    # -- M-8: owed, then SETTLED, then confirmed ---------------------------
-    # the until-window closes first, so this confirmation is allowed (03 not
-    # violated) - shows the scoped prohibition lifting.
-    svc.incur_balance("M-8"); clock.tick(1)
-    svc.settle_balance("M-8"); clock.tick(1)
-    svc.reserve("B-1008", "M-8", "C-5"); clock.tick(1)
-    svc.confirm("B-1008", "M-8", "C-5"); clock.tick(2)
+    # B-CANCEL: the #1 nightmare - cancelled, then checked in anyway. The
+    # check-in lands 3s AFTER the cancellation (well inside the 60s window),
+    # through the real service path, and must be caught by policy 01.
+    clock.tick(1.0); svc.reserve("B-CANCEL")
+    clock.tick(2.0); svc.confirm("B-CANCEL")
+    clock.tick(2.0); svc.cancel("B-CANCEL")
+    clock.tick(3.0); svc.check_in("B-CANCEL")      # -> violates 01
+
+    # B-NOCONF: checked in without ever being confirmed
+    clock.tick(1.0); svc.reserve("B-NOCONF")
+    clock.tick(2.0); svc.check_in("B-NOCONF")      # -> violates 02
+
+    # B-NOCHK: marked attended without a check-in
+    clock.tick(1.0); svc.reserve("B-NOCHK")
+    clock.tick(2.0); svc.confirm("B-NOCHK")
+    clock.tick(2.0); svc.mark_attended("B-NOCHK")  # -> violates 03
+
+    # B-OWES: confirmed while the member still owed money
+    clock.tick(1.0); svc.reserve("B-OWES")
+    clock.tick(2.0); svc.confirm("B-OWES", balance_owed=True)   # -> violates 04
+
+    # B-PROMO: promoted, then the member does nothing. The 15s timer must fire
+    # on silence; later events (the capacity block below) advance event time
+    # past the deadline so the timer resolves during replay.
+    clock.tick(1.0); svc.reserve("B-PROMO")
+    clock.tick(1.0); svc.waitlist("B-PROMO")
+    clock.tick(1.0); svc.promote("B-PROMO")        # -> violates 05 by timeout
+    clock.tick(20.0)                               # silence past the 15s deadline
+
+    # Capacity: 13 members reserved into one class; the app's own counter trips
+    # the cap marker on the 13th (B-C13), which policy 07 makes loud.
+    for i in range(1, 14):
+        clock.tick(0.5)
+        svc.reserve(f"B-C{i:02d}", class_id="C-FULL")   # B-C13 -> violates 07
 
     record_events(path, events)
 
 
 def main() -> int:
-    TRACE.parent.mkdir(parents=True, exist_ok=True)
-    simulate_traffic(TRACE)
+    trace = Path(__file__).parent / "traces" / "representative.jsonl"
+    trace.parent.mkdir(exist_ok=True)
+    simulate_traffic(trace)
 
-    registry = build_registry()
-    policies = load_policies(registry)
-    engine = Engine(policies, terminal_event_types={TERMINAL_TYPE})
-    verdicts = engine.run(ReplaySource(TRACE), emit_pending=True)
+    policies = load_policies(build_registry())
+    engine = Engine(policies, terminal_event_types=set(),
+                    grace=0.5, quiescence_ttl=QUIESCENCE_TTL)
+    verdicts = engine.run(ReplaySource(trace), emit_pending=True)
 
     by_id = {p.policy_id: p for p in policies}
-    violations = [v for v in verdicts if v.verdict == "violated"]
+    actual = set()
+    tally: Counter = Counter()
+    for v in verdicts:
+        tally[(v.policy_id, v.verdict)] += 1
+        if v.verdict == "violated":
+            actual.add((v.policy_id, v.entity_key["booking_id"]))
 
-    for v in sorted(verdicts, key=lambda v: (v.policy_id, str(v.entity_key))):
-        key = ", ".join(f"{k}={val}" for k, val in v.entity_key.items())
-        print(f"{v.verdict:9}  {key:22}  {v.policy_id}")
+    # detail every violation, with the owner's own scenario as the counterexample
+    print("=== violations ===")
+    for v in verdicts:
+        if v.verdict == "violated":
+            print(f"\n[{v.entity_key['booking_id']}] {v.policy_id}")
+            print(explain_verdict(v, by_id[v.policy_id].authored_scenario,
+                                  by_id[v.policy_id].failing_step_index))
 
-    for v in violations:
-        policy = by_id[v.policy_id]
-        print()
-        print(explain_verdict(v, policy.authored_scenario, policy.failing_step_index))
+    # compact per-policy tally (pending is expected and honest under no-terminal)
+    print("\n=== verdict tally (per policy) ===")
+    for p in policies:
+        counts = {k[1]: n for k, n in tally.items() if k[0] == p.policy_id}
+        line = "  ".join(f"{verdict}={counts[verdict]}"
+                         for verdict in ("violated", "satisfied", "pending")
+                         if verdict in counts)
+        print(f"  {p.policy_id:55}  {line or '-'}")
 
-    print(f"\n{len(verdicts)} verdicts, {len(violations)} violation(s)")
-    if EXPECTED["verdicts"] is None:
-        print("EXPECTED not pinned yet: review the output above, then pin it.")
-        return 1
-    ok = (len(verdicts) == EXPECTED["verdicts"]
-          and len(violations) == EXPECTED["violations"])
-    if not ok:
-        print(f"MISMATCH: expected {EXPECTED['verdicts']} verdicts / "
-              f"{EXPECTED['violations']} violations")
+    missing = EXPECTED_VIOLATIONS - actual
+    unexpected = actual - EXPECTED_VIOLATIONS
+    print(f"\n{len(verdicts)} verdicts, {len(actual)} violation(s); "
+          f"expected {len(EXPECTED_VIOLATIONS)}")
+    if missing:
+        print("MISSING expected violations:", sorted(missing))
+    if unexpected:
+        print("UNEXPECTED violations:", sorted(unexpected))
+    ok = not missing and not unexpected
+    print("GATE:", "PASS" if ok else "FAIL")
     return 0 if ok else 1
 
 

@@ -1,20 +1,20 @@
-{"type": "parcel.status", "event_time": 0.022083044052124023, "bindings": {"parcel_id": "P-1"}, "payload": {"status": "registered", "destination": "London"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 0.9244990348815918, "bindings": {"parcel_id": "P-1"}, "payload": {"status": "scanned", "hub": "HUB-A"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 1.8295948505401611, "bindings": {"parcel_id": "P-1"}, "payload": {"status": "out_for_delivery"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 2.733757972717285, "bindings": {"parcel_id": "P-1"}, "payload": {"status": "delivered"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 3.638206958770752, "bindings": {"parcel_id": "P-4"}, "payload": {"status": "registered", "destination": "Rome"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 4.54372501373291, "bindings": {"parcel_id": "P-4"}, "payload": {"status": "scanned", "hub": "HUB-A"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 5.44648003578186, "bindings": {"parcel_id": "P-4"}, "payload": {"status": "out_for_delivery"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 6.34925103187561, "bindings": {"parcel_id": "P-2"}, "payload": {"status": "registered", "destination": "Paris"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 7.251888990402222, "bindings": {"parcel_id": "P-2"}, "payload": {"status": "out_for_delivery"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 8.157383918762207, "bindings": {"parcel_id": "P-2"}, "payload": {"status": "delivered"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 9.061048030853271, "bindings": {"parcel_id": "P-3"}, "payload": {"status": "registered", "destination": "Berlin"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 9.961907863616943, "bindings": {"parcel_id": "P-3"}, "payload": {"status": "scanned", "hub": "HUB-B"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 10.86253309249878, "bindings": {"parcel_id": "P-3"}, "payload": {"status": "out_for_delivery"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 11.76669692993164, "bindings": {"parcel_id": "P-3"}, "payload": {"status": "delivered"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 12.667148113250732, "bindings": {"parcel_id": "P-3"}, "payload": {"status": "rerouted", "hub": "HUB-C"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 13.569246053695679, "bindings": {"parcel_id": "P-5"}, "payload": {"status": "registered", "destination": "Madrid"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 14.474578857421875, "bindings": {"parcel_id": "P-5"}, "payload": {"status": "scanned", "hub": "HUB-B"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 15.380053043365479, "bindings": {"parcel_id": "P-5"}, "payload": {"status": "out_for_delivery"}, "source": "parcel-service"}
-{"type": "parcel.status", "event_time": 16.285577058792114, "bindings": {"parcel_id": "P-5"}, "payload": {"status": "returned"}, "source": "parcel-service"}
-{"type": "behave_rv.clock", "event_time": 26.02466893196106, "bindings": {}, "payload": {}, "source": "clock"}
+{"type": "parcel.status", "event_time": 0.020891904830932617, "bindings": {"parcel_id": "P-1001"}, "payload": {"status": "registered"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 0.6310348510742188, "bindings": {"parcel_id": "P-1001"}, "payload": {"status": "scanned", "hub": "hub-north"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 1.2413020133972168, "bindings": {"parcel_id": "P-1001"}, "payload": {"status": "out_for_delivery"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 1.844369888305664, "bindings": {"parcel_id": "P-1001"}, "payload": {"status": "delivered"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 2.8532958030700684, "bindings": {"parcel_id": "P-1002"}, "payload": {"status": "registered"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 3.459115982055664, "bindings": {"parcel_id": "P-1002"}, "payload": {"status": "out_for_delivery"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 4.069239854812622, "bindings": {"parcel_id": "P-1002"}, "payload": {"status": "delivered"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 5.07952880859375, "bindings": {"parcel_id": "P-1004"}, "payload": {"status": "registered"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 5.685631036758423, "bindings": {"parcel_id": "P-1004"}, "payload": {"status": "scanned", "hub": "hub-east"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 6.289740085601807, "bindings": {"parcel_id": "P-1004"}, "payload": {"status": "out_for_delivery"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 6.898749828338623, "bindings": {"parcel_id": "P-1004"}, "payload": {"status": "delivered"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 7.5093677043914795, "bindings": {"parcel_id": "P-1004"}, "payload": {"status": "rerouted", "hub": "hub-west"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 8.516597986221313, "bindings": {"parcel_id": "P-1003"}, "payload": {"status": "registered"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 9.126718997955322, "bindings": {"parcel_id": "P-1003"}, "payload": {"status": "scanned", "hub": "hub-south"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 9.73689079284668, "bindings": {"parcel_id": "P-1003"}, "payload": {"status": "out_for_delivery"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 11.239543676376343, "bindings": {"parcel_id": "P-1005"}, "payload": {"status": "registered"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 11.848781824111938, "bindings": {"parcel_id": "P-1005"}, "payload": {"status": "scanned", "hub": "hub-north"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 12.459067821502686, "bindings": {"parcel_id": "P-1005"}, "payload": {"status": "out_for_delivery"}, "source": "parcel-service"}
+{"type": "parcel.status", "event_time": 13.06912088394165, "bindings": {"parcel_id": "P-1005"}, "payload": {"status": "delivered"}, "source": "parcel-service"}
+{"type": "behave_rv.clock", "event_time": 30.08343195915222, "bindings": {}, "payload": {}, "source": "clock"}

@@ -4,34 +4,10 @@ Every phrasing below can be used in a `.feature` policy under
 `monitoring/policies/`. Quoted `<placeholders>` take concrete values.
 Regenerate this file with `python monitoring/generate_steps_doc.py`.
 
-## `the game has started`
-
-- **identity**: `game.lifecycle.started` (trigger)
-- **observes**: event `game.started`, entity key `game_id`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then the game has started never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then the game has started has happened
-
-  Scenario: <your policy name>  # precedence
-    When the game has started
-    Then the game has started before
-
-  Scenario: <your policy name>  # deadline
-    When the game has started
-    Then the game has started within "30" seconds
-
-```
-
 ## `a mine explodes`
 
-- **identity**: `game.mine.exploded` (trigger)
-- **observes**: event `mine.exploded`, entity key `game_id`
+- **identity**: `board.mine.boom` (trigger)
+- **observes**: event `mine.boom`, entity key `game_id`
 
 Example scenarios:
 
@@ -52,10 +28,58 @@ Example scenarios:
 
 ```
 
+## `a cell is revealed on the board`
+
+- **identity**: `board.reveal.any` (trigger)
+- **observes**: event `board.reveal`, entity key `game_id`
+
+Example scenarios:
+
+```gherkin
+  Scenario: <your policy name>  # prohibition
+    Then a cell is revealed on the board never happens
+
+  Scenario: <your policy name>  # eventuality
+    Then a cell is revealed on the board has happened
+
+  Scenario: <your policy name>  # precedence
+    When a cell is revealed on the board
+    Then a cell is revealed on the board before
+
+  Scenario: <your policy name>  # deadline
+    When a cell is revealed on the board
+    Then a cell is revealed on the board within "30" seconds
+
+```
+
+## `the planted flags outnumber the mines`
+
+- **identity**: `board.flags.overflow` (trigger)
+- **observes**: event `flag.set`, entity key `game_id`
+
+Example scenarios:
+
+```gherkin
+  Scenario: <your policy name>  # prohibition
+    Then the planted flags outnumber the mines never happens
+
+  Scenario: <your policy name>  # eventuality
+    Then the planted flags outnumber the mines has happened
+
+  Scenario: <your policy name>  # precedence
+    When the planted flags outnumber the mines
+    Then the planted flags outnumber the mines before
+
+  Scenario: <your policy name>  # deadline
+    When the planted flags outnumber the mines
+    Then the planted flags outnumber the mines within "30" seconds
+
+```
+
 ## `a cell is revealed`
 
-- **identity**: `game.cell.reveal` (trigger)
-- **observes**: event `cell.reveal`, entity key `game_id`
+- **identity**: `cell.reveal.occurs` (trigger)
+- **observes**: event `cell.reveal`, entity key `game_id, cell`
 
 Example scenarios:
 
@@ -76,75 +100,27 @@ Example scenarios:
 
 ```
 
-## `the same cell has been revealed`
+## `that cell was already revealed`
 
-- **identity**: `cell.state.revealed` (trigger)
-- **observes**: event `cell.revealed`, entity key `game_id, cell`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then the same cell has been revealed never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then the same cell has been revealed has happened
-
-  Scenario: <your policy name>  # precedence
-    When the same cell has been revealed
-    Then the same cell has been revealed before
-
-  Scenario: <your policy name>  # deadline
-    When the same cell has been revealed
-    Then the same cell has been revealed within "30" seconds
-
-```
-
-## `the same cell is revealed again`
-
-- **identity**: `cell.reveal.repeat` (trigger)
-- **observes**: event `cell.reveal`, entity key `game_id, cell`
+- **identity**: `cell.seen.state` (trigger)
+- **observes**: event `cell.seen`, entity key `game_id, cell`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then the same cell is revealed again never happens
+    Then that cell was already revealed never happens
 
   Scenario: <your policy name>  # eventuality
-    Then the same cell is revealed again has happened
+    Then that cell was already revealed has happened
 
   Scenario: <your policy name>  # precedence
-    When the same cell is revealed again
-    Then the same cell is revealed again before
+    When that cell was already revealed
+    Then that cell was already revealed before
 
   Scenario: <your policy name>  # deadline
-    When the same cell is revealed again
-    Then the same cell is revealed again within "30" seconds
-
-```
-
-## `more flags are planted than there are mines`
-
-- **identity**: `game.flags.exceed_mines` (trigger)
-- **observes**: event `flag.placed`, entity key `game_id`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then more flags are planted than there are mines never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then more flags are planted than there are mines has happened
-
-  Scenario: <your policy name>  # precedence
-    When more flags are planted than there are mines
-    Then more flags are planted than there are mines before
-
-  Scenario: <your policy name>  # deadline
-    When more flags are planted than there are mines
-    Then more flags are planted than there are mines within "30" seconds
+    When that cell was already revealed
+    Then that cell was already revealed within "30" seconds
 
 ```
 

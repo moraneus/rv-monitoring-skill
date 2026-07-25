@@ -11,14 +11,15 @@
         "status"
       ],
       "referenced_constants": {
-        "parcel_service.EVENT_TYPE": "'parcel.status'"
+        "parcel_service.SOURCE": "'parcel-service'",
+        "parcel_service.STATUS_EVENT": "'parcel.status'"
       },
-      "rename_fingerprint": "51c756507cf44f81",
+      "rename_fingerprint": "3b7aae0923ac494d",
       "site_id": "parcel_service.ParcelService.deliver#1",
-      "slice_fingerprint": "51c756507cf44f81",
+      "slice_fingerprint": "3b7aae0923ac494d",
       "slice_functions": {
-        "parcel_service.ParcelService.__init__": "5cd560ffc6efec02",
-        "parcel_service.ParcelService.deliver": "e88220ecda18b208"
+        "parcel_service.ParcelService.__init__": "10fce21fd65239d5",
+        "parcel_service.ParcelService.deliver": "15f29b8b19ed358c"
       },
       "unresolved_calls": [
         "parcel.history.append",
@@ -38,14 +39,15 @@
         "status"
       ],
       "referenced_constants": {
-        "parcel_service.EVENT_TYPE": "'parcel.status'"
+        "parcel_service.SOURCE": "'parcel-service'",
+        "parcel_service.STATUS_EVENT": "'parcel.status'"
       },
-      "rename_fingerprint": "09ac31c832a8ecb8",
+      "rename_fingerprint": "cfd6852a8d5ce9d3",
       "site_id": "parcel_service.ParcelService.hub_scan#1",
-      "slice_fingerprint": "09ac31c832a8ecb8",
+      "slice_fingerprint": "cfd6852a8d5ce9d3",
       "slice_functions": {
-        "parcel_service.ParcelService.__init__": "5cd560ffc6efec02",
-        "parcel_service.ParcelService.hub_scan": "125d2fb70e2ba4fa"
+        "parcel_service.ParcelService.__init__": "10fce21fd65239d5",
+        "parcel_service.ParcelService.hub_scan": "b47bb57a627d31fb"
       },
       "unresolved_calls": [
         "parcel.history.append",
@@ -64,14 +66,15 @@
         "status"
       ],
       "referenced_constants": {
-        "parcel_service.EVENT_TYPE": "'parcel.status'"
+        "parcel_service.SOURCE": "'parcel-service'",
+        "parcel_service.STATUS_EVENT": "'parcel.status'"
       },
-      "rename_fingerprint": "eb66f1da1fc8d31e",
+      "rename_fingerprint": "04e801154fe72399",
       "site_id": "parcel_service.ParcelService.out_for_delivery#1",
-      "slice_fingerprint": "eb66f1da1fc8d31e",
+      "slice_fingerprint": "04e801154fe72399",
       "slice_functions": {
-        "parcel_service.ParcelService.__init__": "5cd560ffc6efec02",
-        "parcel_service.ParcelService.out_for_delivery": "c0e7bd846e284c71"
+        "parcel_service.ParcelService.__init__": "10fce21fd65239d5",
+        "parcel_service.ParcelService.out_for_delivery": "90f23a3d53a868bb"
       },
       "unresolved_calls": [
         "parcel.history.append",
@@ -87,18 +90,18 @@
       "function": "ParcelService.register",
       "module": "parcel_service",
       "payload_fields": [
-        "destination",
         "status"
       ],
       "referenced_constants": {
-        "parcel_service.EVENT_TYPE": "'parcel.status'"
+        "parcel_service.SOURCE": "'parcel-service'",
+        "parcel_service.STATUS_EVENT": "'parcel.status'"
       },
-      "rename_fingerprint": "3365cbea1e8ede35",
+      "rename_fingerprint": "6aff1e2c47b047d8",
       "site_id": "parcel_service.ParcelService.register#1",
-      "slice_fingerprint": "3365cbea1e8ede35",
+      "slice_fingerprint": "6aff1e2c47b047d8",
       "slice_functions": {
-        "parcel_service.ParcelService.__init__": "5cd560ffc6efec02",
-        "parcel_service.ParcelService.register": "c0e174b41a0e4c63"
+        "parcel_service.ParcelService.__init__": "10fce21fd65239d5",
+        "parcel_service.ParcelService.register": "5ef912c2d0f85349"
       },
       "unresolved_calls": [
         "Parcel",
@@ -118,14 +121,15 @@
         "status"
       ],
       "referenced_constants": {
-        "parcel_service.EVENT_TYPE": "'parcel.status'"
+        "parcel_service.SOURCE": "'parcel-service'",
+        "parcel_service.STATUS_EVENT": "'parcel.status'"
       },
-      "rename_fingerprint": "5bbe70562886c39f",
+      "rename_fingerprint": "f760c4525b7b899e",
       "site_id": "parcel_service.ParcelService.return_to_sender#1",
-      "slice_fingerprint": "5bbe70562886c39f",
+      "slice_fingerprint": "f760c4525b7b899e",
       "slice_functions": {
-        "parcel_service.ParcelService.__init__": "5cd560ffc6efec02",
-        "parcel_service.ParcelService.return_to_sender": "fc95ae87bb17bda7"
+        "parcel_service.ParcelService.__init__": "10fce21fd65239d5",
+        "parcel_service.ParcelService.return_to_sender": "45326d6b36f68b97"
       },
       "unresolved_calls": [
         "parcel.history.append",
@@ -145,14 +149,15 @@
         "status"
       ],
       "referenced_constants": {
-        "parcel_service.EVENT_TYPE": "'parcel.status'"
+        "parcel_service.SOURCE": "'parcel-service'",
+        "parcel_service.STATUS_EVENT": "'parcel.status'"
       },
-      "rename_fingerprint": "fca36e7acc2df8e3",
+      "rename_fingerprint": "202a4cf8734f99f2",
       "site_id": "parcel_service.ParcelService.route_to#1",
-      "slice_fingerprint": "fca36e7acc2df8e3",
+      "slice_fingerprint": "202a4cf8734f99f2",
       "slice_functions": {
-        "parcel_service.ParcelService.__init__": "5cd560ffc6efec02",
-        "parcel_service.ParcelService.route_to": "1fcdd57cecab1c08"
+        "parcel_service.ParcelService.__init__": "10fce21fd65239d5",
+        "parcel_service.ParcelService.route_to": "6cc824719cbaa353"
       },
       "unresolved_calls": [
         "parcel.history.append",
@@ -169,7 +174,7 @@
       "phrasing": "a parcel is \"{status}\"",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "f5f45c9e43d3c909",
+        "condition_fingerprint": "8ee378c6e0344d6a",
         "correlation_key": [
           "parcel_id"
         ],
@@ -183,7 +188,6 @@
         ],
         "trigger_condition": "a parcel is \"{status}\"",
         "unresolved_calls": [
-          "ctx.bind",
           "get"
         ]
       },
@@ -196,7 +200,7 @@
       "phrasing": "a parcel is finished",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "811c65584ec74847",
+        "condition_fingerprint": "535f4fb356474e89",
         "correlation_key": [
           "parcel_id"
         ],
@@ -208,7 +212,6 @@
         "referenced_fields": [],
         "trigger_condition": "a parcel is finished",
         "unresolved_calls": [
-          "ctx.bind",
           "get"
         ]
       },

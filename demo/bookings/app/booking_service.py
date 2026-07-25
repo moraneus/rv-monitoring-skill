@@ -1,29 +1,29 @@
-"""The application under monitoring: class bookings for a small fitness studio.
+"""The application under monitoring: a small fitness-studio class-bookings
+service.
 
-This is the studio's business logic. Monitoring asks almost nothing of it: the
+This file is the business logic. Monitoring asks almost nothing of it: the
 service takes an ``emit`` callable and calls it once per observable state
 change. It never imports the engine, never knows about policies, and its logic
-is not reshaped to be observable - the ``Event(...)`` taps sit beside the
-operations.
+is not reshaped to be observable.
 
-Two conventions carried from the behave-rv examples:
+Conventions (copied from the behave-rv instrumentation guide):
 
 * ``emit`` and ``clock`` are injected, so the same service runs live (real
-  clock, events flowing to the engine) and under the replay gate (fake clock,
-  events collected in a list) with identical behaviour.
-* Event times are service-relative seconds when a start-anchored clock is
-  passed, which keeps the dashboard timeline and traces readable. (Since
-  behave-rv 0.3.0 raw ``time.time()`` also works for wall-clock deadlines; the
-  relative clock is a readability choice, not a correctness requirement.)
+  clock, events to the engine) and under the replay gate (fake clock, events
+  into a list) identically.
+* Event construction is visible at the call site and event types are
+  module-level constants, so the stability analyzer can follow the emit sites.
 
-One monitoring decision worth stating in the code, because it is not obvious:
-a booking ends its life at attended, cancelled, or no-show. Of those, only
-``attended`` and ``no_show`` emit the terminal ``booking.done`` event that
-retires the monitor instance. ``cancel`` deliberately does NOT, because the
-studio's most important rule is "a cancelled booking must never be checked in"
-- the illegal check-in happens AFTER the cancel, so terminating at the cancel
-would blind exactly the rule we most want to catch. Cancelled bookings are
-reclaimed by the engine's quiescence timeout instead.
+One entity: the individual booking, keyed by ``booking_id`` (e.g. "B-1042").
+Its life runs reserved -> [waitlisted -> promoted ->] confirmed -> checked_in
+-> attended, with cancelled and no_show as the other endings.
+
+There is deliberately NO terminal event type. attended / cancelled / no_show
+are where a booking's story normally ends, but the monitor keeps watching each
+booking for a window after its last activity (quiescence TTL) rather than
+closing the file the instant it ends. That is what lets the "a cancelled
+booking is never checked in" policy still catch a check-in that lands after a
+cancellation - the booking's monitor is still alive to see it.
 """
 
 from __future__ import annotations
@@ -32,32 +32,41 @@ import time
 
 from behave_rv.events.event import Event
 
-# Event types are module-level constants referenced by name: the stability
-# analyzer resolves these literals; an f-string or concatenation would degrade
-# to a <dynamic> marker and lose analyzability.
-STATUS_TYPE = "booking.status"                 # the booking lifecycle
-BALANCE_TYPE = "member.balance"                # a member's outstanding balance
-MEMBER_CONFIRM_TYPE = "member.booking_confirmed"  # confirm, keyed by member
-SEAT_TYPE = "seat.confirmed"                    # confirm, keyed by (member, class)
-TERMINAL_TYPE = "booking.done"                 # retires attended / no-show bookings
+STATUS_TYPE = "booking.status"          # every booking state transition
+CAP_TYPE = "booking.cap_exceeded"       # app-side capacity check tripped
 
-SOURCE = "booking-service"
+CLASS_CAPACITY = 12                     # a class never seats more than this
 
 
 class BookingService:
     def __init__(self, emit, clock=time.time):
         self._emit = emit
         self._clock = clock
+        # the app already counts seats per class to enforce the cap; the
+        # monitor never sees this - it only sees the marker event below.
+        self._seats: dict[str, set[str]] = {}
+        self._class_of: dict[str, str] = {}
 
-    def _status(self, booking_id: str, status: str, **extra) -> None:
-        """The tap: one normalized event per booking state change."""
+    def _status(self, booking_id: str, status: str, **payload) -> None:
+        """The tap: one normalized event per state change, nothing more."""
         self._emit(Event(STATUS_TYPE, self._clock(), {"booking_id": booking_id},
-                         {"status": status, **extra}, SOURCE))
+                         {"status": status, **payload}, "bookings"))
 
-    # -- booking lifecycle -------------------------------------------------
+    # -- the business operations ------------------------------------------
 
-    def reserve(self, booking_id: str, member_id: str, class_id: str) -> None:
-        self._status(booking_id, "reserved", member_id=member_id, class_id=class_id)
+    def reserve(self, booking_id: str, class_id: str = "C-1") -> None:
+        self._class_of[booking_id] = class_id
+        seats = self._seats.setdefault(class_id, set())
+        seats.add(booking_id)
+        self._status(booking_id, "reserved", class_id=class_id)
+        # the app's own capacity check: if this reservation put the class over
+        # the cap, emit a booking-keyed marker a moment later (distinct
+        # timestamp) so the monitor can make the slip loud and name the booking.
+        if len(seats) > CLASS_CAPACITY:
+            self._emit(Event(CAP_TYPE, self._clock() + 1e-3,
+                             {"booking_id": booking_id},
+                             {"class_id": class_id, "seat_count": len(seats)},
+                             "bookings"))
 
     def waitlist(self, booking_id: str) -> None:
         self._status(booking_id, "waitlisted")
@@ -65,49 +74,28 @@ class BookingService:
     def promote(self, booking_id: str) -> None:
         self._status(booking_id, "promoted")
 
-    def confirm(self, booking_id: str, member_id: str, class_id: str) -> None:
-        # the booking-keyed transition the lifecycle policies read...
-        self._status(booking_id, "confirmed", member_id=member_id, class_id=class_id)
-        # ...plus a member-keyed view of the same act, so "no confirmation while
-        # the member owes a balance" can be a per-member rule...
-        self._emit(Event(MEMBER_CONFIRM_TYPE, self._clock(), {"member_id": member_id},
-                         {"booking_id": booking_id}, SOURCE))
-        # ...plus a (member, class)-keyed view, so a double-booking rule can be
-        # expressed per member+class pair if the studio adopts it (suggestion S2).
-        self._emit(Event(SEAT_TYPE, self._clock(),
-                         {"member_id": member_id, "class_id": class_id},
-                         {"booking_id": booking_id}, SOURCE))
+    def confirm(self, booking_id: str, balance_owed: bool = False) -> None:
+        # payment clears here. The front desk sees the member's balance on the
+        # same screen, so we stamp it onto the confirm event: balance_owed True
+        # means the booking was confirmed while the member still owed money.
+        self._status(booking_id, "confirmed", balance_owed=balance_owed)
 
     def check_in(self, booking_id: str) -> None:
         self._status(booking_id, "checked_in")
 
     def mark_attended(self, booking_id: str) -> None:
+        self._release_seat(booking_id)
         self._status(booking_id, "attended")
-        self._terminate(booking_id)
-
-    def mark_no_show(self, booking_id: str) -> None:
-        self._status(booking_id, "no_show")
-        self._terminate(booking_id)
 
     def cancel(self, booking_id: str) -> None:
-        # a business-terminal state, but intentionally NOT a monitor-terminal:
-        # see the module docstring. No booking.done here.
+        self._release_seat(booking_id)
         self._status(booking_id, "cancelled")
 
-    def _terminate(self, booking_id: str) -> None:
-        # the terminal fires a moment AFTER the status it follows: ordered
-        # actions need distinct timestamps (equal times are ordered
-        # canonically, not by arrival), so the terminal must not overtake the
-        # final status.
-        self._emit(Event(TERMINAL_TYPE, self._clock() + 1e-3,
-                         {"booking_id": booking_id}, {}, SOURCE))
+    def mark_no_show(self, booking_id: str) -> None:
+        self._release_seat(booking_id)
+        self._status(booking_id, "no_show")
 
-    # -- member balance ----------------------------------------------------
-
-    def incur_balance(self, member_id: str) -> None:
-        self._emit(Event(BALANCE_TYPE, self._clock(), {"member_id": member_id},
-                         {"state": "owed"}, SOURCE))
-
-    def settle_balance(self, member_id: str) -> None:
-        self._emit(Event(BALANCE_TYPE, self._clock(), {"member_id": member_id},
-                         {"state": "settled"}, SOURCE))
+    def _release_seat(self, booking_id: str) -> None:
+        class_id = self._class_of.get(booking_id)
+        if class_id is not None:
+            self._seats.get(class_id, set()).discard(booking_id)

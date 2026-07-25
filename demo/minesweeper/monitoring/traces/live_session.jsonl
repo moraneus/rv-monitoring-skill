@@ -1,1 +1,271 @@
-{"type": "game.started", "event_time": 0.16550016403198242, "bindings": {"game_id": "game-1"}, "payload": {"rows": 8, "cols": 8, "mines": 10}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.706852912902832, "bindings": {"game_id": "game-1", "cell": "3,3"}, "payload": {"row": 3, "col": 3, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.707010984420776, "bindings": {"game_id": "game-1", "cell": "3,3"}, "payload": {"row": 3, "col": 3}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.70707106590271, "bindings": {"game_id": "game-1"}, "payload": {"cell": "3,3", "row": 3, "col": 3, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.70710802078247, "bindings": {"game_id": "game-1", "cell": "4,4"}, "payload": {"row": 4, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.7071430683136, "bindings": {"game_id": "game-1", "cell": "4,4"}, "payload": {"row": 4, "col": 4}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.70719599723816, "bindings": {"game_id": "game-1"}, "payload": {"cell": "4,4", "row": 4, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.707233905792236, "bindings": {"game_id": "game-1", "cell": "4,3"}, "payload": {"row": 4, "col": 3, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.707263946533203, "bindings": {"game_id": "game-1", "cell": "4,3"}, "payload": {"row": 4, "col": 3}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.70729112625122, "bindings": {"game_id": "game-1"}, "payload": {"cell": "4,3", "row": 4, "col": 3, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.707314014434814, "bindings": {"game_id": "game-1", "cell": "4,2"}, "payload": {"row": 4, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.707331895828247, "bindings": {"game_id": "game-1", "cell": "4,2"}, "payload": {"row": 4, "col": 2}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.707345008850098, "bindings": {"game_id": "game-1"}, "payload": {"cell": "4,2", "row": 4, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.707365036010742, "bindings": {"game_id": "game-1", "cell": "3,4"}, "payload": {"row": 3, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.70737910270691, "bindings": {"game_id": "game-1", "cell": "3,4"}, "payload": {"row": 3, "col": 4}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.707445859909058, "bindings": {"game_id": "game-1"}, "payload": {"cell": "3,4", "row": 3, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.70746397972107, "bindings": {"game_id": "game-1", "cell": "4,5"}, "payload": {"row": 4, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.70748209953308, "bindings": {"game_id": "game-1", "cell": "4,5"}, "payload": {"row": 4, "col": 5}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.707494020462036, "bindings": {"game_id": "game-1"}, "payload": {"cell": "4,5", "row": 4, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.707509994506836, "bindings": {"game_id": "game-1", "cell": "5,6"}, "payload": {"row": 5, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.707522869110107, "bindings": {"game_id": "game-1", "cell": "5,6"}, "payload": {"row": 5, "col": 6}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.707536935806274, "bindings": {"game_id": "game-1"}, "payload": {"cell": "5,6", "row": 5, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.70755386352539, "bindings": {"game_id": "game-1", "cell": "6,7"}, "payload": {"row": 6, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.707600116729736, "bindings": {"game_id": "game-1", "cell": "6,7"}, "payload": {"row": 6, "col": 7}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.7076199054718, "bindings": {"game_id": "game-1"}, "payload": {"cell": "6,7", "row": 6, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.707646131515503, "bindings": {"game_id": "game-1", "cell": "6,6"}, "payload": {"row": 6, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.707667112350464, "bindings": {"game_id": "game-1", "cell": "6,6"}, "payload": {"row": 6, "col": 6}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.70768713951111, "bindings": {"game_id": "game-1"}, "payload": {"cell": "6,6", "row": 6, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.707704067230225, "bindings": {"game_id": "game-1", "cell": "6,5"}, "payload": {"row": 6, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.70771813392639, "bindings": {"game_id": "game-1", "cell": "6,5"}, "payload": {"row": 6, "col": 5}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.707731008529663, "bindings": {"game_id": "game-1"}, "payload": {"cell": "6,5", "row": 6, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.7077898979187, "bindings": {"game_id": "game-1", "cell": "5,7"}, "payload": {"row": 5, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.707823038101196, "bindings": {"game_id": "game-1", "cell": "5,7"}, "payload": {"row": 5, "col": 7}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.707876920700073, "bindings": {"game_id": "game-1"}, "payload": {"cell": "5,7", "row": 5, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.707904815673828, "bindings": {"game_id": "game-1", "cell": "4,7"}, "payload": {"row": 4, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.707924127578735, "bindings": {"game_id": "game-1", "cell": "4,7"}, "payload": {"row": 4, "col": 7}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.707937955856323, "bindings": {"game_id": "game-1"}, "payload": {"cell": "4,7", "row": 4, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.70796298980713, "bindings": {"game_id": "game-1", "cell": "4,6"}, "payload": {"row": 4, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.70798087120056, "bindings": {"game_id": "game-1", "cell": "4,6"}, "payload": {"row": 4, "col": 6}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.707996129989624, "bindings": {"game_id": "game-1"}, "payload": {"cell": "4,6", "row": 4, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.708052158355713, "bindings": {"game_id": "game-1", "cell": "5,5"}, "payload": {"row": 5, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.708202123641968, "bindings": {"game_id": "game-1", "cell": "5,5"}, "payload": {"row": 5, "col": 5}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.708275079727173, "bindings": {"game_id": "game-1"}, "payload": {"cell": "5,5", "row": 5, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.708345890045166, "bindings": {"game_id": "game-1", "cell": "6,4"}, "payload": {"row": 6, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.708425045013428, "bindings": {"game_id": "game-1", "cell": "6,4"}, "payload": {"row": 6, "col": 4}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.70844602584839, "bindings": {"game_id": "game-1"}, "payload": {"cell": "6,4", "row": 6, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.708470821380615, "bindings": {"game_id": "game-1", "cell": "5,4"}, "payload": {"row": 5, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.708492040634155, "bindings": {"game_id": "game-1", "cell": "5,4"}, "payload": {"row": 5, "col": 4}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.708518028259277, "bindings": {"game_id": "game-1"}, "payload": {"cell": "5,4", "row": 5, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.70854687690735, "bindings": {"game_id": "game-1", "cell": "3,7"}, "payload": {"row": 3, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.708583116531372, "bindings": {"game_id": "game-1", "cell": "3,7"}, "payload": {"row": 3, "col": 7}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.708603143692017, "bindings": {"game_id": "game-1"}, "payload": {"cell": "3,7", "row": 3, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.708626985549927, "bindings": {"game_id": "game-1", "cell": "3,6"}, "payload": {"row": 3, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.708640813827515, "bindings": {"game_id": "game-1", "cell": "3,6"}, "payload": {"row": 3, "col": 6}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.70866298675537, "bindings": {"game_id": "game-1"}, "payload": {"cell": "3,6", "row": 3, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.708688020706177, "bindings": {"game_id": "game-1", "cell": "3,5"}, "payload": {"row": 3, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.70870804786682, "bindings": {"game_id": "game-1", "cell": "3,5"}, "payload": {"row": 3, "col": 5}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.708728075027466, "bindings": {"game_id": "game-1"}, "payload": {"cell": "3,5", "row": 3, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.70875096321106, "bindings": {"game_id": "game-1", "cell": "2,6"}, "payload": {"row": 2, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.708770990371704, "bindings": {"game_id": "game-1", "cell": "2,6"}, "payload": {"row": 2, "col": 6}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.708789825439453, "bindings": {"game_id": "game-1"}, "payload": {"cell": "2,6", "row": 2, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.708816051483154, "bindings": {"game_id": "game-1", "cell": "2,7"}, "payload": {"row": 2, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.7088360786438, "bindings": {"game_id": "game-1", "cell": "2,7"}, "payload": {"row": 2, "col": 7}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.708854913711548, "bindings": {"game_id": "game-1"}, "payload": {"cell": "2,7", "row": 2, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.70887804031372, "bindings": {"game_id": "game-1", "cell": "1,7"}, "payload": {"row": 1, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.708897829055786, "bindings": {"game_id": "game-1", "cell": "1,7"}, "payload": {"row": 1, "col": 7}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.70891785621643, "bindings": {"game_id": "game-1"}, "payload": {"cell": "1,7", "row": 1, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.708957195281982, "bindings": {"game_id": "game-1", "cell": "1,6"}, "payload": {"row": 1, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.708986043930054, "bindings": {"game_id": "game-1", "cell": "1,6"}, "payload": {"row": 1, "col": 6}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.7090060710907, "bindings": {"game_id": "game-1"}, "payload": {"cell": "1,6", "row": 1, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.70902705192566, "bindings": {"game_id": "game-1", "cell": "2,5"}, "payload": {"row": 2, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.70904803276062, "bindings": {"game_id": "game-1", "cell": "2,5"}, "payload": {"row": 2, "col": 5}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.70906901359558, "bindings": {"game_id": "game-1"}, "payload": {"cell": "2,5", "row": 2, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.70909094810486, "bindings": {"game_id": "game-1", "cell": "1,5"}, "payload": {"row": 1, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.709110975265503, "bindings": {"game_id": "game-1", "cell": "1,5"}, "payload": {"row": 1, "col": 5}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.70913004875183, "bindings": {"game_id": "game-1"}, "payload": {"cell": "1,5", "row": 1, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.709151029586792, "bindings": {"game_id": "game-1", "cell": "2,4"}, "payload": {"row": 2, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.709171056747437, "bindings": {"game_id": "game-1", "cell": "2,4"}, "payload": {"row": 2, "col": 4}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.70921301841736, "bindings": {"game_id": "game-1"}, "payload": {"cell": "2,4", "row": 2, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.70923900604248, "bindings": {"game_id": "game-1", "cell": "2,3"}, "payload": {"row": 2, "col": 3, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.709258794784546, "bindings": {"game_id": "game-1", "cell": "2,3"}, "payload": {"row": 2, "col": 3}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.709278106689453, "bindings": {"game_id": "game-1"}, "payload": {"cell": "2,3", "row": 2, "col": 3, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.70930004119873, "bindings": {"game_id": "game-1", "cell": "3,2"}, "payload": {"row": 3, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.70931911468506, "bindings": {"game_id": "game-1", "cell": "3,2"}, "payload": {"row": 3, "col": 2}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.709342002868652, "bindings": {"game_id": "game-1"}, "payload": {"cell": "3,2", "row": 3, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 27.709375143051147, "bindings": {"game_id": "game-1", "cell": "2,2"}, "payload": {"row": 2, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 27.70939803123474, "bindings": {"game_id": "game-1", "cell": "2,2"}, "payload": {"row": 2, "col": 2}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 27.709419012069702, "bindings": {"game_id": "game-1"}, "payload": {"cell": "2,2", "row": 2, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 27.718377113342285, "bindings": {"game_id": "game-1"}, "payload": {"flags": 1, "mines": 10}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 27.726101875305176, "bindings": {"game_id": "game-1"}, "payload": {"flags": 2, "mines": 10}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 72.41245603561401, "bindings": {"game_id": "game-1"}, "payload": {"flags": 1, "mines": 10}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 68.7847228050232, "bindings": {"game_id": "game-2", "cell": "0,0"}, "payload": {"row": 0, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 68.78518795967102, "bindings": {"game_id": "game-2", "cell": "0,0"}, "payload": {"row": 0, "col": 0}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 68.78522491455078, "bindings": {"game_id": "game-2"}, "payload": {"cell": "0,0", "row": 0, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 68.78525590896606, "bindings": {"game_id": "game-2", "cell": "1,1"}, "payload": {"row": 1, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 68.78537392616272, "bindings": {"game_id": "game-2", "cell": "1,1"}, "payload": {"row": 1, "col": 1}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 68.7854220867157, "bindings": {"game_id": "game-2"}, "payload": {"cell": "1,1", "row": 1, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 68.78545880317688, "bindings": {"game_id": "game-2", "cell": "1,0"}, "payload": {"row": 1, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 68.78548192977905, "bindings": {"game_id": "game-2", "cell": "1,0"}, "payload": {"row": 1, "col": 0}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 68.78550791740417, "bindings": {"game_id": "game-2"}, "payload": {"cell": "1,0", "row": 1, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 68.78553080558777, "bindings": {"game_id": "game-2", "cell": "0,1"}, "payload": {"row": 0, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 68.78554797172546, "bindings": {"game_id": "game-2", "cell": "0,1"}, "payload": {"row": 0, "col": 1}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 68.78556180000305, "bindings": {"game_id": "game-2"}, "payload": {"cell": "0,1", "row": 0, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 68.78694772720337, "bindings": {"game_id": "game-2", "cell": "0,2"}, "payload": {"row": 0, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 68.78697180747986, "bindings": {"game_id": "game-2", "cell": "0,2"}, "payload": {"row": 0, "col": 2}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 68.78701281547546, "bindings": {"game_id": "game-2"}, "payload": {"cell": "0,2", "row": 0, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 68.78747701644897, "bindings": {"game_id": "game-2", "cell": "0,3"}, "payload": {"row": 0, "col": 3, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 68.78750085830688, "bindings": {"game_id": "game-2", "cell": "0,3"}, "payload": {"row": 0, "col": 3}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 68.78754878044128, "bindings": {"game_id": "game-2"}, "payload": {"cell": "0,3", "row": 0, "col": 3, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 68.78803086280823, "bindings": {"game_id": "game-2", "cell": "0,4"}, "payload": {"row": 0, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 68.78806185722351, "bindings": {"game_id": "game-2", "cell": "0,4"}, "payload": {"row": 0, "col": 4}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 68.78810906410217, "bindings": {"game_id": "game-2"}, "payload": {"cell": "0,4", "row": 0, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 68.78859066963196, "bindings": {"game_id": "game-2", "cell": "0,5"}, "payload": {"row": 0, "col": 5, "mine": true}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 68.7886209487915, "bindings": {"game_id": "game-2", "cell": "0,5"}, "payload": {"row": 0, "col": 5}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 68.78864979743958, "bindings": {"game_id": "game-2"}, "payload": {"cell": "0,5", "row": 0, "col": 5, "mine": true}, "source": "minesweeper"}
+{"type": "mine.boom", "event_time": 68.78869080543518, "bindings": {"game_id": "game-2"}, "payload": {"cell": "0,5", "row": 0, "col": 5}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 68.7892279624939, "bindings": {"game_id": "game-2", "cell": "1,4"}, "payload": {"row": 1, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 68.78925681114197, "bindings": {"game_id": "game-2", "cell": "1,4"}, "payload": {"row": 1, "col": 4}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 68.78928470611572, "bindings": {"game_id": "game-2"}, "payload": {"cell": "1,4", "row": 1, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 68.7897629737854, "bindings": {"game_id": "game-2", "cell": "0,6"}, "payload": {"row": 0, "col": 6, "mine": true}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 68.78978991508484, "bindings": {"game_id": "game-2", "cell": "0,6"}, "payload": {"row": 0, "col": 6}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 68.78981709480286, "bindings": {"game_id": "game-2"}, "payload": {"cell": "0,6", "row": 0, "col": 6, "mine": true}, "source": "minesweeper"}
+{"type": "mine.boom", "event_time": 68.78984069824219, "bindings": {"game_id": "game-2"}, "payload": {"cell": "0,6", "row": 0, "col": 6}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 103.23917484283447, "bindings": {"game_id": "game-3"}, "payload": {"flags": 1, "mines": 10}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 103.23999381065369, "bindings": {"game_id": "game-3"}, "payload": {"flags": 2, "mines": 10}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 103.24045491218567, "bindings": {"game_id": "game-3"}, "payload": {"flags": 3, "mines": 10}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 103.24086880683899, "bindings": {"game_id": "game-3"}, "payload": {"flags": 4, "mines": 10}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 103.24129581451416, "bindings": {"game_id": "game-3"}, "payload": {"flags": 5, "mines": 10}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 103.24168968200684, "bindings": {"game_id": "game-3"}, "payload": {"flags": 6, "mines": 10}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 103.24208998680115, "bindings": {"game_id": "game-3"}, "payload": {"flags": 7, "mines": 10}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 103.24259686470032, "bindings": {"game_id": "game-3"}, "payload": {"flags": 8, "mines": 10}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 103.2430100440979, "bindings": {"game_id": "game-3"}, "payload": {"flags": 9, "mines": 10}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 103.24340200424194, "bindings": {"game_id": "game-3"}, "payload": {"flags": 10, "mines": 10}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 103.24377393722534, "bindings": {"game_id": "game-3"}, "payload": {"flags": 11, "mines": 10}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.513977766037, "bindings": {"game_id": "game-4", "cell": "0,0"}, "payload": {"row": 0, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51420378684998, "bindings": {"game_id": "game-4", "cell": "0,0"}, "payload": {"row": 0, "col": 0}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.51424479484558, "bindings": {"game_id": "game-4"}, "payload": {"cell": "0,0", "row": 0, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51427507400513, "bindings": {"game_id": "game-4", "cell": "1,1"}, "payload": {"row": 1, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51449179649353, "bindings": {"game_id": "game-4", "cell": "1,1"}, "payload": {"row": 1, "col": 1}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.5145137310028, "bindings": {"game_id": "game-4"}, "payload": {"cell": "1,1", "row": 1, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.5145390033722, "bindings": {"game_id": "game-4", "cell": "1,0"}, "payload": {"row": 1, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51455998420715, "bindings": {"game_id": "game-4", "cell": "1,0"}, "payload": {"row": 1, "col": 0}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.5145788192749, "bindings": {"game_id": "game-4"}, "payload": {"cell": "1,0", "row": 1, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51460194587708, "bindings": {"game_id": "game-4", "cell": "0,1"}, "payload": {"row": 0, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51462483406067, "bindings": {"game_id": "game-4", "cell": "0,1"}, "payload": {"row": 0, "col": 1}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.514643907547, "bindings": {"game_id": "game-4"}, "payload": {"cell": "0,1", "row": 0, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 130.5161919593811, "bindings": {"game_id": "game-5"}, "payload": {"flags": 1, "mines": 10}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 130.51707077026367, "bindings": {"game_id": "game-5"}, "payload": {"flags": 0, "mines": 10}, "source": "minesweeper"}
+{"type": "flag.set", "event_time": 130.51753497123718, "bindings": {"game_id": "game-5"}, "payload": {"flags": 1, "mines": 10}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51803374290466, "bindings": {"game_id": "game-5", "cell": "-1,0"}, "payload": {"row": -1, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51805782318115, "bindings": {"game_id": "game-5", "cell": "-1,0"}, "payload": {"row": -1, "col": 0}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.5180857181549, "bindings": {"game_id": "game-5"}, "payload": {"cell": "-1,0", "row": -1, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.5181188583374, "bindings": {"game_id": "game-5", "cell": "0,1"}, "payload": {"row": 0, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51815390586853, "bindings": {"game_id": "game-5", "cell": "0,1"}, "payload": {"row": 0, "col": 1}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.5181758403778, "bindings": {"game_id": "game-5"}, "payload": {"cell": "0,1", "row": 0, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.5182089805603, "bindings": {"game_id": "game-5", "cell": "1,2"}, "payload": {"row": 1, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51825094223022, "bindings": {"game_id": "game-5", "cell": "1,2"}, "payload": {"row": 1, "col": 2}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.51829075813293, "bindings": {"game_id": "game-5"}, "payload": {"cell": "1,2", "row": 1, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51832389831543, "bindings": {"game_id": "game-5", "cell": "1,1"}, "payload": {"row": 1, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51834893226624, "bindings": {"game_id": "game-5", "cell": "1,1"}, "payload": {"row": 1, "col": 1}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.51836895942688, "bindings": {"game_id": "game-5"}, "payload": {"cell": "1,1", "row": 1, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51839685440063, "bindings": {"game_id": "game-5", "cell": "2,2"}, "payload": {"row": 2, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.518413066864, "bindings": {"game_id": "game-5", "cell": "2,2"}, "payload": {"row": 2, "col": 2}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.51842498779297, "bindings": {"game_id": "game-5"}, "payload": {"cell": "2,2", "row": 2, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51844096183777, "bindings": {"game_id": "game-5", "cell": "2,1"}, "payload": {"row": 2, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.5184769630432, "bindings": {"game_id": "game-5", "cell": "2,1"}, "payload": {"row": 2, "col": 1}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.51848912239075, "bindings": {"game_id": "game-5"}, "payload": {"cell": "2,1", "row": 2, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51852989196777, "bindings": {"game_id": "game-5", "cell": "3,2"}, "payload": {"row": 3, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51857089996338, "bindings": {"game_id": "game-5", "cell": "3,2"}, "payload": {"row": 3, "col": 2}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.51859092712402, "bindings": {"game_id": "game-5"}, "payload": {"cell": "3,2", "row": 3, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51860976219177, "bindings": {"game_id": "game-5", "cell": "3,1"}, "payload": {"row": 3, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51862812042236, "bindings": {"game_id": "game-5", "cell": "3,1"}, "payload": {"row": 3, "col": 1}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.5186460018158, "bindings": {"game_id": "game-5"}, "payload": {"cell": "3,1", "row": 3, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51867008209229, "bindings": {"game_id": "game-5", "cell": "4,2"}, "payload": {"row": 4, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.5186870098114, "bindings": {"game_id": "game-5", "cell": "4,2"}, "payload": {"row": 4, "col": 2}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.51870107650757, "bindings": {"game_id": "game-5"}, "payload": {"cell": "4,2", "row": 4, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.5187168121338, "bindings": {"game_id": "game-5", "cell": "4,1"}, "payload": {"row": 4, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51872992515564, "bindings": {"game_id": "game-5", "cell": "4,1"}, "payload": {"row": 4, "col": 1}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.5187418460846, "bindings": {"game_id": "game-5"}, "payload": {"cell": "4,1", "row": 4, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51875686645508, "bindings": {"game_id": "game-5", "cell": "4,0"}, "payload": {"row": 4, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51876974105835, "bindings": {"game_id": "game-5", "cell": "4,0"}, "payload": {"row": 4, "col": 0}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.51878380775452, "bindings": {"game_id": "game-5"}, "payload": {"cell": "4,0", "row": 4, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51880288124084, "bindings": {"game_id": "game-5", "cell": "5,1"}, "payload": {"row": 5, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.5188159942627, "bindings": {"game_id": "game-5", "cell": "5,1"}, "payload": {"row": 5, "col": 1}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.5188307762146, "bindings": {"game_id": "game-5"}, "payload": {"cell": "5,1", "row": 5, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51884698867798, "bindings": {"game_id": "game-5", "cell": "5,0"}, "payload": {"row": 5, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51893591880798, "bindings": {"game_id": "game-5", "cell": "5,0"}, "payload": {"row": 5, "col": 0}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.51895093917847, "bindings": {"game_id": "game-5"}, "payload": {"cell": "5,0", "row": 5, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51897192001343, "bindings": {"game_id": "game-5", "cell": "6,1"}, "payload": {"row": 6, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.5190088748932, "bindings": {"game_id": "game-5", "cell": "6,1"}, "payload": {"row": 6, "col": 1}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.51902270317078, "bindings": {"game_id": "game-5"}, "payload": {"cell": "6,1", "row": 6, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51907873153687, "bindings": {"game_id": "game-5", "cell": "6,0"}, "payload": {"row": 6, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51910185813904, "bindings": {"game_id": "game-5", "cell": "6,0"}, "payload": {"row": 6, "col": 0}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.51912188529968, "bindings": {"game_id": "game-5"}, "payload": {"cell": "6,0", "row": 6, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51914596557617, "bindings": {"game_id": "game-5", "cell": "7,1"}, "payload": {"row": 7, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51916694641113, "bindings": {"game_id": "game-5", "cell": "7,1"}, "payload": {"row": 7, "col": 1}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.51918697357178, "bindings": {"game_id": "game-5"}, "payload": {"cell": "7,1", "row": 7, "col": 1, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51920986175537, "bindings": {"game_id": "game-5", "cell": "7,0"}, "payload": {"row": 7, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51923084259033, "bindings": {"game_id": "game-5", "cell": "7,0"}, "payload": {"row": 7, "col": 0}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.51925086975098, "bindings": {"game_id": "game-5"}, "payload": {"cell": "7,0", "row": 7, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.519278049469, "bindings": {"game_id": "game-5", "cell": "3,0"}, "payload": {"row": 3, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.519300699234, "bindings": {"game_id": "game-5", "cell": "3,0"}, "payload": {"row": 3, "col": 0}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.51932096481323, "bindings": {"game_id": "game-5"}, "payload": {"cell": "3,0", "row": 3, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51934790611267, "bindings": {"game_id": "game-5", "cell": "2,0"}, "payload": {"row": 2, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51937103271484, "bindings": {"game_id": "game-5", "cell": "2,0"}, "payload": {"row": 2, "col": 0}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.5193920135498, "bindings": {"game_id": "game-5"}, "payload": {"cell": "2,0", "row": 2, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.5194170475006, "bindings": {"game_id": "game-5", "cell": "1,0"}, "payload": {"row": 1, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51944279670715, "bindings": {"game_id": "game-5", "cell": "1,0"}, "payload": {"row": 1, "col": 0}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.5194628238678, "bindings": {"game_id": "game-5"}, "payload": {"cell": "1,0", "row": 1, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.5194878578186, "bindings": {"game_id": "game-5", "cell": "0,0"}, "payload": {"row": 0, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51951098442078, "bindings": {"game_id": "game-5", "cell": "0,0"}, "payload": {"row": 0, "col": 0}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.5195288658142, "bindings": {"game_id": "game-5"}, "payload": {"cell": "0,0", "row": 0, "col": 0, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.51955771446228, "bindings": {"game_id": "game-5", "cell": "0,2"}, "payload": {"row": 0, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.51957297325134, "bindings": {"game_id": "game-5", "cell": "0,2"}, "payload": {"row": 0, "col": 2}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.51958870887756, "bindings": {"game_id": "game-5"}, "payload": {"cell": "0,2", "row": 0, "col": 2, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.5203456878662, "bindings": {"game_id": "game-5", "cell": "8,8"}, "payload": {"row": 8, "col": 8, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.52037596702576, "bindings": {"game_id": "game-5", "cell": "8,8"}, "payload": {"row": 8, "col": 8}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.5204029083252, "bindings": {"game_id": "game-5"}, "payload": {"cell": "8,8", "row": 8, "col": 8, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.52043390274048, "bindings": {"game_id": "game-5", "cell": "7,7"}, "payload": {"row": 7, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.52045798301697, "bindings": {"game_id": "game-5", "cell": "7,7"}, "payload": {"row": 7, "col": 7}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.52047896385193, "bindings": {"game_id": "game-5"}, "payload": {"cell": "7,7", "row": 7, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.52051091194153, "bindings": {"game_id": "game-5", "cell": "7,6"}, "payload": {"row": 7, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.5205318927765, "bindings": {"game_id": "game-5", "cell": "7,6"}, "payload": {"row": 7, "col": 6}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.52055191993713, "bindings": {"game_id": "game-5"}, "payload": {"cell": "7,6", "row": 7, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.52057480812073, "bindings": {"game_id": "game-5", "cell": "6,7"}, "payload": {"row": 6, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.5205957889557, "bindings": {"game_id": "game-5", "cell": "6,7"}, "payload": {"row": 6, "col": 7}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.52061486244202, "bindings": {"game_id": "game-5"}, "payload": {"cell": "6,7", "row": 6, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.52064681053162, "bindings": {"game_id": "game-5", "cell": "6,6"}, "payload": {"row": 6, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.5206687450409, "bindings": {"game_id": "game-5", "cell": "6,6"}, "payload": {"row": 6, "col": 6}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.52068781852722, "bindings": {"game_id": "game-5"}, "payload": {"cell": "6,6", "row": 6, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.52071285247803, "bindings": {"game_id": "game-5", "cell": "5,7"}, "payload": {"row": 5, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.5207347869873, "bindings": {"game_id": "game-5", "cell": "5,7"}, "payload": {"row": 5, "col": 7}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.52075481414795, "bindings": {"game_id": "game-5"}, "payload": {"cell": "5,7", "row": 5, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.52077889442444, "bindings": {"game_id": "game-5", "cell": "5,6"}, "payload": {"row": 5, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.5207998752594, "bindings": {"game_id": "game-5", "cell": "5,6"}, "payload": {"row": 5, "col": 6}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.52081990242004, "bindings": {"game_id": "game-5"}, "payload": {"cell": "5,6", "row": 5, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.52084493637085, "bindings": {"game_id": "game-5", "cell": "6,5"}, "payload": {"row": 6, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.5208659172058, "bindings": {"game_id": "game-5", "cell": "6,5"}, "payload": {"row": 6, "col": 5}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.52088975906372, "bindings": {"game_id": "game-5"}, "payload": {"cell": "6,5", "row": 6, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.5209138393402, "bindings": {"game_id": "game-5", "cell": "5,5"}, "payload": {"row": 5, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.52093482017517, "bindings": {"game_id": "game-5", "cell": "5,5"}, "payload": {"row": 5, "col": 5}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.52095484733582, "bindings": {"game_id": "game-5"}, "payload": {"cell": "5,5", "row": 5, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.52098393440247, "bindings": {"game_id": "game-5", "cell": "6,4"}, "payload": {"row": 6, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.52100491523743, "bindings": {"game_id": "game-5", "cell": "6,4"}, "payload": {"row": 6, "col": 4}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.5210258960724, "bindings": {"game_id": "game-5"}, "payload": {"cell": "6,4", "row": 6, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.5210497379303, "bindings": {"game_id": "game-5", "cell": "5,4"}, "payload": {"row": 5, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.52107071876526, "bindings": {"game_id": "game-5", "cell": "5,4"}, "payload": {"row": 5, "col": 4}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.52109003067017, "bindings": {"game_id": "game-5"}, "payload": {"cell": "5,4", "row": 5, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.52111291885376, "bindings": {"game_id": "game-5", "cell": "4,6"}, "payload": {"row": 4, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.52113389968872, "bindings": {"game_id": "game-5", "cell": "4,6"}, "payload": {"row": 4, "col": 6}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.52115297317505, "bindings": {"game_id": "game-5"}, "payload": {"cell": "4,6", "row": 4, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.52117609977722, "bindings": {"game_id": "game-5", "cell": "4,5"}, "payload": {"row": 4, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.52120089530945, "bindings": {"game_id": "game-5", "cell": "4,5"}, "payload": {"row": 4, "col": 5}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.5212218761444, "bindings": {"game_id": "game-5"}, "payload": {"cell": "4,5", "row": 4, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.521244764328, "bindings": {"game_id": "game-5", "cell": "4,4"}, "payload": {"row": 4, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.52126574516296, "bindings": {"game_id": "game-5", "cell": "4,4"}, "payload": {"row": 4, "col": 4}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.52130675315857, "bindings": {"game_id": "game-5"}, "payload": {"cell": "4,4", "row": 4, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.52134585380554, "bindings": {"game_id": "game-5", "cell": "3,6"}, "payload": {"row": 3, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.52137899398804, "bindings": {"game_id": "game-5", "cell": "3,6"}, "payload": {"row": 3, "col": 6}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.521399974823, "bindings": {"game_id": "game-5"}, "payload": {"cell": "3,6", "row": 3, "col": 6, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.5214238166809, "bindings": {"game_id": "game-5", "cell": "3,5"}, "payload": {"row": 3, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.52144479751587, "bindings": {"game_id": "game-5", "cell": "3,5"}, "payload": {"row": 3, "col": 5}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.52146577835083, "bindings": {"game_id": "game-5"}, "payload": {"cell": "3,5", "row": 3, "col": 5, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.5214877128601, "bindings": {"game_id": "game-5", "cell": "3,4"}, "payload": {"row": 3, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.5215039253235, "bindings": {"game_id": "game-5", "cell": "3,4"}, "payload": {"row": 3, "col": 4}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.5215198993683, "bindings": {"game_id": "game-5"}, "payload": {"cell": "3,4", "row": 3, "col": 4, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.52153897285461, "bindings": {"game_id": "game-5", "cell": "4,7"}, "payload": {"row": 4, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.5215549468994, "bindings": {"game_id": "game-5", "cell": "4,7"}, "payload": {"row": 4, "col": 7}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.52165293693542, "bindings": {"game_id": "game-5"}, "payload": {"cell": "4,7", "row": 4, "col": 7, "mine": false}, "source": "minesweeper"}
+{"type": "cell.reveal", "event_time": 130.52338194847107, "bindings": {"game_id": "game-5", "cell": "100,100"}, "payload": {"row": 100, "col": 100, "mine": false}, "source": "minesweeper"}
+{"type": "cell.seen", "event_time": 130.52341294288635, "bindings": {"game_id": "game-5", "cell": "100,100"}, "payload": {"row": 100, "col": 100}, "source": "minesweeper"}
+{"type": "board.reveal", "event_time": 130.52343797683716, "bindings": {"game_id": "game-5"}, "payload": {"cell": "100,100", "row": 100, "col": 100, "mine": false}, "source": "minesweeper"}

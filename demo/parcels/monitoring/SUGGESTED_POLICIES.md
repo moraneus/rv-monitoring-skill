@@ -1,48 +1,49 @@
-# Suggested policies (proposals - you decide what becomes a policy)
+# Suggested policies (proposals - you decide)
 
-These are drafted by the coding agent from the monitorable surface. None is
-active. To adopt one, move its `.feature` into `monitoring/policies/` yourself
-and rerun the gates. Each below compiles against the current registry.
+These are drafts I thought of while instrumenting the parcel service. Nothing
+here is active. To adopt one, move it into `monitoring/policies/` yourself and
+re-run the gates. Each below compiles against the current vocabulary and
+produces zero violations on the healthy flows.
 
-## 2026-07-23: a parcel is out for delivery before it is delivered
+## 2026-07-25: a delivered parcel is never returned to sender
 
-**Observes:** `parcel.status` (statuses `out_for_delivery`, `delivered`); key `parcel_id`
-**Why:** catches a "delivered" event for a parcel that never went out for
-delivery - a phantom delivery or a mis-sequenced status update. Complements
-rule 1 (which guards the hub scan) by guarding the step just before delivery.
-
-```gherkin
-Feature: no phantom deliveries
-  Scenario: a parcel is out for delivery before it is delivered
-    When a parcel is "delivered"
-    Then a parcel is "out_for_delivery" before
-```
-
-## 2026-07-23: a parcel is registered before it is scanned at a hub
-
-**Observes:** `parcel.status` (statuses `registered`, `scanned`); key `parcel_id`
-**Why:** a scan for a parcel the service never registered signals a lost or
-out-of-order registration event - the lifecycle should always start at
-`registered`.
+**Observes:** `parcel.status` (statuses `delivered`, `returned`), key `parcel_id`
+**Why:** delivered and returned are meant to be mutually exclusive final
+outcomes. This catches a parcel being marked returned-to-sender after it was
+already delivered - a data or process error your three rules do not cover.
+Like rule 2, it has no terminal event, so its detection window is the
+quiescence TTL after delivery.
 
 ```gherkin
-Feature: registration precedes scanning
-  Scenario: a parcel is registered before it is scanned at a hub
-    When a parcel is "scanned"
-    Then a parcel is "registered" before
+Feature: mutually exclusive outcomes
+
+  Scenario: a delivered parcel is never returned to sender
+    Given a parcel is "delivered"
+    Then a parcel is "returned" never happens
 ```
 
-## 2026-07-23: a scanned parcel goes out for delivery within 20 seconds
+## 2026-07-25: a re-routed parcel must have been scanned at a hub first
 
-**Observes:** `parcel.status` (statuses `scanned`, `out_for_delivery`); key `parcel_id`
-**Why:** an SLA on hub dwell time. A parcel scanned at a hub but not dispatched
-within the window is stuck. Demo-scale duration (20s); pick the real value.
-Note: this is a proposal, not one of your three stated rules - the number is a
-placeholder for you to set.
+**Observes:** `parcel.status` (statuses `rerouted`, `scanned`), key `parcel_id`
+**Why:** a reroute names a hub; a parcel that is rerouted without ever having
+been scanned at a hub suggests a phantom/mis-keyed routing event. Decided at
+the first reroute (precedence arms once per parcel).
 
 ```gherkin
-Feature: hub handover SLA
-  Scenario: a scanned parcel goes out for delivery within 20 seconds
-    When a parcel is "scanned"
-    Then a parcel is "out_for_delivery" within "20" seconds
+Feature: reroute needs a prior scan
+
+  Scenario: a re-routed parcel must have been scanned at a hub first
+    When a parcel is "rerouted"
+    Then a parcel is "scanned" before
 ```
+
+## 2026-07-25: (out of fragment) "every dispatched parcel eventually finishes"
+
+**Why not shipped:** a plain "eventually delivered or returned" (`has happened`)
+can only ever reach a `violated` verdict at a terminal event, and this design
+deliberately has no terminal event (so rule 2 can keep watching after
+delivery). Without a terminal it would pend forever and never alert. Rule 3
+already gives you the bounded, always-decidable version of this intent: "…
+within 12 seconds." If you want an unbounded eventuality with a real verdict,
+that is a modeling change (introduce a terminal event and accept the rule-2
+window it opens) - tell me and we will weigh it together.

@@ -17,7 +17,7 @@
             --steps monitoring/steps.py \
             --catalog monitoring/catalog.json \
             --policies monitoring/policies \
-            --app app/parcel_service.py \
+            --app __APP_SOURCES__ \
             --fail-on-app-risk
 
   rv-replay:

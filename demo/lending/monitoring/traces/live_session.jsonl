@@ -1,0 +1,38 @@
+{"type": "loan.status", "event_time": 0.014224052429199219, "bindings": {"loan_id": "L-101"}, "payload": {"status": "borrowed", "member_id": "alice", "book_copy_id": "copy-hobbit"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 1.0194940567016602, "bindings": {"loan_id": "L-102"}, "payload": {"status": "borrowed", "member_id": "bob", "book_copy_id": "copy-dune"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 2.029766798019409, "bindings": {"loan_id": "L-777"}, "payload": {"status": "borrowed", "member_id": "carol", "book_copy_id": "copy-1984"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 3.0400021076202393, "bindings": {"loan_id": "L-101"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 5.050372123718262, "bindings": {"loan_id": "L-303"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 8.056215047836304, "bindings": {"loan_id": "L-102"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 10.058844804763794, "bindings": {"loan_id": "L-404"}, "payload": {"status": "borrowed", "member_id": "dave", "book_copy_id": "copy-sapiens"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 12.069282054901123, "bindings": {"loan_id": "L-404"}, "payload": {"status": "lost"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 14.079493045806885, "bindings": {"loan_id": "L-102"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 17.089223861694336, "bindings": {"loan_id": "L-404"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 0.013281822204589844, "bindings": {"loan_id": "L-101"}, "payload": {"status": "borrowed", "member_id": "alice", "book_copy_id": "copy-hobbit"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 1.023606777191162, "bindings": {"loan_id": "L-102"}, "payload": {"status": "borrowed", "member_id": "bob", "book_copy_id": "copy-dune"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 2.033761739730835, "bindings": {"loan_id": "L-777"}, "payload": {"status": "borrowed", "member_id": "carol", "book_copy_id": "copy-1984"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 3.0440237522125244, "bindings": {"loan_id": "L-101"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 5.049376726150513, "bindings": {"loan_id": "L-303"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 7.059199094772339, "bindings": {"loan_id": "L-606"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 9.069370985031128, "bindings": {"loan_id": "L-102"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 11.076974868774414, "bindings": {"loan_id": "L-404"}, "payload": {"status": "borrowed", "member_id": "dave", "book_copy_id": "copy-sapiens"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 13.08740782737732, "bindings": {"loan_id": "L-404"}, "payload": {"status": "lost"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 15.093401908874512, "bindings": {"loan_id": "L-102"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 17.09404706954956, "bindings": {"loan_id": "L-404"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 18.104451894760132, "bindings": {"loan_id": "L-505"}, "payload": {"status": "borrowed", "member_id": "erin", "book_copy_id": "copy-emma"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 19.110551834106445, "bindings": {"loan_id": "L-505"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 21.11440896987915, "bindings": {"loan_id": "L-505"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 0.012411117553710938, "bindings": {"loan_id": "L-101"}, "payload": {"status": "borrowed", "member_id": "copy-hobbit", "book_copy_id": "alice"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 1.015139102935791, "bindings": {"loan_id": "L-102"}, "payload": {"status": "borrowed", "member_id": "copy-dune", "book_copy_id": "bob"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 2.0161001682281494, "bindings": {"loan_id": "L-777"}, "payload": {"status": "borrowed", "member_id": "copy-1984", "book_copy_id": "carol"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 3.0232670307159424, "bindings": {"loan_id": "L-101"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 5.026660203933716, "bindings": {"loan_id": "L-303"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 7.037014007568359, "bindings": {"loan_id": "L-606"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 9.038784980773926, "bindings": {"loan_id": "L-102"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 11.048906087875366, "bindings": {"loan_id": "L-404"}, "payload": {"status": "borrowed", "member_id": "copy-sapiens", "book_copy_id": "dave"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 13.051926136016846, "bindings": {"loan_id": "L-404"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 15.06209921836853, "bindings": {"loan_id": "L-102"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 17.07218623161316, "bindings": {"loan_id": "L-404"}, "payload": {"status": "renewed"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 18.08261513710022, "bindings": {"loan_id": "L-505"}, "payload": {"status": "borrowed", "member_id": "copy-emma", "book_copy_id": "erin"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 19.08849811553955, "bindings": {"loan_id": "L-505"}, "payload": {"status": "returned"}, "source": "lending-service"}
+{"type": "loan.status", "event_time": 21.101876258850098, "bindings": {"loan_id": "L-505"}, "payload": {"status": "renewed"}, "source": "lending-service"}

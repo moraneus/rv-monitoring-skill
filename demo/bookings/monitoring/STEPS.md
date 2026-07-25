@@ -29,33 +29,33 @@ Example scenarios:
 
 ```
 
-## `a booking reaches a final state`
+## `a booking is confirmed while the member owes`
 
-- **identity**: `booking.final.reached` (trigger)
+- **identity**: `booking.status.confirmed_owing` (trigger)
 - **observes**: event `booking.status`, entity key `booking_id`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a booking reaches a final state never happens
+    Then a booking is confirmed while the member owes never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a booking reaches a final state has happened
+    Then a booking is confirmed while the member owes has happened
 
   Scenario: <your policy name>  # precedence
-    When a booking reaches a final state
-    Then a booking reaches a final state before
+    When a booking is confirmed while the member owes
+    Then a booking is confirmed while the member owes before
 
   Scenario: <your policy name>  # deadline
-    When a booking reaches a final state
-    Then a booking reaches a final state within "30" seconds
+    When a booking is confirmed while the member owes
+    Then a booking is confirmed while the member owes within "30" seconds
 
 ```
 
 ## `a booking is confirmed or cancelled`
 
-- **identity**: `booking.promo.answered` (trigger)
+- **identity**: `booking.status.settled` (trigger)
 - **observes**: event `booking.status`, entity key `booking_id`
 
 Example scenarios:
@@ -77,76 +77,51 @@ Example scenarios:
 
 ```
 
-## `a member's balance is "{state}"`
+## `a booking reaches an end state`
 
-- **identity**: `member.balance.is` (trigger)
-- **observes**: event `member.balance`, entity key `member_id`
-- **parameters**: `state`
+- **identity**: `booking.status.ended` (trigger)
+- **observes**: event `booking.status`, entity key `booking_id`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a member's balance is "<state>" never happens
+    Then a booking reaches an end state never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a member's balance is "<state>" has happened
+    Then a booking reaches an end state has happened
 
   Scenario: <your policy name>  # precedence
-    When a member's balance is "<state>"
-    Then a member's balance is "<state>" before
+    When a booking reaches an end state
+    Then a booking reaches an end state before
 
   Scenario: <your policy name>  # deadline
-    When a member's balance is "<state>"
-    Then a member's balance is "<state>" within "30" seconds
+    When a booking reaches an end state
+    Then a booking reaches an end state within "30" seconds
 
 ```
 
-## `a member confirms a booking`
+## `a booking breaks the class capacity`
 
-- **identity**: `member.booking.confirmed` (trigger)
-- **observes**: event `member.booking_confirmed`, entity key `member_id`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then a member confirms a booking never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then a member confirms a booking has happened
-
-  Scenario: <your policy name>  # precedence
-    When a member confirms a booking
-    Then a member confirms a booking before
-
-  Scenario: <your policy name>  # deadline
-    When a member confirms a booking
-    Then a member confirms a booking within "30" seconds
-
-```
-
-## `a seat is "confirmed"`
-
-- **identity**: `seat.confirmed.is` (trigger)
-- **observes**: event `seat.confirmed`, entity key `member_id, class_id`
+- **identity**: `booking.cap.exceeded` (trigger)
+- **observes**: event `booking.cap_exceeded`, entity key `booking_id`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a seat is "confirmed" never happens
+    Then a booking breaks the class capacity never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a seat is "confirmed" has happened
+    Then a booking breaks the class capacity has happened
 
   Scenario: <your policy name>  # precedence
-    When a seat is "confirmed"
-    Then a seat is "confirmed" before
+    When a booking breaks the class capacity
+    Then a booking breaks the class capacity before
 
   Scenario: <your policy name>  # deadline
-    When a seat is "confirmed"
-    Then a seat is "confirmed" within "30" seconds
+    When a booking breaks the class capacity
+    Then a booking breaks the class capacity within "30" seconds
 
 ```
 

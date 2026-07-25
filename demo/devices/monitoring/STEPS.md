@@ -4,76 +4,77 @@ Every phrasing below can be used in a `.feature` policy under
 `monitoring/policies/`. Quoted `<placeholders>` take concrete values.
 Regenerate this file with `python monitoring/generate_steps_doc.py`.
 
-## `a device is "{status}"`
+## `a device is "{state}"`
 
-- **identity**: `device.status.is` (trigger)
-- **observes**: event `device.status`, entity key `device_id`
-- **parameters**: `status`
+- **identity**: `device.lifecycle.is` (trigger)
+- **observes**: event `device.lifecycle`, entity key `device_id`
+- **parameters**: `state`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a device is "<status>" never happens
+    Then a device is "<state>" never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a device is "<status>" has happened
+    Then a device is "<state>" has happened
 
   Scenario: <your policy name>  # precedence
-    When a device is "<status>"
-    Then a device is "<status>" before
+    When a device is "<state>"
+    Then a device is "<state>" before
 
   Scenario: <your policy name>  # deadline
-    When a device is "<status>"
-    Then a device is "<status>" within "30" seconds
+    When a device is "<state>"
+    Then a device is "<state>" within "30" seconds
 
 ```
 
-## `a device is contained`
+## `a device action is "{result}"`
 
-- **identity**: `device.status.contained` (trigger)
-- **observes**: event `device.status`, entity key `device_id`
+- **identity**: `device.action.is` (trigger)
+- **observes**: event `device.action`, entity key `device_id`
+- **parameters**: `result`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a device is contained never happens
+    Then a device action is "<result>" never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a device is contained has happened
+    Then a device action is "<result>" has happened
 
   Scenario: <your policy name>  # precedence
-    When a device is contained
-    Then a device is contained before
+    When a device action is "<result>"
+    Then a device action is "<result>" before
 
   Scenario: <your policy name>  # deadline
-    When a device is contained
-    Then a device is contained within "30" seconds
+    When a device action is "<result>"
+    Then a device action is "<result>" within "30" seconds
 
 ```
 
-## `a device is retired`
+## `a device performs a non-blocked action`
 
-- **identity**: `device.retired` (trigger)
-- **observes**: event `device.retired`, entity key `device_id`
+- **identity**: `device.action.non_blocked` (trigger)
+- **observes**: event `device.action`, entity key `device_id`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a device is retired never happens
+    Then a device performs a non-blocked action never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a device is retired has happened
+    Then a device performs a non-blocked action has happened
 
   Scenario: <your policy name>  # precedence
-    When a device is retired
-    Then a device is retired before
+    When a device performs a non-blocked action
+    Then a device performs a non-blocked action before
 
   Scenario: <your policy name>  # deadline
-    When a device is retired
-    Then a device is retired within "30" seconds
+    When a device performs a non-blocked action
+    Then a device performs a non-blocked action within "30" seconds
 
 ```
 
@@ -99,31 +100,6 @@ Example scenarios:
   Scenario: <your policy name>  # deadline
     When a sensor reading is "<status>"
     Then a sensor reading is "<status>" within "30" seconds
-
-```
-
-## `the fleet quarantine level is "{level}"`
-
-- **identity**: `fleet.quarantine.level` (trigger)
-- **observes**: event `fleet.quarantine`, entity key `fleet_id`
-- **parameters**: `level`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then the fleet quarantine level is "<level>" never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then the fleet quarantine level is "<level>" has happened
-
-  Scenario: <your policy name>  # precedence
-    When the fleet quarantine level is "<level>"
-    Then the fleet quarantine level is "<level>" before
-
-  Scenario: <your policy name>  # deadline
-    When the fleet quarantine level is "<level>"
-    Then the fleet quarantine level is "<level>" within "30" seconds
 
 ```
 

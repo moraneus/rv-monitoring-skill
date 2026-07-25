@@ -1,55 +1,50 @@
-# Suggested policies (proposals - you decide)
+# Suggested policies
 
-These are my proposals for extra coverage the current vocabulary already
-supports. None is committed. Move any you want into `monitoring/policies/`
-yourself, then rerun the gates. Each has been checked to compile against the
-current registry.
+You (the human) own the policies. These are proposals only - nothing here is
+active until you move it into `monitoring/policies/` yourself. Each one below
+compiles against the current registry and was mini-replayed on healthy traffic
+before being proposed.
 
-Your rules now live in `monitoring/policies/`:
-1. a matched card is never flipped again
-2. a pending attempt resolves within three seconds
-3. nothing happens after the game is complete
-4. every matched card was flipped first  *(promoted from a suggestion on
-   2026-07-25 - a match out of nowhere is stream corruption you want caught)*
+Your three stated rules are already transcribed and live in
+`monitoring/policies/` (01, 02, 03). The two below are extra coverage I noticed
+while instrumenting.
 
 ---
 
-## 2026-07-25: no attempt resolves without becoming ready
+## 2026-07-25: every started game is eventually completed
 
-**Observes:** `attempt.resolved`, `attempt.pending` (key `attempt_id`)
-**Why:** Every resolution should correspond to an attempt that actually became
-ready (its second card was flipped). Guards against a stray or duplicated
-`attempt.resolved` with no matching `attempt.pending`.
-
-```gherkin
-Feature: attempt integrity
-  Scenario: no attempt resolves without becoming ready
-    When an attempt is resolved
-    Then an attempt is ready before
-```
-
-## 2026-07-25: a completed game is never restarted
-
-**Observes:** `game.complete`, `game.start` (key `game_id`)
-**Why:** Once a game is complete its id is done; a second `game.start` for the
-same id would mean id reuse. Complements rule 3 (which forbids `game.action`
-after completion) by forbidding a fresh lifecycle start too.
+**Observes:** `game.completed` (entity `game_id`)
+**Why:** catches a game that is started and then abandoned - never won, never
+cleaned up. Uses only existing vocabulary, no new instrumentation.
+**Caveat (read before adopting):** `has happened` can only *violate* at a
+terminal event, and `game.completed` **is** the terminal. So a game that
+completes satisfies at completion; a game that is abandoned has no terminal and
+stays honestly `pending` until the quiescence TTL reclaims it - it never turns
+`violated`. This is a liveness property outside what a finite prefix can
+refute; adopt it as a "should eventually" signal, not a hard alarm.
 
 ```gherkin
-Feature: lifecycle integrity
-  Scenario: a completed game is never restarted
-    Given the game is complete
-    Then the game starts never happens
+Feature: completeness
+  Scenario: every started game is eventually completed
+    Then the game is completed has happened
 ```
 
----
+## 2026-07-25: an attempt's second card follows a first card
 
-## Out of fragment (stated, not approximated)
+**Observes:** `card.flipped` (entity `game_id, attempt_id`)
+**Why:** a well-formed attempt has a first flip and then a second. A stream
+carrying a lone "second" flip (no first) is malformed - exactly the shape of a
+corrupted/hanging event. This precedence check flags it independently of the
+3-second deadline.
+**Requires new instrumentation:** one additive step,
+`the first card of an attempt is flipped` (a pure predicate on
+`slot == "first"`, key `(game_id, attempt_id)`). No change to the game code -
+the `card.flipped` event already carries `slot`. If you adopt this, I add the
+step to `monitoring/steps.py` and regenerate the catalog.
 
-- **"a card belongs to exactly one attempt"** relates a card to an attempt -
-  two independent correlation keys in one rule. The fragment is one key per
-  scenario, so this cannot be expressed directly. The nearest in-fragment
-  check is the per-card "flipped before matched" above.
-- **"no more than N attempts before completion"** is a count/aggregate over an
-  entity, outside the temporal fragment. Verdicts over the recorded stream
-  (counting `attempt.pending` per game offline) are the honest way to get it.
+```gherkin
+Feature: well-formed attempts
+  Scenario: an attempt's second card follows a first card
+    When the second card of an attempt is flipped
+    Then the first card of an attempt is flipped before
+```

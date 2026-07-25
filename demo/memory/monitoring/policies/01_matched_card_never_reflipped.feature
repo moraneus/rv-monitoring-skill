@@ -1,9 +1,7 @@
-Feature: a found match is final
+Feature: matched cards stay put
 
   # Rule 1: a card that is part of a found match must never be flipped again
-  # for the rest of that game. Keyed per card (game_id, position): the scope
-  # opens when the card is matched and never closes, so any later flip of that
-  # same card violates.
+  # for the rest of that game. Checked on every flip via the history-stamped
+  # `already_matched` field, so it never settles early.
   Scenario: a matched card is never flipped again
-    Given a card is matched
-    Then a card is flipped never happens
+    Then a matched card is flipped again never happens

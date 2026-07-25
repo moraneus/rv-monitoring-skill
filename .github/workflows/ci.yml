@@ -30,12 +30,14 @@ jobs:
           for d in demo/*/; do
             [ -d "${d}monitoring" ] || continue
             echo "== ${d}"
-            app=$(cd "$d" && ls app/*.py | grep -v __init__ | head -1)
-            trace=$(cd "$d" && ls monitoring/traces/*.jsonl | head -1)
             (cd "$d" && python monitoring/replay_check.py > /dev/null)
+            # the app-surface files are exactly the modules the committed
+            # catalog fingerprinted -- derive them so the check is self-describing
+            apps=$(cd "$d" && python -c "import json;c=json.load(open('monitoring/catalog.json'));print(' '.join('app/%s.py'%m for m in sorted({s['module'] for s in c['app_surface']})))")
+            trace=$(cd "$d" && ls monitoring/traces/*.jsonl | head -1)
             (cd "$d" && python -m behave_rv catalog diff \
               --steps monitoring/steps.py --catalog monitoring/catalog.json \
-              --policies monitoring/policies --app "$app" \
+              --policies monitoring/policies --app $apps \
               --fail-on-app-risk --trace "$trace" > /dev/null)
             echo "   gates green"
           done

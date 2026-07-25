@@ -4,59 +4,36 @@ Every phrasing below can be used in a `.feature` policy under
 `monitoring/policies/`. Quoted `<placeholders>` take concrete values.
 Regenerate this file with `python monitoring/generate_steps_doc.py`.
 
-## `a hand is dealt`
+## `the hand is dealt a card`
 
-- **identity**: `hand.dealt.is` (trigger)
+- **identity**: `hand.dealt.card` (trigger)
 - **observes**: event `hand.dealt`, entity key `hand_id`
+- **also writable as**: `a card is dealt to the hand`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a hand is dealt never happens
+    Then the hand is dealt a card never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a hand is dealt has happened
+    Then the hand is dealt a card has happened
 
   Scenario: <your policy name>  # precedence
-    When a hand is dealt
-    Then a hand is dealt before
+    When the hand is dealt a card
+    Then the hand is dealt a card before
 
   Scenario: <your policy name>  # deadline
-    When a hand is dealt
-    Then a hand is dealt within "30" seconds
-
-```
-
-## `a card is dealt to the "{to}"`
-
-- **identity**: `hand.card.to` (trigger)
-- **observes**: event `hand.card`, entity key `hand_id`
-- **parameters**: `to`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then a card is dealt to the "<to>" never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then a card is dealt to the "<to>" has happened
-
-  Scenario: <your policy name>  # precedence
-    When a card is dealt to the "<to>"
-    Then a card is dealt to the "<to>" before
-
-  Scenario: <your policy name>  # deadline
-    When a card is dealt to the "<to>"
-    Then a card is dealt to the "<to>" within "30" seconds
+    When the hand is dealt a card
+    Then the hand is dealt a card within "30" seconds
 
 ```
 
 ## `the hand stands`
 
-- **identity**: `hand.stand.is` (trigger)
-- **observes**: event `hand.stand`, entity key `hand_id`
+- **identity**: `hand.stood` (trigger)
+- **observes**: event `hand.stood`, entity key `hand_id`
+- **also writable as**: `the player stands`
 
 Example scenarios:
 
@@ -77,34 +54,34 @@ Example scenarios:
 
 ```
 
-## `the "{who}" busts`
+## `the hand busts`
 
-- **identity**: `hand.bust.who` (trigger)
-- **observes**: event `hand.bust`, entity key `hand_id`
-- **parameters**: `who`
+- **identity**: `hand.busted` (trigger)
+- **observes**: event `hand.busted`, entity key `hand_id`
+- **also writable as**: `the hand goes bust`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then the "<who>" busts never happens
+    Then the hand busts never happens
 
   Scenario: <your policy name>  # eventuality
-    Then the "<who>" busts has happened
+    Then the hand busts has happened
 
   Scenario: <your policy name>  # precedence
-    When the "<who>" busts
-    Then the "<who>" busts before
+    When the hand busts
+    Then the hand busts before
 
   Scenario: <your policy name>  # deadline
-    When the "<who>" busts
-    Then the "<who>" busts within "30" seconds
+    When the hand busts
+    Then the hand busts within "30" seconds
 
 ```
 
 ## `the hand is settled`
 
-- **identity**: `hand.settled.is` (trigger)
+- **identity**: `hand.settled.any` (trigger)
 - **observes**: event `hand.settled`, entity key `hand_id`
 
 Example scenarios:
@@ -126,9 +103,9 @@ Example scenarios:
 
 ```
 
-## `the hand is settled as a "{outcome}"`
+## `the hand is settled as "{outcome}"`
 
-- **identity**: `hand.settled.as` (trigger)
+- **identity**: `hand.settled.outcome` (trigger)
 - **observes**: event `hand.settled`, entity key `hand_id`
 - **parameters**: `outcome`
 
@@ -136,90 +113,42 @@ Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then the hand is settled as a "<outcome>" never happens
+    Then the hand is settled as "<outcome>" never happens
 
   Scenario: <your policy name>  # eventuality
-    Then the hand is settled as a "<outcome>" has happened
+    Then the hand is settled as "<outcome>" has happened
 
   Scenario: <your policy name>  # precedence
-    When the hand is settled as a "<outcome>"
-    Then the hand is settled as a "<outcome>" before
+    When the hand is settled as "<outcome>"
+    Then the hand is settled as "<outcome>" before
 
   Scenario: <your policy name>  # deadline
-    When the hand is settled as a "<outcome>"
-    Then the hand is settled as a "<outcome>" within "30" seconds
+    When the hand is settled as "<outcome>"
+    Then the hand is settled as "<outcome>" within "30" seconds
 
 ```
 
-## `a hand is resettled`
+## `a payout is made for the hand`
 
-- **identity**: `hand.resettled.is` (trigger)
-- **observes**: event `hand.resettled`, entity key `hand_id`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then a hand is resettled never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then a hand is resettled has happened
-
-  Scenario: <your policy name>  # precedence
-    When a hand is resettled
-    Then a hand is resettled before
-
-  Scenario: <your policy name>  # deadline
-    When a hand is resettled
-    Then a hand is resettled within "30" seconds
-
-```
-
-## `a payout happens`
-
-- **identity**: `hand.payout.is` (trigger)
+- **identity**: `hand.payout` (trigger)
 - **observes**: event `hand.payout`, entity key `hand_id`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a payout happens never happens
+    Then a payout is made for the hand never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a payout happens has happened
+    Then a payout is made for the hand has happened
 
   Scenario: <your policy name>  # precedence
-    When a payout happens
-    Then a payout happens before
+    When a payout is made for the hand
+    Then a payout is made for the hand before
 
   Scenario: <your policy name>  # deadline
-    When a payout happens
-    Then a payout happens within "30" seconds
-
-```
-
-## `the hand is closed`
-
-- **identity**: `hand.closed.is` (trigger)
-- **observes**: event `hand.closed`, entity key `hand_id`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then the hand is closed never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then the hand is closed has happened
-
-  Scenario: <your policy name>  # precedence
-    When the hand is closed
-    Then the hand is closed before
-
-  Scenario: <your policy name>  # deadline
-    When the hand is closed
-    Then the hand is closed within "30" seconds
+    When a payout is made for the hand
+    Then a payout is made for the hand within "30" seconds
 
 ```
 

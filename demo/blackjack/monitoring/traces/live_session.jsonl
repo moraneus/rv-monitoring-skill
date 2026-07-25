@@ -1,25 +1,388 @@
-{"type": "hand.dealt", "event_time": 2.6582579612731934, "bindings": {"hand_id": "h1"}, "payload": {"bet": 10}, "source": "blackjack"}
-{"type": "hand.card", "event_time": 2.6585240364074707, "bindings": {"hand_id": "h1"}, "payload": {"to": "player", "rank": "5", "total": 5}, "source": "blackjack"}
-{"type": "hand.card", "event_time": 2.6585848331451416, "bindings": {"hand_id": "h1"}, "payload": {"to": "dealer", "rank": "10", "total": 10}, "source": "blackjack"}
-{"type": "hand.card", "event_time": 2.6586179733276367, "bindings": {"hand_id": "h1"}, "payload": {"to": "player", "rank": "8", "total": 13}, "source": "blackjack"}
-{"type": "hand.card", "event_time": 2.6586360931396484, "bindings": {"hand_id": "h1"}, "payload": {"to": "dealer", "rank": "3", "total": 13}, "source": "blackjack"}
-{"type": "hand.stand", "event_time": 2.6680610179901123, "bindings": {"hand_id": "h1"}, "payload": {"player_total": 13}, "source": "blackjack"}
-{"type": "hand.card", "event_time": 2.6681320667266846, "bindings": {"hand_id": "h1"}, "payload": {"to": "dealer", "rank": "7", "total": 20}, "source": "blackjack"}
-{"type": "hand.settled", "event_time": 2.668184280395508, "bindings": {"hand_id": "h1"}, "payload": {"outcome": "lose"}, "source": "blackjack"}
-{"type": "hand.closed", "event_time": 2.6682300567626953, "bindings": {"hand_id": "h1"}, "payload": {}, "source": "blackjack"}
-{"type": "hand.dealt", "event_time": 2.676440954208374, "bindings": {"hand_id": "h2"}, "payload": {"bet": 10}, "source": "blackjack"}
-{"type": "hand.card", "event_time": 2.6765079498291016, "bindings": {"hand_id": "h2"}, "payload": {"to": "player", "rank": "10", "total": 10}, "source": "blackjack"}
-{"type": "hand.card", "event_time": 2.6765451431274414, "bindings": {"hand_id": "h2"}, "payload": {"to": "dealer", "rank": "K", "total": 10}, "source": "blackjack"}
-{"type": "hand.card", "event_time": 2.67657208442688, "bindings": {"hand_id": "h2"}, "payload": {"to": "player", "rank": "2", "total": 12}, "source": "blackjack"}
-{"type": "hand.card", "event_time": 2.676596164703369, "bindings": {"hand_id": "h2"}, "payload": {"to": "dealer", "rank": "9", "total": 19}, "source": "blackjack"}
-{"type": "hand.stand", "event_time": 2.6850860118865967, "bindings": {"hand_id": "h2"}, "payload": {"player_total": 12}, "source": "blackjack"}
-{"type": "hand.settled", "event_time": 2.6851449012756348, "bindings": {"hand_id": "h2"}, "payload": {"outcome": "lose"}, "source": "blackjack"}
-{"type": "hand.closed", "event_time": 2.6851789951324463, "bindings": {"hand_id": "h2"}, "payload": {}, "source": "blackjack"}
-{"type": "hand.dealt", "event_time": 2.6679677963256836, "bindings": {"hand_id": "h1"}, "payload": {"bet": 10}, "source": "blackjack"}
-{"type": "hand.card", "event_time": 2.6681928634643555, "bindings": {"hand_id": "h1"}, "payload": {"to": "player", "rank": "2", "total": 2}, "source": "blackjack"}
-{"type": "hand.card", "event_time": 2.668262004852295, "bindings": {"hand_id": "h1"}, "payload": {"to": "dealer", "rank": "10", "total": 10}, "source": "blackjack"}
-{"type": "hand.card", "event_time": 2.6683170795440674, "bindings": {"hand_id": "h1"}, "payload": {"to": "player", "rank": "9", "total": 11}, "source": "blackjack"}
-{"type": "hand.card", "event_time": 2.6683690547943115, "bindings": {"hand_id": "h1"}, "payload": {"to": "dealer", "rank": "J", "total": 20}, "source": "blackjack"}
-{"type": "hand.stand", "event_time": 2.6770331859588623, "bindings": {"hand_id": "h1"}, "payload": {"player_total": 11}, "source": "blackjack"}
-{"type": "hand.settled", "event_time": 2.6771061420440674, "bindings": {"hand_id": "h1"}, "payload": {"outcome": "lose"}, "source": "blackjack"}
-{"type": "hand.closed", "event_time": 2.6771490573883057, "bindings": {"hand_id": "h1"}, "payload": {}, "source": "blackjack"}
+{"type": "hand.dealt", "event_time": 29.026368856430054, "bindings": {"hand_id": "H-1"}, "payload": {"card": "AH", "total": 11, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.026762008666992, "bindings": {"hand_id": "H-1"}, "payload": {"card": "KS", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.02787685394287, "bindings": {"hand_id": "H-1"}, "payload": {"total": 21}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.027931928634644, "bindings": {"hand_id": "H-1"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.027971029281616, "bindings": {"hand_id": "H-1"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.027987957000732, "bindings": {"hand_id": "H-1"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.02852702140808, "bindings": {"hand_id": "H-2"}, "payload": {"card": "10H", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.028558015823364, "bindings": {"hand_id": "H-2"}, "payload": {"card": "2C", "total": 12, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.029024124145508, "bindings": {"hand_id": "H-2"}, "payload": {"card": "3D", "total": 15, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.02948784828186, "bindings": {"hand_id": "H-2"}, "payload": {"card": "4D", "total": 19, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.029903888702393, "bindings": {"hand_id": "H-2"}, "payload": {"total": 19}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.029930114746094, "bindings": {"hand_id": "H-2"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.029951095581055, "bindings": {"hand_id": "H-2"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.02996587753296, "bindings": {"hand_id": "H-2"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.03040909767151, "bindings": {"hand_id": "H-3"}, "payload": {"card": "KD", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.03043484687805, "bindings": {"hand_id": "H-3"}, "payload": {"card": "QS", "total": 20, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.03089189529419, "bindings": {"hand_id": "H-3"}, "payload": {"total": 20}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.030913829803467, "bindings": {"hand_id": "H-3"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.030927896499634, "bindings": {"hand_id": "H-3"}, "payload": {"amount": 10}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.0309419631958, "bindings": {"hand_id": "H-3"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.031371116638184, "bindings": {"hand_id": "H-4"}, "payload": {"card": "6H", "total": 6, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.031398057937622, "bindings": {"hand_id": "H-4"}, "payload": {"card": "7C", "total": 13, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.03181505203247, "bindings": {"hand_id": "H-4"}, "payload": {"card": "3C", "total": 16, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.032246112823486, "bindings": {"hand_id": "H-4"}, "payload": {"card": "JH", "total": 26, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.032283067703247, "bindings": {"hand_id": "H-4"}, "payload": {"total": 26}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.03234601020813, "bindings": {"hand_id": "H-4"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.032377004623413, "bindings": {"hand_id": "H-4"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.032750844955444, "bindings": {"hand_id": "H-5"}, "payload": {"card": "8S", "total": 8, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.03277611732483, "bindings": {"hand_id": "H-5"}, "payload": {"card": "AD", "total": 19, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.033305883407593, "bindings": {"hand_id": "H-5"}, "payload": {"total": 19}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.033355951309204, "bindings": {"hand_id": "H-5"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.033378839492798, "bindings": {"hand_id": "H-5"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.033392906188965, "bindings": {"hand_id": "H-5"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.033874034881592, "bindings": {"hand_id": "H-6"}, "payload": {"card": "KH", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.033915042877197, "bindings": {"hand_id": "H-6"}, "payload": {"card": "AC", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.03433895111084, "bindings": {"hand_id": "H-6"}, "payload": {"total": 21}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.03437614440918, "bindings": {"hand_id": "H-6"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.034404039382935, "bindings": {"hand_id": "H-6"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.034432888031006, "bindings": {"hand_id": "H-6"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.034852027893066, "bindings": {"hand_id": "H-7"}, "payload": {"card": "9D", "total": 9, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.03489398956299, "bindings": {"hand_id": "H-7"}, "payload": {"card": "7S", "total": 16, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.035269021987915, "bindings": {"hand_id": "H-7"}, "payload": {"card": "KS", "total": 26, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.035303115844727, "bindings": {"hand_id": "H-7"}, "payload": {"total": 26}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.03532886505127, "bindings": {"hand_id": "H-7"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.035360097885132, "bindings": {"hand_id": "H-7"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.03573703765869, "bindings": {"hand_id": "H-8"}, "payload": {"card": "5C", "total": 5, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.035763025283813, "bindings": {"hand_id": "H-8"}, "payload": {"card": "JD", "total": 15, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.036142826080322, "bindings": {"hand_id": "H-8"}, "payload": {"card": "4D", "total": 19, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.036508083343506, "bindings": {"hand_id": "H-8"}, "payload": {"total": 19}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.0365309715271, "bindings": {"hand_id": "H-8"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.036561012268066, "bindings": {"hand_id": "H-8"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.036574125289917, "bindings": {"hand_id": "H-8"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.03696894645691, "bindings": {"hand_id": "H-9"}, "payload": {"card": "3D", "total": 3, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.036993980407715, "bindings": {"hand_id": "H-9"}, "payload": {"card": "2H", "total": 5, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.037333965301514, "bindings": {"hand_id": "H-9"}, "payload": {"card": "10D", "total": 15, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.037686109542847, "bindings": {"hand_id": "H-9"}, "payload": {"card": "6D", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.0380277633667, "bindings": {"hand_id": "H-9"}, "payload": {"total": 21}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.038049936294556, "bindings": {"hand_id": "H-9"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.038063049316406, "bindings": {"hand_id": "H-9"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.03807497024536, "bindings": {"hand_id": "H-9"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.038395881652832, "bindings": {"hand_id": "H-10"}, "payload": {"card": "9S", "total": 9, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.038419008255005, "bindings": {"hand_id": "H-10"}, "payload": {"card": "KS", "total": 19, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.038744926452637, "bindings": {"hand_id": "H-10"}, "payload": {"total": 19}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.038769006729126, "bindings": {"hand_id": "H-10"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.038782119750977, "bindings": {"hand_id": "H-10"}, "payload": {"amount": 10}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.038793087005615, "bindings": {"hand_id": "H-10"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.039146184921265, "bindings": {"hand_id": "H-11"}, "payload": {"card": "QS", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.039167165756226, "bindings": {"hand_id": "H-11"}, "payload": {"card": "AH", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.039497137069702, "bindings": {"hand_id": "H-11"}, "payload": {"total": 21}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.039520025253296, "bindings": {"hand_id": "H-11"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.03953194618225, "bindings": {"hand_id": "H-11"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.039543867111206, "bindings": {"hand_id": "H-11"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.03989005088806, "bindings": {"hand_id": "H-12"}, "payload": {"card": "8S", "total": 8, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.039910078048706, "bindings": {"hand_id": "H-12"}, "payload": {"card": "AC", "total": 19, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.04022789001465, "bindings": {"hand_id": "H-12"}, "payload": {"total": 19}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.04025101661682, "bindings": {"hand_id": "H-12"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.040262937545776, "bindings": {"hand_id": "H-12"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.040273904800415, "bindings": {"hand_id": "H-12"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.040859937667847, "bindings": {"hand_id": "H-13"}, "payload": {"card": "5S", "total": 5, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.04088306427002, "bindings": {"hand_id": "H-13"}, "payload": {"card": "JS", "total": 15, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.04121208190918, "bindings": {"hand_id": "H-13"}, "payload": {"card": "QS", "total": 25, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.041234016418457, "bindings": {"hand_id": "H-13"}, "payload": {"total": 25}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.041245937347412, "bindings": {"hand_id": "H-13"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.041258096694946, "bindings": {"hand_id": "H-13"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.0416100025177, "bindings": {"hand_id": "H-14"}, "payload": {"card": "3D", "total": 3, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.04163384437561, "bindings": {"hand_id": "H-14"}, "payload": {"card": "AC", "total": 14, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.041929960250854, "bindings": {"hand_id": "H-14"}, "payload": {"card": "7C", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.042276859283447, "bindings": {"hand_id": "H-14"}, "payload": {"total": 21}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.042309999465942, "bindings": {"hand_id": "H-14"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.042330026626587, "bindings": {"hand_id": "H-14"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.042358875274658, "bindings": {"hand_id": "H-14"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.042715072631836, "bindings": {"hand_id": "H-15"}, "payload": {"card": "4D", "total": 4, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.04274010658264, "bindings": {"hand_id": "H-15"}, "payload": {"card": "KH", "total": 14, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.04311203956604, "bindings": {"hand_id": "H-15"}, "payload": {"card": "QD", "total": 24, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.043136835098267, "bindings": {"hand_id": "H-15"}, "payload": {"total": 24}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.043150901794434, "bindings": {"hand_id": "H-15"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.043163061141968, "bindings": {"hand_id": "H-15"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.043503999710083, "bindings": {"hand_id": "H-16"}, "payload": {"card": "8C", "total": 8, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.043526887893677, "bindings": {"hand_id": "H-16"}, "payload": {"card": "QS", "total": 18, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.043864965438843, "bindings": {"hand_id": "H-16"}, "payload": {"total": 18}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.043887853622437, "bindings": {"hand_id": "H-16"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.043900966644287, "bindings": {"hand_id": "H-16"}, "payload": {"amount": 10}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.04391312599182, "bindings": {"hand_id": "H-16"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.04426884651184, "bindings": {"hand_id": "H-17"}, "payload": {"card": "3D", "total": 3, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.044305086135864, "bindings": {"hand_id": "H-17"}, "payload": {"card": "AD", "total": 14, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.04463505744934, "bindings": {"hand_id": "H-17"}, "payload": {"card": "2H", "total": 16, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.04498291015625, "bindings": {"hand_id": "H-17"}, "payload": {"card": "JH", "total": 16, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.04531502723694, "bindings": {"hand_id": "H-17"}, "payload": {"card": "4C", "total": 20, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.04566216468811, "bindings": {"hand_id": "H-17"}, "payload": {"total": 20}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.045686960220337, "bindings": {"hand_id": "H-17"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.045701026916504, "bindings": {"hand_id": "H-17"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.04571294784546, "bindings": {"hand_id": "H-17"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.04608392715454, "bindings": {"hand_id": "H-18"}, "payload": {"card": "KD", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.04610586166382, "bindings": {"hand_id": "H-18"}, "payload": {"card": "2S", "total": 12, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.046459913253784, "bindings": {"hand_id": "H-18"}, "payload": {"card": "5H", "total": 17, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.046809911727905, "bindings": {"hand_id": "H-18"}, "payload": {"total": 17}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.046833992004395, "bindings": {"hand_id": "H-18"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.046853065490723, "bindings": {"hand_id": "H-18"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.046865940093994, "bindings": {"hand_id": "H-18"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.04720187187195, "bindings": {"hand_id": "H-19"}, "payload": {"card": "6S", "total": 6, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.04722285270691, "bindings": {"hand_id": "H-19"}, "payload": {"card": "KD", "total": 16, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.04758596420288, "bindings": {"hand_id": "H-19"}, "payload": {"card": "5S", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.047975063323975, "bindings": {"hand_id": "H-19"}, "payload": {"total": 21}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.047996997833252, "bindings": {"hand_id": "H-19"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.048010110855103, "bindings": {"hand_id": "H-19"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.04802179336548, "bindings": {"hand_id": "H-19"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.048337936401367, "bindings": {"hand_id": "H-20"}, "payload": {"card": "6D", "total": 6, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.048360109329224, "bindings": {"hand_id": "H-20"}, "payload": {"card": "3D", "total": 9, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.0486900806427, "bindings": {"hand_id": "H-20"}, "payload": {"card": "4D", "total": 13, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.049052000045776, "bindings": {"hand_id": "H-20"}, "payload": {"card": "7S", "total": 20, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.049372911453247, "bindings": {"hand_id": "H-20"}, "payload": {"total": 20}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.049395084381104, "bindings": {"hand_id": "H-20"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.049408197402954, "bindings": {"hand_id": "H-20"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.049422025680542, "bindings": {"hand_id": "H-20"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.049816846847534, "bindings": {"hand_id": "H-21"}, "payload": {"card": "AS", "total": 11, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.049839973449707, "bindings": {"hand_id": "H-21"}, "payload": {"card": "KH", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.050145864486694, "bindings": {"hand_id": "H-21"}, "payload": {"total": 21}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.050168991088867, "bindings": {"hand_id": "H-21"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.05018186569214, "bindings": {"hand_id": "H-21"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.050193071365356, "bindings": {"hand_id": "H-21"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.05053186416626, "bindings": {"hand_id": "H-22"}, "payload": {"card": "AC", "total": 11, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.05056095123291, "bindings": {"hand_id": "H-22"}, "payload": {"card": "2C", "total": 13, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.050874948501587, "bindings": {"hand_id": "H-22"}, "payload": {"total": 13}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.050895929336548, "bindings": {"hand_id": "H-22"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.050908088684082, "bindings": {"hand_id": "H-22"}, "payload": {"amount": 10}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.050920009613037, "bindings": {"hand_id": "H-22"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.051267862319946, "bindings": {"hand_id": "H-23"}, "payload": {"card": "9H", "total": 9, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.051290035247803, "bindings": {"hand_id": "H-23"}, "payload": {"card": "JD", "total": 19, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.05159306526184, "bindings": {"hand_id": "H-23"}, "payload": {"total": 19}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.051618814468384, "bindings": {"hand_id": "H-23"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.051630973815918, "bindings": {"hand_id": "H-23"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.051641941070557, "bindings": {"hand_id": "H-23"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.05195188522339, "bindings": {"hand_id": "H-24"}, "payload": {"card": "QH", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.05197501182556, "bindings": {"hand_id": "H-24"}, "payload": {"card": "KH", "total": 20, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.052276134490967, "bindings": {"hand_id": "H-24"}, "payload": {"total": 20}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.05230188369751, "bindings": {"hand_id": "H-24"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.052330017089844, "bindings": {"hand_id": "H-24"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.052352905273438, "bindings": {"hand_id": "H-24"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.052663803100586, "bindings": {"hand_id": "H-25"}, "payload": {"card": "8D", "total": 8, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.052684783935547, "bindings": {"hand_id": "H-25"}, "payload": {"card": "3H", "total": 11, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.052991151809692, "bindings": {"hand_id": "H-25"}, "payload": {"total": 11}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.05301308631897, "bindings": {"hand_id": "H-25"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.053024768829346, "bindings": {"hand_id": "H-25"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.053035974502563, "bindings": {"hand_id": "H-25"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.05335783958435, "bindings": {"hand_id": "H-26"}, "payload": {"card": "KC", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.05337882041931, "bindings": {"hand_id": "H-26"}, "payload": {"card": "9C", "total": 19, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.053686141967773, "bindings": {"hand_id": "H-26"}, "payload": {"total": 19}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.053707122802734, "bindings": {"hand_id": "H-26"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.053717851638794, "bindings": {"hand_id": "H-26"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.053728818893433, "bindings": {"hand_id": "H-26"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.054078102111816, "bindings": {"hand_id": "H-27"}, "payload": {"card": "8C", "total": 8, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.054105043411255, "bindings": {"hand_id": "H-27"}, "payload": {"card": "3S", "total": 11, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.05441403388977, "bindings": {"hand_id": "H-27"}, "payload": {"total": 11}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.054435968399048, "bindings": {"hand_id": "H-27"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.054447889328003, "bindings": {"hand_id": "H-27"}, "payload": {"amount": 10}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.054460048675537, "bindings": {"hand_id": "H-27"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.054826021194458, "bindings": {"hand_id": "H-28"}, "payload": {"card": "9C", "total": 9, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.05485987663269, "bindings": {"hand_id": "H-28"}, "payload": {"card": "KC", "total": 19, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.055424213409424, "bindings": {"hand_id": "H-28"}, "payload": {"total": 19}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.055453062057495, "bindings": {"hand_id": "H-28"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.055478811264038, "bindings": {"hand_id": "H-28"}, "payload": {"amount": 10}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.055516958236694, "bindings": {"hand_id": "H-28"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.05590009689331, "bindings": {"hand_id": "H-29"}, "payload": {"card": "9H", "total": 9, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.055922985076904, "bindings": {"hand_id": "H-29"}, "payload": {"card": "8H", "total": 17, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.056244134902954, "bindings": {"hand_id": "H-29"}, "payload": {"total": 17}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.056270837783813, "bindings": {"hand_id": "H-29"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.056301832199097, "bindings": {"hand_id": "H-29"}, "payload": {"amount": 10}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.05631399154663, "bindings": {"hand_id": "H-29"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.05663013458252, "bindings": {"hand_id": "H-30"}, "payload": {"card": "QH", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.05665397644043, "bindings": {"hand_id": "H-30"}, "payload": {"card": "9C", "total": 19, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.058032989501953, "bindings": {"hand_id": "H-30"}, "payload": {"total": 19}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.058080196380615, "bindings": {"hand_id": "H-30"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.05809497833252, "bindings": {"hand_id": "H-30"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.058106899261475, "bindings": {"hand_id": "H-30"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.058526039123535, "bindings": {"hand_id": "H-31"}, "payload": {"card": "9C", "total": 9, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.05855083465576, "bindings": {"hand_id": "H-31"}, "payload": {"card": "7C", "total": 16, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.058879137039185, "bindings": {"hand_id": "H-31"}, "payload": {"total": 16}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.058901071548462, "bindings": {"hand_id": "H-31"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.05891489982605, "bindings": {"hand_id": "H-31"}, "payload": {"amount": 10}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.05892586708069, "bindings": {"hand_id": "H-31"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.05923891067505, "bindings": {"hand_id": "H-32"}, "payload": {"card": "10S", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.059262990951538, "bindings": {"hand_id": "H-32"}, "payload": {"card": "7H", "total": 17, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.059595108032227, "bindings": {"hand_id": "H-32"}, "payload": {"total": 17}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.059622049331665, "bindings": {"hand_id": "H-32"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.05965495109558, "bindings": {"hand_id": "H-32"}, "payload": {"amount": 10}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.05966806411743, "bindings": {"hand_id": "H-32"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.05998706817627, "bindings": {"hand_id": "H-33"}, "payload": {"card": "QS", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.060028076171875, "bindings": {"hand_id": "H-33"}, "payload": {"card": "3S", "total": 13, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.060359954833984, "bindings": {"hand_id": "H-33"}, "payload": {"total": 13}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.060384035110474, "bindings": {"hand_id": "H-33"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.06039595603943, "bindings": {"hand_id": "H-33"}, "payload": {"amount": 10}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.060406923294067, "bindings": {"hand_id": "H-33"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.060760021209717, "bindings": {"hand_id": "H-34"}, "payload": {"card": "4D", "total": 4, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.060785055160522, "bindings": {"hand_id": "H-34"}, "payload": {"card": "10D", "total": 14, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.061105966567993, "bindings": {"hand_id": "H-34"}, "payload": {"total": 14}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.061130046844482, "bindings": {"hand_id": "H-34"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.061142921447754, "bindings": {"hand_id": "H-34"}, "payload": {"amount": 10}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.061153888702393, "bindings": {"hand_id": "H-34"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.061501026153564, "bindings": {"hand_id": "H-35"}, "payload": {"card": "9C", "total": 9, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.061525106430054, "bindings": {"hand_id": "H-35"}, "payload": {"card": "2S", "total": 11, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.061830043792725, "bindings": {"hand_id": "H-35"}, "payload": {"total": 11}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.06185507774353, "bindings": {"hand_id": "H-35"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.061866998672485, "bindings": {"hand_id": "H-35"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.061878204345703, "bindings": {"hand_id": "H-35"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.06221914291382, "bindings": {"hand_id": "H-36"}, "payload": {"card": "2D", "total": 2, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.062239170074463, "bindings": {"hand_id": "H-36"}, "payload": {"card": "JH", "total": 12, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.062555074691772, "bindings": {"hand_id": "H-36"}, "payload": {"card": "5C", "total": 17, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.062883853912354, "bindings": {"hand_id": "H-36"}, "payload": {"card": "KC", "total": 27, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.06290912628174, "bindings": {"hand_id": "H-36"}, "payload": {"total": 27}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.062928915023804, "bindings": {"hand_id": "H-36"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.062973976135254, "bindings": {"hand_id": "H-36"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.06331992149353, "bindings": {"hand_id": "H-37"}, "payload": {"card": "2H", "total": 2, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.06335997581482, "bindings": {"hand_id": "H-37"}, "payload": {"card": "10H", "total": 12, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.063735961914062, "bindings": {"hand_id": "H-37"}, "payload": {"card": "8C", "total": 20, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.0640709400177, "bindings": {"hand_id": "H-37"}, "payload": {"card": "7C", "total": 27, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.064096212387085, "bindings": {"hand_id": "H-37"}, "payload": {"total": 27}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.064126014709473, "bindings": {"hand_id": "H-37"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.06414794921875, "bindings": {"hand_id": "H-37"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.064531087875366, "bindings": {"hand_id": "H-38"}, "payload": {"card": "KC", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.064559936523438, "bindings": {"hand_id": "H-38"}, "payload": {"card": "3H", "total": 13, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.064903020858765, "bindings": {"hand_id": "H-38"}, "payload": {"card": "KH", "total": 23, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.064927101135254, "bindings": {"hand_id": "H-38"}, "payload": {"total": 23}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.064940929412842, "bindings": {"hand_id": "H-38"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.064952850341797, "bindings": {"hand_id": "H-38"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.06528091430664, "bindings": {"hand_id": "H-39"}, "payload": {"card": "JC", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.065303802490234, "bindings": {"hand_id": "H-39"}, "payload": {"card": "AD", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.065643787384033, "bindings": {"hand_id": "H-39"}, "payload": {"total": 21}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.06566596031189, "bindings": {"hand_id": "H-39"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.065677881240845, "bindings": {"hand_id": "H-39"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.06569004058838, "bindings": {"hand_id": "H-39"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.06604290008545, "bindings": {"hand_id": "H-40"}, "payload": {"card": "5D", "total": 5, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.06606698036194, "bindings": {"hand_id": "H-40"}, "payload": {"card": "7S", "total": 12, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.06639289855957, "bindings": {"hand_id": "H-40"}, "payload": {"card": "9D", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.066711902618408, "bindings": {"hand_id": "H-40"}, "payload": {"total": 21}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.066735982894897, "bindings": {"hand_id": "H-40"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.066749095916748, "bindings": {"hand_id": "H-40"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.066760063171387, "bindings": {"hand_id": "H-40"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.067079067230225, "bindings": {"hand_id": "H-41"}, "payload": {"card": "9S", "total": 9, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.067108869552612, "bindings": {"hand_id": "H-41"}, "payload": {"card": "KC", "total": 19, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.067436933517456, "bindings": {"hand_id": "H-41"}, "payload": {"card": "KS", "total": 29, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.067457914352417, "bindings": {"hand_id": "H-41"}, "payload": {"total": 29}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.067469835281372, "bindings": {"hand_id": "H-41"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.067500829696655, "bindings": {"hand_id": "H-41"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.067819118499756, "bindings": {"hand_id": "H-42"}, "payload": {"card": "2H", "total": 2, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.0678391456604, "bindings": {"hand_id": "H-42"}, "payload": {"card": "6D", "total": 8, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.06816005706787, "bindings": {"hand_id": "H-42"}, "payload": {"card": "2S", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.068480968475342, "bindings": {"hand_id": "H-42"}, "payload": {"card": "7H", "total": 17, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.068801879882812, "bindings": {"hand_id": "H-42"}, "payload": {"card": "AC", "total": 18, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.06912899017334, "bindings": {"hand_id": "H-42"}, "payload": {"card": "JH", "total": 28, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.06915283203125, "bindings": {"hand_id": "H-42"}, "payload": {"total": 28}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.0691659450531, "bindings": {"hand_id": "H-42"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.069177865982056, "bindings": {"hand_id": "H-42"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.069512128829956, "bindings": {"hand_id": "H-43"}, "payload": {"card": "3S", "total": 3, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.069533109664917, "bindings": {"hand_id": "H-43"}, "payload": {"card": "2H", "total": 5, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.069842100143433, "bindings": {"hand_id": "H-43"}, "payload": {"card": "AC", "total": 16, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.070165157318115, "bindings": {"hand_id": "H-43"}, "payload": {"card": "JS", "total": 16, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.070484161376953, "bindings": {"hand_id": "H-43"}, "payload": {"card": "5C", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.070800065994263, "bindings": {"hand_id": "H-43"}, "payload": {"total": 21}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.070822954177856, "bindings": {"hand_id": "H-43"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.07083511352539, "bindings": {"hand_id": "H-43"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.070847034454346, "bindings": {"hand_id": "H-43"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.071166038513184, "bindings": {"hand_id": "H-44"}, "payload": {"card": "4C", "total": 4, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.071187019348145, "bindings": {"hand_id": "H-44"}, "payload": {"card": "9C", "total": 13, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.071520805358887, "bindings": {"hand_id": "H-44"}, "payload": {"card": "8H", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.07183289527893, "bindings": {"hand_id": "H-44"}, "payload": {"total": 21}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.071854829788208, "bindings": {"hand_id": "H-44"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.071866989135742, "bindings": {"hand_id": "H-44"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.07189106941223, "bindings": {"hand_id": "H-44"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.07224416732788, "bindings": {"hand_id": "H-45"}, "payload": {"card": "5C", "total": 5, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.072268962860107, "bindings": {"hand_id": "H-45"}, "payload": {"card": "KS", "total": 15, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.072619199752808, "bindings": {"hand_id": "H-45"}, "payload": {"card": "JC", "total": 25, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.07264280319214, "bindings": {"hand_id": "H-45"}, "payload": {"total": 25}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.07265591621399, "bindings": {"hand_id": "H-45"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.072668075561523, "bindings": {"hand_id": "H-45"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.07301902770996, "bindings": {"hand_id": "H-46"}, "payload": {"card": "4D", "total": 4, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.07304096221924, "bindings": {"hand_id": "H-46"}, "payload": {"card": "8C", "total": 12, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.07337498664856, "bindings": {"hand_id": "H-46"}, "payload": {"card": "2H", "total": 14, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.07370400428772, "bindings": {"hand_id": "H-46"}, "payload": {"card": "8S", "total": 22, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.07372808456421, "bindings": {"hand_id": "H-46"}, "payload": {"total": 22}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.07374095916748, "bindings": {"hand_id": "H-46"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.073752880096436, "bindings": {"hand_id": "H-46"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.074109077453613, "bindings": {"hand_id": "H-47"}, "payload": {"card": "KS", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.074130058288574, "bindings": {"hand_id": "H-47"}, "payload": {"card": "JD", "total": 20, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.07446002960205, "bindings": {"hand_id": "H-47"}, "payload": {"card": "9D", "total": 29, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.074486017227173, "bindings": {"hand_id": "H-47"}, "payload": {"total": 29}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.074517011642456, "bindings": {"hand_id": "H-47"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.07453489303589, "bindings": {"hand_id": "H-47"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.074882984161377, "bindings": {"hand_id": "H-48"}, "payload": {"card": "3S", "total": 3, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.07491683959961, "bindings": {"hand_id": "H-48"}, "payload": {"card": "2H", "total": 5, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.075242042541504, "bindings": {"hand_id": "H-48"}, "payload": {"card": "7H", "total": 12, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.075575828552246, "bindings": {"hand_id": "H-48"}, "payload": {"card": "KC", "total": 22, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.075598001480103, "bindings": {"hand_id": "H-48"}, "payload": {"total": 22}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.075610876083374, "bindings": {"hand_id": "H-48"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.075623989105225, "bindings": {"hand_id": "H-48"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.075966119766235, "bindings": {"hand_id": "H-49"}, "payload": {"card": "5C", "total": 5, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.075987100601196, "bindings": {"hand_id": "H-49"}, "payload": {"card": "9H", "total": 14, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.076328992843628, "bindings": {"hand_id": "H-49"}, "payload": {"card": "2D", "total": 16, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.076693773269653, "bindings": {"hand_id": "H-49"}, "payload": {"card": "5D", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.07701587677002, "bindings": {"hand_id": "H-49"}, "payload": {"total": 21}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.077052116394043, "bindings": {"hand_id": "H-49"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.077078819274902, "bindings": {"hand_id": "H-49"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.07710599899292, "bindings": {"hand_id": "H-49"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.077605962753296, "bindings": {"hand_id": "H-50"}, "payload": {"card": "7D", "total": 7, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.07764196395874, "bindings": {"hand_id": "H-50"}, "payload": {"card": "7S", "total": 14, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.078022956848145, "bindings": {"hand_id": "H-50"}, "payload": {"card": "8H", "total": 22, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.0780508518219, "bindings": {"hand_id": "H-50"}, "payload": {"total": 22}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.078080892562866, "bindings": {"hand_id": "H-50"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.078097105026245, "bindings": {"hand_id": "H-50"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.07846689224243, "bindings": {"hand_id": "H-51"}, "payload": {"card": "2C", "total": 2, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.078497886657715, "bindings": {"hand_id": "H-51"}, "payload": {"card": "10C", "total": 12, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.07887601852417, "bindings": {"hand_id": "H-51"}, "payload": {"card": "9S", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.079272031784058, "bindings": {"hand_id": "H-51"}, "payload": {"total": 21}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.07930088043213, "bindings": {"hand_id": "H-51"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.07932186126709, "bindings": {"hand_id": "H-51"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.07935905456543, "bindings": {"hand_id": "H-51"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.07971215248108, "bindings": {"hand_id": "H-52"}, "payload": {"card": "5H", "total": 5, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.079736948013306, "bindings": {"hand_id": "H-52"}, "payload": {"card": "JH", "total": 15, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.080075979232788, "bindings": {"hand_id": "H-52"}, "payload": {"card": "6H", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.08041000366211, "bindings": {"hand_id": "H-52"}, "payload": {"total": 21}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.0804340839386, "bindings": {"hand_id": "H-52"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.08044695854187, "bindings": {"hand_id": "H-52"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.080459117889404, "bindings": {"hand_id": "H-52"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.08080291748047, "bindings": {"hand_id": "H-53"}, "payload": {"card": "3C", "total": 3, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.08082389831543, "bindings": {"hand_id": "H-53"}, "payload": {"card": "8H", "total": 11, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.08111810684204, "bindings": {"hand_id": "H-53"}, "payload": {"card": "6S", "total": 17, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.081451892852783, "bindings": {"hand_id": "H-53"}, "payload": {"card": "5C", "total": 22, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.081480026245117, "bindings": {"hand_id": "H-53"}, "payload": {"total": 22}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.081496953964233, "bindings": {"hand_id": "H-53"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.081510066986084, "bindings": {"hand_id": "H-53"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.081867218017578, "bindings": {"hand_id": "H-54"}, "payload": {"card": "10H", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.081895112991333, "bindings": {"hand_id": "H-54"}, "payload": {"card": "AD", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 29.082252979278564, "bindings": {"hand_id": "H-54"}, "payload": {"total": 21}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.082274913787842, "bindings": {"hand_id": "H-54"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 29.08229112625122, "bindings": {"hand_id": "H-54"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.08230209350586, "bindings": {"hand_id": "H-54"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.082618951797485, "bindings": {"hand_id": "H-55"}, "payload": {"card": "6C", "total": 6, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.082642078399658, "bindings": {"hand_id": "H-55"}, "payload": {"card": "KH", "total": 16, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.082940101623535, "bindings": {"hand_id": "H-55"}, "payload": {"card": "2C", "total": 18, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 29.083240032196045, "bindings": {"hand_id": "H-55"}, "payload": {"card": "KD", "total": 28, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 29.08327007293701, "bindings": {"hand_id": "H-55"}, "payload": {"total": 28}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 29.083298921585083, "bindings": {"hand_id": "H-55"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 29.083310842514038, "bindings": {"hand_id": "H-55"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 98.18591094017029, "bindings": {"hand_id": "H-cheat-1"}, "payload": {"card": "KS", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 98.18659806251526, "bindings": {"hand_id": "H-cheat-1"}, "payload": {"card": "8H", "total": 18, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 98.18676686286926, "bindings": {"hand_id": "H-cheat-1"}, "payload": {"total": 18}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 98.18686079978943, "bindings": {"hand_id": "H-cheat-1"}, "payload": {"card": "3D", "total": 21, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 98.1869900226593, "bindings": {"hand_id": "H-cheat-1"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 98.1870379447937, "bindings": {"hand_id": "H-cheat-1"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 98.18709993362427, "bindings": {"hand_id": "H-cheat-1"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 98.21107220649719, "bindings": {"hand_id": "H-cheat-2"}, "payload": {"card": "KS", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 98.21123600006104, "bindings": {"hand_id": "H-cheat-2"}, "payload": {"card": "9H", "total": 19, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 98.21134400367737, "bindings": {"hand_id": "H-cheat-2"}, "payload": {"card": "7D", "total": 26, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.busted", "event_time": 98.21143984794617, "bindings": {"hand_id": "H-cheat-2"}, "payload": {"total": 26}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 98.21151399612427, "bindings": {"hand_id": "H-cheat-2"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 98.21158409118652, "bindings": {"hand_id": "H-cheat-2"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 98.21165299415588, "bindings": {"hand_id": "H-cheat-2"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 98.23150992393494, "bindings": {"hand_id": "H-cheat-3"}, "payload": {"card": "KS", "total": 10, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 98.23167014122009, "bindings": {"hand_id": "H-cheat-3"}, "payload": {"card": "7H", "total": 17, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 98.2317750453949, "bindings": {"hand_id": "H-cheat-3"}, "payload": {"total": 17}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 98.23185801506042, "bindings": {"hand_id": "H-cheat-3"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 98.23193192481995, "bindings": {"hand_id": "H-cheat-3"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 98.23200488090515, "bindings": {"hand_id": "H-cheat-3"}, "payload": {"outcome": "lose"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 98.28038907051086, "bindings": {"hand_id": "H-56"}, "payload": {"card": "7C", "total": 7, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.dealt", "event_time": 98.28053498268127, "bindings": {"hand_id": "H-56"}, "payload": {"card": "JC", "total": 17, "to": "player"}, "source": "blackjack-table"}
+{"type": "hand.stood", "event_time": 98.30494499206543, "bindings": {"hand_id": "H-56"}, "payload": {"total": 17}, "source": "blackjack-table"}
+{"type": "hand.settled", "event_time": 98.30509090423584, "bindings": {"hand_id": "H-56"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}
+{"type": "hand.payout", "event_time": 98.3051369190216, "bindings": {"hand_id": "H-56"}, "payload": {"amount": 20}, "source": "blackjack-table"}
+{"type": "hand.closed", "event_time": 98.30517888069153, "bindings": {"hand_id": "H-56"}, "payload": {"outcome": "win"}, "source": "blackjack-table"}

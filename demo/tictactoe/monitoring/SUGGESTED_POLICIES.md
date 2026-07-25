@@ -1,42 +1,49 @@
-# Suggested policies (proposals only)
+# Suggested policies
 
-You own the policies. These are proposals; nothing here is active until you
-move it into `monitoring/policies/` yourself. Each has been verified to compile
-against the current registry. Active in `policies/`: the three laws you stated
-(strict alternation, no move after finish, every game finishes) plus
-**"a move only happens after its game has started"**, which you promoted from
-this file on 2026-07-25 (moved to `04_move_after_start.feature`).
+Proposals only. You own the policies: nothing here is active until you move
+it into `monitoring/policies/`. Each entry below compiles against the current
+vocabulary and produces zero violations on healthy play.
 
----
+## 2026-07-25: moves may not precede the game start
 
-## 2026-07-25: a game never finishes before any move is made
-
-**Observes:** `game.status` (finished), `game.move`
-**Why:** guards the *other* boundary of the lifecycle. Law 2 forbids a move
-after the finish; this forbids a finish with no move before it, i.e. a
-corrupted or premature `won`/`draw` on an empty board.
+**Observes:** `game.status` (statuses `move`, `started`), key `game_id`
+**Why:** a corrupted or misordered producer could emit a move for a
+`game_id` that never started. This precedence check catches a move that has
+no `started` in its past. (Triggered `before` arms at the first move and
+settles - "the first move came after start" implies every move did.)
 
 ```gherkin
-Feature: finish only after play
+Feature: moves come after the game starts
 
-  Scenario: a game never finishes before any move is made
-    When a game is finished
-    Then a move is made before
+  Scenario: no move may be played before the game has started
+    When a move is played
+    Then a game starts before
 ```
 
----
+## 2026-07-25: X always makes the opening move
 
-## Out of fragment (stated honestly, not proposed)
+**Observes:** `game.status` (status `move`, fields `move_number`, `player`),
+key `game_id`
+**Why:** the game seats X first by convention, but nothing asserts it. This
+flags any game whose first move (`move_number == "1"`) is O - a seating or
+turn-init bug, or a corrupted opening event. Uses the new
+`the opening move is played by "{player}"` step (added this change; reads
+fields already emitted, no new instrumentation).
 
-These are real properties of tic-tac-toe that the single-entity temporal
-fragment cannot express, so they are **not** offered as policies:
+```gherkin
+Feature: opening convention
 
-- **"the same cell is never played twice"** -- relates two move events by their
-  `cell` value (a relation/counting over the entity's own history). The
-  fragment's predicates are single-event; it cannot compare one move's cell to
-  another's. Enforce this in the game logic (the service already does) rather
-  than in a policy.
-- **"X and O each make at most 5 / 4 moves"** -- counting, out of fragment.
-- **"the winner occupies a full line"** -- would need the `won` event to carry
-  the winning line and a predicate over it; expressible only by exposing that
-  field, and even then it is a property of one event, not a temporal rule.
+  Scenario: X always makes the opening move
+    Then the opening move is played by "O" never happens
+```
+
+## Out of fragment (noted, not proposed)
+
+- **"a game is decided at most once"** - a counting property. The tempting
+  `Given a game is decided / Then a game is decided never happens`
+  transcription misfires: the scope opens on the first decision and that
+  same event matches the prohibition, so every legitimate first win/draw
+  would violate. A sound in-fragment version needs an app-side re-decision
+  marker event with a self-contained `never` on it. Raise it if you want it.
+- **"X and O each make a fair share of games' opening moves"** - an
+  aggregate across games. Out of the single-entity fragment entirely.

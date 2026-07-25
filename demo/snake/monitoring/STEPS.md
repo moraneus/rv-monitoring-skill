@@ -29,82 +29,83 @@ Example scenarios:
 
 ```
 
-## `a move is made`
+## `the snake moves`
 
-- **identity**: `snake.move.made` (trigger)
-- **observes**: event `snake.move`, entity key `game_id`
+- **identity**: `game.move.any` (trigger)
+- **observes**: event `game.move`, entity key `game_id`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a move is made never happens
+    Then the snake moves never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a move is made has happened
+    Then the snake moves has happened
 
   Scenario: <your policy name>  # precedence
-    When a move is made
-    Then a move is made before
+    When the snake moves
+    Then the snake moves before
 
   Scenario: <your policy name>  # deadline
-    When a move is made
-    Then a move is made within "30" seconds
+    When the snake moves
+    Then the snake moves within "30" seconds
 
 ```
 
-## `a reversal is accepted`
+## `the snake reverses into itself`
 
-- **identity**: `snake.move.reversal` (trigger)
-- **observes**: event `snake.move`, entity key `game_id`
+- **identity**: `game.move.reversal` (trigger)
+- **observes**: event `game.move`, entity key `game_id`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a reversal is accepted never happens
+    Then the snake reverses into itself never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a reversal is accepted has happened
+    Then the snake reverses into itself has happened
 
   Scenario: <your policy name>  # precedence
-    When a reversal is accepted
-    Then a reversal is accepted before
+    When the snake reverses into itself
+    Then the snake reverses into itself before
 
   Scenario: <your policy name>  # deadline
-    When a reversal is accepted
-    Then a reversal is accepted within "30" seconds
+    When the snake reverses into itself
+    Then the snake reverses into itself within "30" seconds
 
 ```
 
-## `the snake eats food`
+## `a point is scored`
 
-- **identity**: `snake.food.eaten` (trigger)
-- **observes**: event `snake.food`, entity key `game_id`
+- **identity**: `game.food.scored` (trigger)
+- **observes**: event `game.food`, entity key `game_id`
+- **also writable as**: `food is eaten`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then the snake eats food never happens
+    Then a point is scored never happens
 
   Scenario: <your policy name>  # eventuality
-    Then the snake eats food has happened
+    Then a point is scored has happened
 
   Scenario: <your policy name>  # precedence
-    When the snake eats food
-    Then the snake eats food before
+    When a point is scored
+    Then a point is scored before
 
   Scenario: <your policy name>  # deadline
-    When the snake eats food
-    Then the snake eats food within "30" seconds
+    When a point is scored
+    Then a point is scored within "30" seconds
 
 ```
 
 ## `the snake grows`
 
-- **identity**: `snake.grow.happened` (trigger)
-- **observes**: event `snake.grow`, entity key `game_id`
+- **identity**: `game.grow.happens` (trigger)
+- **observes**: event `game.grow`, entity key `game_id`
 
 Example scenarios:
 
@@ -122,30 +123,6 @@ Example scenarios:
   Scenario: <your policy name>  # deadline
     When the snake grows
     Then the snake grows within "30" seconds
-
-```
-
-## `points are scored`
-
-- **identity**: `game.score.made` (trigger)
-- **observes**: event `game.score`, entity key `game_id`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then points are scored never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then points are scored has happened
-
-  Scenario: <your policy name>  # precedence
-    When points are scored
-    Then points are scored before
-
-  Scenario: <your policy name>  # deadline
-    When points are scored
-    Then points are scored within "30" seconds
 
 ```
 

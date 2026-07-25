@@ -1,16 +1,15 @@
-"""Scripted demo - a few Snake games, no browser needed.
+"""Scripted demo - no browser needed.
 
-    python demo.py                 # play the scripts, print every verdict + why
-    python demo.py --dashboard     # same, but also serve the live dashboard
+Plays a handful of Snake games through the real engine and injects the four
+rule-breaking corruptions as raw stream events, feeding a LIVE behave-rv
+dashboard so you can watch the policy cards turn red, then prints every verdict
+with its rendered explanation. The SAME traffic runs under the exit-coded gate
+(``monitoring/replay_check.py``); this view adds the live dashboard.
 
-It plays healthy games through the real engine and injects *corrupted* events -
-the kind a buggy or tampered build could emit - to break each of the three
-rules, so you see the monitor catch them both in the replay gate (the printed
-verdicts here) and, with ``--dashboard``, on the live page. The exact same
-scripted traffic is the exit-coded gate in ``monitoring/replay_check.py``.
+    python demo.py [--dash-port 7101] [--no-dashboard]
 
-The recorded trace (``monitoring/traces/demo_session.jsonl``) is what the
-``catalog diff --trace`` liveness check reads.
+The dashboard stays up for a few seconds after the run so you can read the
+violations; press Ctrl-C to exit sooner.
 """
 
 from __future__ import annotations
@@ -24,80 +23,100 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "monitoring"))
 
-from behave_rv.engine.loop import Engine                          # noqa: E402
-from behave_rv.events.sources.replay import ReplaySource, record_events  # noqa: E402
-from behave_rv.verdict.explain import explain_verdict             # noqa: E402
+from behave_rv.dashboard import Dashboard                       # noqa: E402
+from behave_rv.engine.loop import Engine                        # noqa: E402
+from behave_rv.events.sources.replay import TraceRecorder       # noqa: E402
+from behave_rv.events.sources.subscription import QueueSource   # noqa: E402
+from behave_rv.verdict.explain import explain_verdict           # noqa: E402
 
-from app.game import SnakeService                                 # noqa: E402
-from replay_check import FakeClock, play_scenarios                # noqa: E402
-from steps import build_registry, load_policies                  # noqa: E402
-
-TRACE = ROOT / "monitoring" / "traces" / "demo_session.jsonl"
-
-
-def record_demo_trace() -> Path:
-    events: list = []
-    clock = FakeClock()
-    service = SnakeService(events.append, clock=clock)
-    play_scenarios(service, events.append, clock)
-    record_events(str(TRACE), events, horizon=clock() + 0.001)
-    return TRACE
-
-
-def print_verdicts(policies) -> int:
-    engine = Engine(policies, terminal_event_types=set(), grace=0.0)
-    verdicts = engine.run(ReplaySource(str(TRACE)), emit_pending=True)
-    by_id = {p.policy_id: p for p in policies}
-    violations = [v for v in verdicts if v.verdict == "violated"]
-
-    print(f"\n{len(verdicts)} verdicts over the demo trace:\n")
-    for v in verdicts:
-        mark = {"violated": "X", "satisfied": ".", "pending": "~"}[v.verdict]
-        print(f"  {mark} {v.verdict:9} {v.entity_key}  {v.policy_id}")
-
-    print(f"\n--- {len(violations)} violation(s), each replayed as your scenario ---")
-    for v in violations:
-        p = by_id[v.policy_id]
-        print()
-        print(explain_verdict(v, p.authored_scenario, p.failing_step_index))
-    return len(violations)
+from app.traffic import play                                    # noqa: E402
+from steps import build_registry, load_policies                 # noqa: E402
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--dashboard", action="store_true",
-                    help="also serve the live dashboard and keep it up")
-    ap.add_argument("--dashboard-port", type=int, default=7101)
+    ap.add_argument("--dash-port", type=int, default=7101)
+    ap.add_argument("--no-dashboard", action="store_true")
+    ap.add_argument("--linger", type=float, default=8.0,
+                    help="seconds to keep the dashboard up after the run")
     args = ap.parse_args()
-
-    record_demo_trace()
-    print(f"recorded {TRACE.relative_to(ROOT)}")
 
     registry = build_registry()
     policies = load_policies(registry)
-    print_verdicts(policies)
 
-    if args.dashboard:
-        from behave_rv.dashboard import Dashboard
-        import threading
+    start = time.time()
+    clock = lambda: time.time() - start
+    source = QueueSource()
+
+    dashboard = None
+    dash_url = "(dashboard disabled)"
+    if not args.no_dashboard:
         dashboard = Dashboard(policies, registry=registry,
                               catalog=str(ROOT / "monitoring" / "catalog.json"),
-                              app=[str(ROOT / "app" / "game.py")])
-        url = dashboard.start(port=args.dashboard_port)
-        print(f"\nlive monitor: {url}  (Ctrl-C to stop)")
+                              app=[str(ROOT / "app" / "game.py"),
+                                   str(ROOT / "app" / "traffic.py")])
+        dash_url = dashboard.start(port=args.dash_port)
 
-        def feed():
-            engine = Engine(policies, terminal_event_types=set(), grace=0.0)
-            for e in ReplaySource(str(TRACE)).events():
-                dashboard.tap(e)
-            engine.run(ReplaySource(str(TRACE)), sink=dashboard.sink)
+    recorder = TraceRecorder(str(ROOT / "monitoring" / "traces" / "demo_session.jsonl"),
+                             clock=clock)
 
-        threading.Thread(target=feed, daemon=True).start()
+    def emit(event):
+        source.push(dashboard.tap(recorder(event)) if dashboard else recorder(event))
+
+    # Live-mode timing: advance() sleeps in real wall time so the 2-second
+    # `within` deadline actually matures on the wall clock (service-relative
+    # clock, so event times stay small and the timer fires).
+    def advance(dt):
+        time.sleep(dt)
+
+    engine = Engine(policies, terminal_event_types=set(), grace=0.25)
+
+    # When a sink is passed, the engine delivers verdicts to it rather than
+    # through the return value - so collect them here AND forward to the live
+    # dashboard.
+    verdicts_out: list = []
+
+    def sink(verdict):
+        verdicts_out.append(verdict)
+        if dashboard:
+            dashboard.sink(verdict)
+
+    import threading
+    t = threading.Thread(
+        target=lambda: engine.run(source, emit_pending=True, sink=sink),
+        daemon=True)
+    t.start()
+
+    print(f"live monitor:   {dash_url}\n")
+    print("Playing scripted games (healthy + corrupted)...\n")
+    notes = play(emit, clock, advance)
+    for gid, what, rule in notes:
+        print(f"  {gid:22}  {what}   [{rule}]")
+
+    time.sleep(0.6)               # let the last verdicts land
+    source.close()
+    recorder.close()
+    t.join(timeout=5)
+
+    verdicts = verdicts_out
+    by_id = {p.policy_id: p for p in policies}
+    violations = [v for v in verdicts if v.verdict == "violated"]
+
+    print(f"\n{len(verdicts)} verdicts, {len(violations)} violation(s):\n")
+    for v in violations:
+        policy = by_id[v.policy_id]
+        print(explain_verdict(v, policy.authored_scenario,
+                              policy.failing_step_index))
+        print()
+
+    if dashboard:
+        print(f"Dashboard live at {dash_url} for {args.linger:.0f}s "
+              "(Ctrl-C to exit now).")
         try:
-            while True:
-                time.sleep(1.0)
+            time.sleep(args.linger)
         except KeyboardInterrupt:
-            print("\nstopped")
+            pass
+        dashboard.stop()
     return 0
 
 

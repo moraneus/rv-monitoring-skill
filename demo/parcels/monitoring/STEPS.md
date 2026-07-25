@@ -4,29 +4,28 @@ Every phrasing below can be used in a `.feature` policy under
 `monitoring/policies/`. Quoted `<placeholders>` take concrete values.
 Regenerate this file with `python monitoring/generate_steps_doc.py`.
 
-## `the parcel becomes "{status}"`
+## `a parcel is "{status}"`
 
 - **identity**: `parcel.status.is` (trigger)
 - **observes**: event `parcel.status`, entity key `parcel_id`
 - **parameters**: `status`
-- **also writable as**: `a parcel is "{status}"`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then the parcel becomes "<status>" never happens
+    Then a parcel is "<status>" never happens
 
   Scenario: <your policy name>  # eventuality
-    Then the parcel becomes "<status>" has happened
+    Then a parcel is "<status>" has happened
 
   Scenario: <your policy name>  # precedence
-    When the parcel becomes "<status>"
-    Then the parcel becomes "<status>" before
+    When a parcel is "<status>"
+    Then a parcel is "<status>" before
 
   Scenario: <your policy name>  # deadline
-    When the parcel becomes "<status>"
-    Then the parcel becomes "<status>" within "30" seconds
+    When a parcel is "<status>"
+    Then a parcel is "<status>" within "30" seconds
 
 ```
 

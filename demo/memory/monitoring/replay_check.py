@@ -1,23 +1,20 @@
-"""Deterministic verdict gate: scripted traffic through the real game and
-policies, exit-coded for CI.
+"""Deterministic verdict gate: scripted Memory traffic through the real game
+service and the committed policies, exit-coded for CI.
 
     python monitoring/replay_check.py     # exit 1 on unexpected verdicts
 
-The traffic below drives, on a fake clock:
-  * two full HEALTHY games - every rule must stay green (zero violations); a
-    violation on a healthy flow would mean the rules jointly forbid normal
-    play, a conflict to surface, never a count to pin;
-  * four CHEATS injected as corrupted events, one per rule, so each rule is
-    proven independently:
-      A  re-flip a card that is already part of a found match   -> rule 1
-      B  a game action after the game is complete               -> rule 3
-      C  a second card flipped whose attempt never resolves     -> rule 2
-      D  a card reported matched with no preceding flip         -> rule 4
+The traffic mixes healthy games (which must produce ZERO violations) with the
+three seeded cheats, injected as CORRUPTED events straight into the stream -
+exactly what the monitor exists to catch, and what the honest service never
+emits:
 
-Rule 3's entity (the game) has NO terminal event on purpose: game.complete is
-left non-terminal so the prohibition stays armed after completion. Cheat B
-arrives AFTER completion through the game's real completion timestamp and is
-still caught - that is the check that the completed game is not falsely green.
+  * a matched card re-flipped            -> rule 1
+  * an attempt left hanging (no resolve) -> rule 2 (timer fires on the deadline)
+  * activity after the game completed     -> rule 3 (post-terminal, fresh instance)
+
+The post-completion cheat arrives AFTER the real game.completed terminal (the
+terminal-windows rule): rule 3 is a self-contained `never`, so a fresh monitor
+instance still violates - no false-green window.
 """
 
 from __future__ import annotations
@@ -33,16 +30,11 @@ from behave_rv.events.event import Event                        # noqa: E402
 from behave_rv.events.sources.inprocess import InProcessSource  # noqa: E402
 from behave_rv.verdict.explain import explain_verdict           # noqa: E402
 
-from app.game import (                                          # noqa: E402
-    MemoryGame, Clock, new_order,
-    CARD_FLIP, CARD_MATCHED, GAME_ACTION, ATTEMPT_PENDING, SOURCE,
-)
+from app.game import MemoryGame, FLIPPED, deal                  # noqa: E402
 from steps import build_registry, load_policies                # noqa: E402
 
-# game.complete is deliberately absent: it must NOT settle the game entity, or
-# rule 3 would go falsely green at completion. attempt.resolved ends an attempt.
-TERMINAL_TYPES = {"attempt.resolved"}
-EXPECTED = {"verdicts": 137, "violations": 4}
+TERMINAL_TYPES = {"game.completed"}
+EXPECTED = {"verdicts": 39, "violations": 4}
 
 
 class FakeClock:
@@ -52,96 +44,101 @@ class FakeClock:
     def __call__(self):
         return self.now
 
-    def tick(self, dt: float = 1.0):
+    def tick(self, dt: float = 0.25):
         self.now += dt
 
 
-def _pairs_sequence(order):
-    """Click order that flips each matching pair together, in board order."""
-    seen, seq = {}, []
-    for pos, sym in enumerate(order):
-        if sym in seen:
-            seq += [seen.pop(sym), pos]
-        else:
-            seen[sym] = pos
-    return seq
+def _pairs(deck):
+    """position pairs grouped by symbol: [[p1, p2], ...] (eight pairs)."""
+    by_symbol: dict[str, list[int]] = {}
+    for pos, symbol in enumerate(deck):
+        by_symbol.setdefault(symbol, []).append(pos)
+    return list(by_symbol.values())
 
 
-def _play(emit, clock, base, game_id, seed, pairs=None):
-    """Play a game; ``pairs`` limits how many pairs are matched (None = full)."""
-    order = new_order(seed)
-    game = MemoryGame(game_id, emit, clock, order=order)
+def play_healthy(game: MemoryGame, clock: FakeClock, mismatches: int = 0) -> None:
+    """Play a full honest game to completion, with `mismatches` deliberate
+    wrong attempts first (each resolved by a flip-back well inside 3 seconds)."""
     game.start()
-    clicks = _pairs_sequence(order)
-    if pairs is not None:
-        clicks = clicks[: pairs * 2]
-    for pos in clicks:
-        base.tick(0.05)
-        game.flip(pos)
-    return game
+    clock.tick()
+    pairs = _pairs(game.deck)
+    for _ in range(mismatches):
+        game.flip(pairs[0][0]); clock.tick()          # first card
+        game.flip(pairs[1][0]); clock.tick(0.5)        # second card (mismatch)
+        game.resolve_mismatch(); clock.tick()          # flip back @ +0.5s: in time
+    for pair in pairs:
+        game.flip(pair[0]); clock.tick()
+        game.flip(pair[1]); clock.tick()               # match resolves instantly
 
 
-def simulate_traffic(emit) -> None:
-    base = FakeClock()
-    clock = Clock(base)
+def simulate_traffic(source: InProcessSource) -> None:
+    clock = FakeClock()
+    emit = source.emit
 
-    # --- healthy games: must produce zero violations ------------------------
-    _play(emit, clock, base, "G1", seed=1)          # full, completes
-    _play(emit, clock, base, "G2", seed=2)          # full, completes
+    # -- G1: a wholly healthy game (a described flow: zero violations) ------
+    play_healthy(MemoryGame("G1", emit, clock, deal(seed=1)), clock, mismatches=1)
 
-    # --- cheat A: re-flip a matched card (rule 1) ---------------------------
-    base.tick(1.0)
-    g3 = _play(emit, clock, base, "G3", seed=3, pairs=2)   # partial, not done
-    matched_pos = next(i for i, c in g3.cards.items() if c.matched)
-    base.tick(0.5)
-    emit(Event(CARD_FLIP, clock(),
-               {"game_id": "G3", "position": matched_pos},
-               {"symbol": g3.cards[matched_pos].symbol,
-                "attempt_id": "G3-cheat"}, SOURCE))
+    # -- G2: a matched card re-flipped (rule 1) ----------------------------
+    clock.tick(2.0)
+    g2 = MemoryGame("G2", emit, clock, deal(seed=2))
+    g2.start(); clock.tick()
+    pair = _pairs(g2.deck)[0]
+    g2.flip(pair[0]); clock.tick()
+    g2.flip(pair[1]); clock.tick()                     # this pair is now matched
+    # corrupted event: someone flips a card that is already part of a match.
+    # slot='illegal' keeps it out of rule 2's second-card trigger.
+    emit(Event(FLIPPED, clock(), {"game_id": "G2", "attempt_id": "G2-cheat",
+                                  "position": pair[0]},
+               {"slot": "illegal", "symbol": g2.deck[pair[0]],
+                "already_matched": True, "after_completion": False}, "corrupted"))
+    clock.tick()
+    for p in _pairs(g2.deck)[1:]:                       # finish the game honestly
+        g2.flip(p[0]); clock.tick()
+        g2.flip(p[1]); clock.tick()
 
-    # --- cheat B: a game action after completion (rule 3) -------------------
-    # G1 completed long ago; this arrives at a later timestamp on the same
-    # game entity, past the completion the real path emitted.
-    base.tick(1.0)
-    emit(Event(GAME_ACTION, clock(), {"game_id": "G1"},
-               {"kind": "ghost"}, SOURCE))
+    # -- G3: an attempt left hanging (rule 2) ------------------------------
+    clock.tick(2.0)
+    g3 = MemoryGame("G3", emit, clock, deal(seed=3))
+    g3.start(); clock.tick()
+    p0 = _pairs(g3.deck)[0]
+    g3.flip(p0[0]); clock.tick()
+    g3.flip(p0[1]); clock.tick()                        # one healthy match
+    # corrupted second-card flip that is NEVER resolved:
+    hang_t = clock()
+    emit(Event(FLIPPED, hang_t, {"game_id": "G3", "attempt_id": "G3-hang",
+                                 "position": _pairs(g3.deck)[1][0]},
+               {"slot": "second", "symbol": "?",
+                "already_matched": False, "after_completion": False}, "corrupted"))
+    # (no attempt.resolved for G3-hang; the 3s timer fires once later traffic
+    #  advances event time past hang_t + 3 - the next game does exactly that.)
 
-    # --- cheat D: a match with no preceding flip (rule 4) -------------------
-    # A card.matched for a card that was never flipped - a match appearing out
-    # of nowhere. It is this card entity's first event, so "flipped before"
-    # fails. (It also opens rule 1's scope, which stays pending: no later flip.)
-    base.tick(1.0)
-    emit(Event(CARD_MATCHED, clock(),
-               {"game_id": "G6", "position": 0},
-               {"symbol": "ghost", "attempt_id": "G6-cheat"}, SOURCE))
-
-    # --- cheat C: an attempt that never resolves (rule 2) -------------------
-    base.tick(1.0)
-    emit(Event(ATTEMPT_PENDING, clock(), {"attempt_id": "G4-hang"},
-               {"game_id": "G4", "first": 0, "second": 1}, SOURCE))
-    base.tick(4.0)   # advance past the 3s deadline
-
-    # --- trailing healthy game advances the clock horizon past the hang -----
-    _play(emit, clock, base, "G5", seed=5)
+    # -- G4: activity after completion (rule 3, post-terminal) -------------
+    clock.tick(4.0)                                     # > 3s: fires the G3 hang timer
+    g4 = MemoryGame("G4", emit, clock, deal(seed=4))
+    play_healthy(g4, clock, mismatches=0)               # runs to game.completed
+    clock.tick(1.0)
+    # corrupted flip arriving AFTER the terminal: also a matched-card re-flip,
+    # so it trips rule 3 AND rule 1 on fresh post-terminal instances.
+    emit(Event(FLIPPED, clock(), {"game_id": "G4", "attempt_id": "G4-post",
+                                  "position": 0},
+               {"slot": "illegal", "symbol": g4.deck[0],
+                "already_matched": True, "after_completion": True}, "corrupted"))
+    clock.tick()
 
 
 def main() -> int:
     source = InProcessSource()
-    simulate_traffic(source.emit)
+    simulate_traffic(source)
 
     registry = build_registry()
     policies = load_policies(registry)
-    # grace stays below the 3s within deadline (see the note in app/server.py);
-    # scripted traffic is emitted in order, so a small window admits everything.
-    engine = Engine(policies, terminal_event_types=TERMINAL_TYPES, grace=0.5)
+    engine = Engine(policies, terminal_event_types=TERMINAL_TYPES, grace=0)
     verdicts = engine.run(source, emit_pending=True)
 
     by_id = {p.policy_id: p for p in policies}
     violations = [v for v in verdicts if v.verdict == "violated"]
-
-    order = {"violated": 0, "satisfied": 1, "pending": 2}
-    for verdict in sorted(verdicts, key=lambda v: (order[v.verdict], v.policy_id)):
-        print(f"{verdict.verdict:9}  {verdict.entity_key}  {verdict.policy_id}")
+    for verdict in verdicts:
+        print(f"{verdict.verdict:9}  {str(verdict.entity_key):40}  {verdict.policy_id}")
     for verdict in violations:
         policy = by_id[verdict.policy_id]
         print()
@@ -155,10 +152,9 @@ def main() -> int:
         return 1
     ok = (len(verdicts) == EXPECTED["verdicts"]
           and len(violations) == EXPECTED["violations"])
-    if not ok:
-        print(f"MISMATCH: expected {EXPECTED}, "
-              f"got {{'verdicts': {len(verdicts)}, "
-              f"'violations': {len(violations)}}}")
+    print("GATE:", "PASS" if ok else
+          f"FAIL (expected {EXPECTED['verdicts']} verdicts / "
+          f"{EXPECTED['violations']} violations)")
     return 0 if ok else 1
 
 

@@ -4,10 +4,131 @@ Every phrasing below can be used in a `.feature` policy under
 `monitoring/policies/`. Quoted `<placeholders>` take concrete values.
 Regenerate this file with `python monitoring/generate_steps_doc.py`.
 
+## `a matched card is flipped again`
+
+- **identity**: `card.flipped.rematch` (trigger)
+- **observes**: event `card.flipped`, entity key `game_id`
+
+Example scenarios:
+
+```gherkin
+  Scenario: <your policy name>  # prohibition
+    Then a matched card is flipped again never happens
+
+  Scenario: <your policy name>  # eventuality
+    Then a matched card is flipped again has happened
+
+  Scenario: <your policy name>  # precedence
+    When a matched card is flipped again
+    Then a matched card is flipped again before
+
+  Scenario: <your policy name>  # deadline
+    When a matched card is flipped again
+    Then a matched card is flipped again within "30" seconds
+
+```
+
+## `the second card of an attempt is flipped`
+
+- **identity**: `card.flipped.second` (trigger)
+- **observes**: event `card.flipped`, entity key `game_id, attempt_id`
+
+Example scenarios:
+
+```gherkin
+  Scenario: <your policy name>  # prohibition
+    Then the second card of an attempt is flipped never happens
+
+  Scenario: <your policy name>  # eventuality
+    Then the second card of an attempt is flipped has happened
+
+  Scenario: <your policy name>  # precedence
+    When the second card of an attempt is flipped
+    Then the second card of an attempt is flipped before
+
+  Scenario: <your policy name>  # deadline
+    When the second card of an attempt is flipped
+    Then the second card of an attempt is flipped within "30" seconds
+
+```
+
+## `the attempt resolves`
+
+- **identity**: `attempt.resolved.any` (trigger)
+- **observes**: event `attempt.resolved`, entity key `game_id, attempt_id`
+
+Example scenarios:
+
+```gherkin
+  Scenario: <your policy name>  # prohibition
+    Then the attempt resolves never happens
+
+  Scenario: <your policy name>  # eventuality
+    Then the attempt resolves has happened
+
+  Scenario: <your policy name>  # precedence
+    When the attempt resolves
+    Then the attempt resolves before
+
+  Scenario: <your policy name>  # deadline
+    When the attempt resolves
+    Then the attempt resolves within "30" seconds
+
+```
+
+## `the attempt resolves as "{outcome}"`
+
+- **identity**: `attempt.resolved.outcome` (trigger)
+- **observes**: event `attempt.resolved`, entity key `game_id, attempt_id`
+- **parameters**: `outcome`
+
+Example scenarios:
+
+```gherkin
+  Scenario: <your policy name>  # prohibition
+    Then the attempt resolves as "<outcome>" never happens
+
+  Scenario: <your policy name>  # eventuality
+    Then the attempt resolves as "<outcome>" has happened
+
+  Scenario: <your policy name>  # precedence
+    When the attempt resolves as "<outcome>"
+    Then the attempt resolves as "<outcome>" before
+
+  Scenario: <your policy name>  # deadline
+    When the attempt resolves as "<outcome>"
+    Then the attempt resolves as "<outcome>" within "30" seconds
+
+```
+
+## `a card is flipped after the game is over`
+
+- **identity**: `card.flipped.postgame` (trigger)
+- **observes**: event `card.flipped`, entity key `game_id`
+
+Example scenarios:
+
+```gherkin
+  Scenario: <your policy name>  # prohibition
+    Then a card is flipped after the game is over never happens
+
+  Scenario: <your policy name>  # eventuality
+    Then a card is flipped after the game is over has happened
+
+  Scenario: <your policy name>  # precedence
+    When a card is flipped after the game is over
+    Then a card is flipped after the game is over before
+
+  Scenario: <your policy name>  # deadline
+    When a card is flipped after the game is over
+    Then a card is flipped after the game is over within "30" seconds
+
+```
+
 ## `a card is flipped`
 
-- **identity**: `card.flip.is` (trigger)
-- **observes**: event `card.flip`, entity key `game_id, position`
+- **identity**: `card.flipped.any` (trigger)
+- **observes**: event `card.flipped`, entity key `game_id`
 
 Example scenarios:
 
@@ -28,172 +149,27 @@ Example scenarios:
 
 ```
 
-## `a card is matched`
+## `the game is completed`
 
-- **identity**: `card.matched.is` (trigger)
-- **observes**: event `card.matched`, entity key `game_id, position`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then a card is matched never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then a card is matched has happened
-
-  Scenario: <your policy name>  # precedence
-    When a card is matched
-    Then a card is matched before
-
-  Scenario: <your policy name>  # deadline
-    When a card is matched
-    Then a card is matched within "30" seconds
-
-```
-
-## `an attempt is ready`
-
-- **identity**: `attempt.pending.is` (trigger)
-- **observes**: event `attempt.pending`, entity key `attempt_id`
+- **identity**: `game.completed.any` (trigger)
+- **observes**: event `game.completed`, entity key `game_id`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then an attempt is ready never happens
+    Then the game is completed never happens
 
   Scenario: <your policy name>  # eventuality
-    Then an attempt is ready has happened
+    Then the game is completed has happened
 
   Scenario: <your policy name>  # precedence
-    When an attempt is ready
-    Then an attempt is ready before
+    When the game is completed
+    Then the game is completed before
 
   Scenario: <your policy name>  # deadline
-    When an attempt is ready
-    Then an attempt is ready within "30" seconds
-
-```
-
-## `an attempt is resolved`
-
-- **identity**: `attempt.resolved.is` (trigger)
-- **observes**: event `attempt.resolved`, entity key `attempt_id`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then an attempt is resolved never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then an attempt is resolved has happened
-
-  Scenario: <your policy name>  # precedence
-    When an attempt is resolved
-    Then an attempt is resolved before
-
-  Scenario: <your policy name>  # deadline
-    When an attempt is resolved
-    Then an attempt is resolved within "30" seconds
-
-```
-
-## `an attempt is resolved as "{outcome}"`
-
-- **identity**: `attempt.resolved.outcome` (trigger)
-- **observes**: event `attempt.resolved`, entity key `attempt_id`
-- **parameters**: `outcome`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then an attempt is resolved as "<outcome>" never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then an attempt is resolved as "<outcome>" has happened
-
-  Scenario: <your policy name>  # precedence
-    When an attempt is resolved as "<outcome>"
-    Then an attempt is resolved as "<outcome>" before
-
-  Scenario: <your policy name>  # deadline
-    When an attempt is resolved as "<outcome>"
-    Then an attempt is resolved as "<outcome>" within "30" seconds
-
-```
-
-## `the game starts`
-
-- **identity**: `game.start.is` (trigger)
-- **observes**: event `game.start`, entity key `game_id`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then the game starts never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then the game starts has happened
-
-  Scenario: <your policy name>  # precedence
-    When the game starts
-    Then the game starts before
-
-  Scenario: <your policy name>  # deadline
-    When the game starts
-    Then the game starts within "30" seconds
-
-```
-
-## `the game is complete`
-
-- **identity**: `game.complete.is` (trigger)
-- **observes**: event `game.complete`, entity key `game_id`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then the game is complete never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then the game is complete has happened
-
-  Scenario: <your policy name>  # precedence
-    When the game is complete
-    Then the game is complete before
-
-  Scenario: <your policy name>  # deadline
-    When the game is complete
-    Then the game is complete within "30" seconds
-
-```
-
-## `a game action occurs`
-
-- **identity**: `game.action.is` (trigger)
-- **observes**: event `game.action`, entity key `game_id`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then a game action occurs never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then a game action occurs has happened
-
-  Scenario: <your policy name>  # precedence
-    When a game action occurs
-    Then a game action occurs before
-
-  Scenario: <your policy name>  # deadline
-    When a game action occurs
-    Then a game action occurs within "30" seconds
+    When the game is completed
+    Then the game is completed within "30" seconds
 
 ```
 

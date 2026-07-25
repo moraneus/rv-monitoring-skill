@@ -1,18 +1,14 @@
-"""Browser Minesweeper with a live behave-rv monitor alongside.
+"""The live Minesweeper: a browser board on one port, the behave-rv dashboard
+on another, wired to the same event stream the game emits as you play.
 
-Serves the game UI (stdlib http.server, inline HTML/CSS/JS, no CDNs) on one
-port and the behave-rv dashboard on another. Every honest game action flows
-through the real ``Minesweeper`` engine, whose events are teed into the
-dashboard, recorded to a trace, and delivered to the monitoring engine
-running in a background thread.
-
-The three "inject cheat" buttons construct CORRUPTED events directly and push
-them onto the same stream, bypassing the game's own guards - exactly what a
-compromised or out-of-band component would do. The monitor, which trusts only
-the event stream, catches each one and you watch the verdict turn red on the
-dashboard live.
+Run it:
 
     python app/server.py [--game-port 8803] [--dash-port 7103]
+
+Open the game URL it prints, and the dashboard URL beside it. Every click you
+make emits events; the engine (running in its own thread) decides verdicts and
+the dashboard shows each policy as a live card with its per-entity verdicts and
+rendered explanations. Stdlib only - the UI is inline HTML/JS, no CDNs.
 """
 
 from __future__ import annotations
@@ -25,221 +21,150 @@ import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "monitoring"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "monitoring"))
 
-from behave_rv.dashboard import Dashboard                       # noqa: E402
 from behave_rv.engine.loop import Engine                        # noqa: E402
-from behave_rv.events.event import Event                        # noqa: E402
-from behave_rv.events.sources.replay import TraceRecorder       # noqa: E402
 from behave_rv.events.sources.subscription import QueueSource   # noqa: E402
+from behave_rv.events.sources.replay import TraceRecorder       # noqa: E402
+from behave_rv.dashboard import Dashboard                       # noqa: E402
 
-from app.minesweeper import (                                   # noqa: E402
-    Minesweeper, MonotonicClock, CELL_REVEAL, CELL_REVEALED, MINE_EXPLODED,
-    FLAG_PLACED, SOURCE,
-)
-from steps import build_registry, load_policies                # noqa: E402
+from steps import build_registry, load_policies                 # noqa: E402
+from app.game import MinesweeperGame                            # noqa: E402
+
+TERMINAL_TYPES = {"game.done"}
+TRACE_PATH = str(Path(__file__).resolve().parents[1] / "monitoring" / "traces" / "live_session.jsonl")
 
 
-class Live:
-    """Holds the monitor wiring and the current game."""
+class MonotonicClock:
+    """Wall-time event clock that never repeats a value, so ordered emissions
+    always carry distinct, increasing timestamps. Tracks wall rate (live-safe):
+    it only nudges forward by a hair when two emits share an instant."""
+
+    def __init__(self):
+        self._start = time.time()
+        self._last = 0.0
+        self._lock = threading.Lock()
+
+    def __call__(self) -> float:
+        with self._lock:
+            now = time.time() - self._start
+            if now <= self._last:
+                now = self._last + 1e-4
+            self._last = now
+            return now
+
+
+class GameHost:
+    """Owns the current board and the monitoring wiring. One lock serialises a
+    move and its emissions so the event order the monitor sees matches play."""
 
     def __init__(self, dash_port: int):
-        self.clock = MonotonicClock()
-        self.source = QueueSource()
-        self.registry = build_registry()
-        self.policies = load_policies(self.registry)
-        self.dashboard = Dashboard(
-            self.policies,
-            registry=self.registry,
-            catalog=str(ROOT / "monitoring" / "catalog.json"),
-            app=[str(ROOT / "app" / "minesweeper.py")],
-        )
-        traces = ROOT / "monitoring" / "traces"
-        traces.mkdir(exist_ok=True)
-        # TraceRecorder appends; a live trace represents one session, and game
-        # ids restart per server run, so start the file fresh to keep it
-        # replayable without phantom cross-session duplicates.
-        live_trace = traces / "live_session.jsonl"
-        live_trace.unlink(missing_ok=True)
-        self.recorder = TraceRecorder(str(live_trace), clock=self.clock)
-        # grace is the event-time reorder window; on a live stream it is also
-        # the settle latency, so keep it small. Ordering within a game is
-        # already guaranteed by the strictly-increasing clock, so a short
-        # window is safe and makes violations surface promptly on the page.
-        self.engine = Engine(self.policies, terminal_event_types=set(),
-                             grace=0.5, quiescence_ttl=3600.0)
-
         self._lock = threading.Lock()
+        self._clock = MonotonicClock()
         self._counter = 0
-        self._cheat_seq = 0
-        self.game: Minesweeper | None = None
 
-        self.dash_url = self.dashboard.start(port=dash_port)
-        self._engine_thread = threading.Thread(
-            target=self.engine.run,
-            kwargs={"source": self.source, "sink": self.dashboard.sink},
-            daemon=True,
+        registry = build_registry()
+        self._policies = load_policies(registry)
+        self._source = QueueSource()
+        self._recorder = TraceRecorder(TRACE_PATH, clock=self._clock)
+        self._dashboard = Dashboard(
+            self._policies, registry=registry,
+            catalog=str(Path(__file__).resolve().parents[1] / "monitoring" / "catalog.json"),
+            app=[str(Path(__file__).resolve().parent / "game.py")],
         )
-        self._engine_thread.start()
+        self.dash_url = self._dashboard.start(port=dash_port)
 
-    def _emit(self, event: Event) -> None:
-        # record -> tap for the live feed -> feed the monitoring engine
-        self.source.push(self.dashboard.tap(self.recorder(event)))
+        self._engine = Engine(self._policies, terminal_event_types=TERMINAL_TYPES,
+                              grace=0.2, quiescence_ttl=3600.0)
+        self._thread = threading.Thread(
+            target=self._engine.run,
+            args=(self._source,), kwargs={"sink": self._dashboard.sink},
+            daemon=True)
+        self._thread.start()
+
+        self.game = self._new_game()
+
+    def _emit(self, event):
+        # tee to the trace file, register on the dashboard, feed the engine.
+        self._source.push(self._dashboard.tap(self._recorder(event)))
+
+    def _new_game(self) -> MinesweeperGame:
+        self._counter += 1
+        return MinesweeperGame(f"game-{self._counter}", self._emit, self._clock)
 
     def new_game(self) -> dict:
         with self._lock:
-            self._counter += 1
-            gid = f"game-{self._counter}"
-            self.game = Minesweeper(gid, self._emit, self.clock)
+            self.game = self._new_game()
             return self.game.view()
 
-    def reveal(self, row: int, col: int) -> dict:
+    def reveal(self, r: int, c: int) -> dict:
         with self._lock:
-            if self.game is None:
-                self.new_game()
-            self.game.reveal(row, col)
+            self.game.reveal(r, c)
             return self.game.view()
 
-    def flag(self, row: int, col: int) -> dict:
+    def flag(self, r: int, c: int) -> dict:
         with self._lock:
-            if self.game is None:
-                self.new_game()
-            self.game.flag(row, col)
+            self.game.toggle_flag(r, c)
             return self.game.view()
 
     def state(self) -> dict:
         with self._lock:
-            if self.game is None:
-                self.new_game()
             return self.game.view()
 
-    def cheat(self, kind: str) -> dict:
-        """Inject a corrupted event straight onto the stream (bypassing the
-        game's guards) so the monitor is seen catching it live.
-
-        Each cheat injects a minimal, self-contained corrupted sequence keyed
-        to the current game, so it reliably demonstrates exactly its own rule
-        regardless of the board's actual state. When the real game supports it
-        (an actual boom, a genuinely revealed cell) the cheat piggybacks on
-        that real state instead, for the most realistic demonstration. Injected
-        cells use synthetic ids so they never touch the rendered board."""
-        with self._lock:
-            if self.game is None:
-                self.new_game()
-            gid = self.game.game_id
-            view = self.game.view()
-
-            if kind == "reveal_after_boom":
-                if not self.game.exploded:
-                    # no real boom yet: inject the explosion the illegal
-                    # reveal follows, so the "game over" scope is open.
-                    self._emit(Event(MINE_EXPLODED, self.clock(),
-                                     {"game_id": gid}, {"cell": "injected"},
-                                     SOURCE))
-                self._cheat_seq += 1
-                self._emit(Event(CELL_REVEAL, self.clock(),
-                                 {"game_id": gid, "cell": f"ghost-{self._cheat_seq}"},
-                                 {"row": -1, "col": -1, "mine": False}, SOURCE))
-
-            elif kind == "double_reveal":
-                real = self._pick(view, "revealed")
-                if real is not None:
-                    r, c = (int(x) for x in real.split(","))
-                    self._emit(Event(CELL_REVEAL, self.clock(),
-                                     {"game_id": gid, "cell": real},
-                                     {"row": r, "col": c, "mine": False}, SOURCE))
-                else:
-                    # nothing revealed yet: inject the full first-reveal +
-                    # state so the same-cell scope is armed, then the repeat.
-                    self._cheat_seq += 1
-                    cell = f"ghost-{self._cheat_seq}"
-                    self._emit(Event(CELL_REVEAL, self.clock(),
-                                     {"game_id": gid, "cell": cell},
-                                     {"row": -1, "col": -1, "mine": False}, SOURCE))
-                    self._emit(Event(CELL_REVEALED, self.clock(),
-                                     {"game_id": gid, "cell": cell},
-                                     {"row": -1, "col": -1, "adjacent": 0}, SOURCE))
-                    self._emit(Event(CELL_REVEAL, self.clock(),
-                                     {"game_id": gid, "cell": cell},
-                                     {"row": -1, "col": -1, "mine": False}, SOURCE))
-
-            elif kind == "over_flag":
-                self._emit(Event(FLAG_PLACED, self.clock(),
-                                 {"game_id": gid},
-                                 {"flags": self.game.mine_count + 1,
-                                  "mines": self.game.mine_count,
-                                  "cell": "injected"}, SOURCE))
-            else:
-                return {"error": f"unknown cheat {kind!r}"}
-            return {"ok": True, "kind": kind, "game_id": gid}
-
-    @staticmethod
-    def _pick(view: dict, state: str) -> str | None:
-        for cell in view["cells"]:
-            if cell["state"] == state:
-                return f'{cell["row"]},{cell["col"]}'
-        return None
-
-    def close(self) -> None:
-        self.source.close()
-        self.recorder.close()
-        self.dashboard.stop()
+    def shutdown(self):
+        self._source.close()
+        self._recorder.close()
+        self._dashboard.stop()
 
 
-def make_handler(live: Live, dash_url: str):
+def build_page(dash_url: str) -> bytes:
+    return PAGE.replace("__DASH_URL__", dash_url).encode("utf-8")
+
+
+def make_handler(host: GameHost, dash_url: str):
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *args):
-            pass  # quiet
+            pass
 
-        def _send_json(self, obj, code=200):
-            body = json.dumps(obj).encode()
-            self.send_response(code)
-            self.send_header("Content-Type", "application/json")
+        def _send(self, body: bytes, ctype="application/json"):
+            self.send_response(200)
+            self.send_header("Content-Type", ctype)
             self.send_header("Content-Length", str(len(body)))
             self.end_headers()
             self.wfile.write(body)
 
-        def _read_json(self) -> dict:
-            length = int(self.headers.get("Content-Length", 0) or 0)
+        def _json(self, obj):
+            self._send(json.dumps(obj).encode("utf-8"))
+
+        def _read_body(self) -> dict:
+            length = int(self.headers.get("Content-Length", 0))
             if not length:
                 return {}
             return json.loads(self.rfile.read(length) or b"{}")
 
         def do_GET(self):
             if self.path == "/" or self.path.startswith("/index"):
-                body = PAGE.replace("__DASH_URL__", dash_url).encode()
-                self.send_response(200)
-                self.send_header("Content-Type", "text/html; charset=utf-8")
-                self.send_header("Content-Length", str(len(body)))
-                self.end_headers()
-                self.wfile.write(body)
+                self._send(build_page(dash_url), "text/html; charset=utf-8")
             elif self.path == "/api/state":
-                self._send_json(live.state())
-            elif self.path == "/api/config":
-                self._send_json({"dashboard": dash_url})
-            elif self.path == "/favicon.ico":
-                self.send_response(204)
-                self.end_headers()
+                self._json(host.state())
             else:
-                self.send_error(404)
+                self.send_response(404)
+                self.end_headers()
 
         def do_POST(self):
-            try:
-                data = self._read_json()
-                if self.path == "/api/new":
-                    self._send_json(live.new_game())
-                elif self.path == "/api/reveal":
-                    self._send_json(live.reveal(int(data["row"]), int(data["col"])))
-                elif self.path == "/api/flag":
-                    self._send_json(live.flag(int(data["row"]), int(data["col"])))
-                elif self.path == "/api/cheat":
-                    self._send_json(live.cheat(str(data.get("kind", ""))))
-                else:
-                    self.send_error(404)
-            except Exception as exc:  # noqa: BLE001
-                self._send_json({"error": str(exc)}, code=400)
+            if self.path == "/api/new":
+                self._json(host.new_game())
+            elif self.path == "/api/reveal":
+                b = self._read_body()
+                self._json(host.reveal(int(b["row"]), int(b["col"])))
+            elif self.path == "/api/flag":
+                b = self._read_body()
+                self._json(host.flag(int(b["row"]), int(b["col"])))
+            else:
+                self.send_response(404)
+                self.end_headers()
 
     return Handler
 
@@ -249,166 +174,109 @@ PAGE = r"""<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Minesweeper - live runtime verification</title>
+<title>Minesweeper - monitored</title>
 <style>
   :root {
-    --bg: #0f1220; --panel: #171b2e; --line: #2a3050; --ink: #e7ebff;
-    --muted: #8b93b8; --hidden: #2b3357; --hidden2: #333c66; --rev: #10131f;
-    --accent: #6ea8ff; --bad: #ff5d6c; --good: #38d39f; --flag: #ffcf5c;
+    --bg:#0f1220; --panel:#1a1e33; --edge:#2b3152; --ink:#e7e9f5; --muted:#9aa0c3;
+    --unrev:#2a2f4f; --unrev2:#333a63; --rev:#141830; --flag:#ffbd4a; --boom:#ff4d5e;
+    --accent:#5b8cff;
   }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; background: var(--bg); color: var(--ink);
-    font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  }
-  header {
-    padding: 16px 22px; border-bottom: 1px solid var(--line);
-    display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
-  }
-  header h1 { font-size: 18px; margin: 0; letter-spacing: .2px; }
-  header .sub { color: var(--muted); font-size: 13px; }
-  .wrap { display: flex; gap: 18px; padding: 18px 22px; align-items: flex-start; flex-wrap: wrap; }
-  .col-game { flex: 0 0 auto; }
-  .col-dash { flex: 1 1 520px; min-width: 340px; }
-  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; }
-  .board-card { padding: 16px; }
-  .stats { display: flex; gap: 18px; margin-bottom: 12px; align-items: center; flex-wrap: wrap; }
-  .stat { display: flex; flex-direction: column; }
-  .stat b { font-size: 20px; font-variant-numeric: tabular-nums; }
-  .stat span { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .6px; }
-  .status { margin-left: auto; font-weight: 600; }
-  .status.win { color: var(--good); } .status.lost { color: var(--bad); }
-  .grid { display: grid; grid-template-columns: repeat(8, 40px); gap: 4px; user-select: none; }
-  .cell {
-    width: 40px; height: 40px; border-radius: 8px; border: none; cursor: pointer;
-    font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(180deg, var(--hidden2), var(--hidden));
-    color: var(--ink); transition: transform .05s ease;
-  }
-  .cell:hover { transform: translateY(-1px); }
-  .cell.revealed { background: var(--rev); cursor: default; box-shadow: inset 0 0 0 1px var(--line); }
-  .cell.flag { color: var(--flag); }
-  .cell.mine { background: #3a1220; color: var(--bad); }
-  .n1 { color:#6ea8ff } .n2 { color:#48c78e } .n3 { color:#ff7a90 }
-  .n4 { color:#a78bfa } .n5 { color:#f59e0b } .n6 { color:#22d3ee }
-  .n7 { color:#e879f9 } .n8 { color:#f87171 }
-  .controls { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
-  button.btn {
-    background: #222a49; color: var(--ink); border: 1px solid var(--line);
-    padding: 8px 12px; border-radius: 9px; cursor: pointer; font-size: 13px;
-  }
-  button.btn:hover { border-color: var(--accent); }
-  .cheats { margin-top: 16px; padding: 14px; border-radius: 12px; border: 1px dashed #5a2a3a; background: #1b1420; }
-  .cheats h3 { margin: 0 0 4px; font-size: 13px; color: var(--bad); letter-spacing: .3px; }
-  .cheats p { margin: 0 0 10px; color: var(--muted); font-size: 12px; }
-  button.cheat {
-    background: #3a1622; color: #ffd7dc; border: 1px solid #6a2b3c;
-    padding: 8px 12px; border-radius: 9px; cursor: pointer; font-size: 13px;
-  }
-  button.cheat:hover { background: #4a1c2c; }
-  .dash-head { display:flex; align-items:center; gap:10px; margin-bottom: 8px; }
-  .dash-head a { color: var(--accent); text-decoration: none; font-size: 13px; }
-  iframe { width: 100%; height: 78vh; min-height: 520px; border: 1px solid var(--line); border-radius: 14px; background:#fff; }
-  .hint { color: var(--muted); font-size: 12px; margin-top: 8px; }
-  .toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
-    background: #3a1622; color: #ffd7dc; border: 1px solid #6a2b3c; padding: 10px 16px;
-    border-radius: 10px; opacity: 0; transition: opacity .2s; pointer-events: none; }
-  .toast.show { opacity: 1; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:radial-gradient(1200px 700px at 70% -10%, #1c2450, transparent), var(--bg);
+         color:var(--ink); font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:28px 20px 60px; }
+  h1 { font-size:26px; margin:0 0 4px; letter-spacing:.3px; }
+  .sub { color:var(--muted); margin:0 0 22px; }
+  .sub a { color:var(--accent); text-decoration:none; }
+  .sub a:hover { text-decoration:underline; }
+  .hud { display:flex; gap:14px; align-items:center; margin-bottom:16px; flex-wrap:wrap; }
+  .chip { background:var(--panel); border:1px solid var(--edge); border-radius:12px;
+          padding:8px 14px; font-variant-numeric:tabular-nums; }
+  .chip b { color:var(--ink); } .chip span { color:var(--muted); }
+  button.new { margin-left:auto; background:var(--accent); color:#08122e; border:0;
+          border-radius:12px; padding:10px 18px; font-weight:650; cursor:pointer; }
+  button.new:hover { filter:brightness(1.08); }
+  .status { font-weight:650; padding:8px 14px; border-radius:12px; border:1px solid var(--edge); }
+  .status.playing { color:var(--muted); }
+  .status.won { color:#4ade80; border-color:#20613f; background:#10281c; }
+  .status.lost { color:var(--boom); border-color:#5f2230; background:#2a1017; }
+  .board { display:grid; grid-template-columns:repeat(8, 1fr); gap:6px;
+           background:var(--panel); border:1px solid var(--edge); border-radius:16px; padding:12px; }
+  .cell { aspect-ratio:1/1; border-radius:9px; border:1px solid var(--edge);
+          background:linear-gradient(180deg,var(--unrev2),var(--unrev));
+          display:flex; align-items:center; justify-content:center;
+          font-weight:750; font-size:19px; cursor:pointer; user-select:none;
+          transition:transform .05s, background .1s; }
+  .cell:hover { transform:translateY(-1px); }
+  .cell.rev { background:var(--rev); border-color:#20263f; cursor:default; box-shadow:inset 0 0 0 1px #171b30; }
+  .cell.rev:hover { transform:none; }
+  .cell.flag { color:var(--flag); }
+  .cell.mine { background:linear-gradient(180deg,#3a1420,#2a0e17); border-color:#5f2230; color:var(--boom); }
+  .n1{color:#7aa2ff}.n2{color:#4ade80}.n3{color:#ff8f6b}.n4{color:#b98cff}
+  .n5{color:#ffbd4a}.n6{color:#54d6d6}.n7{color:#e7e9f5}.n8{color:#9aa0c3}
+  .hint { color:var(--muted); font-size:13px; margin-top:16px; }
+  kbd { background:#0c1024; border:1px solid var(--edge); border-radius:6px; padding:1px 7px; }
 </style>
 </head>
 <body>
-<header>
-  <h1>Minesweeper</h1>
-  <span class="sub">8&times;8 &middot; 10 mines &middot; left-click reveal, right-click flag &middot; verified live by behave-rv</span>
-</header>
 <div class="wrap">
-  <div class="col-game">
-    <div class="card board-card">
-      <div class="stats">
-        <div class="stat"><b id="mines">10</b><span>mines</span></div>
-        <div class="stat"><b id="flags">0</b><span>flags</span></div>
-        <div class="stat status" id="status">playing</div>
-      </div>
-      <div class="grid" id="grid"></div>
-      <div class="controls">
-        <button class="btn" onclick="newGame()">New game</button>
-      </div>
-      <div class="cheats">
-        <h3>Inject a corrupted event (bypasses the game)</h3>
-        <p>These push a raw event onto the monitor's stream, dodging every
-           in-game guard - watch the matching policy card turn red.</p>
-        <button class="cheat" onclick="cheat('reveal_after_boom')">Reveal after boom</button>
-        <button class="cheat" onclick="cheat('double_reveal')">Double-reveal a cell</button>
-        <button class="cheat" onclick="cheat('over_flag')">Plant an 11th flag</button>
-        <div class="hint">Each button injects a self-contained corrupted sequence, so it works any time - but if you lose a game first (click a mine) then hit "reveal after boom", the illegal reveal follows your real explosion. Verdicts settle within ~1s.</div>
-      </div>
-    </div>
+  <h1>Minesweeper</h1>
+  <p class="sub">8x8, 10 mines. Left-click reveals, right-click flags. Every move is
+     checked live by <a href="__DASH_URL__" target="_blank">the behave-rv monitor &rarr;</a></p>
+  <div class="hud">
+    <div class="chip"><span>mines</span> <b id="mines">10</b></div>
+    <div class="chip"><span>flags</span> <b id="flags">0</b></div>
+    <div id="status" class="status playing">playing</div>
+    <button class="new" onclick="newGame()">New game</button>
   </div>
-  <div class="col-dash">
-    <div class="dash-head">
-      <strong>Live monitor</strong>
-      <a href="__DASH_URL__" target="_blank" rel="noopener">open in a new tab &#8599;</a>
-    </div>
-    <iframe src="__DASH_URL__" title="behave-rv dashboard"></iframe>
-  </div>
+  <div id="board" class="board"></div>
+  <p class="hint">Rules the monitor enforces: no reveal after a mine explodes &middot;
+     no square revealed twice &middot; flags never exceed the mine count.
+     Open <a href="__DASH_URL__" target="_blank">the dashboard</a> in a second window and watch the cards while you play.</p>
 </div>
-<div class="toast" id="toast"></div>
 <script>
-const NUM_COLORS = ["","n1","n2","n3","n4","n5","n6","n7","n8"];
-let over = false;
-
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 1800);
-}
+const boardEl = document.getElementById('board');
+const NUMS = ['','n1','n2','n3','n4','n5','n6','n7','n8'];
 
 function render(view) {
-  over = view.over;
-  document.getElementById('mines').textContent = view.mines;
   document.getElementById('flags').textContent = view.flags;
-  const s = document.getElementById('status');
-  if (view.won) { s.textContent = 'you win'; s.className = 'status win'; }
-  else if (view.exploded) { s.textContent = 'boom - game over'; s.className = 'status lost'; }
-  else { s.textContent = 'playing'; s.className = 'status'; }
-
-  const grid = document.getElementById('grid');
-  grid.innerHTML = '';
-  for (const c of view.cells) {
-    const el = document.createElement('button');
-    el.className = 'cell';
-    if (c.state === 'revealed') {
-      el.classList.add('revealed');
-      if (c.mine) { el.classList.add('mine'); el.textContent = '\u{1F4A3}'; }
-      else if (c.adjacent > 0) { el.classList.add(NUM_COLORS[c.adjacent]); el.textContent = c.adjacent; }
-    } else if (c.state === 'flagged') {
-      el.classList.add('flag'); el.textContent = '\u{1F6A9}';
-    } else if (c.mine) {
-      el.classList.add('mine'); el.textContent = '\u{1F4A3}';
+  document.getElementById('mines').textContent = view.mines;
+  const st = document.getElementById('status');
+  st.className = 'status ' + view.status;
+  st.textContent = view.status === 'won' ? 'cleared!' : view.status === 'lost' ? 'boom' : 'playing';
+  boardEl.innerHTML = '';
+  for (const cell of view.cells) {
+    const d = document.createElement('div');
+    d.className = 'cell';
+    if (cell.revealed) {
+      d.classList.add('rev');
+      if (cell.mine) { d.classList.add('mine'); d.textContent = '✹'; }
+      else if (cell.count) { d.classList.add(NUMS[cell.count]); d.textContent = cell.count; }
+    } else if (cell.mine) {
+      d.classList.add('mine'); d.textContent = '✹';
+    } else if (cell.flagged) {
+      d.classList.add('flag'); d.textContent = '⚑';
     }
-    el.oncontextmenu = (ev) => { ev.preventDefault(); flag(c.row, c.col); };
-    el.onclick = () => reveal(c.row, c.col);
-    grid.appendChild(el);
+    d.oncontextmenu = (e) => { e.preventDefault(); act('/api/flag', cell.row, cell.col); };
+    d.onclick = () => act('/api/reveal', cell.row, cell.col);
+    boardEl.appendChild(d);
   }
 }
 
-async function post(path, body) {
-  const r = await fetch(path, { method: 'POST', headers: {'Content-Type':'application/json'},
-                                body: JSON.stringify(body || {}) });
-  return r.json();
+async function act(path, row, col) {
+  const r = await fetch(path, {method:'POST', headers:{'Content-Type':'application/json'},
+                              body: JSON.stringify({row, col})});
+  render(await r.json());
 }
-async function reveal(row, col) { if (!over) render(await post('/api/reveal', {row, col})); }
-async function flag(row, col) { if (!over) render(await post('/api/flag', {row, col})); }
-async function newGame() { render(await post('/api/new', {})); }
-async function cheat(kind) {
-  const res = await post('/api/cheat', {kind});
-  if (res.error) toast(res.error);
-  else toast('injected: ' + kind + ' - check the monitor');
+async function newGame() {
+  const r = await fetch('/api/new', {method:'POST'});
+  render(await r.json());
 }
-async function init() {
-  const r = await fetch('/api/state'); render(await r.json());
+async function load() {
+  const r = await fetch('/api/state');
+  render(await r.json());
 }
-init();
+load();
 </script>
 </body>
 </html>
@@ -416,28 +284,27 @@ init();
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Browser Minesweeper + behave-rv monitor")
-    ap.add_argument("--game-port", type=int, default=8803)
-    ap.add_argument("--dash-port", type=int, default=7103)
-    ap.add_argument("--host", default="127.0.0.1")
-    args = ap.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--game-port", type=int, default=8803)
+    parser.add_argument("--dash-port", type=int, default=7103)
+    parser.add_argument("--host", default="127.0.0.1")
+    args = parser.parse_args()
 
-    live = Live(args.dash_port)
-    live.new_game()
-    handler = make_handler(live, live.dash_url)
-    httpd = ThreadingHTTPServer((args.host, args.game_port), handler)
-    game_url = f"http://{args.host}:{args.game_port}"
-
-    print(f"game:  {game_url}")
-    print(f"live monitor: {live.dash_url}")
-    print("Ctrl-C to stop.")
+    host = GameHost(args.dash_port)
+    server = ThreadingHTTPServer((args.host, args.game_port),
+                                 make_handler(host, host.dash_url))
+    game_url = f"http://{args.host}:{server.server_address[1]}"
+    print(f"minesweeper : {game_url}")
+    print(f"live monitor: {host.dash_url}")
+    print("Ctrl+C to stop.")
     try:
-        httpd.serve_forever()
+        server.serve_forever()
     except KeyboardInterrupt:
-        print("\nshutting down...")
+        print("\nstopping...")
     finally:
-        httpd.shutdown()
-        live.close()
+        host.shutdown()
+        server.shutdown()
+        server.server_close()
     return 0
 
 

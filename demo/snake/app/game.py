@@ -1,186 +1,186 @@
-"""The Snake game engine - pure logic, instrumented for runtime verification.
+"""The Snake game engine - authoritative game logic that is born monitorable.
 
-The engine is UI-agnostic: the browser server (``server.py``) and the scripted
-demo (``demo.py``) both drive the same ``SnakeService``. Following the rv
-instrumentation conventions:
+The engine owns all rules (movement, growth, collision, game-over) and emits a
+normalized ``Event`` at every state transition. Instrumentation is additive:
+the ``Event(...)`` constructions sit beside the game logic, they never reshape
+it. ``emit`` and ``clock`` are injected so the SAME engine runs live (real
+clock, events to the monitor) and under the scripted demo (fake clock, events
+into a list) identically.
 
-* ``emit`` and ``clock`` are injected, so the same service runs live (real
-  clock, events into the monitor queue) and under the deterministic replay gate
-  (fake clock, events into a list) with identical code paths.
-* Every state transition constructs an ``Event(...)`` directly at the site,
-  with module-level string constants for the event types and dict literals for
-  bindings and payloads - that is the surface the stability analysis anchors on.
-* Predicates never live here; the engine only *emits*. Verdicts belong to the
-  deterministic monitor.
-
-Correctness invariants the engine enforces (and the monitor independently
-verifies): a 180-degree turn is rejected at input, every eaten food grows the
-snake in the same tick, and a dead game stops ticking. The demo shows the
-monitor catching these same properties when *corrupted* events - the kind a
-buggy or tampered build could emit - are injected into the stream.
+Stdlib only.
 """
 
 from __future__ import annotations
 
 import random
-import time
 from typing import Any, Callable, Optional
 
 from behave_rv.events.event import Event
 
-# --- Event types: stable identities the catalog and policies bind to. ---------
-STATUS_EVENT = "game.status"     # game lifecycle: started / over
-MOVE_EVENT = "snake.move"        # one accepted step of the snake
-FOOD_EVENT = "snake.food"        # the snake's head reached food
-GROW_EVENT = "snake.grow"        # the snake's body grew by one
-SCORE_EVENT = "game.score"       # points were added
+# --- Event types: module-level constants, referenced by name so the stability
+# --- analyzer can resolve them (a computed type would degrade to <dynamic>).
+EVT_STATUS = "game.status"   # lifecycle: status in {"started", "over"}
+EVT_MOVE = "game.move"       # one accepted step; carries heading + previous heading
+EVT_FOOD = "game.food"       # a point is scored (food eaten)
+EVT_GROW = "game.grow"       # the snake grew by one segment
 SOURCE = "snake-engine"
 
-# --- Board and rules ----------------------------------------------------------
-GRID_W = 24
-GRID_H = 24
-START_LENGTH = 3
-POINTS_PER_FOOD = 10
-TICK_EPSILON = 1e-3              # keeps ordered emissions on distinct timestamps
+# The four headings and their exact opposites. A 180-degree reversal is a
+# heading whose opposite equals the previous heading.
+OPPOSITE = {"up": "down", "down": "up", "left": "right", "right": "left"}
+DELTA = {"up": (0, -1), "down": (0, 1), "left": (-1, 0), "right": (1, 0)}
 
-DIRECTIONS: dict[str, tuple[int, int]] = {
-    "up": (0, -1),
-    "down": (0, 1),
-    "left": (-1, 0),
-    "right": (1, 0),
-}
+DEFAULT_W = 20
+DEFAULT_H = 20
+START_LEN = 3
 
 
-def _is_opposite(a: str, b: str) -> bool:
-    (ax, ay), (bx, by) = DIRECTIONS[a], DIRECTIONS[b]
-    return ax == -bx and ay == -by
+class SnakeGame:
+    """One game session. Correlation key: ``game_id``."""
 
-
-class GameState:
-    """The board state for a single game (one monitored entity)."""
-
-    def __init__(self, game_id: str, seed: Optional[int] = None):
-        self.game_id = game_id
-        self.rng = random.Random(seed)
-        cx, cy = GRID_W // 2, GRID_H // 2
-        # head first; the snake starts heading right, in the middle of the board.
-        self.snake: list[tuple[int, int]] = [(cx - i, cy) for i in range(START_LENGTH)]
-        self.heading = "right"
-        self.pending = "right"
-        self.score = 0
-        self.alive = True
-        self.reason = ""
-        self.food = self._spawn_food()
-
-    def _spawn_food(self) -> tuple[int, int]:
-        empty = [(x, y) for x in range(GRID_W) for y in range(GRID_H)
-                 if (x, y) not in self.snake]
-        return self.rng.choice(empty) if empty else self.snake[0]
-
-    def snapshot(self) -> dict[str, Any]:
-        return {
-            "game_id": self.game_id,
-            "grid_w": GRID_W,
-            "grid_h": GRID_H,
-            "snake": [list(cell) for cell in self.snake],
-            "food": list(self.food),
-            "score": self.score,
-            "alive": self.alive,
-            "reason": self.reason,
-            "heading": self.heading,
-            "length": len(self.snake),
-        }
-
-
-class SnakeService:
-    """Drives games and emits their observable behaviour to the monitor.
-
-    ``emit`` receives an :class:`Event`; ``clock`` returns event-time seconds.
-    """
-
-    def __init__(self, emit: Callable[[Event], Any], clock: Callable[[], float] = time.time):
-        self._emit = emit
+    def __init__(
+        self,
+        game_id: str,
+        emit: Callable[[Event], None],
+        clock: Callable[[], float],
+        width: int = DEFAULT_W,
+        height: int = DEFAULT_H,
+        rng: Optional[random.Random] = None,
+    ) -> None:
+        self._game_id = game_id
+        self._emit_raw = emit
         self._clock = clock
-        self._last_t = -1.0
-        self.games: dict[str, GameState] = {}
+        self._w = width
+        self._h = height
+        self._rng = rng or random.Random()
+        self._last_t = 0.0
 
-    def _now(self) -> float:
-        """A strictly increasing event time, so ordered emissions never tie."""
+        # Snake occupies cells head-first; starts centred, heading right.
+        cx, cy = width // 2, height // 2
+        self.snake: list[tuple[int, int]] = [(cx - i, cy) for i in range(START_LEN)]
+        self.direction = "right"        # current heading (last applied)
+        self._pending = "right"         # next heading, validated at input time
+        self.score = 0
+        self.over = False
+        self.reason = ""
+        self.food = self._place_food()
+        self._started = False
+
+    # -- instrumentation helper -------------------------------------------
+    def _emit(self, type: str, payload: dict[str, Any]) -> None:
+        """Stamp a strictly-increasing event_time and push the event.
+
+        Ordered emissions within one tick (move -> food -> grow, or move ->
+        over) must not share a timestamp, or the engine would order them
+        canonically by content. The +1e-3 nudge keeps them distinct while
+        staying at wall rate for live streams.
+        """
         t = self._clock()
         if t <= self._last_t:
-            t = self._last_t + TICK_EPSILON
+            t = self._last_t + 1e-3
         self._last_t = t
-        return t
+        self._emit_raw(
+            Event(
+                type=type,
+                event_time=t,
+                bindings={"game_id": self._game_id},
+                payload=payload,
+                source=SOURCE,
+            )
+        )
 
-    # --- lifecycle ------------------------------------------------------------
-    def new_game(self, game_id: str, seed: Optional[int] = None) -> GameState:
-        state = GameState(game_id, seed=seed)
-        self.games[game_id] = state
-        self._emit(Event(STATUS_EVENT, self._now(), {"game_id": game_id},
-                         {"status": "started", "grid_w": GRID_W, "grid_h": GRID_H},
-                         SOURCE))
-        return state
+    def _place_food(self) -> tuple[int, int]:
+        occupied = set(self.snake)
+        free = [
+            (x, y)
+            for x in range(self._w)
+            for y in range(self._h)
+            if (x, y) not in occupied
+        ]
+        return self._rng.choice(free) if free else (0, 0)
 
-    def set_direction(self, game_id: str, direction: str) -> str:
-        """Queue a direction change. A 180-degree reversal is rejected here -
-        the engine never turns the snake straight back into itself."""
-        state = self.games.get(game_id)
-        if state is None or not state.alive or direction not in DIRECTIONS:
-            return "ignored"
-        if _is_opposite(direction, state.heading):
-            return "rejected"          # the rule-3 invariant, enforced at input
-        state.pending = direction
-        return "accepted"
+    # -- lifecycle --------------------------------------------------------
+    def start(self) -> None:
+        if self._started:
+            return
+        self._started = True
+        self._emit(
+            EVT_STATUS,
+            {"status": "started", "score": self.score, "length": len(self.snake)},
+        )
 
-    def tick(self, game_id: str) -> Optional[GameState]:
-        """Advance the game by one step, emitting what changed."""
-        state = self.games.get(game_id)
-        if state is None or not state.alive:
-            return state
+    def set_direction(self, direction: str) -> bool:
+        """Queue an input heading. A 180-degree reversal of the current heading
+        is REFUSED here and never becomes an accepted move (rule 3). Returns
+        whether the input was accepted."""
+        if direction not in DELTA:
+            return False
+        if self.over:
+            return False
+        if OPPOSITE[self.direction] == direction:
+            return False   # a straight reversal into itself - refused
+        self._pending = direction
+        return True
 
-        new_heading = state.pending
-        reversal_accepted = "true" if _is_opposite(new_heading, state.heading) else "false"
-        turn = "straight" if new_heading == state.heading else "turn"
-        state.heading = new_heading
+    def tick(self) -> None:
+        """Advance the snake one cell. Emits a move, then food+grow if a point
+        is scored, or an over status on collision."""
+        if self.over or not self._started:
+            return
 
-        dx, dy = DIRECTIONS[new_heading]
-        head_x, head_y = state.snake[0]
-        nxt = (head_x + dx, head_y + dy)
+        prev_direction = self.direction
+        self.direction = self._pending
+        dx, dy = DELTA[self.direction]
+        hx, hy = self.snake[0]
+        nx, ny = hx + dx, hy + dy
 
-        if not (0 <= nxt[0] < GRID_W and 0 <= nxt[1] < GRID_H):
-            return self._end_game(state, "wall")
+        # A move is accepted: emit the step with its heading and the previous
+        # heading, so a per-move 180-reversal is detectable from the stream.
+        self._emit(EVT_MOVE, {"direction": self.direction,
+                              "prev_direction": prev_direction})
 
-        will_eat = nxt == state.food
-        body = state.snake if will_eat else state.snake[:-1]
-        if nxt in body:
-            return self._end_game(state, "self")
+        # Wall collision ends the game.
+        if nx < 0 or nx >= self._w or ny < 0 or ny >= self._h:
+            self._game_over("wall")
+            return
 
-        state.snake.insert(0, nxt)
-        self._emit(Event(MOVE_EVENT, self._now(), {"game_id": game_id},
-                         {"direction": new_heading, "reversal_accepted": reversal_accepted,
-                          "turn": turn}, SOURCE))
+        eats = (nx, ny) == self.food
+        # Self collision: hitting the body ends the game. The tail cell is
+        # vacated this tick unless we are growing.
+        body = self.snake if eats else self.snake[:-1]
+        if (nx, ny) in body:
+            self._game_over("self")
+            return
 
-        if will_eat:
-            state.score += POINTS_PER_FOOD
-            self._emit(Event(FOOD_EVENT, self._now(), {"game_id": game_id},
-                             {"score": state.score}, SOURCE))
-            self._emit(Event(GROW_EVENT, self._now(), {"game_id": game_id},
-                             {"length": len(state.snake)}, SOURCE))
-            self._emit(Event(SCORE_EVENT, self._now(), {"game_id": game_id},
-                             {"score": state.score, "points": POINTS_PER_FOOD}, SOURCE))
-            state.food = state._spawn_food()
-        else:
-            state.snake.pop()
-        return state
+        self.snake.insert(0, (nx, ny))
+        if eats:
+            self.score += 1
+            self._emit(EVT_FOOD, {"score": self.score})
+            self._emit(EVT_GROW, {"length": len(self.snake)})
+            self.food = self._place_food()
+        if not eats:
+            self.snake.pop()
 
-    def _end_game(self, state: GameState, reason: str) -> GameState:
-        state.alive = False
-        state.reason = reason
-        self._emit(Event(STATUS_EVENT, self._now(), {"game_id": state.game_id},
-                         {"status": "over", "reason": reason, "score": state.score},
-                         SOURCE))
-        return state
+    def _game_over(self, reason: str) -> None:
+        self.over = True
+        self.reason = reason
+        self._emit(
+            EVT_STATUS,
+            {"status": "over", "reason": reason,
+             "score": self.score, "length": len(self.snake)},
+        )
 
-    def snapshot(self, game_id: str) -> Optional[dict[str, Any]]:
-        state = self.games.get(game_id)
-        return state.snapshot() if state else None
+    # -- view snapshot ----------------------------------------------------
+    def snapshot(self) -> dict[str, Any]:
+        return {
+            "game_id": self._game_id,
+            "w": self._w,
+            "h": self._h,
+            "snake": [list(c) for c in self.snake],
+            "food": list(self.food),
+            "score": self.score,
+            "length": len(self.snake),
+            "direction": self.direction,
+            "over": self.over,
+            "reason": self.reason,
+        }

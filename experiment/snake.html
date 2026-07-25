@@ -1,0 +1,133 @@
+<title>snake - behave-rv experiment</title>
+<style>
+:root{--ink:#0d1418;--sub:#141f27;--card:#182430;--line:#243541;--tx:#dce8ee;
+--mut:#8ba0ac;--faint:#5f7480;--accent:#3fd0c9;--ok:#3bb873;--risk:#d9a441;
+--bad:#e35b52;--pend:#6b8794;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+@media(prefers-color-scheme:light){:root{--ink:#eef2f3;--sub:#e4eaec;--card:#fff;
+--line:#d3dde1;--tx:#132029;--mut:#546570;--faint:#7d8f99;--accent:#0f8f88;}}
+:root[data-theme="dark"]{--ink:#0d1418;--sub:#141f27;--card:#182430;--line:#243541;
+--tx:#dce8ee;--mut:#8ba0ac;--faint:#5f7480;--accent:#3fd0c9;}
+:root[data-theme="light"]{--ink:#eef2f3;--sub:#e4eaec;--card:#fff;--line:#d3dde1;
+--tx:#132029;--mut:#546570;--faint:#7d8f99;--accent:#0f8f88;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ink);color:var(--tx);font-family:var(--sans);
+line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px}
+h1,h2,h3{line-height:1.15;text-wrap:balance;font-weight:680;letter-spacing:-.01em}
+a{color:var(--accent);text-decoration:none}
+code,.mono{font-family:var(--mono);font-size:.86em}
+.tnum{font-variant-numeric:tabular-nums}
+.back{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12.5px;
+color:var(--mut);padding:16px 0}
+.back:hover{color:var(--accent)}
+header.top{border-bottom:1px solid var(--line);background:
+radial-gradient(120% 140% at 85% -30%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 60%)}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
+color:var(--accent);margin:0 0 12px}
+header.top h1{font-size:clamp(27px,5vw,42px);margin:0 0 14px}
+.lede{font-size:clamp(15.5px,2vw,18px);color:var(--tx);max-width:60ch;margin:0}
+.masthead{padding:8px 0 40px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.04em;padding:4px 10px;
+border:1px solid var(--line);border-radius:999px;color:var(--mut)}
+.tag.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,transparent)}
+.tag.bad{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 40%,transparent)}
+.tag.risk{color:var(--risk);border-color:color-mix(in srgb,var(--risk) 40%,transparent)}
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+.kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;
+color:var(--faint);margin:0 0 16px}
+h2{font-size:clamp(20px,3vw,26px);margin:0 0 14px}
+h3{font-size:16px;margin:22px 0 8px}
+p{margin:0 0 14px} .muted{color:var(--mut)} strong{color:var(--tx);font-weight:640}
+pre{background:var(--sub);border:1px solid var(--line);border-radius:10px;padding:13px 15px;
+overflow-x:auto;font-family:var(--mono);font-size:12.4px;line-height:1.55;margin:0 0 14px}
+pre .del{color:var(--bad)} pre .add{color:var(--ok)} pre .cx{color:var(--faint)}
+pre .kw{color:var(--accent)}
+.gherkin{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
+border-radius:9px;padding:13px 16px;margin:0 0 12px;font-family:var(--mono);font-size:12.4px;
+line-height:1.6;overflow-x:auto;white-space:pre}
+.gherkin .g-kw{color:var(--accent);font-weight:600}
+.gherkin .g-name{color:var(--mut)}
+.callout{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
+border-radius:10px;padding:16px 18px;margin:16px 0}
+.callout p{margin:0;font-size:14px}
+.chan{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 12px;background:var(--card)}
+.chan .ch{display:flex;align-items:center;gap:9px;margin:0 0 8px;font-family:var(--mono);
+font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.chan .ch .st{margin-left:auto;padding:2px 9px;border-radius:6px;font-weight:600;letter-spacing:.02em}
+.st.g{color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+.st.r{color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.st.a{color:var(--risk);background:color-mix(in srgb,var(--risk) 14%,transparent)}
+.st.n{color:var(--mut);background:var(--sub)}
+.chan p{margin:0;font-size:13.5px;color:var(--mut)}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}
+.d-ok{background:var(--ok)}.d-bad{background:var(--bad)}.d-risk{background:var(--risk)}.d-pend{background:var(--pend)}
+.evtmodel{font-family:var(--mono);font-size:12.4px;color:var(--mut);background:var(--sub);
+border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin:0 0 14px;overflow-x:auto}
+footer{padding:34px 0 64px}
+footer .wrap{color:var(--faint);font-family:var(--mono);font-size:12px}
+.nav-demos{display:flex;flex-wrap:wrap;gap:6px;padding:14px 0 0}
+.nav-demos a{font-family:var(--mono);font-size:11px;color:var(--mut);padding:4px 9px;
+border:1px solid var(--line);border-radius:6px}
+.nav-demos a:hover{color:var(--accent)}
+.nav-demos a.cur{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+</style>
+<div class="wrap"><a class="back" href="index.html">← Back to the experiment report</a></div>
+<header class="top"><div class="wrap masthead">
+<p class="eyebrow">demo breakdown · browser game · 4 policies · 2 bugs</p>
+<h1>snake</h1>
+<p class="lede">Browser Snake. One bug the monitor caught live; the other is the textbook blind spot - the snake never actually grows, yet emits a "grew" event, so the rule that only checks the event stays green.</p>
+<div class="tags"><span class="tag bad">2 bugs planted</span><span class="tag ok">2 found by user</span><span class="tag risk">live: catch + miss</span></div>
+<div class="nav-demos"><a href="lending.html" class="">lending</a><a href="parcels.html" class="">parcels</a><a href="bookings.html" class="">bookings</a><a href="devices.html" class="">devices</a><a href="payments.html" class="">payments</a><a href="snake.html" class="cur">snake</a><a href="blackjack.html" class="">blackjack</a><a href="minesweeper.html" class="">minesweeper</a><a href="tictactoe.html" class="">tic-tac-toe</a><a href="memory.html" class="">memory</a></div>
+</div></header>
+
+<section><div class="wrap">
+<p class="kicker">What it is</p>
+<h2>A browser Snake with an embedded monitor</h2>
+<p>A stdlib HTTP server serves an inline canvas game; the engine emits events to a live dashboard. A session ends when the snake hits a wall or itself.</p><p>A game entity is deliberately non-terminal so the post-over prohibitions stay armed.</p>
+<div class="evtmodel"><strong>event model &nbsp;·&nbsp;</strong><code>game.status</code>, <code>game.move</code> (carrying direction + prev_direction), <code>game.food</code>, <code>game.grow</code> - all keyed by <code>game_id</code>.</div>
+</div></section>
+
+<section><div class="wrap">
+<p class="kicker">The monitored rules</p>
+<h2>What the user asked the monitor to enforce</h2>
+<p class="muted">Verbatim from the committed <code>monitoring/policies/</code>. These are the human's own
+words; the engine owns the verdict.</p>
+<div class="gherkin"><span class="g-kw">Feature:</span> the snake never reverses straight into itself
+
+  <span class="g-kw">Scenario:</span> a 180-degree reversal is never accepted
+    <span class="g-kw">Then </span>the snake reverses into itself never happens</div><div class="gherkin"><span class="g-kw">Feature:</span> every point scored makes the snake grow in time
+
+  <span class="g-kw">Scenario:</span> food eaten is followed by growth within two seconds
+    <span class="g-kw">When </span>food is eaten
+    <span class="g-kw">Then </span>the snake grows within "2" seconds</div><div class="gherkin"><span class="g-kw">Feature:</span> no play after a game is over
+
+  <span class="g-kw">Scenario:</span> a finished game never moves again
+    <span class="g-kw">Given </span>a game is "over"
+    <span class="g-kw">Then </span>the snake moves never happens</div>
+</div></section>
+
+<section><div class="wrap">
+<p class="kicker">The sabotage</p>
+<h2>The bugs planted in the app code</h2>
+<h3>Bug 1 - the reversal guard is dead code</h3><pre>  def set_direction(self, direction):
+<span class="del">-     if OPPOSITE[self.direction] == direction:  # blocks a 180° turn</span>
+<span class="add">+     if OPPOSITE[direction] == direction:       # always False</span>
+          return False</pre><p>The guard compares a direction to its own opposite - always False - so a 180-degree reversal straight into the snake's neck is <strong>accepted</strong>. Press the opposite arrow and you instantly die. The monitor catches this: the reversal rule fires live.</p><p class="muted"><strong>Policy in play:</strong> 04 - no reversal &nbsp;·&nbsp; <strong>Trigger:</strong> moving right, press Left (one keypress) &nbsp;·&nbsp; <strong>Class:</strong> normal-use</p><h3>Bug 2 - eating food never grows the snake</h3><pre>  def tick(self):
+      ... move, maybe eat food, emit game.grow ...
+<span class="del">-     if not grew: self.snake.pop()   # keep tail unless growing</span>
+<span class="add">+     self.snake.pop()                # ALWAYS pop - never grows</span></pre><p>An unconditional tail-pop: the snake scores points and <strong>emits a <code>game.grow</code> event</strong>, but its length never actually changes. Rule 2 checks only that a grow <em>event</em> followed the food within 2 seconds - which it did - so the card stays <span style="color:var(--ok)">green</span>. The monitor watches the event, not the world.</p><p class="muted"><strong>Policy in play:</strong> none effectively - the event fires, so 03 is satisfied &nbsp;·&nbsp; <strong>Trigger:</strong> eat any food &nbsp;·&nbsp; <strong>Class:</strong> subtle · slip-through</p>
+</div></section>
+
+<section><div class="wrap">
+<p class="kicker">Detection</p>
+<h2>How the failure surfaced</h2>
+<p class="muted">The same defect through the framework's three independent channels, plus what the blind
+user actually noticed.</p>
+<div class="chan"><div class="ch"><span class="dot d-risk"></span>Channel A - live runtime<span class="st a">catch + miss</span></div><p>Rule 3 (no reversal) went <span style="color:var(--bad)">red</span> on real games where the player reversed. But rule 2 stayed green while the snake never grew - the grow event fired on schedule even though the length was frozen.</p></div><div class="chan"><div class="ch"><span class="dot d-pend"></span>Channel B - replay gate<span class="st n">pass · exit 0</span></div><p>The pinned gate passed - because the scripted traffic injects the reversal as a raw event and its healthy game only checks that the grow event fired, so neither buggy engine path is actually exercised. A methodology lesson: seeds must drive the real engine.</p></div><div class="chan"><div class="ch"><span class="dot d-bad"></span>Channel C - stability contract<span class="st r">break · exit 1</span></div><p><code>catalog diff</code> failed, flagging <code>set_direction</code> and <code>tick</code> as changed on the emit path.</p></div><div class="chan"><div class="ch"><span class="dot d-ok"></span>The blind user<span class="st g">found 2 / 2</span></div><p>Drove the game over HTTP: reversed the snake and watched rule 3 fire, then noticed the length stayed at 3 while the score climbed to 16 - catching the grow bug by eye that the monitor could not see.</p></div>
+<div class="callout"><p><strong>A monitor watches events, not state.</strong> When the bug is in the logic the event reports (a reversal accepted), the monitor is excellent. When the bug is a lie between the event and reality (a grow event with no growth), only a human watching the actual game catches it - and the pinned gate can pass while the live game is broken if its traffic bypasses the real path.</p></div>
+</div></section>
+
+<footer><div class="wrap">behave-rv 0.3.1 · demo: snake · <a href="index.html">full experiment report ↗</a></div></footer>

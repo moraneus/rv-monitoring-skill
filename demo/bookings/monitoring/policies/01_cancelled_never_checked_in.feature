@@ -1,4 +1,4 @@
-Feature: cancellation safety
+Feature: cancelled bookings
 
   Scenario: a cancelled booking is never checked in
     Given a booking is "cancelled"

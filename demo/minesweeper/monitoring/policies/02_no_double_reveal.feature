@@ -1,5 +1,5 @@
-Feature: a revealed cell stays revealed exactly once
+Feature: each square is revealed at most once
 
-  Scenario: no cell is ever revealed twice
-    Given the same cell has been revealed
-    Then the same cell is revealed again never happens
+  Scenario: a cell is never revealed twice
+    Given that cell was already revealed
+    Then a cell is revealed never happens

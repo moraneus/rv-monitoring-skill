@@ -7,6 +7,8 @@ Conventions (see the rv skill's project-files reference):
   bind to it across renames. Never reuse one for a different meaning.
 * Predicates are pure: read the event, return a boolean.
 * When rewording a phrasing, keep the old wording as an alias.
+
+One correlation key throughout: ``parcel_id``.
 """
 
 from pathlib import Path
@@ -16,42 +18,33 @@ from behave_rv.compile.compiler import compile_feature
 
 POLICY_DIR = Path(__file__).parent / "policies"
 
-# The statuses that end a parcel's lifecycle (delivered or returned to sender).
-FINISHED_STATUSES = ("delivered", "returned")
+# The user's definition of "finished": a parcel that has been delivered or
+# returned to sender. Enumerated deliberately - a future final status would
+# NOT be classified as finished by this predicate (a blind spot noted to the
+# user), which is faithful to the user's stated two-outcome definition.
+FINAL_STATUSES = ("delivered", "returned")
 
 
 def build_registry() -> StepRegistry:
     registry = StepRegistry()
 
-    # The lifecycle step: matches any parcel status by value. Covers
-    # "scanned", "out_for_delivery", "delivered", "rerouted", "returned".
-    @registry.trigger('the parcel becomes "{status}"',
+    @registry.trigger('a parcel is "{status}"',
                       step_id="parcel.status.is",
                       event_type="parcel.status",
                       correlation_key="parcel_id")
     def parcel_is(ctx, event, status):
-        if event.type == "parcel.status" and event.payload.get("status") == status:
-            ctx.bind(parcel_id=event.bindings["parcel_id"])
-            return True
-        return False
+        """Matches a single parcel status transition by exact value."""
+        return (event.type == "parcel.status"
+                and event.payload.get("status") == status)
 
-    # Old wording kept as an alias so existing policies phrased
-    # 'a parcel is "..."' keep compiling unchanged (step_id is the identity).
-    registry.alias("parcel.status.is", 'a parcel is "{status}"')
-
-    # A second step over the SAME event type, reading the status field but
-    # matching a SET of terminal statuses. This lets one obligation cover
-    # "delivered OR returned" for the delivery-window deadline.
     @registry.trigger('a parcel is finished',
                       step_id="parcel.status.finished",
                       event_type="parcel.status",
                       correlation_key="parcel_id")
-    def parcel_is_finished(ctx, event):
-        if event.type == "parcel.status" \
-                and event.payload.get("status") in FINISHED_STATUSES:
-            ctx.bind(parcel_id=event.bindings["parcel_id"])
-            return True
-        return False
+    def parcel_finished(ctx, event):
+        """Matches the end of a parcel's journey: delivered or returned."""
+        return (event.type == "parcel.status"
+                and event.payload.get("status") in FINAL_STATUSES)
 
     return registry
 

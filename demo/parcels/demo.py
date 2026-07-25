@@ -1,139 +1,156 @@
-"""Live monitoring demo for the parcel service.
+"""Runnable live demo of the parcel monitor.
 
-    python demo.py                 # runs, opens the dashboard, waits for Ctrl-C
-    python demo.py --seconds 24    # runs for a fixed span, then shuts down
+    python demo.py                 # scripted real-time traffic, dashboard on :7202
+    python demo.py --port 8080     # pick another port
 
-Wiring, in words: seeded parcel traffic runs on a driver thread and pushes
-events into a QueueSource through the dashboard tap and a trace recorder; the
-engine consumes on its own thread and delivers each verdict to the dashboard
-sink; the stdlib HTTP dashboard serves live snapshots. Nothing blocks the app.
+Drives the REAL ParcelService in wall-clock time while a behave-rv engine
+evaluates the three policies against the live event stream. Open the printed
+URL to watch, in your own words:
 
-Open the printed URL to watch, in your own words: every policy as a card with
-its per-parcel verdicts, the authored scenario replayed with the failing step
-marked for each violation, the live event feed, and the stability strip
-showing whether the code still matches the committed catalog.
+  * each policy as a card with its per-parcel verdicts,
+  * the rendered explanation for every violation (your scenario, replayed),
+  * the live event feed,
+  * the stability strip (code still matches the committed catalog).
 
-The clock is service-relative (``time.time() - start``) so wall-fired deadline
-timers (the 12s delivery window) start near zero and fire correctly.
+Every event is also written to monitoring/traces/live_session.jsonl so the
+exact run can be replayed later (see replay_trace.py).
+
+Live mode uses a service-relative clock (seconds since start) and real time:
+the 12-second deadline is 12 real seconds, so a parcel that is not finished in
+time trips a wall-clock timer while you watch.
 """
 
 from __future__ import annotations
 
 import argparse
+import atexit
+import signal
 import sys
 import threading
 import time
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
-sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "monitoring"))
+sys.path.insert(0, str(Path(__file__).resolve().parent / "monitoring"))
 
-from behave_rv.dashboard import Dashboard                        # noqa: E402
-from behave_rv.engine.loop import Engine                         # noqa: E402
-from behave_rv.events.sources.replay import TraceRecorder        # noqa: E402
-from behave_rv.events.sources.subscription import QueueSource    # noqa: E402
+from behave_rv.dashboard import Dashboard                       # noqa: E402
+from behave_rv.engine.loop import Engine                        # noqa: E402
+from behave_rv.events.sources.replay import TraceRecorder       # noqa: E402
+from behave_rv.events.sources.subscription import QueueSource   # noqa: E402
 
-from app.parcel_service import ParcelService                     # noqa: E402
-from steps import build_registry, load_policies                  # noqa: E402
+from app.parcel_service import ParcelService                    # noqa: E402
+from steps import build_registry, load_policies                 # noqa: E402
 
-TRACE_PATH = ROOT / "monitoring" / "traces" / "live_session.jsonl"
+TRACE_PATH = "monitoring/traces/live_session.jsonl"
 
 
-def drive(svc: ParcelService, stop: threading.Event) -> None:
-    """Seeded parcel traffic: three healthy parcels and three faults, paced so
-    the policy cards flip live on the dashboard."""
+def run_traffic(svc: ParcelService) -> None:
+    """A scripted stream of parcels in real time: three faults among the
+    healthy majority, spaced so each verdict is visible as it lands."""
 
-    def gap(dt=0.9):
-        stop.wait(dt)
+    def step(fn, *args, pause=0.6):
+        fn(*args)
+        time.sleep(pause)
 
-    # P-1 healthy: scanned, out for delivery, delivered in time.
-    svc.register("P-1", "London"); gap()
-    svc.hub_scan("P-1", "HUB-A"); gap()
-    svc.out_for_delivery("P-1"); gap()
-    svc.deliver("P-1"); gap()
+    # Healthy: scanned, dispatched, delivered well within the deadline.
+    step(svc.register, "P-1001", "12 Oak St")
+    step(svc.hub_scan, "P-1001", "hub-north")
+    step(svc.out_for_delivery, "P-1001")
+    step(svc.deliver, "P-1001", pause=1.0)
 
-    # P-4 fault (started early so its 12s window elapses within the demo):
-    # out for delivery, then never delivered or returned -> timer violation.
-    svc.register("P-4", "Rome"); gap()
-    svc.hub_scan("P-4", "HUB-A"); gap()
-    svc.out_for_delivery("P-4"); gap()
+    # Rule 1 fault: dispatched with NO hub scan -> violates at dispatch.
+    step(svc.register, "P-1002", "9 Elm Ave")
+    step(svc.out_for_delivery, "P-1002")
+    step(svc.deliver, "P-1002", pause=1.0)
 
-    # P-2 fault: out for delivery WITHOUT a hub scan -> rule 1 violation.
-    svc.register("P-2", "Paris"); gap()
-    svc.out_for_delivery("P-2"); gap()
-    svc.deliver("P-2"); gap()
+    # Rule 2 fault: re-routed AFTER delivery -> violates at the reroute.
+    step(svc.register, "P-1004", "77 Birch Ln")
+    step(svc.hub_scan, "P-1004", "hub-east")
+    step(svc.out_for_delivery, "P-1004")
+    step(svc.deliver, "P-1004")
+    step(svc.route_to, "P-1004", "hub-west", pause=1.0)
 
-    # P-3 fault: delivered, then RE-ROUTED -> rule 2 violation.
-    svc.register("P-3", "Berlin"); gap()
-    svc.hub_scan("P-3", "HUB-B"); gap()
-    svc.out_for_delivery("P-3"); gap()
-    svc.deliver("P-3"); gap()
-    svc.route_to("P-3", "HUB-C"); gap()
+    # Rule 3 fault: dispatched, then never finished -> the 12s wall timer
+    # fires while the parcel sits quiet. Healthy P-1005 runs alongside so the
+    # feed keeps moving.
+    step(svc.register, "P-1003", "5 Cedar Ct")
+    step(svc.hub_scan, "P-1003", "hub-south")
+    step(svc.out_for_delivery, "P-1003", pause=1.5)
 
-    # P-5 healthy: scanned, out for delivery, returned to sender in time.
-    svc.register("P-5", "Madrid"); gap()
-    svc.hub_scan("P-5", "HUB-B"); gap()
-    svc.out_for_delivery("P-5"); gap()
-    svc.return_to_sender("P-5")
-    # P-4's window keeps counting; its timer fires ~12s after its dispatch.
+    step(svc.register, "P-1005", "40 Maple Way")
+    step(svc.hub_scan, "P-1005", "hub-north")
+    step(svc.out_for_delivery, "P-1005")
+    step(svc.deliver, "P-1005", pause=1.0)
+
+    # Wait out P-1003's deadline so the timeout verdict appears on the board.
+    time.sleep(13)
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--seconds", type=float, default=None,
-                    help="auto-shutdown after N seconds (default: wait for Ctrl-C)")
-    ap.add_argument("--port", type=int, default=7007)
-    args = ap.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--port", type=int, default=7202)
+    parser.add_argument("--seconds", type=float, default=0.0,
+                        help="auto-stop this many seconds after traffic "
+                             "finishes (0 = stay live until Ctrl-C)")
+    args = parser.parse_args()
 
     registry = build_registry()
     policies = load_policies(registry)
 
     start = time.time()
-    clock = lambda: time.time() - start
+    clock = lambda: time.time() - start           # service-relative clock
+
     source = QueueSource()
     dashboard = Dashboard(policies, registry=registry,
-                          catalog=str(ROOT / "monitoring" / "catalog.json"),
-                          app=[str(ROOT / "app" / "parcel_service.py")])
-    TRACE_PATH.parent.mkdir(parents=True, exist_ok=True)
+                          catalog="monitoring/catalog.json",
+                          app=["app/parcel_service.py"])
+    Path(TRACE_PATH).parent.mkdir(parents=True, exist_ok=True)
     recorder = TraceRecorder(TRACE_PATH, clock=clock)
 
-    svc = ParcelService(lambda e: source.push(dashboard.tap(recorder(e))),
-                        clock=clock)
+    svc = ParcelService(
+        emit=lambda event: source.push(dashboard.tap(recorder(event))),
+        clock=clock,
+    )
 
-    # No terminal event: a delivered parcel must stay watched for rule 2, so
-    # entities are reclaimed by quiescence TTL rather than a lifecycle end.
-    engine = Engine(policies, terminal_event_types=set(),
-                    grace=0.5, quiescence_ttl=120.0)
+    # A small grace on a fast live stream; correctness does not depend on it
+    # (behave-rv >= 0.3.1). No terminal event: delivered/returned parcels are
+    # reclaimed by quiescence so rule 2 keeps watching after delivery.
+    engine = Engine(policies, quiescence_ttl=120.0, grace=2.0)
 
-    url = dashboard.start(port=args.port)
-    print("live monitor:", url)
-    print("watch the policy cards and event feed there while traffic runs.")
-
-    threading.Thread(target=lambda: engine.run(source, sink=dashboard.sink),
-                     daemon=True).start()
+    # Guarantee the trace's clock-horizon marker is written no matter how we
+    # exit (Ctrl-C, kill, or clean auto-stop): without it a wall-fired
+    # deadline verdict replays as pending instead of violated.
+    atexit.register(recorder.close)
 
     stop = threading.Event()
-    driver = threading.Thread(target=drive, args=(svc, stop), daemon=True)
-    driver.start()
+    signal.signal(signal.SIGINT, lambda *_: stop.set())
+    signal.signal(signal.SIGTERM, lambda *_: stop.set())
+
+    url = dashboard.start(port=args.port)
+    print("live monitor:", url, flush=True)
+    print("watch the three policy cards fill in; three faults are seeded.",
+          flush=True)
+
+    engine_thread = threading.Thread(
+        target=engine.run, args=(source,),
+        kwargs={"sink": dashboard.sink}, daemon=True)
+    engine_thread.start()
 
     try:
-        if args.seconds is not None:
+        run_traffic(svc)
+        print("\nscripted traffic complete - dashboard still live at", url,
+              flush=True)
+        if args.seconds > 0:
+            print(f"auto-stopping in {args.seconds:g}s.", flush=True)
             stop.wait(args.seconds)
         else:
-            print("Ctrl-C to stop.")
-            while not stop.is_set():
-                stop.wait(1.0)
-    except KeyboardInterrupt:
-        pass
+            print("Ctrl-C to stop.", flush=True)
+            stop.wait()
     finally:
-        stop.set()
-        recorder.close()
-        print(f"\nrecorded trace: {TRACE_PATH}")
-        print("replay it later with: "
-              "python -m behave_rv --steps monitoring/steps.py "
-              "--policy monitoring/policies/03_delivery_window.feature "
-              f"--trace {TRACE_PATH.name}")
+        print("stopping...", flush=True)
+        recorder.close()          # writes the clock-horizon marker for replay
+        source.close()
+        engine_thread.join(timeout=3)
+        dashboard.stop()
     return 0
 
 

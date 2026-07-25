@@ -1,74 +1,42 @@
-# Suggested policies (proposals - you decide)
+# Suggested policies (proposals - you decide what becomes a policy)
 
-These are ideas I (the agent) thought of. Nothing here is active. Move a
-scenario into `monitoring/policies/` yourself if you want it enforced, and
-tell me - I will add any new step/event surface it needs, regenerate the
-catalog for that intended change, and rerun the gates.
+These are agent proposals over the existing event vocabulary. None is active;
+move one into `monitoring/policies/` yourself if you want it enforced.
 
-Your three requested rules already live in `monitoring/policies/`:
-`01_no_reveal_after_boom`, `02_no_double_reveal`, `03_flags_never_exceed_mines`.
+## 2026-07-25: a board only detonates on a real reveal
 
-Each proposal below needs a small amount of NEW instrumentation or vocabulary
-(named per item), so it does not compile against today's registry yet - that
-is exactly why it is a proposal and not a policy. I did not add that surface,
-to keep the build focused on the three rules you asked for.
-
----
-
-## 2026-07-25: a cell is never flagged after it has been revealed
-
-**Observes:** `cell.revealed` (state), a NEW `flag.placed` step keyed on the
-cell. **Requires:** `flag.placed` to carry `cell` in its *bindings* (today it
-carries the cell only in the payload) plus a `(game_id, cell)`-keyed flag step.
-**Why:** flagging a cell you already uncovered is a UI/state bug; the monitor
-would catch it per cell.
+**Observes:** `mine.boom` (`board.mine.boom`), `board.reveal` (`board.reveal.any`)
+**Why:** the current rules police what happens AFTER a boom. This is the mirror
+image: a `mine.boom` should never arrive on a board where nothing was ever
+revealed - it would mean an explosion fabricated out of nothing. Catches a
+corrupted stream that injects a boom with no reveal behind it.
 
 ```gherkin
-Feature: flags land only on hidden cells
+Feature: an explosion has a cause
 
-  Scenario: no cell is flagged after it has been revealed
-    Given the same cell has been revealed
-    Then that cell is flagged never happens
+  Scenario: a mine only explodes after some cell was revealed
+    When a mine explodes
+    Then a cell is revealed on the board before
 ```
 
-## 2026-07-25: nothing happens before the game starts - PROMOTED
+## 2026-07-25: a square is seen only after it is revealed
 
-You promoted this on 2026-07-25. It now lives in
-`monitoring/policies/04_reveal_only_after_start.feature`, backed by the new
-`the game has started` step (observing the already-emitted `game.started`), the
-catalog was regenerated for that intended change, and the replay traffic
-exercises it including its fault (`g_no_start`). Kept here only as a record of
-the promotion.
-
-## 2026-07-25: no reveal after a win either
-
-**Observes:** a NEW `game.won` event, `cell.reveal`. **Requires:** splitting
-today's `game.over{result}` into (or adding) a distinct `game.won` event so a
-win can open a scope; the current predicate cannot read the `result` payload
-field in a scope step cleanly. **Why:** rule 1 covers reveals after a *loss*
-(mine explodes); the symmetric case - reveals after a *win* - is currently
-uncovered. Keyed on `game_id`.
+**Observes:** `cell.seen` (`cell.seen.state`), `cell.reveal` (`cell.reveal.occurs`)
+**Why:** the `cell.seen` state latch is what rule 2 (no double reveal) leans on.
+This proposal guards the latch itself: `cell.seen` must be preceded by the
+`cell.reveal` it records, so a stream cannot open the "already revealed" scope
+for a square that was never actually revealed.
 
 ```gherkin
-Feature: a won game is also finished
+Feature: the seen-latch is honest
 
-  Scenario: no cell is revealed after the game is won
-    Given the game is won
-    Then a cell is revealed never happens
+  Scenario: a cell is marked seen only after it was revealed
+    When that cell was already revealed
+    Then a cell is revealed before
 ```
 
-## 2026-07-25: a flagged cell is not revealed until it is unflagged
-
-**Observes:** NEW per-cell `flag.placed` / `flag.removed` steps, `cell.reveal`.
-**Requires:** `flag.placed` and `flag.removed` keyed on `(game_id, cell)`.
-**Why:** the honest game blocks revealing a flagged cell; this interval-scope
-rule makes that guard observable, and a corrupted reveal of a flagged cell
-would be caught.
-
-```gherkin
-Feature: flags protect a cell from reveal
-
-  Scenario: a flagged cell is not revealed while flagged
-    Given the same cell is flagged until it is unflagged
-    Then that cell is revealed never happens
-```
+Note: both proposals use the triggered `before` form, which arms ONCE per
+entity and decides at the first trigger - exactly right here (the first boom /
+first seen-latch is the one that must have a cause). They do not replace the
+three committed prohibitions; they add a second, causal angle on the same
+events.

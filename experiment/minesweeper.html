@@ -1,0 +1,131 @@
+<title>minesweeper - behave-rv experiment</title>
+<style>
+:root{--ink:#0d1418;--sub:#141f27;--card:#182430;--line:#243541;--tx:#dce8ee;
+--mut:#8ba0ac;--faint:#5f7480;--accent:#3fd0c9;--ok:#3bb873;--risk:#d9a441;
+--bad:#e35b52;--pend:#6b8794;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+@media(prefers-color-scheme:light){:root{--ink:#eef2f3;--sub:#e4eaec;--card:#fff;
+--line:#d3dde1;--tx:#132029;--mut:#546570;--faint:#7d8f99;--accent:#0f8f88;}}
+:root[data-theme="dark"]{--ink:#0d1418;--sub:#141f27;--card:#182430;--line:#243541;
+--tx:#dce8ee;--mut:#8ba0ac;--faint:#5f7480;--accent:#3fd0c9;}
+:root[data-theme="light"]{--ink:#eef2f3;--sub:#e4eaec;--card:#fff;--line:#d3dde1;
+--tx:#132029;--mut:#546570;--faint:#7d8f99;--accent:#0f8f88;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ink);color:var(--tx);font-family:var(--sans);
+line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px}
+h1,h2,h3{line-height:1.15;text-wrap:balance;font-weight:680;letter-spacing:-.01em}
+a{color:var(--accent);text-decoration:none}
+code,.mono{font-family:var(--mono);font-size:.86em}
+.tnum{font-variant-numeric:tabular-nums}
+.back{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12.5px;
+color:var(--mut);padding:16px 0}
+.back:hover{color:var(--accent)}
+header.top{border-bottom:1px solid var(--line);background:
+radial-gradient(120% 140% at 85% -30%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 60%)}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
+color:var(--accent);margin:0 0 12px}
+header.top h1{font-size:clamp(27px,5vw,42px);margin:0 0 14px}
+.lede{font-size:clamp(15.5px,2vw,18px);color:var(--tx);max-width:60ch;margin:0}
+.masthead{padding:8px 0 40px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.04em;padding:4px 10px;
+border:1px solid var(--line);border-radius:999px;color:var(--mut)}
+.tag.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,transparent)}
+.tag.bad{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 40%,transparent)}
+.tag.risk{color:var(--risk);border-color:color-mix(in srgb,var(--risk) 40%,transparent)}
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+.kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;
+color:var(--faint);margin:0 0 16px}
+h2{font-size:clamp(20px,3vw,26px);margin:0 0 14px}
+h3{font-size:16px;margin:22px 0 8px}
+p{margin:0 0 14px} .muted{color:var(--mut)} strong{color:var(--tx);font-weight:640}
+pre{background:var(--sub);border:1px solid var(--line);border-radius:10px;padding:13px 15px;
+overflow-x:auto;font-family:var(--mono);font-size:12.4px;line-height:1.55;margin:0 0 14px}
+pre .del{color:var(--bad)} pre .add{color:var(--ok)} pre .cx{color:var(--faint)}
+pre .kw{color:var(--accent)}
+.gherkin{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
+border-radius:9px;padding:13px 16px;margin:0 0 12px;font-family:var(--mono);font-size:12.4px;
+line-height:1.6;overflow-x:auto;white-space:pre}
+.gherkin .g-kw{color:var(--accent);font-weight:600}
+.gherkin .g-name{color:var(--mut)}
+.callout{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
+border-radius:10px;padding:16px 18px;margin:16px 0}
+.callout p{margin:0;font-size:14px}
+.chan{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 12px;background:var(--card)}
+.chan .ch{display:flex;align-items:center;gap:9px;margin:0 0 8px;font-family:var(--mono);
+font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.chan .ch .st{margin-left:auto;padding:2px 9px;border-radius:6px;font-weight:600;letter-spacing:.02em}
+.st.g{color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+.st.r{color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.st.a{color:var(--risk);background:color-mix(in srgb,var(--risk) 14%,transparent)}
+.st.n{color:var(--mut);background:var(--sub)}
+.chan p{margin:0;font-size:13.5px;color:var(--mut)}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}
+.d-ok{background:var(--ok)}.d-bad{background:var(--bad)}.d-risk{background:var(--risk)}.d-pend{background:var(--pend)}
+.evtmodel{font-family:var(--mono);font-size:12.4px;color:var(--mut);background:var(--sub);
+border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin:0 0 14px;overflow-x:auto}
+footer{padding:34px 0 64px}
+footer .wrap{color:var(--faint);font-family:var(--mono);font-size:12px}
+.nav-demos{display:flex;flex-wrap:wrap;gap:6px;padding:14px 0 0}
+.nav-demos a{font-family:var(--mono);font-size:11px;color:var(--mut);padding:4px 9px;
+border:1px solid var(--line);border-radius:6px}
+.nav-demos a:hover{color:var(--accent)}
+.nav-demos a.cur{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+</style>
+<div class="wrap"><a class="back" href="index.html">← Back to the experiment report</a></div>
+<header class="top"><div class="wrap masthead">
+<p class="eyebrow">demo breakdown · browser game · 3 policies · 2 bugs</p>
+<h1>minesweeper</h1>
+<p class="lede">Browser Minesweeper - the best runtime result in the corpus: both implanted bugs caught live by policy verdicts, plus a third out-of-coverage bug the user found by eye.</p>
+<div class="tags"><span class="tag bad">2 bugs planted</span><span class="tag ok">2 found by user</span><span class="tag ok">live: catch ×2</span></div>
+<div class="nav-demos"><a href="lending.html" class="">lending</a><a href="parcels.html" class="">parcels</a><a href="bookings.html" class="">bookings</a><a href="devices.html" class="">devices</a><a href="payments.html" class="">payments</a><a href="snake.html" class="">snake</a><a href="blackjack.html" class="">blackjack</a><a href="minesweeper.html" class="cur">minesweeper</a><a href="tictactoe.html" class="">tic-tac-toe</a><a href="memory.html" class="">memory</a></div>
+</div></header>
+
+<section><div class="wrap">
+<p class="kicker">What it is</p>
+<h2>A browser Minesweeper with per-cell monitoring</h2>
+<p>8×8, 10 mines, click to reveal, right-click to flag. Cells are monitored under a composite key so "revealed at most once" is checked per square, per game.</p><p>The win-only terminal is a deliberate cleverness: because a boom (loss) and the terminal (win) are mutually exclusive, rule 1 has no terminal blind spot at all.</p>
+<div class="evtmodel"><strong>event model &nbsp;·&nbsp;</strong><code>mine.boom</code>, <code>board.reveal</code> (game-keyed) and <code>cell.reveal</code>/<code>cell.seen</code> (composite key), <code>flag.set</code> (carries flag+mine counts), terminal <code>game.done</code> on win only.</div>
+</div></section>
+
+<section><div class="wrap">
+<p class="kicker">The monitored rules</p>
+<h2>What the user asked the monitor to enforce</h2>
+<p class="muted">Verbatim from the committed <code>monitoring/policies/</code>. These are the human's own
+words; the engine owns the verdict.</p>
+<div class="gherkin"><span class="g-kw">Feature:</span> a detonated board is frozen
+
+  <span class="g-kw">Scenario:</span> no cell is revealed after a mine explodes
+    <span class="g-kw">Given </span>a mine explodes
+    <span class="g-kw">Then </span>a cell is revealed on the board never happens</div><div class="gherkin"><span class="g-kw">Feature:</span> each square is revealed at most once
+
+  <span class="g-kw">Scenario:</span> a cell is never revealed twice
+    <span class="g-kw">Given </span>that cell was already revealed
+    <span class="g-kw">Then </span>a cell is revealed never happens</div><div class="gherkin"><span class="g-kw">Feature:</span> the flag budget is never exceeded
+
+  <span class="g-kw">Scenario:</span> planted flags never outnumber the mines
+    <span class="g-kw">Then </span>the planted flags outnumber the mines never happens</div>
+</div></section>
+
+<section><div class="wrap">
+<p class="kicker">The sabotage</p>
+<h2>The bugs planted in the app code</h2>
+<h3>Bug 1 - a lost board is not frozen</h3><pre>  def reveal(self, cell):
+<span class="del">-     if self.status != "playing": return   # frozen after win OR loss</span>
+<span class="add">+     if self.status == "won":     return   # frozen only on a win</span></pre><p>After you hit a mine (status → lost), the freeze guard no longer triggers, so you can keep revealing cells. The monitor catches it live: rule 1 (<em>no reveal after a mine explodes</em>) fires as the post-boom reveals happen.</p><p class="muted"><strong>Policy in play:</strong> 01 - no reveal after explosion &nbsp;·&nbsp; <strong>Trigger:</strong> reveal a mine, then click any other square &nbsp;·&nbsp; <strong>Class:</strong> normal-use</p><h3>Bug 2 - flag budget off-by-one</h3><pre>  def toggle_flag(self, cell):
+<span class="del">-     if len(self.flagged) &gt;= self.mines: return  # budget = mines</span>
+<span class="add">+     if len(self.flagged) &gt;  self.mines: return  # allows one extra</span></pre><p>You can now plant <code>mines + 1</code> flags. The monitor catches it live: rule 3 (<em>flags never outnumber the mines</em>) fires on the 11th flag of a 10-mine board.</p><p class="muted"><strong>Policy in play:</strong> 03 - flags within budget &nbsp;·&nbsp; <strong>Trigger:</strong> flag 10 squares, then flag one more &nbsp;·&nbsp; <strong>Class:</strong> subtle · edge</p>
+</div></section>
+
+<section><div class="wrap">
+<p class="kicker">Detection</p>
+<h2>How the failure surfaced</h2>
+<p class="muted">The same defect through the framework's three independent channels, plus what the blind
+user actually noticed.</p>
+<div class="chan"><div class="ch"><span class="dot d-ok"></span>Channel A - live runtime<span class="st g">catch ×2</span></div><p>Both bugs produced live violations: rule 1 on the reveal-after-boom, rule 3 on the over-budget flag, each with a rendered counterexample. Rule 2 (double-reveal) correctly stayed satisfied.</p></div><div class="chan"><div class="ch"><span class="dot d-pend"></span>Channel B - replay gate<span class="st n">pass · exit 0</span></div><p>The pinned gate passed (92 verdicts / 3 violations) - its scripted corruptions still fire, but they don't exercise the two buggy engine branches, so the count held. The live play, not the gate, is what caught these.</p></div><div class="chan"><div class="ch"><span class="dot d-risk"></span>Channel C - stability contract<span class="st a">risk · exit 1</span></div><p><code>catalog diff --fail-on-app-risk</code> failed from startup, naming the changed emit-path functions (reveal, _flood_reveal, toggle_flag) and the exact at-risk policies.</p></div><div class="chan"><div class="ch"><span class="dot d-ok"></span>The blind user<span class="st g">found 2 / 2 (+1)</span></div><p>Caught both bugs through live play, and additionally found an out-of-coverage bug by eye - reveal() does no bounds-checking, so out-of-range HTTP reveals create phantom cells - correctly noting the shipped policies don't watch it.</p></div>
+<div class="callout"><p><strong>The strongest runtime showing.</strong> Two real game bugs, both caught by live policy verdicts as the user played - the clearest demonstration that an embedded monitor finds real logic bugs, not just contract drift. The one bug outside the rules (bounds-checking) is precisely the kind only a human catches.</p></div>
+</div></section>
+
+<footer><div class="wrap">behave-rv 0.3.1 · demo: minesweeper · <a href="index.html">full experiment report ↗</a></div></footer>

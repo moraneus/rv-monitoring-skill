@@ -1,64 +1,45 @@
-{"type": "game.status", "event_time": 0.1376199722290039, "bindings": {"game_id": "g1"}, "payload": {"state": "started"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 22.805429935455322, "bindings": {"game_id": "g1"}, "payload": {"player": "X", "cell": 0, "prev_player": "none"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 22.81392192840576, "bindings": {"game_id": "g1"}, "payload": {"player": "O", "cell": 3, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 22.82618999481201, "bindings": {"game_id": "g1"}, "payload": {"player": "X", "cell": 1, "prev_player": "O"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 22.842484951019287, "bindings": {"game_id": "g1"}, "payload": {"player": "O", "cell": 4, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 22.85310411453247, "bindings": {"game_id": "g1"}, "payload": {"player": "X", "cell": 2, "prev_player": "O"}, "source": "tictactoe"}
-{"type": "game.status", "event_time": 22.853179216384888, "bindings": {"game_id": "g1"}, "payload": {"state": "won", "winner": "X"}, "source": "tictactoe"}
-{"type": "game.ended", "event_time": 22.865838050842285, "bindings": {"game_id": "g1"}, "payload": {"outcome": "won"}, "source": "tictactoe"}
-{"type": "game.status", "event_time": 22.865916967391968, "bindings": {"game_id": "g2"}, "payload": {"state": "started"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 22.880661010742188, "bindings": {"game_id": "g2"}, "payload": {"player": "X", "cell": 0, "prev_player": "none"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 22.88073182106018, "bindings": {"game_id": "g2"}, "payload": {"player": "X", "cell": 1, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.ended", "event_time": 22.89777898788452, "bindings": {"game_id": "g2"}, "payload": {"outcome": "abandoned"}, "source": "tictactoe"}
-{"type": "game.status", "event_time": 22.89790987968445, "bindings": {"game_id": "g3"}, "payload": {"state": "started"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 22.90767502784729, "bindings": {"game_id": "g3"}, "payload": {"player": "X", "cell": 0, "prev_player": "none"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 22.918988943099976, "bindings": {"game_id": "g3"}, "payload": {"player": "O", "cell": 3, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 22.933840036392212, "bindings": {"game_id": "g3"}, "payload": {"player": "X", "cell": 1, "prev_player": "O"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 22.94207787513733, "bindings": {"game_id": "g3"}, "payload": {"player": "O", "cell": 4, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 22.95058512687683, "bindings": {"game_id": "g3"}, "payload": {"player": "X", "cell": 2, "prev_player": "O"}, "source": "tictactoe"}
-{"type": "game.status", "event_time": 22.950647115707397, "bindings": {"game_id": "g3"}, "payload": {"state": "won", "winner": "X"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 22.966597080230713, "bindings": {"game_id": "g3"}, "payload": {"player": "O", "cell": 5, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.ended", "event_time": 62.34272313117981, "bindings": {"game_id": "g3"}, "payload": {"outcome": "won"}, "source": "tictactoe"}
-{"type": "game.status", "event_time": 62.34312701225281, "bindings": {"game_id": "g4"}, "payload": {"state": "started"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 62.356547117233276, "bindings": {"game_id": "g4"}, "payload": {"player": "X", "cell": 4, "prev_player": "none"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 62.368587017059326, "bindings": {"game_id": "g4"}, "payload": {"player": "O", "cell": 0, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 62.38016891479492, "bindings": {"game_id": "g4"}, "payload": {"player": "X", "cell": 8, "prev_player": "O"}, "source": "tictactoe"}
-{"type": "game.status", "event_time": 0.08170890808105469, "bindings": {"game_id": "g1"}, "payload": {"state": "started"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 2.9837050437927246, "bindings": {"game_id": "g1"}, "payload": {"player": "X", "cell": 0, "prev_player": "none"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 2.9981589317321777, "bindings": {"game_id": "g1"}, "payload": {"player": "O", "cell": 4, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 3.0090479850769043, "bindings": {"game_id": "g2-orphan"}, "payload": {"player": "X", "cell": 0, "prev_player": "none"}, "source": "tictactoe"}
-{"type": "game.ended", "event_time": 19.284828901290894, "bindings": {"game_id": "g1"}, "payload": {"outcome": "abandoned"}, "source": "tictactoe"}
-{"type": "game.status", "event_time": 19.28510093688965, "bindings": {"game_id": "g3"}, "payload": {"state": "started"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 19.29419493675232, "bindings": {"game_id": "g3"}, "payload": {"player": "X", "cell": 4, "prev_player": "none"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 19.303752899169922, "bindings": {"game_id": "g3"}, "payload": {"player": "O", "cell": 0, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 19.311486959457397, "bindings": {"game_id": "g3"}, "payload": {"player": "X", "cell": 8, "prev_player": "O"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 184.67627000808716, "bindings": {"game_id": "g3"}, "payload": {"player": "O", "cell": 3, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 184.70095086097717, "bindings": {"game_id": "g3"}, "payload": {"player": "X", "cell": 1, "prev_player": "O"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 184.72228980064392, "bindings": {"game_id": "g3"}, "payload": {"player": "O", "cell": 2, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.ended", "event_time": 184.73278999328613, "bindings": {"game_id": "g3"}, "payload": {"outcome": "abandoned"}, "source": "tictactoe"}
-{"type": "game.status", "event_time": 184.73286080360413, "bindings": {"game_id": "g4"}, "payload": {"state": "started"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 184.74186992645264, "bindings": {"game_id": "g4"}, "payload": {"player": "X", "cell": 0, "prev_player": "none"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 184.741938829422, "bindings": {"game_id": "g4"}, "payload": {"player": "X", "cell": 1, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 184.75153493881226, "bindings": {"game_id": "g5-orphan"}, "payload": {"player": "X", "cell": 0, "prev_player": "none"}, "source": "tictactoe"}
-{"type": "game.ended", "event_time": 184.76055788993835, "bindings": {"game_id": "g4"}, "payload": {"outcome": "abandoned"}, "source": "tictactoe"}
-{"type": "game.status", "event_time": 184.76062202453613, "bindings": {"game_id": "g6"}, "payload": {"state": "started"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 184.7703788280487, "bindings": {"game_id": "g6"}, "payload": {"player": "X", "cell": 4, "prev_player": "none"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 184.77957391738892, "bindings": {"game_id": "g6"}, "payload": {"player": "O", "cell": 0, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 184.79041290283203, "bindings": {"game_id": "g6"}, "payload": {"player": "X", "cell": 8, "prev_player": "O"}, "source": "tictactoe"}
-{"type": "game.status", "event_time": 0.07916498184204102, "bindings": {"game_id": "g1"}, "payload": {"state": "started"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 2.9277820587158203, "bindings": {"game_id": "g1"}, "payload": {"player": "X", "cell": 0, "prev_player": "none"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 2.941740036010742, "bindings": {"game_id": "g1"}, "payload": {"player": "O", "cell": 3, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 2.9531960487365723, "bindings": {"game_id": "g1"}, "payload": {"player": "X", "cell": 1, "prev_player": "O"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 2.9637792110443115, "bindings": {"game_id": "g1"}, "payload": {"player": "O", "cell": 4, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 2.9734930992126465, "bindings": {"game_id": "g1"}, "payload": {"player": "X", "cell": 2, "prev_player": "O"}, "source": "tictactoe"}
-{"type": "game.status", "event_time": 2.9735519886016846, "bindings": {"game_id": "g1"}, "payload": {"state": "won", "winner": "X"}, "source": "tictactoe"}
-{"type": "game.ended", "event_time": 2.982131004333496, "bindings": {"game_id": "g1"}, "payload": {"outcome": "won"}, "source": "tictactoe"}
-{"type": "game.status", "event_time": 2.982192039489746, "bindings": {"game_id": "g2"}, "payload": {"state": "started"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 2.990561008453369, "bindings": {"game_id": "g2"}, "payload": {"player": "X", "cell": 0, "prev_player": "none"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 2.990618944168091, "bindings": {"game_id": "g2"}, "payload": {"player": "X", "cell": 1, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 2.9984450340270996, "bindings": {"game_id": "g3-orphan"}, "payload": {"player": "X", "cell": 0, "prev_player": "none"}, "source": "tictactoe"}
-{"type": "game.ended", "event_time": 3.006333112716675, "bindings": {"game_id": "g2"}, "payload": {"outcome": "abandoned"}, "source": "tictactoe"}
-{"type": "game.status", "event_time": 3.0063822269439697, "bindings": {"game_id": "g4"}, "payload": {"state": "started"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 3.0141961574554443, "bindings": {"game_id": "g4"}, "payload": {"player": "X", "cell": 4, "prev_player": "none"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 3.0218162536621094, "bindings": {"game_id": "g4"}, "payload": {"player": "O", "cell": 0, "prev_player": "X"}, "source": "tictactoe"}
-{"type": "game.move", "event_time": 3.029608964920044, "bindings": {"game_id": "g4"}, "payload": {"player": "X", "cell": 8, "prev_player": "O"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 2.9664578437805176, "bindings": {"game_id": "game-1"}, "payload": {"status": "started"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 2.9755449295043945, "bindings": {"game_id": "game-1"}, "payload": {"status": "move", "player": "X", "cell": "0", "prev_player": "none", "after_finish": "no", "move_number": "1"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 2.8786709308624268, "bindings": {"game_id": "game-1"}, "payload": {"status": "started"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 2.8962440490722656, "bindings": {"game_id": "game-1"}, "payload": {"status": "move", "player": "X", "cell": "0", "prev_player": "none", "after_finish": "no", "move_number": "1"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 3.0703718662261963, "bindings": {"game_id": "game-1"}, "payload": {"status": "move", "player": "O", "cell": "3", "prev_player": "X", "after_finish": "no", "move_number": "2"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 3.254499912261963, "bindings": {"game_id": "game-1"}, "payload": {"status": "move", "player": "X", "cell": "1", "prev_player": "O", "after_finish": "no", "move_number": "3"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 3.4264938831329346, "bindings": {"game_id": "game-1"}, "payload": {"status": "move", "player": "O", "cell": "4", "prev_player": "X", "after_finish": "no", "move_number": "4"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 3.5988547801971436, "bindings": {"game_id": "game-1"}, "payload": {"status": "move", "player": "X", "cell": "2", "prev_player": "O", "after_finish": "no", "move_number": "5"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 3.598923683166504, "bindings": {"game_id": "game-1"}, "payload": {"status": "won", "winner": "X"}, "source": "tictactoe"}
+{"type": "game.over", "event_time": 3.598972797393799, "bindings": {"game_id": "game-1"}, "payload": {"outcome": "won"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 3.7744688987731934, "bindings": {"game_id": "game-2"}, "payload": {"status": "started"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 3.7942757606506348, "bindings": {"game_id": "game-2"}, "payload": {"status": "move", "player": "X", "cell": "4", "prev_player": "none", "after_finish": "no", "move_number": "1"}, "source": "tictactoe"}
+{"type": "game.over", "event_time": 3.967071056365967, "bindings": {"game_id": "game-2"}, "payload": {"outcome": "abandoned"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 3.9673879146575928, "bindings": {"game_id": "game-3"}, "payload": {"status": "started"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 12.981778860092163, "bindings": {"game_id": "game-1"}, "payload": {"status": "started"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 33.127992153167725, "bindings": {"game_id": "game-1"}, "payload": {"status": "started"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 57.72141909599304, "bindings": {"game_id": "game-1"}, "payload": {"status": "move", "player": "X", "cell": "0", "prev_player": "none", "after_finish": "no", "move_number": "1"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 66.92477607727051, "bindings": {"game_id": "game-1"}, "payload": {"status": "move", "player": "O", "cell": "3", "prev_player": "X", "after_finish": "no", "move_number": "2"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 77.04112505912781, "bindings": {"game_id": "game-1"}, "payload": {"status": "move", "player": "X", "cell": "1", "prev_player": "O", "after_finish": "no", "move_number": "3"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 85.82587718963623, "bindings": {"game_id": "game-1"}, "payload": {"status": "move", "player": "O", "cell": "4", "prev_player": "X", "after_finish": "no", "move_number": "4"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 89.79130101203918, "bindings": {"game_id": "game-1"}, "payload": {"status": "move", "player": "X", "cell": "2", "prev_player": "O", "after_finish": "no", "move_number": "5"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 89.7924861907959, "bindings": {"game_id": "game-1"}, "payload": {"status": "won", "winner": "X"}, "source": "tictactoe"}
+{"type": "game.over", "event_time": 89.79263401031494, "bindings": {"game_id": "game-1"}, "payload": {"outcome": "won"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 133.05861806869507, "bindings": {"game_id": "game-2"}, "payload": {"status": "started"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 137.12182021141052, "bindings": {"game_id": "game-2"}, "payload": {"status": "move", "player": "X", "cell": "4", "prev_player": "none", "after_finish": "no", "move_number": "1"}, "source": "tictactoe"}
+{"type": "game.over", "event_time": 140.92698216438293, "bindings": {"game_id": "game-2"}, "payload": {"outcome": "abandoned"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 140.92734003067017, "bindings": {"game_id": "game-3"}, "payload": {"status": "started"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 13.432436227798462, "bindings": {"game_id": "game-1"}, "payload": {"status": "started"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 13.442750215530396, "bindings": {"game_id": "game-1"}, "payload": {"status": "move", "player": "X", "cell": "0", "prev_player": "none", "after_finish": "no", "move_number": "1"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 13.45351505279541, "bindings": {"game_id": "game-1"}, "payload": {"status": "move", "player": "X", "cell": "1", "prev_player": "X", "after_finish": "no", "move_number": "2"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 13.463763952255249, "bindings": {"game_id": "game-1"}, "payload": {"status": "move", "player": "X", "cell": "3", "prev_player": "X", "after_finish": "no", "move_number": "3"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 55.68339514732361, "bindings": {"game_id": "game-1"}, "payload": {"status": "move", "player": "X", "cell": "2", "prev_player": "X", "after_finish": "no", "move_number": "4"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 55.68387722969055, "bindings": {"game_id": "game-1"}, "payload": {"status": "won", "winner": "X"}, "source": "tictactoe"}
+{"type": "game.over", "event_time": 55.68401527404785, "bindings": {"game_id": "game-1"}, "payload": {"outcome": "won"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 67.97627711296082, "bindings": {"game_id": "game-2"}, "payload": {"status": "started"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 67.98552703857422, "bindings": {"game_id": "game-2"}, "payload": {"status": "move", "player": "X", "cell": "4", "prev_player": "none", "after_finish": "no", "move_number": "1"}, "source": "tictactoe"}
+{"type": "game.over", "event_time": 67.99433422088623, "bindings": {"game_id": "game-2"}, "payload": {"outcome": "abandoned"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 67.99438810348511, "bindings": {"game_id": "game-3"}, "payload": {"status": "started"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 96.66688108444214, "bindings": {"game_id": "game-3"}, "payload": {"status": "move", "player": "X", "cell": "0", "prev_player": "none", "after_finish": "no", "move_number": "1"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 96.68301010131836, "bindings": {"game_id": "game-3"}, "payload": {"status": "move", "player": "X", "cell": "3", "prev_player": "X", "after_finish": "no", "move_number": "2"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 96.69205141067505, "bindings": {"game_id": "game-3"}, "payload": {"status": "move", "player": "X", "cell": "6", "prev_player": "X", "after_finish": "no", "move_number": "3"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 96.69211912155151, "bindings": {"game_id": "game-3"}, "payload": {"status": "won", "winner": "X"}, "source": "tictactoe"}
+{"type": "game.over", "event_time": 96.69213819503784, "bindings": {"game_id": "game-3"}, "payload": {"outcome": "won"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 171.61535716056824, "bindings": {"game_id": "game-4"}, "payload": {"status": "started"}, "source": "tictactoe"}
+{"type": "game.status", "event_time": 171.63237309455872, "bindings": {"game_id": "game-4"}, "payload": {"status": "move", "player": "X", "cell": "0", "prev_player": "none", "after_finish": "no", "move_number": "1"}, "source": "tictactoe"}

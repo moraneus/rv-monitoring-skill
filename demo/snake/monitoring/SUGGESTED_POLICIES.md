@@ -1,48 +1,42 @@
 # Suggested policies (proposals - you decide)
 
-These are drafts *I* thought of from the monitorable surface. They are NOT
-active. Move any you want into `monitoring/policies/` yourself, then rerun the
-gates. Each compiles against the current registry.
+These are drafts *I* thought of. They are not active. Move any you want into
+`monitoring/policies/` and re-run the gates; leave the rest here. Each below
+compiles against the current vocabulary and produces zero violations on the
+healthy scripted flows.
 
-Your requested rules are live in `monitoring/policies/`:
-`01_no_activity_after_game_over.feature` (rule 1, split into two scenarios -
-moves and points - because a policy has one obligation each),
-`02_food_growth_within_2s.feature` (rule 2),
-`03_no_reversal_accepted.feature` (rule 3), and
-`04_start_precedes_activity.feature` (promoted 2026-07-25 from the suggestion
-below; you extended its intent to cover scoring as well as moving, so it went
-in as two `before` scenarios).
+## 2026-07-25: growth must be earned
 
----
-
-## 2026-07-25: every point scored comes from eating food
-
-**Observes:** `game.score`, `snake.food` / key `game_id`
-**Why:** score should only ever move at a food event. A `game.score` whose
-immediate predecessor is not a food event means points appeared from somewhere
-other than eating - the exact shape of the injected `zombie` corruption.
+**Observes:** `game.grow`, `game.food` (key `game_id`)
+**Why:** The snake should only ever grow as a result of eating. A growth with
+no preceding point would mean length is being handed out for free - the mirror
+image of rule 2 (which catches food that fails to grow).
 
 ```gherkin
-Feature: points are earned only by eating
+Feature: growth is always earned
 
-  Scenario: a score is immediately preceded by eating food
-    When points are scored
-    Then the snake eats food previously
+  Scenario: the snake only grows after scoring a point
+    When the snake grows
+    Then a point is scored before
 ```
 
-## 2026-07-25: a game that starts eventually ends
+Note: `before` is decided once, at the first growth, and settles. It proves
+"growth was earned at least once", not "every growth was earned". A
+per-growth version would need history stamping (stamp each `game.grow` with the
+score at that moment and write a self-contained `never` over it) - say the word
+and I will add the emission and the step.
 
-**Observes:** `game.status` (started / over) / key `game_id`
-**Why:** surfaces games that never reach `over` - a snake stuck in a tick loop
-that never dies. NOTE: this needs a terminal event to ever produce a
-*violated* verdict; with `game.over` deliberately non-terminal (see the report)
-it stays `pending` until the game ends and only ever reads satisfied. Offered
-mainly to make the "no terminal" trade-off concrete - accept only if you also
-want to add a terminal event, which would re-open the rule-1 false-green risk.
+## 2026-07-25: points come from play
+
+**Observes:** `game.food`, `game.move` (key `game_id`)
+**Why:** A point should only be scored during actual play, i.e. after the snake
+has moved at least once. A score before any move suggests a phantom point
+injected outside the game loop.
 
 ```gherkin
-Feature: games terminate
+Feature: points come from play
 
-  Scenario: a started game eventually ends
-    Then a game is "over" has happened
+  Scenario: a point is only scored after the snake has moved
+    When a point is scored
+    Then the snake moves before
 ```

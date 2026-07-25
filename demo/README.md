@@ -1,133 +1,55 @@
-# Demos: projects built end-to-end by agents using this skill
+# Example projects
 
-Every project under this directory was written entirely by a coding agent
-following the rv skill, against behave-rv 0.3.0 from PyPI - requirements
-to policies, instrumentation, gates, dashboard, everything. Each
-directory's `PROMPTS.md` holds the exact human prompts that produced it,
-turn by turn, with what happened at each turn; nothing was hand-edited
-afterwards, and a separate session independently re-ran every gate (and
-hash-checked catalogs where the story depends on nothing having been
-regenerated). Together they are the skill's acceptance suite: CI runs
-every demo's replay and catalog gates against the published behave-rv on
-each push.
+Ten small applications built with the rv skill, each shipping with its own
+behave-rv runtime monitor and a live dashboard. They are here to be read and
+run: every one has its monitored policies in `monitoring/policies/`, its
+instrumentation in `app/`, a committed two-sided contract in
+`monitoring/catalog.json`, and a deterministic replay gate. CI runs each
+demo's gates against the published `behave-rv` on every push.
 
-Each demo was designed to test a different part of the skill:
+## Five services
 
-## lending - the full development loop and the break protocol
+| Demo | What it monitors |
+|---|---|
+| **lending** | a library lending service - loans borrowed, renewed, returned, or reported lost |
+| **parcels** | a pre-existing parcel tracker, made monitorable without changing its behaviour |
+| **bookings** | a fitness-studio class-bookings flow, designed through the `/rv` interview |
+| **devices** | an IoT fleet tracker - device lifecycles plus independent sensor feeds |
+| **payments** | a payment tracker - authorize, capture, dispute, refund, close |
 
-A library lending service built over five turns: the user's stated rules
-transcribed as policies, the agent's proposals adopted only on the user's
-word, a cross-entity fines rule brought in-fragment by key projection and
-shipped as an intended contract change with the pre-save diff quoted, and
-an adversarial "no behaviour change" cleanup with a split outcome that
-shows the contract machinery at its best: a pure rename of an emitting
-function absorbed silently (proven by the 0.3.0 rename-invariant
-fingerprint), while an extract-method refactor in the same request - which
-the agent itself had proven behaviourally identical by replay - was
-STOPPED, reverted, and held for the user, because a "no behaviour change"
-request makes any flagged risk unintended by definition. The catalog was
-never regenerated to silence a signal (verified by hash); the extraction
-landed only on the user's explicit go. Replay pinned at 36 verdicts,
-5 violations.
+## Five browser games
 
-## parcels - brownfield instrumentation and the alias flow
+Each game serves its own inline HTML/JS UI (standard library only) and runs
+its monitor alongside, with in-browser buttons to inject a corrupted event
+so you can watch a policy card turn red live.
 
-The application existed BEFORE monitoring: the agent had to make it
-monitorable without changing its behaviour (verified: legacy callers run
-identically). It surfaced the conflict between "delivered parcels are
-finished" and "never re-route after delivery" - a hard engine terminal
-would have blinded the rule it was meant to serve - and chose TTL
-reclamation. The recorder is wired with the service clock, so the recorded
-live session replays ALL its violations, including the 12-second deadline
-that fired on the wall clock after the last event (the clock-horizon
-marker at work). Turn two reworded the vocabulary with the old phrasing
-kept as an alias: the user's policy files untouched, the diff reporting
-`renamed`, not a break. Replay pinned at 15 verdicts, 3 violations.
+| Demo | What it monitors |
+|---|---|
+| **snake** | no play after game-over; food is followed by growth; no 180° reversal |
+| **blackjack** | no card after a stand; a bust never wins; payout only after settlement; a loser is never paid |
+| **minesweeper** | no reveal after a mine explodes; no cell revealed twice; flags never outnumber mines |
+| **tictactoe** | strict turn alternation; no move after the game is decided; every game finishes |
+| **memory** | a matched card is never re-flipped; an attempt resolves within 3 seconds; nothing after completion |
 
-## bookings - the /rv interactive consultation
-
-From `/rv` to a running monitor in three turns: a single-pass interview in
-plain words with the per-entity ground rule stated upfront, honest triage
-of the user's wishes - the unpaid-balance rule brought in-fragment by key
-projection onto the member (an interval-scoped never with the extra event
-surface flagged for veto), the two counting wishes refused ("not faking
-it") with a partial composite-key echo offered as a suggestion - then a
-written plan ending in exactly two decisions, and not one file on disk
-until the user said go (verified at every stage). Six user-owned policies
-including a deliberately unbounded "still waiting" eventuality the plan
-explained honestly. Replay pinned at 43 verdicts, 5 violations.
-
-## devices - operator coverage, the honest refusal, and the policy repair
-
-An IoT fleet tracker whose rules exercise five temporal forms, with
-`since` chosen natively for the from-that-moment-on rule. Turn two is the
-hardest guardrail test: a direct order to add an aggregate rule ("alert
-when more than 3 devices are quarantined at once") - refused with the
-refusal verified against the compiler, nothing touched, and an honest
-app-counts/engine-alerts approximation proposed with its caveats stated,
-including the easy-to-miss one: the singleton alert is single-shot. The
-user accepted, and the addition went through the intended-change protocol.
-Then the demo's most instructive stretch: the user discovered that rules 2
-and 3 as transcribed were JOINTLY unsatisfiable - the literal "nothing but
-blocked rejections after quarantine" forbade the very wipe that
-"every retired device was wiped first" requires, leaving no legal
-decommission path. The agent ran the committed monitor over the flows,
-confirmed the contradiction with deciding events, laid out four options
-(explicitly advising against hiding events from the monitor), and repaired
-rule 2 only on the user's word - after which quarantine -> wipe -> retire
-goes green while every attacker case still violates. This finding is why
-the skill now requires a joint-satisfiability check on transcribed rules.
-Replay pinned at 33 verdicts, 5 violations.
-
-## The game demos: software born monitorable, with a UI
-
-Five browser games, each built by an agent from a single user request,
-each shipping with its own live RV dashboard and in-browser
-cheat-injection buttons so violations are watchable as they happen.
-Stdlib-only; every game serves its own inline HTML/JS UI. Beyond being
-playable, each one earned its keep by exercising a different edge of the
-fragment:
-
-- **snake** (game :8801, monitor :7101) - the no-terminal false-green
-  trap answered at build time; the 180-degree-turn rule done
-  classify-not-enumerate via a stamped boolean. 4 policies, replay 28/6.
-- **blackjack** (:8802/:7102) - player-scoped rules (dealer draws after a
-  stand are the game, not a violation); the agent refused to ship an
-  "at most once" rule whose naive transcription misfires on every honest
-  settlement, and the accepted re-occurrence marker proved that a
-  self-contained never has no terminal blind spot. 5 policies, replay
-  38/6.
-- **minesweeper** (:8803/:7103) - per-cell composite keys; the
-  at-most-once reveal solved with an action/state split; the
-  flags-vs-mines counting wish projected honestly through payload-stamped
-  counts. 4 policies, replay 124/4.
-- **tictactoe** (:8804/:7104) - the build that discovered triggered forms
-  arm once per entity, and invented history stamping (a `prev_player`
-  field plus a self-contained never) so alternation is checked at every
-  move. 4 policies, replay 23/5.
-- **memory** (:8805/:7105) - three entity kinds with disciplined keys
-  (cards on composite keys, attempts deliberately unkeyed from games);
-  the grace-vs-deadline interaction that produced the cheatsheet's
-  fast-stream guidance. 4 policies, replay 137/4.
-
-Each game's `PROMPTS.md` holds its verbatim prompts and what happened.
-Start any of them with `python app/server.py`, `python server.py`,
-`python run_live.py`, or `python live_monitor.py` (each README says
-which), then open the game and monitor URLs it prints.
-
-## Running any demo
+## Running a demo
 
 ```bash
-pip install behave-rv        # >= 0.3.0, Python 3.10+
+pip install behave-rv        # >= 0.3.1, Python 3.10+
 cd demo/<name>
-python demo.py               # lending, parcels, devices
+
+# services: drive the live dashboard
+python demo.py               # lending, parcels, devices, payments
 python live_monitor.py       # bookings
+
+# games: serve the browser game + its dashboard
+python demo.py               # snake, blackjack, minesweeper, tictactoe
+python server.py             # memory
 ```
 
-The live dashboard opens at http://127.0.0.1:7007: every policy as a card
-with per-entity verdicts, violations rendered as the authored scenario
-with the failing step marked, the live event feed, and the two-sided
-stability strip. The deterministic gates, per demo:
+The live dashboard shows every policy as a card with its per-entity verdicts,
+the authored scenario replayed with the failing step marked for each
+violation, a live event feed, and a strip showing whether the running code
+still matches the committed contract. The deterministic gates each demo ships:
 
 ```bash
 python monitoring/replay_check.py
@@ -136,3 +58,10 @@ python -m behave_rv catalog diff \
   --policies monitoring/policies --app app/<service>.py \
   --fail-on-app-risk --trace monitoring/traces/<trace>.jsonl
 ```
+
+## See the monitor find real bugs
+
+The [`experiment/`](../experiment/index.html) folder is an offline report
+that takes these ten apps, plants realistic bugs in their code, and shows,
+demo by demo, exactly how the runtime monitor did or did not catch each one.
+Open `experiment/index.html` in a browser.

@@ -1,0 +1,435 @@
+{
+  "app_surface": [
+    {
+      "binding_keys": [
+        "payment_id"
+      ],
+      "event_type": "payment.rejected",
+      "function": "PaymentService.attempt_customer_action",
+      "module": "service",
+      "payload_fields": [
+        "action",
+        "reason"
+      ],
+      "referenced_constants": {
+        "service.REJECTED_EVENT": "'payment.rejected'",
+        "service.SOURCE": "'payment-service'"
+      },
+      "rename_fingerprint": "6246a621910b1a17",
+      "site_id": "service.PaymentService.attempt_customer_action#1",
+      "slice_fingerprint": "6246a621910b1a17",
+      "slice_functions": {
+        "service.PaymentService.__init__": "5ffc51c5d807e3d4",
+        "service.PaymentService.attempt_customer_action": "4c9204bbf151b8c1"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "payment_id"
+      ],
+      "event_type": "payment.status",
+      "function": "PaymentService.authorize",
+      "module": "service",
+      "payload_fields": [
+        "status"
+      ],
+      "referenced_constants": {
+        "service.SOURCE": "'payment-service'",
+        "service.STATUS_EVENT": "'payment.status'"
+      },
+      "rename_fingerprint": "2bc88acbbe71f659",
+      "site_id": "service.PaymentService.authorize#1",
+      "slice_fingerprint": "2bc88acbbe71f659",
+      "slice_functions": {
+        "service.PaymentService.__init__": "5ffc51c5d807e3d4",
+        "service.PaymentService.authorize": "88b7da3495340d07"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "payment_id"
+      ],
+      "event_type": "payment.status",
+      "function": "PaymentService.capture",
+      "module": "service",
+      "payload_fields": [
+        "status"
+      ],
+      "referenced_constants": {
+        "service.SOURCE": "'payment-service'",
+        "service.STATUS_EVENT": "'payment.status'"
+      },
+      "rename_fingerprint": "fa931288161a7fd4",
+      "site_id": "service.PaymentService.capture#1",
+      "slice_fingerprint": "fa931288161a7fd4",
+      "slice_functions": {
+        "service.PaymentService.__init__": "5ffc51c5d807e3d4",
+        "service.PaymentService.capture": "4a9c26a977bb8d00"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "payment_id"
+      ],
+      "event_type": "payment.status",
+      "function": "PaymentService.close",
+      "module": "service",
+      "payload_fields": [
+        "status"
+      ],
+      "referenced_constants": {
+        "service.CLOSED_TERMINAL": "'payment.closed'",
+        "service.DISPUTE_CLOSED_EVENT": "'payment.dispute_closed'",
+        "service.SOURCE": "'payment-service'",
+        "service.STATUS_EVENT": "'payment.status'",
+        "service._STEP": "0.001"
+      },
+      "rename_fingerprint": "d2651374f8a84457",
+      "site_id": "service.PaymentService.close#1",
+      "slice_fingerprint": "d2651374f8a84457",
+      "slice_functions": {
+        "service.PaymentService.__init__": "5ffc51c5d807e3d4",
+        "service.PaymentService.close": "c561402bfc5f7bbe"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "payment_id"
+      ],
+      "event_type": "payment.dispute_closed",
+      "function": "PaymentService.close",
+      "module": "service",
+      "payload_fields": [],
+      "referenced_constants": {
+        "service.CLOSED_TERMINAL": "'payment.closed'",
+        "service.DISPUTE_CLOSED_EVENT": "'payment.dispute_closed'",
+        "service.SOURCE": "'payment-service'",
+        "service.STATUS_EVENT": "'payment.status'",
+        "service._STEP": "0.001"
+      },
+      "rename_fingerprint": "d2651374f8a84457",
+      "site_id": "service.PaymentService.close#2",
+      "slice_fingerprint": "d2651374f8a84457",
+      "slice_functions": {
+        "service.PaymentService.__init__": "5ffc51c5d807e3d4",
+        "service.PaymentService.close": "c561402bfc5f7bbe"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "payment_id"
+      ],
+      "event_type": "payment.closed",
+      "function": "PaymentService.close",
+      "module": "service",
+      "payload_fields": [],
+      "referenced_constants": {
+        "service.CLOSED_TERMINAL": "'payment.closed'",
+        "service.DISPUTE_CLOSED_EVENT": "'payment.dispute_closed'",
+        "service.SOURCE": "'payment-service'",
+        "service.STATUS_EVENT": "'payment.status'",
+        "service._STEP": "0.001"
+      },
+      "rename_fingerprint": "d2651374f8a84457",
+      "site_id": "service.PaymentService.close#3",
+      "slice_fingerprint": "d2651374f8a84457",
+      "slice_functions": {
+        "service.PaymentService.__init__": "5ffc51c5d807e3d4",
+        "service.PaymentService.close": "c561402bfc5f7bbe"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "payment_id"
+      ],
+      "event_type": "payment.status",
+      "function": "PaymentService.dispute",
+      "module": "service",
+      "payload_fields": [
+        "status"
+      ],
+      "referenced_constants": {
+        "service.FROZEN_EVENT": "'payment.frozen'",
+        "service.SOURCE": "'payment-service'",
+        "service.STATUS_EVENT": "'payment.status'",
+        "service._STEP": "0.001"
+      },
+      "rename_fingerprint": "4513958cbea89cb4",
+      "site_id": "service.PaymentService.dispute#1",
+      "slice_fingerprint": "4513958cbea89cb4",
+      "slice_functions": {
+        "service.PaymentService.__init__": "5ffc51c5d807e3d4",
+        "service.PaymentService.dispute": "a82028a42a7ab46c"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit",
+        "self._frozen.add"
+      ]
+    },
+    {
+      "binding_keys": [
+        "payment_id"
+      ],
+      "event_type": "payment.frozen",
+      "function": "PaymentService.dispute",
+      "module": "service",
+      "payload_fields": [],
+      "referenced_constants": {
+        "service.FROZEN_EVENT": "'payment.frozen'",
+        "service.SOURCE": "'payment-service'",
+        "service.STATUS_EVENT": "'payment.status'",
+        "service._STEP": "0.001"
+      },
+      "rename_fingerprint": "4513958cbea89cb4",
+      "site_id": "service.PaymentService.dispute#2",
+      "slice_fingerprint": "4513958cbea89cb4",
+      "slice_functions": {
+        "service.PaymentService.__init__": "5ffc51c5d807e3d4",
+        "service.PaymentService.dispute": "a82028a42a7ab46c"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit",
+        "self._frozen.add"
+      ]
+    },
+    {
+      "binding_keys": [
+        "payment_id"
+      ],
+      "event_type": "payment.status",
+      "function": "PaymentService.investigate",
+      "module": "service",
+      "payload_fields": [
+        "status"
+      ],
+      "referenced_constants": {
+        "service.SOURCE": "'payment-service'",
+        "service.STATUS_EVENT": "'payment.status'"
+      },
+      "rename_fingerprint": "b131c5ea4216bac9",
+      "site_id": "service.PaymentService.investigate#1",
+      "slice_fingerprint": "b131c5ea4216bac9",
+      "slice_functions": {
+        "service.PaymentService.__init__": "5ffc51c5d807e3d4",
+        "service.PaymentService.investigate": "f87f782265914dce"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    },
+    {
+      "binding_keys": [
+        "payment_id"
+      ],
+      "event_type": "payment.status",
+      "function": "PaymentService.refund",
+      "module": "service",
+      "payload_fields": [
+        "status"
+      ],
+      "referenced_constants": {
+        "service.SOURCE": "'payment-service'",
+        "service.STATUS_EVENT": "'payment.status'"
+      },
+      "rename_fingerprint": "117da535a03f7e6b",
+      "site_id": "service.PaymentService.refund#1",
+      "slice_fingerprint": "117da535a03f7e6b",
+      "slice_functions": {
+        "service.PaymentService.__init__": "5ffc51c5d807e3d4",
+        "service.PaymentService.refund": "b4460bd6d2b44d86"
+      },
+      "unresolved_calls": [
+        "self._clock",
+        "self._emit"
+      ]
+    }
+  ],
+  "catalog_format_version": 3,
+  "entries": [
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a payment is \"{status}\"",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "c59f07935a2dd33d",
+        "correlation_key": [
+          "payment_id"
+        ],
+        "event_type": "payment.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "status": "any"
+        },
+        "referenced_fields": [
+          "status"
+        ],
+        "trigger_condition": "a payment is \"{status}\"",
+        "unresolved_calls": [
+          "get"
+        ]
+      },
+      "step_id": "payment.status.is",
+      "version": 1
+    },
+    {
+      "kind": "obligation",
+      "observed": false,
+      "phrasing": "a payment changes status",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "5c32bc920a211a12",
+        "correlation_key": [
+          "payment_id"
+        ],
+        "event_type": "payment.status",
+        "helper_hashes": {},
+        "payload_fields": {},
+        "referenced_fields": [],
+        "trigger_condition": "a payment changes status",
+        "unresolved_calls": []
+      },
+      "step_id": "payment.status.any",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a payment is disputed or closed",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "874cb31cb9ba0de7",
+        "correlation_key": [
+          "payment_id"
+        ],
+        "event_type": "payment.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "status": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "a payment is disputed or closed",
+        "unresolved_calls": [
+          "get"
+        ]
+      },
+      "step_id": "payment.status.resolved",
+      "version": 1
+    },
+    {
+      "kind": "obligation",
+      "observed": false,
+      "phrasing": "a payment is authorized or captured",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "874cb31cb9ba0de7",
+        "correlation_key": [
+          "payment_id"
+        ],
+        "event_type": "payment.status",
+        "helper_hashes": {},
+        "payload_fields": {
+          "status": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "a payment is authorized or captured",
+        "unresolved_calls": [
+          "get"
+        ]
+      },
+      "step_id": "payment.status.charge",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a disputed payment closes",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "cac89de9c5ef4f6c",
+        "correlation_key": [
+          "payment_id"
+        ],
+        "event_type": "payment.dispute_closed",
+        "helper_hashes": {},
+        "payload_fields": {},
+        "referenced_fields": [],
+        "trigger_condition": "a disputed payment closes",
+        "unresolved_calls": []
+      },
+      "step_id": "payment.dispute_closed.is",
+      "version": 1
+    },
+    {
+      "kind": "scope",
+      "observed": false,
+      "phrasing": "a payment becomes frozen",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "e79054930f6586b2",
+        "correlation_key": [
+          "payment_id"
+        ],
+        "event_type": "payment.frozen",
+        "helper_hashes": {},
+        "payload_fields": {},
+        "referenced_fields": [],
+        "trigger_condition": "a payment becomes frozen",
+        "unresolved_calls": []
+      },
+      "step_id": "payment.frozen.mark",
+      "version": 1
+    },
+    {
+      "kind": "trigger",
+      "observed": false,
+      "phrasing": "a payment is frozen-rejected",
+      "provenance": "llm",
+      "signature": {
+        "condition_fingerprint": "4ce460426d787396",
+        "correlation_key": [
+          "payment_id"
+        ],
+        "event_type": "payment.rejected",
+        "helper_hashes": {},
+        "payload_fields": {
+          "reason": "any"
+        },
+        "referenced_fields": [],
+        "trigger_condition": "a payment is frozen-rejected",
+        "unresolved_calls": [
+          "get"
+        ]
+      },
+      "step_id": "payment.rejected.frozen",
+      "version": 1
+    }
+  ]
+}

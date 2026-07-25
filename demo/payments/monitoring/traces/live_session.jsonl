@@ -1,0 +1,87 @@
+{"type": "payment.status", "event_time": 0.020530223846435547, "bindings": {"payment_id": "P-3003"}, "payload": {"status": "authorized"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 0.4306640625, "bindings": {"payment_id": "P-3003"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 0.8382761478424072, "bindings": {"payment_id": "P-1001"}, "payload": {"status": "authorized"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 1.2415611743927002, "bindings": {"payment_id": "P-1001"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 1.6517901420593262, "bindings": {"payment_id": "P-1001"}, "payload": {"status": "closed"}, "source": "payment-service"}
+{"type": "payment.closed", "event_time": 1.652790142059326, "bindings": {"payment_id": "P-1001"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 2.062061071395874, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "authorized"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 2.4721720218658447, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 2.8823561668395996, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "disputed"}, "source": "payment-service"}
+{"type": "payment.frozen", "event_time": 2.8833561668395995, "bindings": {"payment_id": "P-2002"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.rejected", "event_time": 3.2906880378723145, "bindings": {"payment_id": "P-2002"}, "payload": {"reason": "frozen", "action": "recapture"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 3.7008261680603027, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "investigated"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 4.101408004760742, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "refunded"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 4.512042999267578, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "closed"}, "source": "payment-service"}
+{"type": "payment.dispute_closed", "event_time": 4.5130429992675785, "bindings": {"payment_id": "P-2002"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.closed", "event_time": 4.514042999267578, "bindings": {"payment_id": "P-2002"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 4.913678169250488, "bindings": {"payment_id": "P-4004"}, "payload": {"status": "authorized"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 5.324115037918091, "bindings": {"payment_id": "P-4004"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 5.730337142944336, "bindings": {"payment_id": "P-4004"}, "payload": {"status": "disputed"}, "source": "payment-service"}
+{"type": "payment.frozen", "event_time": 5.731337142944336, "bindings": {"payment_id": "P-4004"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 6.1360602378845215, "bindings": {"payment_id": "P-4004"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 6.545912265777588, "bindings": {"payment_id": "P-5005"}, "payload": {"status": "authorized"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 6.95627498626709, "bindings": {"payment_id": "P-5005"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 7.365616321563721, "bindings": {"payment_id": "P-5005"}, "payload": {"status": "disputed"}, "source": "payment-service"}
+{"type": "payment.frozen", "event_time": 7.366616321563721, "bindings": {"payment_id": "P-5005"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 7.775098085403442, "bindings": {"payment_id": "P-5005"}, "payload": {"status": "closed"}, "source": "payment-service"}
+{"type": "payment.dispute_closed", "event_time": 7.776098085403443, "bindings": {"payment_id": "P-5005"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.closed", "event_time": 7.777098085403442, "bindings": {"payment_id": "P-5005"}, "payload": {}, "source": "payment-service"}
+{"type": "behave_rv.clock", "event_time": 23.379019021987915, "bindings": {}, "payload": {}, "source": "clock"}
+{"type": "payment.status", "event_time": 0.024217844009399414, "bindings": {"payment_id": "P-3003"}, "payload": {"status": "authorized"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 0.42478370666503906, "bindings": {"payment_id": "P-3003"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 0.8349828720092773, "bindings": {"payment_id": "P-1001"}, "payload": {"status": "authorized"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 1.245133638381958, "bindings": {"payment_id": "P-1001"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 1.6532108783721924, "bindings": {"payment_id": "P-1001"}, "payload": {"status": "closed"}, "source": "payment-service"}
+{"type": "payment.closed", "event_time": 1.6542108783721923, "bindings": {"payment_id": "P-1001"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 2.0547568798065186, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "authorized"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 2.4648818969726562, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 2.8734419345855713, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "disputed"}, "source": "payment-service"}
+{"type": "payment.frozen", "event_time": 2.874441934585571, "bindings": {"payment_id": "P-2002"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.rejected", "event_time": 3.2837488651275635, "bindings": {"payment_id": "P-2002"}, "payload": {"reason": "declined", "action": "recapture"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 3.6938698291778564, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "investigated"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 4.097103834152222, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "refund"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 4.5036139488220215, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "closed"}, "source": "payment-service"}
+{"type": "payment.dispute_closed", "event_time": 4.504613948822022, "bindings": {"payment_id": "P-2002"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.closed", "event_time": 4.505613948822021, "bindings": {"payment_id": "P-2002"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 4.913959741592407, "bindings": {"payment_id": "P-4004"}, "payload": {"status": "authorized"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 5.3227698802948, "bindings": {"payment_id": "P-4004"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 5.723622798919678, "bindings": {"payment_id": "P-4004"}, "payload": {"status": "disputed"}, "source": "payment-service"}
+{"type": "payment.frozen", "event_time": 5.724622798919678, "bindings": {"payment_id": "P-4004"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 6.125342845916748, "bindings": {"payment_id": "P-4004"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 6.534618854522705, "bindings": {"payment_id": "P-5005"}, "payload": {"status": "authorized"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 6.935089826583862, "bindings": {"payment_id": "P-5005"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 7.338665962219238, "bindings": {"payment_id": "P-5005"}, "payload": {"status": "disputed"}, "source": "payment-service"}
+{"type": "payment.frozen", "event_time": 7.339665962219239, "bindings": {"payment_id": "P-5005"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 7.740664005279541, "bindings": {"payment_id": "P-5005"}, "payload": {"status": "closed"}, "source": "payment-service"}
+{"type": "payment.dispute_closed", "event_time": 7.741664005279541, "bindings": {"payment_id": "P-5005"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.closed", "event_time": 7.742664005279541, "bindings": {"payment_id": "P-5005"}, "payload": {}, "source": "payment-service"}
+{"type": "behave_rv.clock", "event_time": 23.350741863250732, "bindings": {}, "payload": {}, "source": "clock"}
+{"type": "payment.status", "event_time": 0.023960113525390625, "bindings": {"payment_id": "P-3003"}, "payload": {"status": "authorized"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 0.434359073638916, "bindings": {"payment_id": "P-3003"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 0.8410623073577881, "bindings": {"payment_id": "P-1001"}, "payload": {"status": "authorized"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 1.242332935333252, "bindings": {"payment_id": "P-1001"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 1.6524670124053955, "bindings": {"payment_id": "P-1001"}, "payload": {"status": "closed"}, "source": "payment-service"}
+{"type": "payment.closed", "event_time": 1.6534670124053954, "bindings": {"payment_id": "P-1001"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 2.054776191711426, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "authorized"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 2.4553511142730713, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 2.8576650619506836, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "disputed"}, "source": "payment-service"}
+{"type": "payment.frozen", "event_time": 2.8586650619506835, "bindings": {"payment_id": "P-2002"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.rejected", "event_time": 3.2609641551971436, "bindings": {"payment_id": "P-2002"}, "payload": {"reason": "declined", "action": "recapture"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 3.663295030593872, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "investigated"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 4.070406913757324, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "refund"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 4.4758241176605225, "bindings": {"payment_id": "P-2002"}, "payload": {"status": "closed"}, "source": "payment-service"}
+{"type": "payment.dispute_closed", "event_time": 4.476824117660523, "bindings": {"payment_id": "P-2002"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.closed", "event_time": 4.477824117660522, "bindings": {"payment_id": "P-2002"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 4.882910966873169, "bindings": {"payment_id": "P-4004"}, "payload": {"status": "authorized"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 5.29303503036499, "bindings": {"payment_id": "P-4004"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 5.703329086303711, "bindings": {"payment_id": "P-4004"}, "payload": {"status": "disputed"}, "source": "payment-service"}
+{"type": "payment.frozen", "event_time": 5.704329086303711, "bindings": {"payment_id": "P-4004"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 6.113530158996582, "bindings": {"payment_id": "P-4004"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 6.517486095428467, "bindings": {"payment_id": "P-5005"}, "payload": {"status": "authorized"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 6.924926996231079, "bindings": {"payment_id": "P-5005"}, "payload": {"status": "captured"}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 7.325206995010376, "bindings": {"payment_id": "P-5005"}, "payload": {"status": "disputed"}, "source": "payment-service"}
+{"type": "payment.frozen", "event_time": 7.326206995010376, "bindings": {"payment_id": "P-5005"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.status", "event_time": 7.727966070175171, "bindings": {"payment_id": "P-5005"}, "payload": {"status": "closed"}, "source": "payment-service"}
+{"type": "payment.dispute_closed", "event_time": 7.728966070175171, "bindings": {"payment_id": "P-5005"}, "payload": {}, "source": "payment-service"}
+{"type": "payment.closed", "event_time": 7.729966070175171, "bindings": {"payment_id": "P-5005"}, "payload": {}, "source": "payment-service"}
+{"type": "behave_rv.clock", "event_time": 23.358752965927124, "bindings": {}, "payload": {}, "source": "clock"}

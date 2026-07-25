@@ -1,5 +1,5 @@
-Feature: loan settlement deadline
+Feature: every borrowed loan is settled in time
 
   Scenario: a borrowed loan is returned, renewed, or reported lost within 21 seconds
     When a loan is "borrowed"
-    Then a loan is renewed, returned, or reported lost within "21" seconds
+    Then a loan is returned, renewed, or reported lost within "21" seconds

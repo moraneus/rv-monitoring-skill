@@ -1,0 +1,136 @@
+<title>devices - behave-rv experiment</title>
+<style>
+:root{--ink:#0d1418;--sub:#141f27;--card:#182430;--line:#243541;--tx:#dce8ee;
+--mut:#8ba0ac;--faint:#5f7480;--accent:#3fd0c9;--ok:#3bb873;--risk:#d9a441;
+--bad:#e35b52;--pend:#6b8794;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+@media(prefers-color-scheme:light){:root{--ink:#eef2f3;--sub:#e4eaec;--card:#fff;
+--line:#d3dde1;--tx:#132029;--mut:#546570;--faint:#7d8f99;--accent:#0f8f88;}}
+:root[data-theme="dark"]{--ink:#0d1418;--sub:#141f27;--card:#182430;--line:#243541;
+--tx:#dce8ee;--mut:#8ba0ac;--faint:#5f7480;--accent:#3fd0c9;}
+:root[data-theme="light"]{--ink:#eef2f3;--sub:#e4eaec;--card:#fff;--line:#d3dde1;
+--tx:#132029;--mut:#546570;--faint:#7d8f99;--accent:#0f8f88;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ink);color:var(--tx);font-family:var(--sans);
+line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px}
+h1,h2,h3{line-height:1.15;text-wrap:balance;font-weight:680;letter-spacing:-.01em}
+a{color:var(--accent);text-decoration:none}
+code,.mono{font-family:var(--mono);font-size:.86em}
+.tnum{font-variant-numeric:tabular-nums}
+.back{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12.5px;
+color:var(--mut);padding:16px 0}
+.back:hover{color:var(--accent)}
+header.top{border-bottom:1px solid var(--line);background:
+radial-gradient(120% 140% at 85% -30%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 60%)}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
+color:var(--accent);margin:0 0 12px}
+header.top h1{font-size:clamp(27px,5vw,42px);margin:0 0 14px}
+.lede{font-size:clamp(15.5px,2vw,18px);color:var(--tx);max-width:60ch;margin:0}
+.masthead{padding:8px 0 40px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.04em;padding:4px 10px;
+border:1px solid var(--line);border-radius:999px;color:var(--mut)}
+.tag.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,transparent)}
+.tag.bad{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 40%,transparent)}
+.tag.risk{color:var(--risk);border-color:color-mix(in srgb,var(--risk) 40%,transparent)}
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+.kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;
+color:var(--faint);margin:0 0 16px}
+h2{font-size:clamp(20px,3vw,26px);margin:0 0 14px}
+h3{font-size:16px;margin:22px 0 8px}
+p{margin:0 0 14px} .muted{color:var(--mut)} strong{color:var(--tx);font-weight:640}
+pre{background:var(--sub);border:1px solid var(--line);border-radius:10px;padding:13px 15px;
+overflow-x:auto;font-family:var(--mono);font-size:12.4px;line-height:1.55;margin:0 0 14px}
+pre .del{color:var(--bad)} pre .add{color:var(--ok)} pre .cx{color:var(--faint)}
+pre .kw{color:var(--accent)}
+.gherkin{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
+border-radius:9px;padding:13px 16px;margin:0 0 12px;font-family:var(--mono);font-size:12.4px;
+line-height:1.6;overflow-x:auto;white-space:pre}
+.gherkin .g-kw{color:var(--accent);font-weight:600}
+.gherkin .g-name{color:var(--mut)}
+.callout{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
+border-radius:10px;padding:16px 18px;margin:16px 0}
+.callout p{margin:0;font-size:14px}
+.chan{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 12px;background:var(--card)}
+.chan .ch{display:flex;align-items:center;gap:9px;margin:0 0 8px;font-family:var(--mono);
+font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.chan .ch .st{margin-left:auto;padding:2px 9px;border-radius:6px;font-weight:600;letter-spacing:.02em}
+.st.g{color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+.st.r{color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.st.a{color:var(--risk);background:color-mix(in srgb,var(--risk) 14%,transparent)}
+.st.n{color:var(--mut);background:var(--sub)}
+.chan p{margin:0;font-size:13.5px;color:var(--mut)}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}
+.d-ok{background:var(--ok)}.d-bad{background:var(--bad)}.d-risk{background:var(--risk)}.d-pend{background:var(--pend)}
+.evtmodel{font-family:var(--mono);font-size:12.4px;color:var(--mut);background:var(--sub);
+border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin:0 0 14px;overflow-x:auto}
+footer{padding:34px 0 64px}
+footer .wrap{color:var(--faint);font-family:var(--mono);font-size:12px}
+.nav-demos{display:flex;flex-wrap:wrap;gap:6px;padding:14px 0 0}
+.nav-demos a{font-family:var(--mono);font-size:11px;color:var(--mut);padding:4px 9px;
+border:1px solid var(--line);border-radius:6px}
+.nav-demos a:hover{color:var(--accent)}
+.nav-demos a.cur{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+</style>
+<div class="wrap"><a class="back" href="index.html">← Back to the experiment report</a></div>
+<header class="top"><div class="wrap masthead">
+<p class="eyebrow">demo breakdown · service · 6 policies · 2 bugs</p>
+<h1>devices</h1>
+<p class="lede">An IoT fleet tracker across two entity types. Its wipe bug is a clean runtime catch - the monitor flagged the demo's own "healthy" device - while a subtler timestamp-ordering bug slipped past the user, exactly as the saboteur predicted.</p>
+<div class="tags"><span class="tag bad">2 bugs planted</span><span class="tag risk">1 found by user</span><span class="tag ok">live: catch</span></div>
+<div class="nav-demos"><a href="lending.html" class="">lending</a><a href="parcels.html" class="">parcels</a><a href="bookings.html" class="">bookings</a><a href="devices.html" class="cur">devices</a><a href="payments.html" class="">payments</a><a href="snake.html" class="">snake</a><a href="blackjack.html" class="">blackjack</a><a href="minesweeper.html" class="">minesweeper</a><a href="tictactoe.html" class="">tic-tac-toe</a><a href="memory.html" class="">memory</a></div>
+</div></header>
+
+<section><div class="wrap">
+<p class="kicker">What it is</p>
+<h2>A device + sensor fleet tracker</h2>
+<p>A <code>FleetService</code>: devices go provisioned → provision-ok → activated → act → quarantined → wiped → retired; sensor feeds push readings under their own key. Five temporal forms are exercised across the six rules.</p><p>Retirement is the device terminal; rule 2's containment is armed from quarantine until retirement.</p>
+<div class="evtmodel"><strong>event model &nbsp;·&nbsp;</strong><code>device.lifecycle</code> and <code>device.action</code> keyed by <code>device_id</code>; terminal <code>device.retired</code>; <code>sensor.reading</code> keyed by <code>sensor_id</code>.</div>
+</div></section>
+
+<section><div class="wrap">
+<p class="kicker">The monitored rules</p>
+<h2>What the user asked the monitor to enforce</h2>
+<p class="muted">Verbatim from the committed <code>monitoring/policies/</code>. These are the human's own
+words; the engine owns the verdict.</p>
+<div class="gherkin"><span class="g-kw">Feature:</span> retirement safety
+
+  <span class="g-kw">Scenario:</span> every retired device was wiped before retirement
+    <span class="g-kw">When </span>a device is "retired"
+    <span class="g-kw">Then </span>a device is "wiped" before</div><div class="gherkin"><span class="g-kw">Feature:</span> device activation ordering
+
+  <span class="g-kw">Scenario:</span> activated only immediately after its provision check passed
+    <span class="g-kw">When </span>a device is "activated"
+    <span class="g-kw">Then </span>a device is "provision_ok" previously</div><div class="gherkin"><span class="g-kw">Feature:</span> quarantine containment
+
+  <span class="g-kw">Scenario:</span> a quarantined device performs no non-blocked action
+    <span class="g-kw">Given </span>a device is "quarantined"
+    <span class="g-kw">Then </span>a device performs a non-blocked action never happens</div><div class="gherkin"><span class="g-kw">Feature:</span> sensor feed health
+
+  <span class="g-kw">Scenario:</span> a sensor feed only ever reports ok readings
+    <span class="g-kw">Then </span>a sensor reading is "ok" always holds</div>
+</div></section>
+
+<section><div class="wrap">
+<p class="kicker">The sabotage</p>
+<h2>The bugs planted in the app code</h2>
+<h3>Bug 1 - wipe records the wrong lifecycle state</h3><pre>  def wipe(self, device_id):
+<span class="del">-     self._lifecycle(device_id, "wiped")</span>
+<span class="add">+     self._lifecycle(device_id, "wipe")</span></pre><p>No device ever reaches the state <code>wiped</code>. The retirement-safety rule (<em>a retired device was wiped before retirement</em>) becomes <strong>unsatisfiable</strong>: it can no longer tell a safe wipe-then-retire from a dangerous retire-without-wipe, and fires on every retirement - including the demo's own device the build had called healthy.</p><p class="muted"><strong>Policy in play:</strong> 03 - retirement safety &nbsp;·&nbsp; <strong>Trigger:</strong> wipe(D) → retire(D) &nbsp;·&nbsp; <strong>Class:</strong> normal-use</p><h3>Bug 2 - the terminal loses its timestamp offset</h3><pre>  def retire(self, device_id):
+      self._lifecycle(device_id, "retired")
+<span class="del">-     self._emit(retired_terminal, self._clock() + 1e-3)  # ordered after</span>
+<span class="add">+     self._emit(retired_terminal, self._clock())         # shares the timestamp</span></pre><p>The tiny <code>+1e-3</code> that ordered the terminal <em>after</em> the retired status is dropped, so both now share an event time. Equal timestamps fall back to canonical content ordering - a subtle ordering slip that no policy asserts on. <strong>The user did not notice it.</strong></p><p class="muted"><strong>Policy in play:</strong> none binds the ordering - slipped through &nbsp;·&nbsp; <strong>Trigger:</strong> every retire &nbsp;·&nbsp; <strong>Class:</strong> subtle · slip-through</p>
+</div></section>
+
+<section><div class="wrap">
+<p class="kicker">Detection</p>
+<h2>How the failure surfaced</h2>
+<p class="muted">The same defect through the framework's three independent channels, plus what the blind
+user actually noticed.</p>
+<div class="chan"><div class="ch"><span class="dot d-ok"></span>Channel A - live runtime<span class="st g">catch</span></div><p>The wiped-before-retire rule fired <span style="color:var(--bad)">violated</span> on the demo's own "healthy" device D-1 - an unmistakable live signal that something about wipe was wrong.</p></div><div class="chan"><div class="ch"><span class="dot d-bad"></span>Channel B - replay gate<span class="st r">red · exit 1</span></div><p><code>replay_check.py</code> failed with a count mismatch (9 vs the pinned 7), the two extras being the healthy devices the wipe bug now trips.</p></div><div class="chan"><div class="ch"><span class="dot d-risk"></span>Channel C - stability contract<span class="st a">risk · exit 1</span></div><p>The stability contract flagged the wipe and retire emit sites as behavior-risk.</p></div><div class="chan"><div class="ch"><span class="dot d-risk"></span>The blind user<span class="st a">found 1 / 2</span></div><p>Caught the wipe bug through all three channels and confirmed the activation-predecessor rule still works. The timestamp-ordering bug was not noticed - the predicted slip-through.</p></div>
+<div class="callout"><p><strong>A clean runtime catch, and a predicted miss.</strong> A wrong state string that makes a safety rule unsatisfiable is exactly what the monitor is for, and it fired on the app's own supposedly-healthy device. The bug that slipped - an ordering detail no rule asserts - was flagged as a slip-through before anyone played.</p></div>
+</div></section>
+
+<footer><div class="wrap">behave-rv 0.3.1 · demo: devices · <a href="index.html">full experiment report ↗</a></div></footer>

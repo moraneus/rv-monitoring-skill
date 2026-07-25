@@ -2,270 +2,228 @@
   "app_surface": [
     {
       "binding_keys": [
-        "attempt_id"
+        "attempt_id",
+        "game_id",
+        "position"
+      ],
+      "event_type": "card.flipped",
+      "function": "MemoryGame._close_attempt",
+      "module": "game",
+      "payload_fields": [
+        "after_completion",
+        "already_matched",
+        "slot",
+        "symbol"
+      ],
+      "referenced_constants": {
+        "game.BOARD_SIZE": "16",
+        "game.COMPLETED": "'game.completed'",
+        "game.FLIPPED": "'card.flipped'",
+        "game.MATCHED": "'match.found'",
+        "game.RESOLVED": "'attempt.resolved'",
+        "game.SOURCE": "'memory-game'",
+        "game.STARTED": "'game.started'"
+      },
+      "rename_fingerprint": "d2fb21f6531e1be6",
+      "site_id": "game.MemoryGame._close_attempt#1",
+      "slice_fingerprint": "74314fb5d434dc7c",
+      "slice_functions": {
+        "game.MemoryGame._close_attempt": "723f76e593e78667",
+        "game.MemoryGame._complete": "691e3705861dfec4",
+        "game.MemoryGame._open_attempt": "b9674cb11285e3af",
+        "game.MemoryGame._resolve": "e9dc294efcda339e",
+        "game.MemoryGame._stamp": "50439e9d06823fd4",
+        "game.MemoryGame.flip": "2e6bb524c4cf45e7",
+        "game.MemoryGame.resolve_mismatch": "402d38717f0c520c",
+        "game.MemoryGame.start": "9a5b9b267969159d"
+      },
+      "unresolved_calls": [
+        "self.clock",
+        "self.emit",
+        "self.matched.update"
+      ]
+    },
+    {
+      "binding_keys": [
+        "game_id"
+      ],
+      "event_type": "match.found",
+      "function": "MemoryGame._close_attempt",
+      "module": "game",
+      "payload_fields": [
+        "after_completion",
+        "position_a",
+        "position_b",
+        "symbol"
+      ],
+      "referenced_constants": {
+        "game.BOARD_SIZE": "16",
+        "game.COMPLETED": "'game.completed'",
+        "game.FLIPPED": "'card.flipped'",
+        "game.MATCHED": "'match.found'",
+        "game.RESOLVED": "'attempt.resolved'",
+        "game.SOURCE": "'memory-game'",
+        "game.STARTED": "'game.started'"
+      },
+      "rename_fingerprint": "d2fb21f6531e1be6",
+      "site_id": "game.MemoryGame._close_attempt#2",
+      "slice_fingerprint": "74314fb5d434dc7c",
+      "slice_functions": {
+        "game.MemoryGame._close_attempt": "723f76e593e78667",
+        "game.MemoryGame._complete": "691e3705861dfec4",
+        "game.MemoryGame._open_attempt": "b9674cb11285e3af",
+        "game.MemoryGame._resolve": "e9dc294efcda339e",
+        "game.MemoryGame._stamp": "50439e9d06823fd4",
+        "game.MemoryGame.flip": "2e6bb524c4cf45e7",
+        "game.MemoryGame.resolve_mismatch": "402d38717f0c520c",
+        "game.MemoryGame.start": "9a5b9b267969159d"
+      },
+      "unresolved_calls": [
+        "self.clock",
+        "self.emit",
+        "self.matched.update"
+      ]
+    },
+    {
+      "binding_keys": [
+        "game_id"
+      ],
+      "event_type": "game.completed",
+      "function": "MemoryGame._complete",
+      "module": "game",
+      "payload_fields": [
+        "after_completion"
+      ],
+      "referenced_constants": {
+        "game.BOARD_SIZE": "16",
+        "game.COMPLETED": "'game.completed'",
+        "game.FLIPPED": "'card.flipped'",
+        "game.MATCHED": "'match.found'",
+        "game.RESOLVED": "'attempt.resolved'",
+        "game.SOURCE": "'memory-game'",
+        "game.STARTED": "'game.started'"
+      },
+      "rename_fingerprint": "d2fb21f6531e1be6",
+      "site_id": "game.MemoryGame._complete#1",
+      "slice_fingerprint": "74314fb5d434dc7c",
+      "slice_functions": {
+        "game.MemoryGame._close_attempt": "723f76e593e78667",
+        "game.MemoryGame._complete": "691e3705861dfec4",
+        "game.MemoryGame._open_attempt": "b9674cb11285e3af",
+        "game.MemoryGame._resolve": "e9dc294efcda339e",
+        "game.MemoryGame._stamp": "50439e9d06823fd4",
+        "game.MemoryGame.flip": "2e6bb524c4cf45e7",
+        "game.MemoryGame.resolve_mismatch": "402d38717f0c520c",
+        "game.MemoryGame.start": "9a5b9b267969159d"
+      },
+      "unresolved_calls": [
+        "self.clock",
+        "self.emit",
+        "self.matched.update"
+      ]
+    },
+    {
+      "binding_keys": [
+        "attempt_id",
+        "game_id",
+        "position"
+      ],
+      "event_type": "card.flipped",
+      "function": "MemoryGame._open_attempt",
+      "module": "game",
+      "payload_fields": [
+        "after_completion",
+        "already_matched",
+        "slot",
+        "symbol"
+      ],
+      "referenced_constants": {
+        "game.BOARD_SIZE": "16",
+        "game.COMPLETED": "'game.completed'",
+        "game.FLIPPED": "'card.flipped'",
+        "game.MATCHED": "'match.found'",
+        "game.RESOLVED": "'attempt.resolved'",
+        "game.SOURCE": "'memory-game'",
+        "game.STARTED": "'game.started'"
+      },
+      "rename_fingerprint": "d2fb21f6531e1be6",
+      "site_id": "game.MemoryGame._open_attempt#1",
+      "slice_fingerprint": "74314fb5d434dc7c",
+      "slice_functions": {
+        "game.MemoryGame._close_attempt": "723f76e593e78667",
+        "game.MemoryGame._complete": "691e3705861dfec4",
+        "game.MemoryGame._open_attempt": "b9674cb11285e3af",
+        "game.MemoryGame._resolve": "e9dc294efcda339e",
+        "game.MemoryGame._stamp": "50439e9d06823fd4",
+        "game.MemoryGame.flip": "2e6bb524c4cf45e7",
+        "game.MemoryGame.resolve_mismatch": "402d38717f0c520c",
+        "game.MemoryGame.start": "9a5b9b267969159d"
+      },
+      "unresolved_calls": [
+        "self.clock",
+        "self.emit",
+        "self.matched.update"
+      ]
+    },
+    {
+      "binding_keys": [
+        "attempt_id",
+        "game_id"
       ],
       "event_type": "attempt.resolved",
       "function": "MemoryGame._resolve",
       "module": "game",
       "payload_fields": [
-        "game_id",
+        "after_completion",
         "outcome"
       ],
       "referenced_constants": {
-        "game.ATTEMPT_PENDING": "'attempt.pending'",
-        "game.ATTEMPT_RESOLVED": "'attempt.resolved'",
-        "game.CARD_FLIP": "'card.flip'",
-        "game.CARD_MATCHED": "'card.matched'",
-        "game.GAME_ACTION": "'game.action'",
-        "game.GAME_COMPLETE": "'game.complete'",
-        "game.PAIRS": "8",
+        "game.BOARD_SIZE": "16",
+        "game.COMPLETED": "'game.completed'",
+        "game.FLIPPED": "'card.flipped'",
+        "game.MATCHED": "'match.found'",
+        "game.RESOLVED": "'attempt.resolved'",
         "game.SOURCE": "'memory-game'"
       },
-      "rename_fingerprint": "f08d127b62fef021",
+      "rename_fingerprint": "97aa3b724e7ad630",
       "site_id": "game.MemoryGame._resolve#1",
-      "slice_fingerprint": "71f15c5d59fca2aa",
+      "slice_fingerprint": "e94b26f1a16a7a26",
       "slice_functions": {
-        "game.MemoryGame._fire": "2c2c417f2d6dea39",
-        "game.MemoryGame._resolve": "591176dd1e172d6b",
-        "game.MemoryGame.flip": "1943b73734ae347d",
-        "game.MemoryGame.view": "6b20eb2cc066b7f6"
+        "game.MemoryGame._close_attempt": "723f76e593e78667",
+        "game.MemoryGame._complete": "691e3705861dfec4",
+        "game.MemoryGame._open_attempt": "b9674cb11285e3af",
+        "game.MemoryGame._resolve": "e9dc294efcda339e",
+        "game.MemoryGame._stamp": "50439e9d06823fd4",
+        "game.MemoryGame.flip": "2e6bb524c4cf45e7",
+        "game.MemoryGame.resolve_mismatch": "402d38717f0c520c"
       },
       "unresolved_calls": [
         "self.clock",
-        "self.emit"
+        "self.emit",
+        "self.matched.update"
       ]
     },
     {
       "binding_keys": [
         "game_id"
       ],
-      "event_type": "game.action",
-      "function": "MemoryGame._resolve",
-      "module": "game",
-      "payload_fields": [
-        "kind"
-      ],
-      "referenced_constants": {
-        "game.ATTEMPT_PENDING": "'attempt.pending'",
-        "game.ATTEMPT_RESOLVED": "'attempt.resolved'",
-        "game.CARD_FLIP": "'card.flip'",
-        "game.CARD_MATCHED": "'card.matched'",
-        "game.GAME_ACTION": "'game.action'",
-        "game.GAME_COMPLETE": "'game.complete'",
-        "game.PAIRS": "8",
-        "game.SOURCE": "'memory-game'"
-      },
-      "rename_fingerprint": "f08d127b62fef021",
-      "site_id": "game.MemoryGame._resolve#2",
-      "slice_fingerprint": "71f15c5d59fca2aa",
-      "slice_functions": {
-        "game.MemoryGame._fire": "2c2c417f2d6dea39",
-        "game.MemoryGame._resolve": "591176dd1e172d6b",
-        "game.MemoryGame.flip": "1943b73734ae347d",
-        "game.MemoryGame.view": "6b20eb2cc066b7f6"
-      },
-      "unresolved_calls": [
-        "self.clock",
-        "self.emit"
-      ]
-    },
-    {
-      "binding_keys": [
-        "game_id",
-        "position"
-      ],
-      "event_type": "card.flip",
-      "function": "MemoryGame.flip",
-      "module": "game",
-      "payload_fields": [
-        "attempt_id",
-        "symbol"
-      ],
-      "referenced_constants": {
-        "game.ATTEMPT_PENDING": "'attempt.pending'",
-        "game.ATTEMPT_RESOLVED": "'attempt.resolved'",
-        "game.CARD_FLIP": "'card.flip'",
-        "game.CARD_MATCHED": "'card.matched'",
-        "game.GAME_ACTION": "'game.action'",
-        "game.GAME_COMPLETE": "'game.complete'",
-        "game.PAIRS": "8",
-        "game.SOURCE": "'memory-game'"
-      },
-      "rename_fingerprint": "f08d127b62fef021",
-      "site_id": "game.MemoryGame.flip#1",
-      "slice_fingerprint": "71f15c5d59fca2aa",
-      "slice_functions": {
-        "game.MemoryGame._fire": "2c2c417f2d6dea39",
-        "game.MemoryGame._resolve": "591176dd1e172d6b",
-        "game.MemoryGame.flip": "1943b73734ae347d",
-        "game.MemoryGame.view": "6b20eb2cc066b7f6"
-      },
-      "unresolved_calls": [
-        "self.clock",
-        "self.emit"
-      ]
-    },
-    {
-      "binding_keys": [
-        "game_id"
-      ],
-      "event_type": "game.action",
-      "function": "MemoryGame.flip",
-      "module": "game",
-      "payload_fields": [
-        "kind"
-      ],
-      "referenced_constants": {
-        "game.ATTEMPT_PENDING": "'attempt.pending'",
-        "game.ATTEMPT_RESOLVED": "'attempt.resolved'",
-        "game.CARD_FLIP": "'card.flip'",
-        "game.CARD_MATCHED": "'card.matched'",
-        "game.GAME_ACTION": "'game.action'",
-        "game.GAME_COMPLETE": "'game.complete'",
-        "game.PAIRS": "8",
-        "game.SOURCE": "'memory-game'"
-      },
-      "rename_fingerprint": "f08d127b62fef021",
-      "site_id": "game.MemoryGame.flip#2",
-      "slice_fingerprint": "71f15c5d59fca2aa",
-      "slice_functions": {
-        "game.MemoryGame._fire": "2c2c417f2d6dea39",
-        "game.MemoryGame._resolve": "591176dd1e172d6b",
-        "game.MemoryGame.flip": "1943b73734ae347d",
-        "game.MemoryGame.view": "6b20eb2cc066b7f6"
-      },
-      "unresolved_calls": [
-        "self.clock",
-        "self.emit"
-      ]
-    },
-    {
-      "binding_keys": [
-        "attempt_id"
-      ],
-      "event_type": "attempt.pending",
-      "function": "MemoryGame.flip",
-      "module": "game",
-      "payload_fields": [
-        "first",
-        "game_id",
-        "second"
-      ],
-      "referenced_constants": {
-        "game.ATTEMPT_PENDING": "'attempt.pending'",
-        "game.ATTEMPT_RESOLVED": "'attempt.resolved'",
-        "game.CARD_FLIP": "'card.flip'",
-        "game.CARD_MATCHED": "'card.matched'",
-        "game.GAME_ACTION": "'game.action'",
-        "game.GAME_COMPLETE": "'game.complete'",
-        "game.PAIRS": "8",
-        "game.SOURCE": "'memory-game'"
-      },
-      "rename_fingerprint": "f08d127b62fef021",
-      "site_id": "game.MemoryGame.flip#3",
-      "slice_fingerprint": "71f15c5d59fca2aa",
-      "slice_functions": {
-        "game.MemoryGame._fire": "2c2c417f2d6dea39",
-        "game.MemoryGame._resolve": "591176dd1e172d6b",
-        "game.MemoryGame.flip": "1943b73734ae347d",
-        "game.MemoryGame.view": "6b20eb2cc066b7f6"
-      },
-      "unresolved_calls": [
-        "self.clock",
-        "self.emit"
-      ]
-    },
-    {
-      "binding_keys": [
-        "game_id",
-        "position"
-      ],
-      "event_type": "card.matched",
-      "function": "MemoryGame.flip",
-      "module": "game",
-      "payload_fields": [
-        "attempt_id",
-        "symbol"
-      ],
-      "referenced_constants": {
-        "game.ATTEMPT_PENDING": "'attempt.pending'",
-        "game.ATTEMPT_RESOLVED": "'attempt.resolved'",
-        "game.CARD_FLIP": "'card.flip'",
-        "game.CARD_MATCHED": "'card.matched'",
-        "game.GAME_ACTION": "'game.action'",
-        "game.GAME_COMPLETE": "'game.complete'",
-        "game.PAIRS": "8",
-        "game.SOURCE": "'memory-game'"
-      },
-      "rename_fingerprint": "f08d127b62fef021",
-      "site_id": "game.MemoryGame.flip#4",
-      "slice_fingerprint": "71f15c5d59fca2aa",
-      "slice_functions": {
-        "game.MemoryGame._fire": "2c2c417f2d6dea39",
-        "game.MemoryGame._resolve": "591176dd1e172d6b",
-        "game.MemoryGame.flip": "1943b73734ae347d",
-        "game.MemoryGame.view": "6b20eb2cc066b7f6"
-      },
-      "unresolved_calls": [
-        "self.clock",
-        "self.emit"
-      ]
-    },
-    {
-      "binding_keys": [
-        "game_id"
-      ],
-      "event_type": "game.complete",
-      "function": "MemoryGame.flip",
-      "module": "game",
-      "payload_fields": [
-        "pairs"
-      ],
-      "referenced_constants": {
-        "game.ATTEMPT_PENDING": "'attempt.pending'",
-        "game.ATTEMPT_RESOLVED": "'attempt.resolved'",
-        "game.CARD_FLIP": "'card.flip'",
-        "game.CARD_MATCHED": "'card.matched'",
-        "game.GAME_ACTION": "'game.action'",
-        "game.GAME_COMPLETE": "'game.complete'",
-        "game.PAIRS": "8",
-        "game.SOURCE": "'memory-game'"
-      },
-      "rename_fingerprint": "f08d127b62fef021",
-      "site_id": "game.MemoryGame.flip#5",
-      "slice_fingerprint": "71f15c5d59fca2aa",
-      "slice_functions": {
-        "game.MemoryGame._fire": "2c2c417f2d6dea39",
-        "game.MemoryGame._resolve": "591176dd1e172d6b",
-        "game.MemoryGame.flip": "1943b73734ae347d",
-        "game.MemoryGame.view": "6b20eb2cc066b7f6"
-      },
-      "unresolved_calls": [
-        "self.clock",
-        "self.emit"
-      ]
-    },
-    {
-      "binding_keys": [
-        "game_id"
-      ],
-      "event_type": "game.start",
+      "event_type": "game.started",
       "function": "MemoryGame.start",
       "module": "game",
       "payload_fields": [
+        "after_completion",
         "pairs"
       ],
       "referenced_constants": {
-        "game.GAME_START": "'game.start'",
-        "game.PAIRS": "8",
-        "game.SOURCE": "'memory-game'"
+        "game.SOURCE": "'memory-game'",
+        "game.STARTED": "'game.started'"
       },
-      "rename_fingerprint": "b0afd2d6c9b0e57a",
+      "rename_fingerprint": "d0c956262ba7b301",
       "site_id": "game.MemoryGame.start#1",
-      "slice_fingerprint": "1495f7964dbf5387",
+      "slice_fingerprint": "f408f4df21bec829",
       "slice_functions": {
-        "game.MemoryGame._fire": "2c2c417f2d6dea39",
-        "game.MemoryGame.start": "91607308ce8c3f8c"
+        "game.MemoryGame._stamp": "50439e9d06823fd4",
+        "game.MemoryGame.start": "9a5b9b267969159d"
       },
       "unresolved_calls": [
         "self.clock",
@@ -278,93 +236,82 @@
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "a card is flipped",
+      "phrasing": "a matched card is flipped again",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "d66938a9c0250be5",
+        "condition_fingerprint": "9d1ecfc5c86e65ee",
         "correlation_key": [
-          "game_id",
-          "position"
+          "game_id"
         ],
-        "event_type": "card.flip",
+        "event_type": "card.flipped",
         "helper_hashes": {},
-        "payload_fields": {},
+        "payload_fields": {
+          "already_matched": "any"
+        },
         "referenced_fields": [],
-        "trigger_condition": "a card is flipped",
-        "unresolved_calls": []
+        "trigger_condition": "a matched card is flipped again",
+        "unresolved_calls": [
+          "get"
+        ]
       },
-      "step_id": "card.flip.is",
+      "step_id": "card.flipped.rematch",
       "version": 1
     },
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "a card is matched",
+      "phrasing": "the second card of an attempt is flipped",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "ca3cc5607604e002",
+        "condition_fingerprint": "de0416ec5988fb36",
         "correlation_key": [
           "game_id",
-          "position"
-        ],
-        "event_type": "card.matched",
-        "helper_hashes": {},
-        "payload_fields": {},
-        "referenced_fields": [],
-        "trigger_condition": "a card is matched",
-        "unresolved_calls": []
-      },
-      "step_id": "card.matched.is",
-      "version": 1
-    },
-    {
-      "kind": "trigger",
-      "observed": false,
-      "phrasing": "an attempt is ready",
-      "provenance": "llm",
-      "signature": {
-        "condition_fingerprint": "72baa7cebefb9c24",
-        "correlation_key": [
           "attempt_id"
         ],
-        "event_type": "attempt.pending",
+        "event_type": "card.flipped",
         "helper_hashes": {},
-        "payload_fields": {},
+        "payload_fields": {
+          "slot": "any"
+        },
         "referenced_fields": [],
-        "trigger_condition": "an attempt is ready",
-        "unresolved_calls": []
+        "trigger_condition": "the second card of an attempt is flipped",
+        "unresolved_calls": [
+          "get"
+        ]
       },
-      "step_id": "attempt.pending.is",
+      "step_id": "card.flipped.second",
       "version": 1
     },
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "an attempt is resolved",
+      "phrasing": "the attempt resolves",
       "provenance": "llm",
       "signature": {
         "condition_fingerprint": "17a5ee025cab2c79",
         "correlation_key": [
+          "game_id",
           "attempt_id"
         ],
         "event_type": "attempt.resolved",
         "helper_hashes": {},
         "payload_fields": {},
         "referenced_fields": [],
-        "trigger_condition": "an attempt is resolved",
+        "trigger_condition": "the attempt resolves",
         "unresolved_calls": []
       },
-      "step_id": "attempt.resolved.is",
+      "step_id": "attempt.resolved.any",
       "version": 1
     },
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "an attempt is resolved as \"{outcome}\"",
+      "phrasing": "the attempt resolves as \"{outcome}\"",
       "provenance": "llm",
       "signature": {
         "condition_fingerprint": "bf9dada0eea81196",
         "correlation_key": [
+          "game_id",
           "attempt_id"
         ],
         "event_type": "attempt.resolved",
@@ -375,7 +322,7 @@
         "referenced_fields": [
           "outcome"
         ],
-        "trigger_condition": "an attempt is resolved as \"{outcome}\"",
+        "trigger_condition": "the attempt resolves as \"{outcome}\"",
         "unresolved_calls": [
           "get"
         ]
@@ -386,61 +333,65 @@
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "the game starts",
+      "phrasing": "a card is flipped after the game is over",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "8536f395780e27ae",
+        "condition_fingerprint": "de7e5015cf178b3c",
         "correlation_key": [
           "game_id"
         ],
-        "event_type": "game.start",
+        "event_type": "card.flipped",
         "helper_hashes": {},
-        "payload_fields": {},
+        "payload_fields": {
+          "after_completion": "any"
+        },
         "referenced_fields": [],
-        "trigger_condition": "the game starts",
-        "unresolved_calls": []
+        "trigger_condition": "a card is flipped after the game is over",
+        "unresolved_calls": [
+          "get"
+        ]
       },
-      "step_id": "game.start.is",
+      "step_id": "card.flipped.postgame",
       "version": 1
     },
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "the game is complete",
+      "phrasing": "a card is flipped",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "0021d1211ca6418e",
+        "condition_fingerprint": "70e2ddc36d2dc587",
         "correlation_key": [
           "game_id"
         ],
-        "event_type": "game.complete",
+        "event_type": "card.flipped",
         "helper_hashes": {},
         "payload_fields": {},
         "referenced_fields": [],
-        "trigger_condition": "the game is complete",
+        "trigger_condition": "a card is flipped",
         "unresolved_calls": []
       },
-      "step_id": "game.complete.is",
+      "step_id": "card.flipped.any",
       "version": 1
     },
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "a game action occurs",
+      "phrasing": "the game is completed",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "926bf3d19ce33416",
+        "condition_fingerprint": "46d1cc4b135c433f",
         "correlation_key": [
           "game_id"
         ],
-        "event_type": "game.action",
+        "event_type": "game.completed",
         "helper_hashes": {},
         "payload_fields": {},
         "referenced_fields": [],
-        "trigger_condition": "a game action occurs",
+        "trigger_condition": "the game is completed",
         "unresolved_calls": []
       },
-      "step_id": "game.action.is",
+      "step_id": "game.completed.any",
       "version": 1
     }
   ]

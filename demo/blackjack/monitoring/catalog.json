@@ -4,311 +4,48 @@
       "binding_keys": [
         "hand_id"
       ],
-      "event_type": "hand.bust",
-      "function": "BlackjackGame._bust",
-      "module": "game",
-      "payload_fields": [
-        "total",
-        "who"
-      ],
-      "referenced_constants": {
-        "game.BET": "10",
-        "game.DEALER_STANDS_ON": "17",
-        "game.EVENT_BUST": "'hand.bust'",
-        "game.EVENT_CARD": "'hand.card'",
-        "game.EVENT_CLOSED": "'hand.closed'",
-        "game.EVENT_DEALT": "'hand.dealt'",
-        "game.EVENT_PAYOUT": "'hand.payout'",
-        "game.EVENT_RESETTLED": "'hand.resettled'",
-        "game.EVENT_SETTLED": "'hand.settled'",
-        "game.EVENT_STAND": "'hand.stand'",
-        "game.SOURCE": "'blackjack'"
-      },
-      "rename_fingerprint": "6b4e131905ab22cb",
-      "site_id": "game.BlackjackGame._bust#1",
-      "slice_fingerprint": "13bd3374c3de6e8b",
-      "slice_functions": {
-        "game.BlackjackGame.__init__": "6eacbaf9f2e2a228",
-        "game.BlackjackGame._bust": "e3d81527b5e44287",
-        "game.BlackjackGame._close": "1384a392deff69f3",
-        "game.BlackjackGame._deal_to": "542254f5a017965a",
-        "game.BlackjackGame._draw": "9fbe3ca9f204afaa",
-        "game.BlackjackGame._pay": "93a789246ec2c7bf",
-        "game.BlackjackGame._settle": "b337517da8f832de",
-        "game.BlackjackGame._shuffle": "7702beb3f917fe25",
-        "game.BlackjackGame._tick": "d590af13cbe1b68e",
-        "game.BlackjackGame.hit": "bcd6cb7255b76f6c",
-        "game.BlackjackGame.new_hand": "d203f9200976639a",
-        "game.BlackjackGame.stand": "ee24379445ea0853",
-        "game.BlackjackGame.state": "6a68a2c57fdca284",
-        "game._card_value": "37cdc37242ecf930",
-        "game.hand_total": "9a37ff426d7e3283"
-      },
-      "unresolved_calls": [
-        "<dynamic>",
-        "random.Random",
-        "self._clock",
-        "self._deck.pop",
-        "self._emit",
-        "self._rng.shuffle"
-      ]
-    },
-    {
-      "binding_keys": [
-        "hand_id"
-      ],
       "event_type": "hand.closed",
-      "function": "BlackjackGame._close",
-      "module": "game",
-      "payload_fields": [],
-      "referenced_constants": {
-        "game.BET": "10",
-        "game.DEALER_STANDS_ON": "17",
-        "game.EVENT_BUST": "'hand.bust'",
-        "game.EVENT_CARD": "'hand.card'",
-        "game.EVENT_CLOSED": "'hand.closed'",
-        "game.EVENT_DEALT": "'hand.dealt'",
-        "game.EVENT_PAYOUT": "'hand.payout'",
-        "game.EVENT_RESETTLED": "'hand.resettled'",
-        "game.EVENT_SETTLED": "'hand.settled'",
-        "game.EVENT_STAND": "'hand.stand'",
-        "game.SOURCE": "'blackjack'"
-      },
-      "rename_fingerprint": "6b4e131905ab22cb",
-      "site_id": "game.BlackjackGame._close#1",
-      "slice_fingerprint": "13bd3374c3de6e8b",
-      "slice_functions": {
-        "game.BlackjackGame.__init__": "6eacbaf9f2e2a228",
-        "game.BlackjackGame._bust": "e3d81527b5e44287",
-        "game.BlackjackGame._close": "1384a392deff69f3",
-        "game.BlackjackGame._deal_to": "542254f5a017965a",
-        "game.BlackjackGame._draw": "9fbe3ca9f204afaa",
-        "game.BlackjackGame._pay": "93a789246ec2c7bf",
-        "game.BlackjackGame._settle": "b337517da8f832de",
-        "game.BlackjackGame._shuffle": "7702beb3f917fe25",
-        "game.BlackjackGame._tick": "d590af13cbe1b68e",
-        "game.BlackjackGame.hit": "bcd6cb7255b76f6c",
-        "game.BlackjackGame.new_hand": "d203f9200976639a",
-        "game.BlackjackGame.stand": "ee24379445ea0853",
-        "game.BlackjackGame.state": "6a68a2c57fdca284",
-        "game._card_value": "37cdc37242ecf930",
-        "game.hand_total": "9a37ff426d7e3283"
-      },
-      "unresolved_calls": [
-        "<dynamic>",
-        "random.Random",
-        "self._clock",
-        "self._deck.pop",
-        "self._emit",
-        "self._rng.shuffle"
-      ]
-    },
-    {
-      "binding_keys": [
-        "hand_id"
-      ],
-      "event_type": "hand.card",
-      "function": "BlackjackGame._deal_to",
-      "module": "game",
-      "payload_fields": [
-        "rank",
-        "to",
-        "total"
-      ],
-      "referenced_constants": {
-        "game.BET": "10",
-        "game.DEALER_STANDS_ON": "17",
-        "game.EVENT_BUST": "'hand.bust'",
-        "game.EVENT_CARD": "'hand.card'",
-        "game.EVENT_CLOSED": "'hand.closed'",
-        "game.EVENT_DEALT": "'hand.dealt'",
-        "game.EVENT_PAYOUT": "'hand.payout'",
-        "game.EVENT_RESETTLED": "'hand.resettled'",
-        "game.EVENT_SETTLED": "'hand.settled'",
-        "game.EVENT_STAND": "'hand.stand'",
-        "game.SOURCE": "'blackjack'"
-      },
-      "rename_fingerprint": "6b4e131905ab22cb",
-      "site_id": "game.BlackjackGame._deal_to#1",
-      "slice_fingerprint": "13bd3374c3de6e8b",
-      "slice_functions": {
-        "game.BlackjackGame.__init__": "6eacbaf9f2e2a228",
-        "game.BlackjackGame._bust": "e3d81527b5e44287",
-        "game.BlackjackGame._close": "1384a392deff69f3",
-        "game.BlackjackGame._deal_to": "542254f5a017965a",
-        "game.BlackjackGame._draw": "9fbe3ca9f204afaa",
-        "game.BlackjackGame._pay": "93a789246ec2c7bf",
-        "game.BlackjackGame._settle": "b337517da8f832de",
-        "game.BlackjackGame._shuffle": "7702beb3f917fe25",
-        "game.BlackjackGame._tick": "d590af13cbe1b68e",
-        "game.BlackjackGame.hit": "bcd6cb7255b76f6c",
-        "game.BlackjackGame.new_hand": "d203f9200976639a",
-        "game.BlackjackGame.stand": "ee24379445ea0853",
-        "game.BlackjackGame.state": "6a68a2c57fdca284",
-        "game._card_value": "37cdc37242ecf930",
-        "game.hand_total": "9a37ff426d7e3283"
-      },
-      "unresolved_calls": [
-        "<dynamic>",
-        "random.Random",
-        "self._clock",
-        "self._deck.pop",
-        "self._emit",
-        "self._rng.shuffle"
-      ]
-    },
-    {
-      "binding_keys": [
-        "hand_id"
-      ],
-      "event_type": "hand.payout",
-      "function": "BlackjackGame._pay",
-      "module": "game",
-      "payload_fields": [
-        "amount"
-      ],
-      "referenced_constants": {
-        "game.BET": "10",
-        "game.DEALER_STANDS_ON": "17",
-        "game.EVENT_BUST": "'hand.bust'",
-        "game.EVENT_CARD": "'hand.card'",
-        "game.EVENT_CLOSED": "'hand.closed'",
-        "game.EVENT_DEALT": "'hand.dealt'",
-        "game.EVENT_PAYOUT": "'hand.payout'",
-        "game.EVENT_RESETTLED": "'hand.resettled'",
-        "game.EVENT_SETTLED": "'hand.settled'",
-        "game.EVENT_STAND": "'hand.stand'",
-        "game.SOURCE": "'blackjack'"
-      },
-      "rename_fingerprint": "6b4e131905ab22cb",
-      "site_id": "game.BlackjackGame._pay#1",
-      "slice_fingerprint": "13bd3374c3de6e8b",
-      "slice_functions": {
-        "game.BlackjackGame.__init__": "6eacbaf9f2e2a228",
-        "game.BlackjackGame._bust": "e3d81527b5e44287",
-        "game.BlackjackGame._close": "1384a392deff69f3",
-        "game.BlackjackGame._deal_to": "542254f5a017965a",
-        "game.BlackjackGame._draw": "9fbe3ca9f204afaa",
-        "game.BlackjackGame._pay": "93a789246ec2c7bf",
-        "game.BlackjackGame._settle": "b337517da8f832de",
-        "game.BlackjackGame._shuffle": "7702beb3f917fe25",
-        "game.BlackjackGame._tick": "d590af13cbe1b68e",
-        "game.BlackjackGame.hit": "bcd6cb7255b76f6c",
-        "game.BlackjackGame.new_hand": "d203f9200976639a",
-        "game.BlackjackGame.stand": "ee24379445ea0853",
-        "game.BlackjackGame.state": "6a68a2c57fdca284",
-        "game._card_value": "37cdc37242ecf930",
-        "game.hand_total": "9a37ff426d7e3283"
-      },
-      "unresolved_calls": [
-        "<dynamic>",
-        "random.Random",
-        "self._clock",
-        "self._deck.pop",
-        "self._emit",
-        "self._rng.shuffle"
-      ]
-    },
-    {
-      "binding_keys": [
-        "hand_id"
-      ],
-      "event_type": "hand.resettled",
-      "function": "BlackjackGame._settle",
-      "module": "game",
-      "payload_fields": [],
-      "referenced_constants": {
-        "game.BET": "10",
-        "game.DEALER_STANDS_ON": "17",
-        "game.EVENT_BUST": "'hand.bust'",
-        "game.EVENT_CARD": "'hand.card'",
-        "game.EVENT_CLOSED": "'hand.closed'",
-        "game.EVENT_DEALT": "'hand.dealt'",
-        "game.EVENT_PAYOUT": "'hand.payout'",
-        "game.EVENT_RESETTLED": "'hand.resettled'",
-        "game.EVENT_SETTLED": "'hand.settled'",
-        "game.EVENT_STAND": "'hand.stand'",
-        "game.SOURCE": "'blackjack'"
-      },
-      "rename_fingerprint": "6b4e131905ab22cb",
-      "site_id": "game.BlackjackGame._settle#1",
-      "slice_fingerprint": "13bd3374c3de6e8b",
-      "slice_functions": {
-        "game.BlackjackGame.__init__": "6eacbaf9f2e2a228",
-        "game.BlackjackGame._bust": "e3d81527b5e44287",
-        "game.BlackjackGame._close": "1384a392deff69f3",
-        "game.BlackjackGame._deal_to": "542254f5a017965a",
-        "game.BlackjackGame._draw": "9fbe3ca9f204afaa",
-        "game.BlackjackGame._pay": "93a789246ec2c7bf",
-        "game.BlackjackGame._settle": "b337517da8f832de",
-        "game.BlackjackGame._shuffle": "7702beb3f917fe25",
-        "game.BlackjackGame._tick": "d590af13cbe1b68e",
-        "game.BlackjackGame.hit": "bcd6cb7255b76f6c",
-        "game.BlackjackGame.new_hand": "d203f9200976639a",
-        "game.BlackjackGame.stand": "ee24379445ea0853",
-        "game.BlackjackGame.state": "6a68a2c57fdca284",
-        "game._card_value": "37cdc37242ecf930",
-        "game.hand_total": "9a37ff426d7e3283"
-      },
-      "unresolved_calls": [
-        "<dynamic>",
-        "random.Random",
-        "self._clock",
-        "self._deck.pop",
-        "self._emit",
-        "self._rng.shuffle"
-      ]
-    },
-    {
-      "binding_keys": [
-        "hand_id"
-      ],
-      "event_type": "hand.settled",
-      "function": "BlackjackGame._settle",
-      "module": "game",
+      "function": "BlackjackTable._close",
+      "module": "blackjack",
       "payload_fields": [
         "outcome"
       ],
       "referenced_constants": {
-        "game.BET": "10",
-        "game.DEALER_STANDS_ON": "17",
-        "game.EVENT_BUST": "'hand.bust'",
-        "game.EVENT_CARD": "'hand.card'",
-        "game.EVENT_CLOSED": "'hand.closed'",
-        "game.EVENT_DEALT": "'hand.dealt'",
-        "game.EVENT_PAYOUT": "'hand.payout'",
-        "game.EVENT_RESETTLED": "'hand.resettled'",
-        "game.EVENT_SETTLED": "'hand.settled'",
-        "game.EVENT_STAND": "'hand.stand'",
-        "game.SOURCE": "'blackjack'"
+        "blackjack.BET": "10",
+        "blackjack.BUSTED": "'hand.busted'",
+        "blackjack.CLOSED": "'hand.closed'",
+        "blackjack.DEALT": "'hand.dealt'",
+        "blackjack.PAYOUT": "'hand.payout'",
+        "blackjack.SETTLED": "'hand.settled'",
+        "blackjack.SOURCE": "'blackjack-table'",
+        "blackjack.STOOD": "'hand.stood'"
       },
-      "rename_fingerprint": "6b4e131905ab22cb",
-      "site_id": "game.BlackjackGame._settle#2",
-      "slice_fingerprint": "13bd3374c3de6e8b",
+      "rename_fingerprint": "ee5a8b5b5e73977f",
+      "site_id": "blackjack.BlackjackTable._close#1",
+      "slice_fingerprint": "7e540cf98ceca4f5",
       "slice_functions": {
-        "game.BlackjackGame.__init__": "6eacbaf9f2e2a228",
-        "game.BlackjackGame._bust": "e3d81527b5e44287",
-        "game.BlackjackGame._close": "1384a392deff69f3",
-        "game.BlackjackGame._deal_to": "542254f5a017965a",
-        "game.BlackjackGame._draw": "9fbe3ca9f204afaa",
-        "game.BlackjackGame._pay": "93a789246ec2c7bf",
-        "game.BlackjackGame._settle": "b337517da8f832de",
-        "game.BlackjackGame._shuffle": "7702beb3f917fe25",
-        "game.BlackjackGame._tick": "d590af13cbe1b68e",
-        "game.BlackjackGame.hit": "bcd6cb7255b76f6c",
-        "game.BlackjackGame.new_hand": "d203f9200976639a",
-        "game.BlackjackGame.stand": "ee24379445ea0853",
-        "game.BlackjackGame.state": "6a68a2c57fdca284",
-        "game._card_value": "37cdc37242ecf930",
-        "game.hand_total": "9a37ff426d7e3283"
+        "blackjack.BlackjackTable.__init__": "d989142c32944323",
+        "blackjack.BlackjackTable._close": "7122188daf541f43",
+        "blackjack.BlackjackTable._deal_to_player": "9faa8603d75c7314",
+        "blackjack.BlackjackTable._now": "d590af13cbe1b68e",
+        "blackjack.BlackjackTable._pay": "da68868785bd2869",
+        "blackjack.BlackjackTable._settle": "cfcb3c011e7925ae",
+        "blackjack.BlackjackTable.hit": "08ad63bac2c83694",
+        "blackjack.BlackjackTable.new_hand": "11a4c0ac2d273618",
+        "blackjack.BlackjackTable.stand": "ab42c976d5101992",
+        "blackjack.BlackjackTable.state": "de4367a43114883f",
+        "blackjack.fresh_deck": "5079e95abd470c23",
+        "blackjack.hand_total": "cad1da500f4061a3",
+        "blackjack.rank_of": "f88a82f4e2879464"
       },
       "unresolved_calls": [
-        "<dynamic>",
         "random.Random",
         "self._clock",
         "self._deck.pop",
         "self._emit",
-        "self._rng.shuffle"
+        "self._rng.shuffle",
+        "self.dealer.append",
+        "self.player.append"
       ]
     },
     {
@@ -316,103 +53,241 @@
         "hand_id"
       ],
       "event_type": "hand.dealt",
-      "function": "BlackjackGame.new_hand",
-      "module": "game",
+      "function": "BlackjackTable._deal_to_player",
+      "module": "blackjack",
       "payload_fields": [
-        "bet"
+        "card",
+        "to",
+        "total"
       ],
       "referenced_constants": {
-        "game.BET": "10",
-        "game.DEALER_STANDS_ON": "17",
-        "game.EVENT_BUST": "'hand.bust'",
-        "game.EVENT_CARD": "'hand.card'",
-        "game.EVENT_CLOSED": "'hand.closed'",
-        "game.EVENT_DEALT": "'hand.dealt'",
-        "game.EVENT_PAYOUT": "'hand.payout'",
-        "game.EVENT_RESETTLED": "'hand.resettled'",
-        "game.EVENT_SETTLED": "'hand.settled'",
-        "game.EVENT_STAND": "'hand.stand'",
-        "game.SOURCE": "'blackjack'"
+        "blackjack.BET": "10",
+        "blackjack.BUSTED": "'hand.busted'",
+        "blackjack.CLOSED": "'hand.closed'",
+        "blackjack.DEALT": "'hand.dealt'",
+        "blackjack.PAYOUT": "'hand.payout'",
+        "blackjack.SETTLED": "'hand.settled'",
+        "blackjack.SOURCE": "'blackjack-table'",
+        "blackjack.STOOD": "'hand.stood'"
       },
-      "rename_fingerprint": "6b4e131905ab22cb",
-      "site_id": "game.BlackjackGame.new_hand#1",
-      "slice_fingerprint": "13bd3374c3de6e8b",
+      "rename_fingerprint": "ee5a8b5b5e73977f",
+      "site_id": "blackjack.BlackjackTable._deal_to_player#1",
+      "slice_fingerprint": "7e540cf98ceca4f5",
       "slice_functions": {
-        "game.BlackjackGame.__init__": "6eacbaf9f2e2a228",
-        "game.BlackjackGame._bust": "e3d81527b5e44287",
-        "game.BlackjackGame._close": "1384a392deff69f3",
-        "game.BlackjackGame._deal_to": "542254f5a017965a",
-        "game.BlackjackGame._draw": "9fbe3ca9f204afaa",
-        "game.BlackjackGame._pay": "93a789246ec2c7bf",
-        "game.BlackjackGame._settle": "b337517da8f832de",
-        "game.BlackjackGame._shuffle": "7702beb3f917fe25",
-        "game.BlackjackGame._tick": "d590af13cbe1b68e",
-        "game.BlackjackGame.hit": "bcd6cb7255b76f6c",
-        "game.BlackjackGame.new_hand": "d203f9200976639a",
-        "game.BlackjackGame.stand": "ee24379445ea0853",
-        "game.BlackjackGame.state": "6a68a2c57fdca284",
-        "game._card_value": "37cdc37242ecf930",
-        "game.hand_total": "9a37ff426d7e3283"
+        "blackjack.BlackjackTable.__init__": "d989142c32944323",
+        "blackjack.BlackjackTable._close": "7122188daf541f43",
+        "blackjack.BlackjackTable._deal_to_player": "9faa8603d75c7314",
+        "blackjack.BlackjackTable._now": "d590af13cbe1b68e",
+        "blackjack.BlackjackTable._pay": "da68868785bd2869",
+        "blackjack.BlackjackTable._settle": "cfcb3c011e7925ae",
+        "blackjack.BlackjackTable.hit": "08ad63bac2c83694",
+        "blackjack.BlackjackTable.new_hand": "11a4c0ac2d273618",
+        "blackjack.BlackjackTable.stand": "ab42c976d5101992",
+        "blackjack.BlackjackTable.state": "de4367a43114883f",
+        "blackjack.fresh_deck": "5079e95abd470c23",
+        "blackjack.hand_total": "cad1da500f4061a3",
+        "blackjack.rank_of": "f88a82f4e2879464"
       },
       "unresolved_calls": [
-        "<dynamic>",
         "random.Random",
         "self._clock",
         "self._deck.pop",
         "self._emit",
-        "self._rng.shuffle"
+        "self._rng.shuffle",
+        "self.dealer.append",
+        "self.player.append"
       ]
     },
     {
       "binding_keys": [
         "hand_id"
       ],
-      "event_type": "hand.stand",
-      "function": "BlackjackGame.stand",
-      "module": "game",
+      "event_type": "hand.payout",
+      "function": "BlackjackTable._pay",
+      "module": "blackjack",
       "payload_fields": [
-        "player_total"
+        "amount"
       ],
       "referenced_constants": {
-        "game.BET": "10",
-        "game.DEALER_STANDS_ON": "17",
-        "game.EVENT_BUST": "'hand.bust'",
-        "game.EVENT_CARD": "'hand.card'",
-        "game.EVENT_CLOSED": "'hand.closed'",
-        "game.EVENT_DEALT": "'hand.dealt'",
-        "game.EVENT_PAYOUT": "'hand.payout'",
-        "game.EVENT_RESETTLED": "'hand.resettled'",
-        "game.EVENT_SETTLED": "'hand.settled'",
-        "game.EVENT_STAND": "'hand.stand'",
-        "game.SOURCE": "'blackjack'"
+        "blackjack.BET": "10",
+        "blackjack.BUSTED": "'hand.busted'",
+        "blackjack.CLOSED": "'hand.closed'",
+        "blackjack.DEALT": "'hand.dealt'",
+        "blackjack.PAYOUT": "'hand.payout'",
+        "blackjack.SETTLED": "'hand.settled'",
+        "blackjack.SOURCE": "'blackjack-table'",
+        "blackjack.STOOD": "'hand.stood'"
       },
-      "rename_fingerprint": "6b4e131905ab22cb",
-      "site_id": "game.BlackjackGame.stand#1",
-      "slice_fingerprint": "13bd3374c3de6e8b",
+      "rename_fingerprint": "ee5a8b5b5e73977f",
+      "site_id": "blackjack.BlackjackTable._pay#1",
+      "slice_fingerprint": "7e540cf98ceca4f5",
       "slice_functions": {
-        "game.BlackjackGame.__init__": "6eacbaf9f2e2a228",
-        "game.BlackjackGame._bust": "e3d81527b5e44287",
-        "game.BlackjackGame._close": "1384a392deff69f3",
-        "game.BlackjackGame._deal_to": "542254f5a017965a",
-        "game.BlackjackGame._draw": "9fbe3ca9f204afaa",
-        "game.BlackjackGame._pay": "93a789246ec2c7bf",
-        "game.BlackjackGame._settle": "b337517da8f832de",
-        "game.BlackjackGame._shuffle": "7702beb3f917fe25",
-        "game.BlackjackGame._tick": "d590af13cbe1b68e",
-        "game.BlackjackGame.hit": "bcd6cb7255b76f6c",
-        "game.BlackjackGame.new_hand": "d203f9200976639a",
-        "game.BlackjackGame.stand": "ee24379445ea0853",
-        "game.BlackjackGame.state": "6a68a2c57fdca284",
-        "game._card_value": "37cdc37242ecf930",
-        "game.hand_total": "9a37ff426d7e3283"
+        "blackjack.BlackjackTable.__init__": "d989142c32944323",
+        "blackjack.BlackjackTable._close": "7122188daf541f43",
+        "blackjack.BlackjackTable._deal_to_player": "9faa8603d75c7314",
+        "blackjack.BlackjackTable._now": "d590af13cbe1b68e",
+        "blackjack.BlackjackTable._pay": "da68868785bd2869",
+        "blackjack.BlackjackTable._settle": "cfcb3c011e7925ae",
+        "blackjack.BlackjackTable.hit": "08ad63bac2c83694",
+        "blackjack.BlackjackTable.new_hand": "11a4c0ac2d273618",
+        "blackjack.BlackjackTable.stand": "ab42c976d5101992",
+        "blackjack.BlackjackTable.state": "de4367a43114883f",
+        "blackjack.fresh_deck": "5079e95abd470c23",
+        "blackjack.hand_total": "cad1da500f4061a3",
+        "blackjack.rank_of": "f88a82f4e2879464"
       },
       "unresolved_calls": [
-        "<dynamic>",
         "random.Random",
         "self._clock",
         "self._deck.pop",
         "self._emit",
-        "self._rng.shuffle"
+        "self._rng.shuffle",
+        "self.dealer.append",
+        "self.player.append"
+      ]
+    },
+    {
+      "binding_keys": [
+        "hand_id"
+      ],
+      "event_type": "hand.settled",
+      "function": "BlackjackTable._settle",
+      "module": "blackjack",
+      "payload_fields": [
+        "outcome"
+      ],
+      "referenced_constants": {
+        "blackjack.BET": "10",
+        "blackjack.BUSTED": "'hand.busted'",
+        "blackjack.CLOSED": "'hand.closed'",
+        "blackjack.DEALT": "'hand.dealt'",
+        "blackjack.PAYOUT": "'hand.payout'",
+        "blackjack.SETTLED": "'hand.settled'",
+        "blackjack.SOURCE": "'blackjack-table'",
+        "blackjack.STOOD": "'hand.stood'"
+      },
+      "rename_fingerprint": "ee5a8b5b5e73977f",
+      "site_id": "blackjack.BlackjackTable._settle#1",
+      "slice_fingerprint": "7e540cf98ceca4f5",
+      "slice_functions": {
+        "blackjack.BlackjackTable.__init__": "d989142c32944323",
+        "blackjack.BlackjackTable._close": "7122188daf541f43",
+        "blackjack.BlackjackTable._deal_to_player": "9faa8603d75c7314",
+        "blackjack.BlackjackTable._now": "d590af13cbe1b68e",
+        "blackjack.BlackjackTable._pay": "da68868785bd2869",
+        "blackjack.BlackjackTable._settle": "cfcb3c011e7925ae",
+        "blackjack.BlackjackTable.hit": "08ad63bac2c83694",
+        "blackjack.BlackjackTable.new_hand": "11a4c0ac2d273618",
+        "blackjack.BlackjackTable.stand": "ab42c976d5101992",
+        "blackjack.BlackjackTable.state": "de4367a43114883f",
+        "blackjack.fresh_deck": "5079e95abd470c23",
+        "blackjack.hand_total": "cad1da500f4061a3",
+        "blackjack.rank_of": "f88a82f4e2879464"
+      },
+      "unresolved_calls": [
+        "random.Random",
+        "self._clock",
+        "self._deck.pop",
+        "self._emit",
+        "self._rng.shuffle",
+        "self.dealer.append",
+        "self.player.append"
+      ]
+    },
+    {
+      "binding_keys": [
+        "hand_id"
+      ],
+      "event_type": "hand.busted",
+      "function": "BlackjackTable.hit",
+      "module": "blackjack",
+      "payload_fields": [
+        "total"
+      ],
+      "referenced_constants": {
+        "blackjack.BET": "10",
+        "blackjack.BUSTED": "'hand.busted'",
+        "blackjack.CLOSED": "'hand.closed'",
+        "blackjack.DEALT": "'hand.dealt'",
+        "blackjack.PAYOUT": "'hand.payout'",
+        "blackjack.SETTLED": "'hand.settled'",
+        "blackjack.SOURCE": "'blackjack-table'",
+        "blackjack.STOOD": "'hand.stood'"
+      },
+      "rename_fingerprint": "ee5a8b5b5e73977f",
+      "site_id": "blackjack.BlackjackTable.hit#1",
+      "slice_fingerprint": "7e540cf98ceca4f5",
+      "slice_functions": {
+        "blackjack.BlackjackTable.__init__": "d989142c32944323",
+        "blackjack.BlackjackTable._close": "7122188daf541f43",
+        "blackjack.BlackjackTable._deal_to_player": "9faa8603d75c7314",
+        "blackjack.BlackjackTable._now": "d590af13cbe1b68e",
+        "blackjack.BlackjackTable._pay": "da68868785bd2869",
+        "blackjack.BlackjackTable._settle": "cfcb3c011e7925ae",
+        "blackjack.BlackjackTable.hit": "08ad63bac2c83694",
+        "blackjack.BlackjackTable.new_hand": "11a4c0ac2d273618",
+        "blackjack.BlackjackTable.stand": "ab42c976d5101992",
+        "blackjack.BlackjackTable.state": "de4367a43114883f",
+        "blackjack.fresh_deck": "5079e95abd470c23",
+        "blackjack.hand_total": "cad1da500f4061a3",
+        "blackjack.rank_of": "f88a82f4e2879464"
+      },
+      "unresolved_calls": [
+        "random.Random",
+        "self._clock",
+        "self._deck.pop",
+        "self._emit",
+        "self._rng.shuffle",
+        "self.dealer.append",
+        "self.player.append"
+      ]
+    },
+    {
+      "binding_keys": [
+        "hand_id"
+      ],
+      "event_type": "hand.stood",
+      "function": "BlackjackTable.stand",
+      "module": "blackjack",
+      "payload_fields": [
+        "total"
+      ],
+      "referenced_constants": {
+        "blackjack.BET": "10",
+        "blackjack.BUSTED": "'hand.busted'",
+        "blackjack.CLOSED": "'hand.closed'",
+        "blackjack.DEALT": "'hand.dealt'",
+        "blackjack.PAYOUT": "'hand.payout'",
+        "blackjack.SETTLED": "'hand.settled'",
+        "blackjack.SOURCE": "'blackjack-table'",
+        "blackjack.STOOD": "'hand.stood'"
+      },
+      "rename_fingerprint": "ee5a8b5b5e73977f",
+      "site_id": "blackjack.BlackjackTable.stand#1",
+      "slice_fingerprint": "7e540cf98ceca4f5",
+      "slice_functions": {
+        "blackjack.BlackjackTable.__init__": "d989142c32944323",
+        "blackjack.BlackjackTable._close": "7122188daf541f43",
+        "blackjack.BlackjackTable._deal_to_player": "9faa8603d75c7314",
+        "blackjack.BlackjackTable._now": "d590af13cbe1b68e",
+        "blackjack.BlackjackTable._pay": "da68868785bd2869",
+        "blackjack.BlackjackTable._settle": "cfcb3c011e7925ae",
+        "blackjack.BlackjackTable.hit": "08ad63bac2c83694",
+        "blackjack.BlackjackTable.new_hand": "11a4c0ac2d273618",
+        "blackjack.BlackjackTable.stand": "ab42c976d5101992",
+        "blackjack.BlackjackTable.state": "de4367a43114883f",
+        "blackjack.fresh_deck": "5079e95abd470c23",
+        "blackjack.hand_total": "cad1da500f4061a3",
+        "blackjack.rank_of": "f88a82f4e2879464"
+      },
+      "unresolved_calls": [
+        "random.Random",
+        "self._clock",
+        "self._deck.pop",
+        "self._emit",
+        "self._rng.shuffle",
+        "self.dealer.append",
+        "self.player.append"
       ]
     }
   ],
@@ -421,7 +296,7 @@
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "a hand is dealt",
+      "phrasing": "the hand is dealt a card",
       "provenance": "llm",
       "signature": {
         "condition_fingerprint": "c07a6740ef14eb7e",
@@ -432,36 +307,10 @@
         "helper_hashes": {},
         "payload_fields": {},
         "referenced_fields": [],
-        "trigger_condition": "a hand is dealt",
+        "trigger_condition": "the hand is dealt a card",
         "unresolved_calls": []
       },
-      "step_id": "hand.dealt.is",
-      "version": 1
-    },
-    {
-      "kind": "trigger",
-      "observed": false,
-      "phrasing": "a card is dealt to the \"{to}\"",
-      "provenance": "llm",
-      "signature": {
-        "condition_fingerprint": "1a69a175a70813a5",
-        "correlation_key": [
-          "hand_id"
-        ],
-        "event_type": "hand.card",
-        "helper_hashes": {},
-        "payload_fields": {
-          "to": "any"
-        },
-        "referenced_fields": [
-          "to"
-        ],
-        "trigger_condition": "a card is dealt to the \"{to}\"",
-        "unresolved_calls": [
-          "get"
-        ]
-      },
-      "step_id": "hand.card.to",
+      "step_id": "hand.dealt.card",
       "version": 1
     },
     {
@@ -470,44 +319,38 @@
       "phrasing": "the hand stands",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "35495a378f4fdbce",
+        "condition_fingerprint": "27736ff9905687f1",
         "correlation_key": [
           "hand_id"
         ],
-        "event_type": "hand.stand",
+        "event_type": "hand.stood",
         "helper_hashes": {},
         "payload_fields": {},
         "referenced_fields": [],
         "trigger_condition": "the hand stands",
         "unresolved_calls": []
       },
-      "step_id": "hand.stand.is",
+      "step_id": "hand.stood",
       "version": 1
     },
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "the \"{who}\" busts",
+      "phrasing": "the hand busts",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "6dcd7a0ff54132c6",
+        "condition_fingerprint": "78aa3bf4481b1ba2",
         "correlation_key": [
           "hand_id"
         ],
-        "event_type": "hand.bust",
+        "event_type": "hand.busted",
         "helper_hashes": {},
-        "payload_fields": {
-          "who": "any"
-        },
-        "referenced_fields": [
-          "who"
-        ],
-        "trigger_condition": "the \"{who}\" busts",
-        "unresolved_calls": [
-          "get"
-        ]
+        "payload_fields": {},
+        "referenced_fields": [],
+        "trigger_condition": "the hand busts",
+        "unresolved_calls": []
       },
-      "step_id": "hand.bust.who",
+      "step_id": "hand.busted",
       "version": 1
     },
     {
@@ -527,13 +370,13 @@
         "trigger_condition": "the hand is settled",
         "unresolved_calls": []
       },
-      "step_id": "hand.settled.is",
+      "step_id": "hand.settled.any",
       "version": 1
     },
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "the hand is settled as a \"{outcome}\"",
+      "phrasing": "the hand is settled as \"{outcome}\"",
       "provenance": "llm",
       "signature": {
         "condition_fingerprint": "a9b7b8a2ca311dac",
@@ -548,38 +391,18 @@
         "referenced_fields": [
           "outcome"
         ],
-        "trigger_condition": "the hand is settled as a \"{outcome}\"",
+        "trigger_condition": "the hand is settled as \"{outcome}\"",
         "unresolved_calls": [
           "get"
         ]
       },
-      "step_id": "hand.settled.as",
+      "step_id": "hand.settled.outcome",
       "version": 1
     },
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "a hand is resettled",
-      "provenance": "llm",
-      "signature": {
-        "condition_fingerprint": "8f885535324062ea",
-        "correlation_key": [
-          "hand_id"
-        ],
-        "event_type": "hand.resettled",
-        "helper_hashes": {},
-        "payload_fields": {},
-        "referenced_fields": [],
-        "trigger_condition": "a hand is resettled",
-        "unresolved_calls": []
-      },
-      "step_id": "hand.resettled.is",
-      "version": 1
-    },
-    {
-      "kind": "trigger",
-      "observed": false,
-      "phrasing": "a payout happens",
+      "phrasing": "a payout is made for the hand",
       "provenance": "llm",
       "signature": {
         "condition_fingerprint": "19da3f291794dcf7",
@@ -590,30 +413,10 @@
         "helper_hashes": {},
         "payload_fields": {},
         "referenced_fields": [],
-        "trigger_condition": "a payout happens",
+        "trigger_condition": "a payout is made for the hand",
         "unresolved_calls": []
       },
-      "step_id": "hand.payout.is",
-      "version": 1
-    },
-    {
-      "kind": "trigger",
-      "observed": false,
-      "phrasing": "the hand is closed",
-      "provenance": "llm",
-      "signature": {
-        "condition_fingerprint": "c9f1983222372b2b",
-        "correlation_key": [
-          "hand_id"
-        ],
-        "event_type": "hand.closed",
-        "helper_hashes": {},
-        "payload_fields": {},
-        "referenced_fields": [],
-        "trigger_condition": "the hand is closed",
-        "unresolved_calls": []
-      },
-      "step_id": "hand.closed.is",
+      "step_id": "hand.payout",
       "version": 1
     }
   ]

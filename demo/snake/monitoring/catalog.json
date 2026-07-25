@@ -4,265 +4,79 @@
       "binding_keys": [
         "game_id"
       ],
-      "event_type": "game.status",
-      "function": "SnakeService._end_game",
+      "event_type": "<dynamic>",
+      "function": "SnakeGame._emit",
       "module": "game",
       "payload_fields": [
-        "reason",
-        "score",
-        "status"
+        "<dynamic>"
       ],
       "referenced_constants": {
-        "game.FOOD_EVENT": "'snake.food'",
-        "game.GRID_H": "24",
-        "game.GRID_W": "24",
-        "game.GROW_EVENT": "'snake.grow'",
-        "game.MOVE_EVENT": "'snake.move'",
-        "game.POINTS_PER_FOOD": "10",
-        "game.SCORE_EVENT": "'game.score'",
+        "game.EVT_FOOD": "'game.food'",
+        "game.EVT_GROW": "'game.grow'",
+        "game.EVT_MOVE": "'game.move'",
+        "game.EVT_STATUS": "'game.status'",
         "game.SOURCE": "'snake-engine'",
-        "game.STATUS_EVENT": "'game.status'",
-        "game.TICK_EPSILON": "0.001"
+        "game.START_LEN": "3"
       },
-      "rename_fingerprint": "a8f91b95274165a9",
-      "site_id": "game.SnakeService._end_game#1",
-      "slice_fingerprint": "c537fead25dc7e5d",
+      "rename_fingerprint": "6d8056709c09fd27",
+      "site_id": "game.SnakeGame._emit#1",
+      "slice_fingerprint": "2e82c7d78c789a91",
       "slice_functions": {
-        "game.SnakeService.__init__": "3f093bf774a4ad80",
-        "game.SnakeService._end_game": "e4e0e4c79f108ea6",
-        "game.SnakeService._now": "25c48a6b33213da1",
-        "game.SnakeService.new_game": "7e254eaad88982b3",
-        "game.SnakeService.tick": "e474d4ee9485a9f3",
-        "game._is_opposite": "54ee15668c339786"
+        "game.SnakeGame.__init__": "500bdbb9cd948f6f",
+        "game.SnakeGame._emit": "2157b08f75504909",
+        "game.SnakeGame._game_over": "7807deebe7a4ad03",
+        "game.SnakeGame._place_food": "bbecae33d6cfc713",
+        "game.SnakeGame.set_direction": "09da6f64eaa19d3f",
+        "game.SnakeGame.start": "9f5ede6ede45a288",
+        "game.SnakeGame.tick": "7eaef38fb4b5e9c7"
       },
       "unresolved_calls": [
-        "GameState",
+        "random.Random",
         "self._clock",
-        "self._emit",
-        "self.games.get",
-        "state._spawn_food",
-        "state.snake.insert",
-        "state.snake.pop"
+        "self._emit_raw",
+        "self._rng.choice",
+        "self.snake.insert",
+        "self.snake.pop"
       ]
     },
     {
       "binding_keys": [
         "game_id"
       ],
-      "event_type": "game.status",
-      "function": "SnakeService.new_game",
-      "module": "game",
+      "event_type": "<dynamic>",
+      "function": "play",
+      "module": "traffic",
       "payload_fields": [
-        "grid_h",
-        "grid_w",
-        "status"
+        "<dynamic>"
       ],
-      "referenced_constants": {
-        "game.FOOD_EVENT": "'snake.food'",
-        "game.GRID_H": "24",
-        "game.GRID_W": "24",
-        "game.GROW_EVENT": "'snake.grow'",
-        "game.MOVE_EVENT": "'snake.move'",
-        "game.POINTS_PER_FOOD": "10",
-        "game.SCORE_EVENT": "'game.score'",
-        "game.SOURCE": "'snake-engine'",
-        "game.STATUS_EVENT": "'game.status'",
-        "game.TICK_EPSILON": "0.001"
-      },
-      "rename_fingerprint": "a8f91b95274165a9",
-      "site_id": "game.SnakeService.new_game#1",
-      "slice_fingerprint": "c537fead25dc7e5d",
+      "referenced_constants": {},
+      "rename_fingerprint": "3165a5f686955898",
+      "site_id": "traffic.play#1",
+      "slice_fingerprint": "3165a5f686955898",
       "slice_functions": {
-        "game.SnakeService.__init__": "3f093bf774a4ad80",
-        "game.SnakeService._end_game": "e4e0e4c79f108ea6",
-        "game.SnakeService._now": "25c48a6b33213da1",
-        "game.SnakeService.new_game": "7e254eaad88982b3",
-        "game.SnakeService.tick": "e474d4ee9485a9f3",
-        "game._is_opposite": "54ee15668c339786"
+        "traffic.play": "4432cf1e2253f90f"
       },
       "unresolved_calls": [
-        "GameState",
-        "self._clock",
-        "self._emit",
-        "self.games.get",
-        "state._spawn_food",
-        "state.snake.insert",
-        "state.snake.pop"
-      ]
-    },
-    {
-      "binding_keys": [
-        "game_id"
-      ],
-      "event_type": "snake.move",
-      "function": "SnakeService.tick",
-      "module": "game",
-      "payload_fields": [
-        "direction",
-        "reversal_accepted",
-        "turn"
-      ],
-      "referenced_constants": {
-        "game.FOOD_EVENT": "'snake.food'",
-        "game.GRID_H": "24",
-        "game.GRID_W": "24",
-        "game.GROW_EVENT": "'snake.grow'",
-        "game.MOVE_EVENT": "'snake.move'",
-        "game.POINTS_PER_FOOD": "10",
-        "game.SCORE_EVENT": "'game.score'",
-        "game.SOURCE": "'snake-engine'",
-        "game.STATUS_EVENT": "'game.status'",
-        "game.TICK_EPSILON": "0.001"
-      },
-      "rename_fingerprint": "a8f91b95274165a9",
-      "site_id": "game.SnakeService.tick#1",
-      "slice_fingerprint": "c537fead25dc7e5d",
-      "slice_functions": {
-        "game.SnakeService.__init__": "3f093bf774a4ad80",
-        "game.SnakeService._end_game": "e4e0e4c79f108ea6",
-        "game.SnakeService._now": "25c48a6b33213da1",
-        "game.SnakeService.new_game": "7e254eaad88982b3",
-        "game.SnakeService.tick": "e474d4ee9485a9f3",
-        "game._is_opposite": "54ee15668c339786"
-      },
-      "unresolved_calls": [
-        "GameState",
-        "self._clock",
-        "self._emit",
-        "self.games.get",
-        "state._spawn_food",
-        "state.snake.insert",
-        "state.snake.pop"
-      ]
-    },
-    {
-      "binding_keys": [
-        "game_id"
-      ],
-      "event_type": "snake.food",
-      "function": "SnakeService.tick",
-      "module": "game",
-      "payload_fields": [
-        "score"
-      ],
-      "referenced_constants": {
-        "game.FOOD_EVENT": "'snake.food'",
-        "game.GRID_H": "24",
-        "game.GRID_W": "24",
-        "game.GROW_EVENT": "'snake.grow'",
-        "game.MOVE_EVENT": "'snake.move'",
-        "game.POINTS_PER_FOOD": "10",
-        "game.SCORE_EVENT": "'game.score'",
-        "game.SOURCE": "'snake-engine'",
-        "game.STATUS_EVENT": "'game.status'",
-        "game.TICK_EPSILON": "0.001"
-      },
-      "rename_fingerprint": "a8f91b95274165a9",
-      "site_id": "game.SnakeService.tick#2",
-      "slice_fingerprint": "c537fead25dc7e5d",
-      "slice_functions": {
-        "game.SnakeService.__init__": "3f093bf774a4ad80",
-        "game.SnakeService._end_game": "e4e0e4c79f108ea6",
-        "game.SnakeService._now": "25c48a6b33213da1",
-        "game.SnakeService.new_game": "7e254eaad88982b3",
-        "game.SnakeService.tick": "e474d4ee9485a9f3",
-        "game._is_opposite": "54ee15668c339786"
-      },
-      "unresolved_calls": [
-        "GameState",
-        "self._clock",
-        "self._emit",
-        "self.games.get",
-        "state._spawn_food",
-        "state.snake.insert",
-        "state.snake.pop"
-      ]
-    },
-    {
-      "binding_keys": [
-        "game_id"
-      ],
-      "event_type": "snake.grow",
-      "function": "SnakeService.tick",
-      "module": "game",
-      "payload_fields": [
-        "length"
-      ],
-      "referenced_constants": {
-        "game.FOOD_EVENT": "'snake.food'",
-        "game.GRID_H": "24",
-        "game.GRID_W": "24",
-        "game.GROW_EVENT": "'snake.grow'",
-        "game.MOVE_EVENT": "'snake.move'",
-        "game.POINTS_PER_FOOD": "10",
-        "game.SCORE_EVENT": "'game.score'",
-        "game.SOURCE": "'snake-engine'",
-        "game.STATUS_EVENT": "'game.status'",
-        "game.TICK_EPSILON": "0.001"
-      },
-      "rename_fingerprint": "a8f91b95274165a9",
-      "site_id": "game.SnakeService.tick#3",
-      "slice_fingerprint": "c537fead25dc7e5d",
-      "slice_functions": {
-        "game.SnakeService.__init__": "3f093bf774a4ad80",
-        "game.SnakeService._end_game": "e4e0e4c79f108ea6",
-        "game.SnakeService._now": "25c48a6b33213da1",
-        "game.SnakeService.new_game": "7e254eaad88982b3",
-        "game.SnakeService.tick": "e474d4ee9485a9f3",
-        "game._is_opposite": "54ee15668c339786"
-      },
-      "unresolved_calls": [
-        "GameState",
-        "self._clock",
-        "self._emit",
-        "self.games.get",
-        "state._spawn_food",
-        "state.snake.insert",
-        "state.snake.pop"
-      ]
-    },
-    {
-      "binding_keys": [
-        "game_id"
-      ],
-      "event_type": "game.score",
-      "function": "SnakeService.tick",
-      "module": "game",
-      "payload_fields": [
-        "points",
-        "score"
-      ],
-      "referenced_constants": {
-        "game.FOOD_EVENT": "'snake.food'",
-        "game.GRID_H": "24",
-        "game.GRID_W": "24",
-        "game.GROW_EVENT": "'snake.grow'",
-        "game.MOVE_EVENT": "'snake.move'",
-        "game.POINTS_PER_FOOD": "10",
-        "game.SCORE_EVENT": "'game.score'",
-        "game.SOURCE": "'snake-engine'",
-        "game.STATUS_EVENT": "'game.status'",
-        "game.TICK_EPSILON": "0.001"
-      },
-      "rename_fingerprint": "a8f91b95274165a9",
-      "site_id": "game.SnakeService.tick#4",
-      "slice_fingerprint": "c537fead25dc7e5d",
-      "slice_functions": {
-        "game.SnakeService.__init__": "3f093bf774a4ad80",
-        "game.SnakeService._end_game": "e4e0e4c79f108ea6",
-        "game.SnakeService._now": "25c48a6b33213da1",
-        "game.SnakeService.new_game": "7e254eaad88982b3",
-        "game.SnakeService.tick": "e474d4ee9485a9f3",
-        "game._is_opposite": "54ee15668c339786"
-      },
-      "unresolved_calls": [
-        "GameState",
-        "self._clock",
-        "self._emit",
-        "self.games.get",
-        "state._spawn_food",
-        "state.snake.insert",
-        "state.snake.pop"
+        "SnakeGame",
+        "advance",
+        "clock",
+        "emit",
+        "g.start",
+        "g.tick",
+        "g2.set_direction",
+        "g2.start",
+        "g2.tick",
+        "ga.start",
+        "ga.tick",
+        "gb.start",
+        "gb.tick",
+        "gc.start",
+        "gc.tick",
+        "gd.start",
+        "gd.tick",
+        "notes.append",
+        "random.Random",
+        "raw"
       ]
     }
   ],
@@ -274,7 +88,7 @@
       "phrasing": "a game is \"{status}\"",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "b43fc0e222373bd6",
+        "condition_fingerprint": "bb0f5cfdaedc9a19",
         "correlation_key": [
           "game_id"
         ],
@@ -288,7 +102,6 @@
         ],
         "trigger_condition": "a game is \"{status}\"",
         "unresolved_calls": [
-          "ctx.bind",
           "get"
         ]
       },
@@ -298,70 +111,67 @@
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "a move is made",
+      "phrasing": "the snake moves",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "ddd293f5a701bc6f",
+        "condition_fingerprint": "94560527fbe5e03f",
         "correlation_key": [
           "game_id"
         ],
-        "event_type": "snake.move",
+        "event_type": "game.move",
         "helper_hashes": {},
         "payload_fields": {},
         "referenced_fields": [],
-        "trigger_condition": "a move is made",
-        "unresolved_calls": [
-          "ctx.bind"
-        ]
+        "trigger_condition": "the snake moves",
+        "unresolved_calls": []
       },
-      "step_id": "snake.move.made",
+      "step_id": "game.move.any",
       "version": 1
     },
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "a reversal is accepted",
+      "phrasing": "the snake reverses into itself",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "3fa3df5442868219",
+        "condition_fingerprint": "c74b6c0ccd1b19ff",
         "correlation_key": [
           "game_id"
         ],
-        "event_type": "snake.move",
+        "event_type": "game.move",
         "helper_hashes": {},
         "payload_fields": {
-          "reversal_accepted": "any"
+          "direction": "any",
+          "prev_direction": "any"
         },
         "referenced_fields": [],
-        "trigger_condition": "a reversal is accepted",
+        "trigger_condition": "the snake reverses into itself",
         "unresolved_calls": [
-          "ctx.bind",
+          "_OPPOSITE.get",
           "get"
         ]
       },
-      "step_id": "snake.move.reversal",
+      "step_id": "game.move.reversal",
       "version": 1
     },
     {
       "kind": "trigger",
       "observed": false,
-      "phrasing": "the snake eats food",
+      "phrasing": "a point is scored",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "eaa8a74e00bc5351",
+        "condition_fingerprint": "545c9319878982a7",
         "correlation_key": [
           "game_id"
         ],
-        "event_type": "snake.food",
+        "event_type": "game.food",
         "helper_hashes": {},
         "payload_fields": {},
         "referenced_fields": [],
-        "trigger_condition": "the snake eats food",
-        "unresolved_calls": [
-          "ctx.bind"
-        ]
+        "trigger_condition": "a point is scored",
+        "unresolved_calls": []
       },
-      "step_id": "snake.food.eaten",
+      "step_id": "game.food.scored",
       "version": 1
     },
     {
@@ -370,42 +180,18 @@
       "phrasing": "the snake grows",
       "provenance": "llm",
       "signature": {
-        "condition_fingerprint": "db4bf072aae9df70",
+        "condition_fingerprint": "ecf2567dc85a1d6e",
         "correlation_key": [
           "game_id"
         ],
-        "event_type": "snake.grow",
+        "event_type": "game.grow",
         "helper_hashes": {},
         "payload_fields": {},
         "referenced_fields": [],
         "trigger_condition": "the snake grows",
-        "unresolved_calls": [
-          "ctx.bind"
-        ]
+        "unresolved_calls": []
       },
-      "step_id": "snake.grow.happened",
-      "version": 1
-    },
-    {
-      "kind": "trigger",
-      "observed": false,
-      "phrasing": "points are scored",
-      "provenance": "llm",
-      "signature": {
-        "condition_fingerprint": "1e5a61a3f8e65c2a",
-        "correlation_key": [
-          "game_id"
-        ],
-        "event_type": "game.score",
-        "helper_hashes": {},
-        "payload_fields": {},
-        "referenced_fields": [],
-        "trigger_condition": "points are scored",
-        "unresolved_calls": [
-          "ctx.bind"
-        ]
-      },
-      "step_id": "game.score.made",
+      "step_id": "game.grow.happens",
       "version": 1
     }
   ]

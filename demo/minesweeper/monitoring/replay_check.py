@@ -1,89 +1,111 @@
-"""Deterministic verdict gate: scripted traffic through the real game and the
-real policies, exit-coded for CI.
+"""Deterministic verdict gate: scripted traffic through the real game engine
+and the committed policies, exit-coded for CI.
 
     python monitoring/replay_check.py     # exit 1 on unexpected verdicts
 
-The healthy flows (a safe game; a legitimate mine hit that ends the game) go
-through the real ``Minesweeper`` service and MUST produce zero violations.
-The three faults are corrupted events injected directly onto the stream -
-exactly what a compromised or bypassed component would emit - so the monitor,
-which trusts only the event stream, catches each one:
+The healthy flow is a full, real game played to a win (zero violations - the
+board engine's own guards keep play legal). The faulty flows are CORRUPTED
+event streams injected straight onto the source, bypassing those guards, one
+per rule:
 
-* reveal after the boom          -> rule 1 (01_no_reveal_after_boom)
-* the same cell revealed twice    -> rule 2 (02_no_double_reveal)
-* an 11th flag on a 10-mine board -> rule 3 (03_flags_never_exceed_mines)
+* reveal-after-boom : a board reveal emitted after the mine detonated.
+* double-reveal     : a second reveal of a square already seen.
+* flag-overflow     : a flag count above the mine budget.
 
-There is no terminal event (game.over is informational, not terminal), so the
-prohibitions stay armed after the boom and the terminal-windows concern does
-not apply: the post-boom reveal is caught even though it arrives after
-game.over. Update EXPECTED only for intended behaviour changes, and say so.
+Update EXPECTED only for intended behaviour changes, and say so in the commit.
 """
 
 from __future__ import annotations
 
+import random
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from behave_rv.engine.loop import Engine                       # noqa: E402
-from behave_rv.events.event import Event                       # noqa: E402
+from behave_rv.engine.loop import Engine                        # noqa: E402
+from behave_rv.events.event import Event                        # noqa: E402
 from behave_rv.events.sources.inprocess import InProcessSource  # noqa: E402
 from behave_rv.verdict.explain import explain_verdict           # noqa: E402
 
-from app.minesweeper import (                                   # noqa: E402
-    Minesweeper, DeterministicClock, CELL_REVEAL, FLAG_PLACED, SOURCE,
+from steps import build_registry, load_policies                 # noqa: E402
+from app.game import (                                          # noqa: E402
+    MinesweeperGame, BOARD_REVEAL, CELL_REVEAL, FLAG_SET, SOURCE,
 )
-from steps import build_registry, load_policies                # noqa: E402
 
-# game.over is deliberately NOT terminal (see module docstring).
-TERMINAL_TYPES: set[str] = set()
-EXPECTED = {"verdicts": 124, "violations": 4}
+TERMINAL_TYPES = {"game.done"}     # a cleared board settles its game-keyed policies
+EXPECTED = {"verdicts": 92, "violations": 3}
 
-# Ten mines packed into the top two rows, leaving the rest of the board safe.
-MINES = [(0, c) for c in range(5)] + [(1, c) for c in range(5)]
+
+class FakeClock:
+    """Strictly increasing event time: every emit gets a distinct timestamp so
+    ordered emissions never collide. ``tick`` opens a wider gap between flows."""
+
+    def __init__(self):
+        self.now = 0.0
+
+    def __call__(self):
+        self.now += 1e-3
+        return self.now
+
+    def tick(self, dt: float = 1.0):
+        self.now += dt
+
+
+def play_healthy_win(emit, clock) -> None:
+    """A real board played to completion with no illegal move: reveal a safe
+    opening square, plant a few flags within budget, then clear every non-mine
+    square. The engine's guards make this clean by construction."""
+    game = MinesweeperGame("game-healthy", emit, clock, rng=random.Random(7))
+    game.reveal(0, 0)                       # first click places mines, always safe
+    for cell in sorted(game.mine_at)[:3]:   # flag a few real mines, well under budget 10
+        game.toggle_flag(*cell)
+    for r in range(game.rows):
+        for c in range(game.cols):
+            if (r, c) not in game.mine_at:
+                game.reveal(r, c)           # revealed squares are inert; only new ones fire
+    assert game.status == "won", game.status
+
+
+def cheat_reveal_after_boom(emit, clock) -> None:
+    """Detonate a real board, then inject a reveal that arrives after the boom."""
+    game = MinesweeperGame("game-boom", emit, clock, rng=random.Random(1))
+    game.reveal(0, 0)                       # safe opener, places mines
+    mine_r, mine_c = sorted(game.mine_at)[0]
+    game.reveal(mine_r, mine_c)             # steps on a mine -> mine.boom, board frozen
+    clock.tick()
+    # corrupted stream: a board reveal after the detonation (bypasses the guard)
+    emit(Event(BOARD_REVEAL, clock(), {"game_id": "game-boom"},
+               {"cell": "3,3", "row": 3, "col": 3, "mine": False}, SOURCE))
+
+
+def cheat_double_reveal(emit, clock) -> None:
+    """Reveal a square legally, then inject a second reveal of that same square."""
+    game = MinesweeperGame("game-dup", emit, clock, rng=random.Random(2))
+    game.reveal(0, 0)
+    # find a revealed non-mine square to duplicate
+    target = sorted(game.revealed)[0]
+    clock.tick()
+    # corrupted stream: the same (game_id, cell) revealed a second time
+    emit(Event(CELL_REVEAL, clock(),
+               {"game_id": "game-dup", "cell": f"{target[0]},{target[1]}"},
+               {"row": target[0], "col": target[1], "mine": False}, SOURCE))
+
+
+def cheat_flag_overflow(emit, clock) -> None:
+    """Inject a flag count above the mine budget."""
+    clock.tick()
+    emit(Event(FLAG_SET, clock(), {"game_id": "game-flags"},
+               {"flags": 11, "mines": 10}, SOURCE))
 
 
 def simulate_traffic(emit) -> None:
-    clock = DeterministicClock()
-
-    # --- healthy flow 1: a safe game, normal reveals and flags -----------
-    safe = Minesweeper("g_safe", emit, clock, mine_positions=MINES)
-    safe.reveal(7, 7)            # floods a large safe region
-    safe.reveal(5, 6)            # already revealed by the flood -> no-op
-    safe.flag(0, 0)              # flag three suspected mines (<= 10)
-    safe.flag(0, 1)
-    safe.flag(1, 0)
-
-    # --- healthy flow 2: a legitimate mine hit ends the game (no cheat) ---
-    boom_ok = Minesweeper("g_boom_ok", emit, clock, mine_positions=MINES)
-    boom_ok.reveal(0, 0)         # steps on a mine -> boom, game over
-    boom_ok.reveal(6, 6)         # honest game no-ops after game over
-
-    # --- fault A: reveal after the boom (rule 1) -------------------------
-    boom = Minesweeper("g_boom_cheat", emit, clock, mine_positions=MINES)
-    boom.reveal(0, 0)            # boom
-    emit(Event(CELL_REVEAL, clock(), {"game_id": "g_boom_cheat", "cell": "6,6"},
-               {"row": 6, "col": 6, "mine": False}, SOURCE))   # injected reveal
-
-    # --- fault B: the same cell revealed twice (rule 2) ------------------
-    dbl = Minesweeper("g_double_cheat", emit, clock, mine_positions=MINES)
-    dbl.reveal(7, 7)            # legitimate first reveal of a region incl (7,7)
-    emit(Event(CELL_REVEAL, clock(), {"game_id": "g_double_cheat", "cell": "7,7"},
-               {"row": 7, "col": 7, "mine": False}, SOURCE))   # injected repeat
-
-    # --- fault C: an 11th flag on a 10-mine board (rule 3) ---------------
-    flags = Minesweeper("g_flag_cheat", emit, clock, mine_positions=MINES)
-    emit(Event(FLAG_PLACED, clock(), {"game_id": "g_flag_cheat"},
-               {"flags": 11, "mines": 10, "cell": "3,3"}, SOURCE))  # injected
-
-    # --- fault D: a reveal with no preceding game start (rule 4) ----------
-    # No Minesweeper is constructed for this game_id, so no game.started event
-    # is ever emitted; a raw cell.reveal arriving under it models a
-    # correlation-key or ordering bug in the emitter.
-    emit(Event(CELL_REVEAL, clock(), {"game_id": "g_no_start", "cell": "2,2"},
-               {"row": 2, "col": 2, "mine": False}, SOURCE))        # injected
+    clock = FakeClock()
+    play_healthy_win(emit, clock);      clock.tick(5)
+    cheat_reveal_after_boom(emit, clock); clock.tick(5)
+    cheat_double_reveal(emit, clock);   clock.tick(5)
+    cheat_flag_overflow(emit, clock)
 
 
 def main() -> int:

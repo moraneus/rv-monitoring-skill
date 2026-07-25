@@ -1,152 +1,141 @@
 """Scripted demo - no browser needed.
 
-    python demo.py [--dash-port 7105] [--hold] [--no-dashboard]
+    python demo.py                 # live dashboard at :7105, plays the games,
+                                   #   then holds so you can watch. Ctrl-C to stop.
+    python demo.py --auto-exit 6   # run, snapshot, and exit (used by tests/CI)
 
-Plays a few games live through the real engine and the behave-rv dashboard,
-then injects corrupted events - re-flipping a matched card, an attempt left
-hanging, an action after completion - so every rule is driven to a violation.
-Verdicts and their rendered counterexamples print to the console; the same
-verdicts land on the dashboard while it runs.
+It plays a healthy game and then the three cheats, injected as CORRUPTED
+events straight into the live stream (the honest service never emits them):
 
-For the exit-coded gate on a recorded stream, see ``monitoring/replay_check.py``.
+  * G-cheat-rematch : a card already in a found pair is flipped again  -> rule 1
+  * G-cheat-hang    : a second card is flipped and never resolved       -> rule 2
+                       (the 3-second wall timer fires it, live)
+  * G-cheat-postgame: a flip arrives after the game completed           -> rule 3
+                       (post-terminal, on a fresh monitor instance)
+
+Watch the three policy cards on the dashboard turn from green to a rendered
+violation. The same run also invokes the exit-coded replay gate at the end.
 """
 
 from __future__ import annotations
 
 import argparse
+import subprocess
 import sys
 import threading
 import time
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
-sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "monitoring"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent / "monitoring"))
 
-from behave_rv.engine.loop import Engine                          # noqa: E402
-from behave_rv.events.event import Event                          # noqa: E402
-from behave_rv.events.sources.subscription import QueueSource     # noqa: E402
-from behave_rv.dashboard import Dashboard                         # noqa: E402
-from behave_rv.verdict.explain import explain_verdict            # noqa: E402
+from behave_rv.dashboard import Dashboard                       # noqa: E402
+from behave_rv.engine.loop import Engine                        # noqa: E402
+from behave_rv.events.event import Event                        # noqa: E402
+from behave_rv.events.sources.subscription import QueueSource   # noqa: E402
 
-from app.game import (                                            # noqa: E402
-    MemoryGame, live_clock, new_order,
-    CARD_FLIP, CARD_MATCHED, GAME_ACTION, ATTEMPT_PENDING, SOURCE,
-)
-from steps import build_registry, load_policies                  # noqa: E402
+from app.game import MemoryGame, FLIPPED, deal                  # noqa: E402
+from steps import build_registry, load_policies                # noqa: E402
+
+HERE = Path(__file__).resolve().parent
 
 
-def pairs_sequence(order):
-    seen, seq = {}, []
-    for pos, sym in enumerate(order):
-        if sym in seen:
-            seq += [seen.pop(sym), pos]
-        else:
-            seen[sym] = pos
-    return seq
-
-
-def play(emit, clock, game_id, seed, pairs=None, pace=0.02):
-    order = new_order(seed)
-    game = MemoryGame(game_id, emit, clock, order=order)
-    game.start()
-    clicks = pairs_sequence(order)
-    if pairs is not None:
-        clicks = clicks[: pairs * 2]
-    for pos in clicks:
-        game.flip(pos)
-        time.sleep(pace)   # let the dashboard animate; keeps events readable
-    return game
+def winning_order(deck):
+    pairs = {}
+    for pos, sym in enumerate(deck):
+        pairs.setdefault(sym, []).append(pos)
+    return list(pairs.values())
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--dash-port", type=int, default=7105)
-    ap.add_argument("--host", default="127.0.0.1")
-    ap.add_argument("--hold", action="store_true",
-                    help="keep the dashboard running after the demo for inspection")
-    ap.add_argument("--no-dashboard", action="store_true",
-                    help="console only; do not start the web dashboard")
+    ap.add_argument("--monitor-port", type=int, default=7105)
+    ap.add_argument("--auto-exit", type=float, default=None,
+                    help="exit this many seconds after the scenario (for tests)")
     args = ap.parse_args()
 
+    start = time.time()
+    clock = lambda: time.time() - start
     registry = build_registry()
     policies = load_policies(registry)
+    dashboard = Dashboard(policies, registry=registry,
+                          catalog="monitoring/catalog.json", app=["app/game.py"])
     source = QueueSource()
-    clock = live_clock()
+    emit = lambda e: source.push(dashboard.tap(e))
+    engine = Engine(policies, terminal_event_types={"game.completed"}, grace=0.4)
+    threading.Thread(target=lambda: engine.run(source, sink=dashboard.sink),
+                     daemon=True).start()
 
-    verdicts = []
-    if args.no_dashboard:
-        sink = verdicts.append
-        emit = source.push
-        dash_url = None
-    else:
-        dashboard = Dashboard(policies, registry=registry,
-                              catalog=str(ROOT / "monitoring" / "catalog.json"),
-                              app=[str(ROOT / "app" / "game.py")])
+    url = dashboard.start(port=args.monitor_port)
+    print(f"live monitor: {url}\n")
 
-        def sink(v):
-            verdicts.append(v)
-            dashboard.sink(v)
+    def play(game: MemoryGame):
+        game.start()
+        for a, b in winning_order(game.deck):
+            game.flip(a); time.sleep(0.05)
+            game.flip(b); time.sleep(0.05)     # instant match
 
-        def emit(e):
-            source.push(dashboard.tap(e))
-        dash_url = dashboard.start(port=args.dash_port, host=args.host)
+    # -- 1. a healthy game: every card card resolves, all three rules green --
+    print("1) healthy game 'demo-ok' -> should stay all green")
+    play(MemoryGame("demo-ok", emit, clock, deal(seed=1)))
+    time.sleep(0.4)
 
-    engine = Engine(policies, terminal_event_types={"attempt.resolved"}, grace=0.5)
-    threading.Thread(target=engine.run, args=(source,),
-                     kwargs={"sink": sink}, daemon=True).start()
+    # -- 2. rule 1: re-flip a matched card ---------------------------------
+    print("2) cheat 'demo-rematch' -> re-flips a matched card (rule 1)")
+    g2 = MemoryGame("demo-rematch", emit, clock, deal(seed=2))
+    g2.start()
+    pair = winning_order(g2.deck)[0]
+    g2.flip(pair[0]); g2.flip(pair[1])          # this pair is now matched
+    time.sleep(0.1)
+    emit(Event(FLIPPED, clock(), {"game_id": "demo-rematch",
+               "attempt_id": "demo-rematch-x", "position": pair[0]},
+               {"slot": "illegal", "symbol": g2.deck[pair[0]],
+                "already_matched": True, "after_completion": False}, "corrupted"))
+    time.sleep(0.4)
 
-    if dash_url:
-        print(f"live monitor: {dash_url}  (open it to watch the verdicts arrive)\n")
+    # -- 3. rule 2: an attempt left hanging (wall timer fires it) -----------
+    print("3) cheat 'demo-hang' -> a second flip that never resolves (rule 2);"
+          " waiting for the 3s timer...")
+    g3 = MemoryGame("demo-hang", emit, clock, deal(seed=3))
+    g3.start()
+    emit(Event(FLIPPED, clock(), {"game_id": "demo-hang",
+               "attempt_id": "demo-hang-1", "position": 0},
+               {"slot": "second", "symbol": "?",
+                "already_matched": False, "after_completion": False}, "corrupted"))
+    time.sleep(3.4)                              # > 3s: the deadline lapses
 
-    print("playing two healthy games ...")
-    play(emit, clock, "demo-healthy-1", seed=11)
-    g2 = play(emit, clock, "demo-healthy-2", seed=22)
+    # -- 4. rule 3: activity after completion (post-terminal) --------------
+    print("4) cheat 'demo-postgame' -> a flip after the game completed (rule 3)")
+    g4 = MemoryGame("demo-postgame", emit, clock, deal(seed=4))
+    play(g4)                                     # runs to game.completed
+    time.sleep(0.3)
+    emit(Event(FLIPPED, clock(), {"game_id": "demo-postgame",
+               "attempt_id": "demo-postgame-x", "position": 0},
+               {"slot": "illegal", "symbol": g4.deck[0],
+                "already_matched": True, "after_completion": True}, "corrupted"))
+    time.sleep(0.6)
 
-    print("cheat 1/3: re-flipping a card that is already matched (rule 1) ...")
-    matched_pos = next(i for i, c in g2.cards.items() if c.matched)
-    emit(Event(CARD_FLIP, clock(),
-               {"game_id": "demo-healthy-2", "position": matched_pos},
-               {"symbol": g2.cards[matched_pos].symbol,
-                "attempt_id": "demo-healthy-2-cheat"}, SOURCE))
+    counts = dashboard.state()["counts"]
+    print(f"\nlive verdicts so far: {counts['verdicts']} "
+          f"({counts['violations']} violation(s), {counts['events']} events)")
 
-    print("cheat 2/3: an action after the game is complete (rule 3) ...")
-    emit(Event(GAME_ACTION, clock(), {"game_id": "demo-healthy-2"},
-               {"kind": "ghost"}, SOURCE))
+    # -- the exit-coded replay gate over deterministic traffic -------------
+    print("\nrunning the replay gate (deterministic, exit-coded):")
+    gate = subprocess.run([sys.executable, str(HERE / "monitoring" / "replay_check.py")],
+                          capture_output=True, text=True)
+    print(gate.stdout.strip().splitlines()[-1] if gate.stdout else "")
+    print(f"replay gate exit code: {gate.returncode}")
 
-    print("cheat 3/4: a card reported matched with no preceding flip (rule 4) ...")
-    emit(Event(CARD_MATCHED, clock(),
-               {"game_id": "demo-phantom", "position": 0},
-               {"symbol": "ghost", "attempt_id": "demo-phantom-cheat"}, SOURCE))
-
-    print("cheat 4/4: a second card flipped whose attempt never resolves (rule 2) ...")
-    emit(Event(ATTEMPT_PENDING, clock(), {"attempt_id": "demo-hang"},
-               {"game_id": "demo-cheat", "first": 0, "second": 1}, SOURCE))
-
-    print("\nwaiting for the 3-second deadline timer to fire ...")
-    time.sleep(4.0)
-
-    by_id = {p.policy_id: p for p in policies}
-    violations = [v for v in verdicts if v.verdict == "violated"]
-    print(f"\n=== {len(violations)} violation(s) detected ===\n")
-    for v in violations:
-        policy = by_id[v.policy_id]
-        print(explain_verdict(v, policy.authored_scenario,
-                              policy.failing_step_index))
-        print("-" * 66)
-
-    satisfied = sum(1 for v in verdicts if v.verdict == "satisfied")
-    print(f"\n(also {satisfied} attempts satisfied on the healthy games)")
-    print("replay gate with pinned expectations: python monitoring/replay_check.py")
-
-    if args.hold and dash_url:
-        print(f"\ndashboard held open at {dash_url} - Ctrl-C to exit")
-        try:
-            while True:
-                time.sleep(1)
-        except KeyboardInterrupt:
-            pass
-    source.close()
+    if args.auto_exit is not None:
+        time.sleep(args.auto_exit)
+        dashboard.stop()
+        return 0 if gate.returncode == 0 else 1
+    print(f"\nDashboard holding at {url} - Ctrl-C to stop.")
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        dashboard.stop()
     return 0
 
 

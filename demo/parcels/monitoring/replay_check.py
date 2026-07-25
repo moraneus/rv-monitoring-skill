@@ -1,13 +1,17 @@
-"""Deterministic verdict gate: scripted traffic through the real ParcelService
+"""Deterministic verdict gate: scripted traffic through the REAL ParcelService
 and the committed policies, exit-coded for CI.
 
     python monitoring/replay_check.py     # exit 1 on unexpected verdicts
 
-Every seeded flow (healthy and faulty) runs with ``clock.tick`` between
-ordered actions, so the same input yields the same trace and verdicts byte for
-byte. The run also records that trace to ``traces/parcels.jsonl`` (with a
-clock horizon) so ``catalog diff --trace`` and offline replay stay meaningful.
-Update EXPECTED only for intended behaviour changes, and say so in the report.
+Every flow is driven through the real service methods (never by hand-crafting
+events), with a fake clock ticked between ordered actions so event times are
+distinct and deadlines are exercised. Healthy flows must produce zero
+violations; each fault flow proves exactly one rule fires.
+
+No terminal event is configured: ``delivered``/``returned`` intentionally do
+NOT retire the entity, so rule 2 ("once delivered, never re-routed") stays
+armed and catches a reroute that arrives AFTER delivery (fault B). A terminal
+on delivery would settle rule 2 as satisfied and make that reroute invisible.
 """
 
 from __future__ import annotations
@@ -20,18 +24,18 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from behave_rv.engine.loop import Engine                       # noqa: E402
 from behave_rv.events.sources.inprocess import InProcessSource  # noqa: E402
-from behave_rv.events.sources.replay import record_events       # noqa: E402
 from behave_rv.verdict.explain import explain_verdict           # noqa: E402
 
 from app.parcel_service import ParcelService                    # noqa: E402
 from steps import build_registry, load_policies                 # noqa: E402
 
-# No monitoring terminal: rule "a delivered parcel is never re-routed" needs
-# the monitor to keep watching after delivery, so delivery is not terminal.
+# Finished parcels are reclaimed by quiescence, not by a terminal event
+# (see the module docstring and the monitoring report).
 TERMINAL_TYPES: set[str] = set()
-TRACE_PATH = Path(__file__).parent / "traces" / "parcels.jsonl"
+QUIESCENCE_TTL = 30.0
+DEADLINE = 12.0
 
-EXPECTED = {"verdicts": 15, "violations": 3}   # pinned after first green run
+EXPECTED = {"verdicts": 13, "violations": 3}
 
 
 class FakeClock:
@@ -45,60 +49,71 @@ class FakeClock:
         self.now += dt
 
 
-def simulate_traffic(emit, clock: FakeClock) -> None:
-    """Drive every seeded flow deterministically."""
-    svc = ParcelService(emit, clock=clock)
+def simulate_traffic(emit) -> None:
+    """Drive every seeded flow through the real service, deterministically."""
+    clock = FakeClock()
+    svc = ParcelService(emit=emit, clock=clock)
 
-    def step(fn, *args):
-        fn(*args)
-        clock.tick()
+    # --- Healthy flow 1: scanned, dispatched, delivered in time -----------
+    svc.register("H1", "12 Oak St")
+    clock.tick()
+    svc.hub_scan("H1", "hub-a")
+    clock.tick()
+    svc.out_for_delivery("H1")
+    clock.tick(5)                      # delivered 5s after dispatch (< 12s)
+    svc.deliver("H1")
 
-    # P-1 healthy: scanned, out for delivery, delivered inside the window.
-    step(svc.register, "P-1", "London")
-    step(svc.hub_scan, "P-1", "HUB-A")
-    step(svc.out_for_delivery, "P-1")
-    step(svc.deliver, "P-1")
+    # --- Healthy flow 2: scanned, dispatched, returned in time ------------
+    clock.tick()
+    svc.register("H2", "9 Elm Ave")
+    clock.tick()
+    svc.hub_scan("H2", "hub-b")
+    clock.tick()
+    svc.out_for_delivery("H2")
+    clock.tick(4)                      # returned 4s after dispatch (< 12s)
+    svc.return_to_sender("H2")
 
-    # P-2 fault: out for delivery WITHOUT a hub scan (violates rule 1). Then
-    # delivered in time, so its delivery-window policy is satisfied.
-    step(svc.register, "P-2", "Paris")
-    step(svc.out_for_delivery, "P-2")
-    step(svc.deliver, "P-2")
+    # --- Fault A: dispatched with NO hub scan (rule 1) --------------------
+    clock.tick()
+    svc.register("FA", "3 Pine Rd")
+    clock.tick()
+    svc.out_for_delivery("FA")         # no "scanned" before -> violation
+    clock.tick(5)
+    svc.deliver("FA")
 
-    # P-3 fault: delivered, then RE-ROUTED (violates rule 2).
-    step(svc.register, "P-3", "Berlin")
-    step(svc.hub_scan, "P-3", "HUB-B")
-    step(svc.out_for_delivery, "P-3")
-    step(svc.deliver, "P-3")
-    step(svc.route_to, "P-3", "HUB-C")
+    # --- Fault B: re-routed AFTER delivery (rule 2) ----------------------
+    clock.tick()
+    svc.register("FB", "77 Birch Ln")
+    clock.tick()
+    svc.hub_scan("FB", "hub-c")
+    clock.tick()
+    svc.out_for_delivery("FB")
+    clock.tick(3)
+    svc.deliver("FB")                  # delivered (rule 3 satisfied)
+    clock.tick(2)
+    svc.route_to("FB", "hub-d")        # reroute after delivery -> violation
 
-    # P-4 fault: out for delivery, then neither delivered nor returned before
-    # the 12s window elapses (violates rule 3 by timer).
-    step(svc.register, "P-4", "Rome")
-    step(svc.hub_scan, "P-4", "HUB-A")
-    step(svc.out_for_delivery, "P-4")
-    clock.tick(15.0)                     # window blown, no finishing event
-
-    # P-5 healthy: scanned, out for delivery, RETURNED inside the window.
-    step(svc.register, "P-5", "Madrid")
-    step(svc.hub_scan, "P-5", "HUB-B")
-    step(svc.out_for_delivery, "P-5")
-    step(svc.return_to_sender, "P-5")
+    # --- Fault C: not finished within the deadline (rule 3) --------------
+    clock.tick()
+    svc.register("FC", "5 Cedar Ct")
+    clock.tick()
+    svc.hub_scan("FC", "hub-e")
+    clock.tick()
+    svc.out_for_delivery("FC")
+    clock.tick(DEADLINE + 1)           # 13s later: deadline already blown
+    svc.deliver("FC")                  # a late delivery does not un-violate
 
 
 def main() -> int:
     source = InProcessSource()
-    recorded: list = []
-
-    clock = FakeClock()
-    simulate_traffic(lambda e: (recorded.append(e), source.emit(e)), clock)
-
-    TRACE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    record_events(TRACE_PATH, recorded, horizon=clock())
+    simulate_traffic(source.emit)
 
     registry = build_registry()
     policies = load_policies(registry)
-    engine = Engine(policies, terminal_event_types=TERMINAL_TYPES, grace=0.0)
+    # grace=0: the scripted trace is already in canonical order (fake clock,
+    # no reordering), so the reorder window only delays deadline firing.
+    engine = Engine(policies, terminal_event_types=TERMINAL_TYPES,
+                    quiescence_ttl=QUIESCENCE_TTL, grace=0.0)
     verdicts = engine.run(source, emit_pending=True)
 
     by_id = {p.policy_id: p for p in policies}

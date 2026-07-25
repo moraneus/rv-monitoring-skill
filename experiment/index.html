@@ -1,0 +1,646 @@
+<title>behave-rv - the bug-detection experiment</title>
+<style>
+  :root{
+    --ink:#0d1418; --sub:#141f27; --card:#182430; --line:#243541;
+    --tx:#dce8ee; --mut:#8ba0ac; --faint:#5f7480;
+    --accent:#3fd0c9;                 /* phosphor cyan - the one accent */
+    --ok:#3bb873; --risk:#d9a441; --bad:#e35b52; --pend:#6b8794;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:light){
+    :root{ --ink:#eef2f3; --sub:#e4eaec; --card:#ffffff; --line:#d3dde1;
+      --tx:#132029; --mut:#546570; --faint:#7d8f99; --accent:#0f8f88; }
+  }
+  :root[data-theme="dark"]{ --ink:#0d1418; --sub:#141f27; --card:#182430; --line:#243541;
+    --tx:#dce8ee; --mut:#8ba0ac; --faint:#5f7480; --accent:#3fd0c9; }
+  :root[data-theme="light"]{ --ink:#eef2f3; --sub:#e4eaec; --card:#ffffff; --line:#d3dde1;
+    --tx:#132029; --mut:#546570; --faint:#7d8f99; --accent:#0f8f88; }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ink);color:var(--tx);font-family:var(--sans);
+    line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{line-height:1.15;text-wrap:balance;font-weight:680;letter-spacing:-.01em}
+  a{color:var(--accent);text-decoration:none}
+  code,.mono{font-family:var(--mono);font-size:.86em}
+  .tnum{font-variant-numeric:tabular-nums}
+
+  /* masthead */
+  header.top{border-bottom:1px solid var(--line);background:
+    radial-gradient(120% 140% at 82% -20%, color-mix(in srgb,var(--accent) 12%,transparent), transparent 60%);}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--accent);margin:0 0 14px}
+  header.top h1{font-size:clamp(30px,5.4vw,52px);margin:0 0 16px}
+  .lede{font-size:clamp(17px,2.2vw,21px);color:var(--tx);max-width:62ch;margin:0}
+  .masthead{padding:60px 0 40px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:26px;font-family:var(--mono);
+    font-size:12.5px;color:var(--mut)}
+  .meta b{color:var(--tx);font-weight:600}
+
+  /* legend chips */
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 4px}
+  .chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11.5px;
+    letter-spacing:.04em;padding:5px 10px;border:1px solid var(--line);border-radius:999px;color:var(--mut)}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none}
+  .d-ok{background:var(--ok)} .d-bad{background:var(--bad)} .d-risk{background:var(--risk)} .d-pend{background:var(--pend)}
+
+  /* sticky nav */
+  nav.toc{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--ink) 88%,transparent);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav.toc .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:11px;padding-bottom:11px}
+  nav.toc a{font-family:var(--mono);font-size:12px;color:var(--mut);white-space:nowrap;
+    padding:5px 11px;border-radius:7px}
+  nav.toc a:hover{color:var(--tx);background:var(--sub)}
+
+  section{padding:52px 0;border-bottom:1px solid var(--line)}
+  section > .wrap > h2{font-size:clamp(22px,3.4vw,30px);margin:0 0 6px}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--faint);margin:0 0 22px}
+  p{margin:0 0 16px} .muted{color:var(--mut)}
+  strong{color:var(--tx);font-weight:640}
+
+  /* stat band */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:8px 0 6px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 16px}
+  .stat .n{font-family:var(--mono);font-size:30px;font-weight:600;color:var(--accent);letter-spacing:-.02em}
+  .stat .l{font-size:12.5px;color:var(--mut);margin-top:4px;line-height:1.35}
+  @media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+  /* demo cards */
+  .demos{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:720px){.demos{grid-template-columns:1fr}}
+  .demo{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;
+    display:flex;flex-direction:column}
+  .demo h3{margin:0;font-size:17px;display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .demo h3 .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--faint);font-weight:500}
+  .demo .desc{font-size:13.5px;color:var(--mut);margin:8px 0 14px}
+  .rules{list-style:none;padding:0;margin:0 0 15px;font-size:12.8px}
+  .rules li{display:flex;gap:8px;padding:3px 0;color:var(--tx)}
+  .rules li .op{font-family:var(--mono);font-size:10px;color:var(--accent);flex:none;
+    border:1px solid var(--line);border-radius:5px;padding:1px 5px;margin-top:2px;letter-spacing:.03em}
+  .bug{margin-top:auto;border-top:1px dashed var(--line);padding-top:13px}
+  .bug .bh{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--bad);margin:0 0 8px;display:flex;align-items:center;gap:7px}
+  .bug pre{margin:0 0 9px;background:var(--sub);border:1px solid var(--line);border-radius:9px;
+    padding:11px 12px;overflow-x:auto;font-family:var(--mono);font-size:11.6px;line-height:1.5}
+  .bug pre .del{color:var(--bad)} .bug pre .add{color:var(--ok)} .bug pre .cx{color:var(--faint)}
+  .bug .note{font-size:12.5px;color:var(--mut);margin:0}
+  .verd{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+  .v{font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;padding:3px 8px;border-radius:6px;
+    border:1px solid transparent}
+  .v.live{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 45%,transparent);background:color-mix(in srgb,var(--ok) 12%,transparent)}
+  .v.miss{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 45%,transparent);background:color-mix(in srgb,var(--bad) 10%,transparent)}
+  .v.part{color:var(--risk);border-color:color-mix(in srgb,var(--risk) 45%,transparent);background:color-mix(in srgb,var(--risk) 12%,transparent)}
+  .v.chan{color:var(--mut);border-color:var(--line)}
+
+  /* scorecard table */
+  .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin:6px 0}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:13px}
+  th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line)}
+  thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--faint);font-weight:500;background:var(--sub);position:sticky;top:0}
+  tbody tr:last-child td{border-bottom:none}
+  td.mono,th.mono{font-family:var(--mono)}
+  .cell{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11.5px}
+  .pill{padding:2px 7px;border-radius:5px;font-family:var(--mono);font-size:11px;font-weight:600}
+  .pill.g{color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+  .pill.r{color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+  .pill.a{color:var(--risk);background:color-mix(in srgb,var(--risk) 14%,transparent)}
+  .pill.n{color:var(--mut);background:var(--sub)}
+
+  /* channel explainer */
+  .chans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:8px 0}
+  @media(max-width:720px){.chans{grid-template-columns:1fr}}
+  .chan{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .chan .cn{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+  .chan h4{margin:0 0 8px;font-size:15px}
+  .chan p{font-size:13px;color:var(--mut);margin:0}
+  .chan .score{font-family:var(--mono);font-size:22px;color:var(--tx);margin-top:12px}
+
+  .findings{counter-reset:f;list-style:none;padding:0;margin:6px 0 0}
+  .findings li{position:relative;padding:0 0 20px 46px;border-left:1px solid var(--line);margin-left:14px}
+  .findings li::before{counter-increment:f;content:counter(f,decimal-leading-zero);position:absolute;
+    left:-15px;top:-2px;width:29px;height:29px;border-radius:50%;background:var(--sub);border:1px solid var(--line);
+    font-family:var(--mono);font-size:11px;color:var(--accent);display:flex;align-items:center;justify-content:center}
+  .findings li:last-child{border-left-color:transparent}
+  .findings h4{margin:0 0 5px;font-size:16px}
+  .findings p{font-size:14px;color:var(--mut);margin:0}
+
+  .callout{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
+    border-radius:10px;padding:18px 20px;margin:20px 0}
+  .callout p{margin:0;font-size:14.5px}
+  footer{padding:44px 0 70px}
+  footer .wrap{color:var(--faint);font-family:var(--mono);font-size:12px}
+  .hr-note{color:var(--faint);font-size:12.5px;font-style:italic}
+
+  .more{margin-top:13px;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;color:var(--accent)}
+  .more:hover{text-decoration:underline}
+</style>
+
+<header class="top">
+  <div class="wrap masthead">
+    <p class="eyebrow">behave-rv · runtime verification · field experiment</p>
+    <h1>Does an embedded runtime monitor actually find real bugs?</h1>
+    <p class="lede">Ten small applications, each built to ship with its own live behave-rv monitor.
+      A saboteur planted <strong>19 realistic bugs</strong> in their code. Ten people, told nothing,
+      used each app and watched its monitor. This is what happened.</p>
+    <div class="legend" aria-label="verdict legend">
+      <span class="chip"><span class="dot d-ok"></span>satisfied</span>
+      <span class="chip"><span class="dot d-bad"></span>violated</span>
+      <span class="chip"><span class="dot d-risk"></span>behavior-risk</span>
+      <span class="chip"><span class="dot d-pend"></span>pending</span>
+    </div>
+    <div class="meta">
+      <span><b>Framework</b> behave-rv 0.3.1</span>
+      <span><b>Demos</b> 10 (5 services · 5 browser games)</span>
+      <span><b>Bugs implanted</b> 19</span>
+      <span><b>Found by users</b> 17</span>
+      <span><b>Monitoring config touched</b> 0 files</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc"><div class="wrap">
+  <a href="#idea">The idea</a>
+  <a href="#how">How RV works</a>
+  <a href="#setup">The experiment</a>
+  <a href="#demos">The ten demos</a>
+  <a href="#channels">Three channels</a>
+  <a href="#scorecard">Scorecard</a>
+  <a href="#findings">What it means</a>
+  <a href="#limits">Honest limits</a>
+</div></nav>
+
+<section id="idea">
+  <div class="wrap">
+    <p class="kicker">The premise</p>
+    <h2>Software that is <em>born monitorable</em></h2>
+    <p>behave-rv turns human-readable Gherkin rules into deterministic per-entity monitors that
+      watch a running program's event stream and emit a verdict - <span style="color:var(--ok)">satisfied</span>,
+      <span style="color:var(--bad)">violated</span>, or <span style="color:var(--pend)">pending</span> - for every rule,
+      for every thing it tracks, in real time. The rules are the human's; the verdict is the engine's;
+      no model sits in the runtime path. An agent skill (rv-monitoring-skill) lets a coding agent
+      instrument an application <em>as it writes it</em>, so the software that leaves development already
+      carries a runtime monitor inside it.</p>
+    <p>The open question a reasonable skeptic asks: <strong>fine, but if the code has a genuine bug,
+      does the monitor actually catch it - or does it just decorate a green dashboard?</strong>
+      This experiment was built to answer that with numbers instead of assertions.</p>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <p class="kicker">Background</p>
+    <h2>What the monitor is watching</h2>
+    <p>Each application emits an <code>Event(type, event_time, bindings, payload)</code> at every state
+      transition. A policy is one Gherkin scenario compiled to a monitor: a <code>never</code> prohibition,
+      a <code>before</code>/<code>previously</code> precedence, a <code>within</code> deadline that fires on
+      the wall clock when nothing arrives, an <code>always holds</code> invariant, or a scoped/<code>since</code>
+      window. Every emit site and every step predicate is fingerprinted into a committed
+      <strong>two-sided contract</strong> (<code>catalog.json</code>), so a code change that could move what
+      the monitor sees is flagged at build time. There are, in effect, three ways the framework can raise a hand.</p>
+    <div class="chans">
+      <div class="chan">
+        <p class="cn">Channel A · live</p>
+        <h4>Runtime verdict</h4>
+        <p>A policy card flips to <span style="color:var(--bad)">violated</span> as the buggy behaviour actually
+          happens, with the authored scenario replayed and the failing step marked.</p>
+      </div>
+      <div class="chan">
+        <p class="cn">Channel B · replay</p>
+        <h4>Pinned gate</h4>
+        <p>A committed <code>replay_check.py</code> runs scripted traffic against pinned verdict counts and
+          exits non-zero when the counts move - a CI merge gate.</p>
+      </div>
+      <div class="chan">
+        <p class="cn">Channel C · stability</p>
+        <h4>Contract diff</h4>
+        <p><code>catalog diff --fail-on-app-risk</code> compares current code to the committed contract and flags
+          <span style="color:var(--risk)">behavior-risk</span> on any changed emit-path function - even before a
+          single event flows.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="setup">
+  <div class="wrap">
+    <p class="kicker">Method</p>
+    <h2>The experiment, in three blind stages</h2>
+    <p><strong>Build.</strong> Ten demos were built from scratch by dedicated agents driving the rv skill against
+      behave-rv 0.3.1 - five services (lending, parcels, bookings, devices, payments) and five browser games
+      (snake, blackjack, minesweeper, tic-tac-toe, memory), each with a live dashboard. All ten passed their
+      gates green before anything was touched.</p>
+    <p><strong>Sabotage.</strong> One saboteur agent - using no monitoring knowledge - planted <strong>one or two
+      realistic bugs</strong> into each demo's application code only, and recorded each one privately with a
+      prediction of whether the monitor would catch it. Every <code>monitoring/</code> tree was verified
+      byte-for-byte unchanged; every demo still imported and ran. The bugs were deliberately varied: some
+      clearly policy-violating, some subtle edge cases, some outside what any policy asserts.</p>
+    <p><strong>Play.</strong> Ten "user" agents, each blind to the bugs and forbidden from reading the saboteur's
+      notes, exercised their demo hard through its real interface - the game APIs over HTTP, the service classes
+      directly - for a long session of normal play and edge cases, watched the RV dashboard, and wrote an
+      honest report of anything wrong. Only afterward were the three channels scored against the recorded ground truth.</p>
+    <div class="callout"><p><strong>Integrity.</strong> Across the whole run, exactly ten application files
+      changed and zero monitoring files did (confirmed by hash before and after). So every stability-strip
+      change a user saw was real, and the comparison is clean.</p></div>
+  </div>
+</section>
+
+<section id="demos">
+  <div class="wrap">
+    <p class="kicker">The corpus</p>
+    <h2>The ten demos and their planted bugs</h2>
+    <p class="muted">Each card lists the user's own monitored rules, the exact bug(s) implanted in the app code,
+      and how the failure surfaced. <span class="hr-note">Diffs are the verified on-disk change.</span></p>
+    <div class="demos">
+
+      <!-- LENDING -->
+      <div class="demo">
+        <h3>lending <span class="tag">service · 5 policies</span></h3>
+        <p class="desc">A library lending service. Loans are borrowed, renewed, returned, or reported lost.</p>
+        <ul class="rules">
+          <li><span class="op">before</span>a loan is returned only after it was borrowed</li>
+          <li><span class="op">never</span>a lost loan is never renewed</li>
+          <li><span class="op">within</span>a borrowed loan settles within 21s</li>
+          <li><span class="op">before</span>a loan is renewed only after borrowed</li>
+          <li><span class="op">never</span>a returned loan is never renewed</li>
+        </ul>
+        <div class="bug">
+          <p class="bh"><span class="dot d-bad"></span>2 bugs · report_lost &amp; borrow</p>
+          <pre><span class="cx">def report_lost(self, loan_id):</span>
+<span class="del">-   self._status(loan_id, LOST)</span>
+<span class="add">+   self._status(loan_id, RETURNED)</span>   <span class="cx"># emits "returned"</span></pre>
+          <p class="note">The lost event never fires. A renew-after-lost then trips the <em>wrong</em> policy
+            (returned-never-renewed) while lost-never-renewed sits <strong>silently dormant</strong>. Bug 2 swaps two
+            payload fields no policy reads.</p>
+          <div class="verd">
+            <span class="v part">live: misdirected</span><span class="v chan">replay: pass</span>
+            <span class="v live">stability: flag</span><span class="v live">user: 2/2</span>
+          </div>
+          <a class="more" href="lending.html">Full breakdown of lending →</a>
+        </div>
+      </div>
+
+      <!-- PARCELS -->
+      <div class="demo">
+        <h3>parcels <span class="tag">brownfield · 3 policies</span></h3>
+        <p class="desc">A pre-existing parcel tracker, made monitorable without changing its behaviour.</p>
+        <ul class="rules">
+          <li><span class="op">before</span>scanned at a hub before out for delivery</li>
+          <li><span class="op">never</span>a delivered parcel is never re-routed</li>
+          <li><span class="op">within</span>delivered or returned within 12s of dispatch</li>
+        </ul>
+        <div class="bug">
+          <p class="bh"><span class="dot d-bad"></span>1 bug · route_to emits wrong status</p>
+          <pre><span class="cx">def route_to(self, id, hub):</span>
+    parcel.status = "rerouted"   <span class="cx"># state is right</span>
+    Event(..., {"status":<span class="del"> "rerouted"</span><span class="add"> "scanned"</span>})  <span class="cx"># event lies</span></pre>
+          <p class="note">A reroute-after-delivery is never seen by rule 2 - its card stays empty. The
+            <strong>runtime monitor misses it entirely</strong>; only the pinned replay gate (a pending fault) and
+            the stability contract catch the drift.</p>
+          <div class="verd">
+            <span class="v miss">live: miss (dormant)</span><span class="v live">replay: red</span>
+            <span class="v live">stability: flag</span><span class="v live">user: 1/1</span>
+          </div>
+          <a class="more" href="parcels.html">Full breakdown of parcels →</a>
+        </div>
+      </div>
+
+      <!-- BOOKINGS -->
+      <div class="demo">
+        <h3>bookings <span class="tag">/rv · 7 policies</span></h3>
+        <p class="desc">A fitness-studio class-bookings monitor, designed live through the /rv interview.</p>
+        <ul class="rules">
+          <li><span class="op">never</span>a cancelled booking is never checked in</li>
+          <li><span class="op">before</span>check-in only after confirmed</li>
+          <li><span class="op">within</span>a promotion is answered in 15s</li>
+          <li><span class="op">never</span>never confirm while the member owes</li>
+          <li><span class="op">never</span>a class never goes over capacity</li>
+        </ul>
+        <div class="bug">
+          <p class="bh"><span class="dot d-bad"></span>2 bugs · confirm typo &amp; capacity off-by-one</p>
+          <pre><span class="del">- self._status(id, "confirmed", ...)</span>
+<span class="add">+ self._status(id, "comfirmed", ...)</span>   <span class="cx"># typo</span>
+<span class="del">- if len(seats) &gt; CLASS_CAPACITY:</span>
+<span class="add">+ if len(seats) &gt;= CLASS_CAPACITY:</span></pre>
+          <p class="note">The typo <strong>false-alarms</strong> two rules on every healthy booking and leaves a third
+            (never-confirm-while-owing) <strong>dead</strong>. The off-by-one alarms one seat early. Replay gate and
+            stability both fire.</p>
+          <div class="verd">
+            <span class="v part">live: mixed</span><span class="v live">replay: red</span>
+            <span class="v live">stability: flag</span><span class="v live">user: 2/2</span>
+          </div>
+          <a class="more" href="bookings.html">Full breakdown of bookings →</a>
+        </div>
+      </div>
+
+      <!-- DEVICES -->
+      <div class="demo">
+        <h3>devices <span class="tag">service · 6 policies</span></h3>
+        <p class="desc">An IoT fleet tracker: devices provisioned → activated → quarantined → wiped → retired, plus sensor feeds.</p>
+        <ul class="rules">
+          <li><span class="op">previously</span>activate only right after provision-ok</li>
+          <li><span class="op">since</span>after quarantine, only blocked actions</li>
+          <li><span class="op">before</span>a retired device was wiped first</li>
+          <li><span class="op">always</span>a sensor feed reports only "ok"</li>
+        </ul>
+        <div class="bug">
+          <p class="bh"><span class="dot d-bad"></span>2 bugs · wipe status &amp; terminal timestamp</p>
+          <pre><span class="cx">def wipe(self, device_id):</span>
+<span class="del">-   self._lifecycle(device_id, "wiped")</span>
+<span class="add">+   self._lifecycle(device_id, "wipe")</span></pre>
+          <p class="note">No device ever reaches "wiped", so the wiped-before-retire rule becomes
+            <strong>unsatisfiable</strong> and fires on every retirement - the monitor flags even the demo's own
+            "healthy" device. The subtler bug (a dropped terminal-timestamp offset) <strong>slipped past the user</strong>.</p>
+          <div class="verd">
+            <span class="v live">live: catch</span><span class="v live">replay: red</span>
+            <span class="v live">stability: flag</span><span class="v part">user: 1/2</span>
+          </div>
+          <a class="more" href="devices.html">Full breakdown of devices →</a>
+        </div>
+      </div>
+
+      <!-- PAYMENTS -->
+      <div class="demo">
+        <h3>payments <span class="tag">service · 3 policies</span></h3>
+        <p class="desc">A payment tracker: authorize → capture → (dispute → investigate → refund) → close.</p>
+        <ul class="rules">
+          <li><span class="op">since</span>after a dispute, no new charge activity</li>
+          <li><span class="op">before</span>a disputed close was refunded first</li>
+          <li><span class="op">within</span>captured resolves within 20s</li>
+        </ul>
+        <div class="bug">
+          <p class="bh"><span class="dot d-bad"></span>2 bugs · refund payload &amp; frozen reason</p>
+          <pre><span class="cx">self._status[id] = "refunded"</span>   <span class="cx"># state right</span>
+Event(..., {"status":<span class="del"> "refunded"</span><span class="add"> "refund"</span>})  <span class="cx"># event wrong</span></pre>
+          <p class="note">No "refunded" event ever exists, so the refund-before-close rule becomes a
+            <strong>constant alarm</strong> that can no longer tell a correctly-refunded payment from an unrefunded
+            one. The user caught both; the secondary (a "declined"/"frozen" reason) showed as a dead step + a risk flag.</p>
+          <div class="verd">
+            <span class="v live">live: catch</span><span class="v live">replay: red</span>
+            <span class="v live">stability: flag</span><span class="v live">user: 2/2</span>
+          </div>
+          <a class="more" href="payments.html">Full breakdown of payments →</a>
+        </div>
+      </div>
+
+      <!-- SNAKE -->
+      <div class="demo">
+        <h3>snake <span class="tag">game · 4 policies</span></h3>
+        <p class="desc">Browser Snake with a live monitor. A session ends when the snake dies.</p>
+        <ul class="rules">
+          <li><span class="op">never</span>no moves or points after game-over</li>
+          <li><span class="op">within</span>food is followed by growth in 2s</li>
+          <li><span class="op">never</span>a 180° reversal is never accepted</li>
+        </ul>
+        <div class="bug">
+          <p class="bh"><span class="dot d-bad"></span>2 bugs · dead reversal guard &amp; never grows</p>
+          <pre><span class="del">- if OPPOSITE[self.direction] == direction:</span>
+<span class="add">+ if OPPOSITE[direction] == direction:</span>   <span class="cx"># always False</span></pre>
+          <p class="note">The reversal guard is dead code - a 180° turn is accepted and the monitor
+            <strong>catches it live</strong> (rule 3 red). But the second bug (an unconditional <code>pop()</code> so
+            the snake never actually grows) is a <strong>blind spot</strong>: rule 2 checks that a grow <em>event</em>
+            fired, not that the length changed.</p>
+          <div class="verd">
+            <span class="v live">live: catch + miss</span><span class="v chan">replay: pass</span>
+            <span class="v live">stability: break</span><span class="v live">user: 2/2</span>
+          </div>
+          <a class="more" href="snake.html">Full breakdown of snake →</a>
+        </div>
+      </div>
+
+      <!-- BLACKJACK -->
+      <div class="demo">
+        <h3>blackjack <span class="tag">game · 5 policies</span></h3>
+        <p class="desc">Browser Blackjack, player vs dealer. Each dealt hand is watched.</p>
+        <ul class="rules">
+          <li><span class="op">never</span>no card after a stand</li>
+          <li><span class="op">never</span>a bust never settles as a win</li>
+          <li><span class="op">within</span>settle within 30s</li>
+          <li><span class="op">before</span>payout only after settlement</li>
+          <li><span class="op">never</span>a losing hand is never paid</li>
+        </ul>
+        <div class="bug">
+          <p class="bh"><span class="dot d-bad"></span>2 bugs · losing paid &amp; tie paid as win</p>
+          <pre><span class="cx">if outcome == "win": self._pay(BET*2)</span>
+<span class="del">- elif outcome == "push": self._pay(BET)</span>
+<span class="add">+ else: self._pay(BET)</span>   <span class="cx"># loses now pay too</span></pre>
+          <p class="note">Losing hands get paid - the monitor <strong>fired rule 5 on eleven of the user's own honest
+            losing hands.</strong> The second bug (a tie settled as a win, paid double) is <strong>uncovered</strong>:
+            no policy forbids paying a win, so it stays silent - the user caught it by eye.</p>
+          <div class="verd">
+            <span class="v live">live: catch + miss</span><span class="v live">replay: red</span>
+            <span class="v live">stability: flag</span><span class="v live">user: 2/2</span>
+          </div>
+          <a class="more" href="blackjack.html">Full breakdown of blackjack →</a>
+        </div>
+      </div>
+
+      <!-- MINESWEEPER -->
+      <div class="demo">
+        <h3>minesweeper <span class="tag">game · 3 policies</span></h3>
+        <p class="desc">Browser Minesweeper, 8×8, 10 mines. Reveal and flag cells.</p>
+        <ul class="rules">
+          <li><span class="op">never</span>no reveal after a mine explodes</li>
+          <li><span class="op">never</span>a cell is never revealed twice</li>
+          <li><span class="op">never</span>flags never outnumber the mines</li>
+        </ul>
+        <div class="bug">
+          <p class="bh"><span class="dot d-bad"></span>2 bugs · freeze guard &amp; flag budget</p>
+          <pre><span class="del">- if self.status != "playing": return</span>
+<span class="add">+ if self.status == "won": return</span>   <span class="cx"># frozen only on win</span></pre>
+          <p class="note">A lost board is no longer frozen - you can keep revealing after the boom, and the monitor
+            <strong>catches it live</strong> (rule 1). The flag off-by-one (an 11th flag on 10 mines) also <strong>fires
+            live</strong> (rule 3). Both bugs caught by runtime verdicts.</p>
+          <div class="verd">
+            <span class="v live">live: catch ×2</span><span class="v chan">replay: pass</span>
+            <span class="v live">stability: flag</span><span class="v live">user: 2/2</span>
+          </div>
+          <a class="more" href="minesweeper.html">Full breakdown of minesweeper →</a>
+        </div>
+      </div>
+
+      <!-- TICTACTOE -->
+      <div class="demo">
+        <h3>tic-tac-toe <span class="tag">game · 3 policies</span></h3>
+        <p class="desc">Browser tic-tac-toe, two players at one keyboard.</p>
+        <ul class="rules">
+          <li><span class="op">never</span>players strictly alternate</li>
+          <li><span class="op">never</span>no move after the game is decided</li>
+          <li><span class="op">has&nbsp;happened</span>every game eventually finishes</li>
+        </ul>
+        <div class="bug">
+          <p class="bh"><span class="dot d-bad"></span>2 bugs · turn never toggles &amp; bad win line</p>
+          <pre><span class="del">- self._current = "O" if player=="X" else "X"</span>
+<span class="add">+ self._current = "X" if player=="X" else "O"</span></pre>
+          <p class="note">The turn never alternates - every move comes out X. The monitor was, in the user's words,
+            <strong>"the hero"</strong>: the alternation law fired <span style="color:var(--bad)">violated</span> live on
+            every game. The corrupted win-line (a subtler second bug) was <strong>unreachable</strong> in all-X play and
+            unasserted by any policy.</p>
+          <div class="verd">
+            <span class="v live">live: catch</span><span class="v live">replay: red</span>
+            <span class="v live">stability: flag</span><span class="v part">user: 1/2</span>
+          </div>
+          <a class="more" href="tictactoe.html">Full breakdown of tictactoe →</a>
+        </div>
+      </div>
+
+      <!-- MEMORY -->
+      <div class="demo">
+        <h3>memory <span class="tag">game · 3 policies</span></h3>
+        <p class="desc">Browser Memory pairs, a 4×4 grid. Flip two cards; matches stay up.</p>
+        <ul class="rules">
+          <li><span class="op">never</span>a matched card is never re-flipped</li>
+          <li><span class="op">within</span>an attempt resolves within 3s</li>
+          <li><span class="op">never</span>nothing happens after completion</li>
+        </ul>
+        <div class="bug">
+          <p class="bh"><span class="dot d-bad"></span>2 bugs · resolve mis-scoped &amp; slow flip-back</p>
+          <pre><span class="cx">  if len(self.matched) == BOARD_SIZE:</span>
+<span class="cx">      self._complete()</span>
+<span class="del">- self._resolve(attempt_id, "matched")</span>
+<span class="add">+     self._resolve(attempt_id, "matched")</span>   <span class="cx"># now nested</span></pre>
+          <p class="note">The resolve emit is nested one level too deep, so <strong>only the final matched pair ever
+            resolves</strong> - every intermediate match arms the 3-second deadline and lets it lapse. The monitor
+            <strong>fires rule 2 live</strong>; a companion timing bug (flip-back pushed to 3.5s) violates the same rule.</p>
+          <div class="verd">
+            <span class="v live">live: catch</span><span class="v live">replay: red</span>
+            <span class="v live">stability: flag</span><span class="v live">user: 2/2</span>
+          </div>
+          <a class="more" href="memory.html">Full breakdown of memory →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="channels">
+  <div class="wrap">
+    <p class="kicker">Coverage by channel</p>
+    <h2>No single alarm is enough - together they never missed a demo</h2>
+    <p>The most important result is not a single number but a shape. The three channels fail differently,
+      and their union is what makes the framework trustworthy.</p>
+    <div class="chans">
+      <div class="chan">
+        <p class="cn">Channel A · live</p>
+        <h4>The loudest, the most foolable</h4>
+        <p>Caught the wrong behaviour of most bugs - sometimes spectacularly (blackjack paying losers, tic-tac-toe's
+          all-X games). But a buggy <em>emitter</em> can fool it: lending fired the wrong policy, parcels' rule went
+          dormant, bookings raised false alarms on healthy data.</p>
+        <p class="score">~13 / 19 <span class="muted" style="font-size:12px">behaviour caught</span></p>
+      </div>
+      <div class="chan">
+        <p class="cn">Channel B · replay</p>
+        <h4>Deterministic, but only as good as its traffic</h4>
+        <p>Went red in seven of ten demos. It <em>passed</em> in three (lending, snake, minesweeper) - because the
+          pinned scripted traffic didn't drive the buggy branch, or a misdirected fault preserved the count. A real
+          methodology lesson: seeds must exercise the real engine, not bypass it.</p>
+        <p class="score">7 / 10 <span class="muted" style="font-size:12px">demos red</span></p>
+      </div>
+      <div class="chan">
+        <p class="cn">Channel C · stability</p>
+        <h4>The quiet backstop that never missed</h4>
+        <p>Every bug touched an emit-path function or constant, so the two-sided contract flagged
+          <span style="color:var(--risk)">behavior-risk</span> on all ten demos - before a single event flowed. It
+          names the changed function, not the specific defect: a coarse but perfectly reliable "the watched code moved."</p>
+        <p class="score">10 / 10 <span class="muted" style="font-size:12px">demos flagged</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="scorecard">
+  <div class="wrap">
+    <p class="kicker">The full ledger</p>
+    <h2>Scorecard</h2>
+    <div class="tbl"><table>
+      <thead><tr>
+        <th>Demo</th><th class="mono">bugs</th><th class="mono">user found</th>
+        <th>Live runtime</th><th>Replay gate</th><th>Stability</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>lending</td><td class="mono tnum">2</td><td class="mono tnum">2</td>
+          <td><span class="pill a">misdirected</span></td><td><span class="pill n">pass</span></td><td><span class="pill a">risk</span></td></tr>
+        <tr><td>parcels</td><td class="mono tnum">1</td><td class="mono tnum">1</td>
+          <td><span class="pill r">miss</span></td><td><span class="pill r">red</span></td><td><span class="pill a">risk</span></td></tr>
+        <tr><td>bookings</td><td class="mono tnum">2</td><td class="mono tnum">2</td>
+          <td><span class="pill a">mixed</span></td><td><span class="pill r">red</span></td><td><span class="pill a">risk</span></td></tr>
+        <tr><td>devices</td><td class="mono tnum">2</td><td class="mono tnum">1</td>
+          <td><span class="pill g">catch</span></td><td><span class="pill r">red</span></td><td><span class="pill a">risk</span></td></tr>
+        <tr><td>payments</td><td class="mono tnum">2</td><td class="mono tnum">2</td>
+          <td><span class="pill g">catch</span></td><td><span class="pill r">red</span></td><td><span class="pill a">risk</span></td></tr>
+        <tr><td>snake</td><td class="mono tnum">2</td><td class="mono tnum">2</td>
+          <td><span class="pill g">catch</span> <span class="pill r">1 miss</span></td><td><span class="pill n">pass</span></td><td><span class="pill r">break</span></td></tr>
+        <tr><td>blackjack</td><td class="mono tnum">2</td><td class="mono tnum">2</td>
+          <td><span class="pill g">catch</span> <span class="pill r">1 miss</span></td><td><span class="pill r">red</span></td><td><span class="pill a">risk</span></td></tr>
+        <tr><td>minesweeper</td><td class="mono tnum">2</td><td class="mono tnum">2</td>
+          <td><span class="pill g">catch ×2</span></td><td><span class="pill n">pass</span></td><td><span class="pill a">risk</span></td></tr>
+        <tr><td>tic-tac-toe</td><td class="mono tnum">2</td><td class="mono tnum">1</td>
+          <td><span class="pill g">catch</span></td><td><span class="pill r">red</span></td><td><span class="pill a">risk</span></td></tr>
+        <tr><td>memory</td><td class="mono tnum">2</td><td class="mono tnum">2</td>
+          <td><span class="pill g">catch</span></td><td><span class="pill r">red</span></td><td><span class="pill a">risk</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="stats">
+      <div class="stat"><div class="n tnum">19</div><div class="l">bugs implanted (app code only)</div></div>
+      <div class="stat"><div class="n tnum">17</div><div class="l">found by the blind users</div></div>
+      <div class="stat"><div class="n tnum">10/10</div><div class="l">demos flagged by stability</div></div>
+      <div class="stat"><div class="n tnum">0</div><div class="l">demos where nothing raised a hand</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="findings">
+  <div class="wrap">
+    <p class="kicker">Interpretation</p>
+    <h2>What the experiment actually shows</h2>
+    <ol class="findings">
+      <li><h4>The embedded RV finds real app-logic bugs.</h4>
+        <p>Every one of the ten demos had its injected defect surfaced by at least one automated channel, and the
+          blind users found 17 of 19 with the monitor as their primary lever - not a decorated green dashboard.</p></li>
+      <li><h4>The live verdict cards are the loudest signal and the most foolable.</h4>
+        <p>When the bug is in the <em>logic</em>, the monitor catches it beautifully. When the bug is in the
+          <em>emitter</em> - a wrong status string, a swapped field - the cards can lie: a dormant policy, a
+          misdirected verdict, or a false alarm on healthy data. Reading verdicts alone is not enough.</p></li>
+      <li><h4>The stability contract is the quiet backstop.</h4>
+        <p>It fired on all ten because every bug perturbed an emit-path function. It cannot diagnose the defect, but
+          it never let a change to the watched code pass unremarked - exactly the "specifications don't rot silently"
+          promise the framework was built around.</p></li>
+      <li><h4>The two bugs that slipped were the ones the design predicts.</h4>
+        <p>A device terminal-timestamp offset and a corrupted tic-tac-toe win-line: both subtle, both unasserted by
+          any policy, one unreachable in the broken game's play. The saboteur predicted both as slip-throughs before
+          anyone played.</p></li>
+      <li><h4>A monitor watches the event, not the world.</h4>
+        <p>The coverage gaps map precisely to documented limits: it sees only the <em>fields a policy binds</em>
+          (lending's swap), the <em>event a policy names</em> rather than the state (snake never grows yet emits
+          "grew"), and the <em>properties a policy asserts</em> (blackjack's untracked push payout). Those bugs are
+          the user's to catch - and every buggy demo's own README and pinned gate became false, which the gates flagged.</p></li>
+    </ol>
+    <div class="callout"><p><strong>The honest one-line answer.</strong> Yes - the embedded monitor finds real bugs,
+      and its blind spots are knowable in advance from what its policies bind. Its verdict cards are the alarm; its
+      pinned gate is the merge guard; its stability contract is the tripwire. You want all three, and you want them
+      because they fail in different places.</p></div>
+  </div>
+</section>
+
+<section id="limits">
+  <div class="wrap">
+    <p class="kicker">Caveats</p>
+    <h2>Where this evidence stops</h2>
+    <p>This is a designed experiment, not a field trial. The apps are small; the bugs were planted by one saboteur
+      with knowledge of the fragment; the "users" are agents playing a human role. The numbers show that RV
+      <em>can</em> catch real bugs and <em>where</em> its channels fail - they do not prove a catch rate on an
+      arbitrary production codebase, and the coverage gaps (event-not-state, unbound-fields, unasserted-properties)
+      are inherent to any specification-based monitor: it enforces what you wrote, no more. The reliable, load-bearing
+      finding is the <em>shape</em>, not a headline percentage: three complementary channels, none sufficient alone,
+      whose union raised a hand on all ten demos.</p>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  behave-rv 0.3.1 · rv-monitoring-skill · 10 demos · 19 implanted bugs · blind three-stage protocol<br>
+  ground truth, per-demo user reports, and the raw scorecard retained alongside this document
+</div></footer>

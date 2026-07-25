@@ -1,23 +1,16 @@
-"""The monitorable vocabulary for Minesweeper.
+"""The monitorable vocabulary for the Minesweeper board.
 
 Conventions (see the rv skill's project-files reference):
 * ``build_registry()`` is a side-effect-free factory; the behave-rv CLI
   detects and uses it.
-* ``step_id`` is permanent identity; policies bind to it across renames.
-  Never reuse one for a different meaning.
-* Predicates are pure: read the event, return a boolean. No side effects.
+* ``step_id`` is permanent identity (``<domain>.<event>.<what>``); policies
+  bind to it across renames. Never reuse one for a different meaning.
+* Predicates are pure: read the event, return a boolean. Nothing else.
 * When rewording a phrasing, keep the old wording as an alias.
 
-Two correlation keys are in play, and they are what keep the policies in the
-single-entity fragment:
-* ``game_id``            - the whole game (rule 1 "no reveal after boom",
-                           rule 3 "flags never exceed mines").
-* ``(game_id, cell)``    - one specific cell of one game (rule 2 "no cell is
-                           ever revealed twice").
-
-``cell.reveal`` (the reveal ACTION) is observed under BOTH keys by two
-separate steps - a game-wide reveal and a same-cell reveal - so each policy
-stays on exactly one key.
+Two correlation keys are in play. Board-wide rules key on ``game_id``;
+"revealed at most once" keys on the composite ``(game_id, cell)`` so every
+square is its own monitored entity.
 """
 
 from pathlib import Path
@@ -31,61 +24,36 @@ POLICY_DIR = Path(__file__).parent / "policies"
 def build_registry() -> StepRegistry:
     registry = StepRegistry()
 
-    # --- lifecycle: the game has started (key: game_id) -----------------
-    # Observes game.started, already emitted at board construction. Used by
-    # the "a cell is only revealed after the game has started" policy.
-    @registry.trigger('the game has started',
-                      step_id="game.lifecycle.started",
-                      event_type="game.started",
-                      correlation_key="game_id")
-    def game_has_started(ctx, event):
-        return event.type == "game.started"
+    # -- board-wide vocabulary (key: game_id) -------------------------------
 
-    # --- rule 1: no reveal after a mine explodes (key: game_id) ---------
-    @registry.trigger('a mine explodes',
-                      step_id="game.mine.exploded",
-                      event_type="mine.exploded",
-                      correlation_key="game_id")
+    @registry.trigger("a mine explodes", step_id="board.mine.boom",
+                      event_type="mine.boom", correlation_key="game_id")
     def mine_explodes(ctx, event):
-        return event.type == "mine.exploded"
+        return event.type == "mine.boom"
 
-    @registry.trigger('a cell is revealed',
-                      step_id="game.cell.reveal",
-                      event_type="cell.reveal",
-                      correlation_key="game_id")
-    def cell_revealed_in_game(ctx, event):
+    @registry.trigger("a cell is revealed on the board", step_id="board.reveal.any",
+                      event_type="board.reveal", correlation_key="game_id")
+    def cell_revealed_on_board(ctx, event):
+        return event.type == "board.reveal"
+
+    @registry.trigger("the planted flags outnumber the mines",
+                      step_id="board.flags.overflow",
+                      event_type="flag.set", correlation_key="game_id")
+    def flags_outnumber_mines(ctx, event):
+        return (event.type == "flag.set"
+                and event.payload.get("flags", 0) > event.payload.get("mines", 0))
+
+    # -- per-square vocabulary (key: game_id + cell) ------------------------
+
+    @registry.trigger("a cell is revealed", step_id="cell.reveal.occurs",
+                      event_type="cell.reveal", correlation_key=("game_id", "cell"))
+    def cell_reveal_occurs(ctx, event):
         return event.type == "cell.reveal"
 
-    # --- rule 2: no cell is ever revealed twice (key: game_id, cell) ----
-    # Scope opens on the cell's revealed STATE, which the game emits strictly
-    # after the reveal action; the forbidden event is any later reveal ACTION
-    # on that same cell.
-    @registry.trigger('the same cell has been revealed',
-                      step_id="cell.state.revealed",
-                      event_type="cell.revealed",
-                      correlation_key=("game_id", "cell"))
-    def same_cell_state_revealed(ctx, event):
-        return event.type == "cell.revealed"
-
-    @registry.trigger('the same cell is revealed again',
-                      step_id="cell.reveal.repeat",
-                      event_type="cell.reveal",
-                      correlation_key=("game_id", "cell"))
-    def same_cell_reveal_again(ctx, event):
-        return event.type == "cell.reveal"
-
-    # --- rule 3: flags never exceed the mine count (key: game_id) -------
-    # The game stamps the running flag count and the board's mine count into
-    # every flag.placed event, so this is a PURE predicate over one event's
-    # payload - not cross-event counting (which is out of fragment).
-    @registry.trigger('more flags are planted than there are mines',
-                      step_id="game.flags.exceed_mines",
-                      event_type="flag.placed",
-                      correlation_key="game_id")
-    def flags_exceed_mines(ctx, event):
-        return (event.type == "flag.placed"
-                and int(event.payload.get("flags", 0))
-                > int(event.payload.get("mines", 0)))
+    @registry.trigger("that cell was already revealed", step_id="cell.seen.state",
+                      event_type="cell.seen", correlation_key=("game_id", "cell"))
+    def cell_already_revealed(ctx, event):
+        return event.type == "cell.seen"
 
     return registry
 

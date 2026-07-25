@@ -1,4 +1,4 @@
-"""The monitorable vocabulary for the Memory pairs game.
+"""The monitorable vocabulary for the Memory-pairs game.
 
 Conventions (see the rv skill's project-files reference):
 * ``build_registry()`` is a side-effect-free factory; the behave-rv CLI
@@ -8,10 +8,12 @@ Conventions (see the rv skill's project-files reference):
 * Predicates are pure: read the event, return a boolean.
 * When rewording a phrasing, keep the old wording as an alias.
 
-Correlation keys per step:
-  * a card ......... ("game_id", "position")  - one card inside one game
-  * an attempt ..... "attempt_id"             - one two-card attempt
-  * the game ....... "game_id"                - the whole game
+Two correlation keys are in play, both single-entity (one card game per key):
+  * ``game_id``                      - the whole game (rules 1 and 3).
+  * ``(game_id, attempt_id)``        - one flip attempt (rule 2's deadline).
+The second is occurrence keying: a `within` deadline arms once per entity, so
+each attempt is its own entity to have every attempt's 3-second clock checked
+rather than only the first (see references/operators.md).
 """
 
 from pathlib import Path
@@ -21,71 +23,69 @@ from behave_rv.compile.compiler import compile_feature
 
 POLICY_DIR = Path(__file__).parent / "policies"
 
-CARD_KEY = ("game_id", "position")
-
 
 def build_registry() -> StepRegistry:
     registry = StepRegistry()
 
-    # -- card events (keyed per card within a game) ---------------------------
-    @registry.trigger("a card is flipped",
-                      step_id="card.flip.is",
-                      event_type="card.flip",
-                      correlation_key=CARD_KEY)
-    def card_is_flipped(ctx, event):
-        return event.type == "card.flip"
+    # -- rule 1: a card already part of a found pair is flipped again -------
+    # History-stamped predicate: the emit site knows, at flip time, whether
+    # the card was already matched. A self-contained `never` over this field
+    # checks EVERY flip and never settles early.
+    @registry.trigger('a matched card is flipped again',
+                      step_id="card.flipped.rematch",
+                      event_type="card.flipped", correlation_key="game_id")
+    def matched_card_reflipped(ctx, event):
+        return (event.type == "card.flipped"
+                and event.payload.get("already_matched") is True)
 
-    @registry.trigger("a card is matched",
-                      step_id="card.matched.is",
-                      event_type="card.matched",
-                      correlation_key=CARD_KEY)
-    def card_is_matched(ctx, event):
-        return event.type == "card.matched"
+    # -- rule 2: the second card of an attempt / its resolution ------------
+    @registry.trigger("the second card of an attempt is flipped",
+                      step_id="card.flipped.second",
+                      event_type="card.flipped",
+                      correlation_key=("game_id", "attempt_id"))
+    def second_card_flipped(ctx, event):
+        return (event.type == "card.flipped"
+                and event.payload.get("slot") == "second")
 
-    # -- attempt events (keyed per attempt) -----------------------------------
-    @registry.trigger("an attempt is ready",
-                      step_id="attempt.pending.is",
-                      event_type="attempt.pending",
-                      correlation_key="attempt_id")
-    def attempt_is_ready(ctx, event):
-        return event.type == "attempt.pending"
-
-    @registry.trigger("an attempt is resolved",
-                      step_id="attempt.resolved.is",
+    @registry.trigger("the attempt resolves",
+                      step_id="attempt.resolved.any",
                       event_type="attempt.resolved",
-                      correlation_key="attempt_id")
-    def attempt_is_resolved(ctx, event):
+                      correlation_key=("game_id", "attempt_id"))
+    def attempt_resolves(ctx, event):
         return event.type == "attempt.resolved"
 
-    @registry.trigger('an attempt is resolved as "{outcome}"',
+    @registry.trigger('the attempt resolves as "{outcome}"',
                       step_id="attempt.resolved.outcome",
                       event_type="attempt.resolved",
-                      correlation_key="attempt_id")
-    def attempt_resolved_as(ctx, event, outcome):
+                      correlation_key=("game_id", "attempt_id"))
+    def attempt_resolves_as(ctx, event, outcome):
         return (event.type == "attempt.resolved"
                 and event.payload.get("outcome") == outcome)
 
-    # -- game lifecycle events (keyed per game) -------------------------------
-    @registry.trigger("the game starts",
-                      step_id="game.start.is",
-                      event_type="game.start",
-                      correlation_key="game_id")
-    def game_starts(ctx, event):
-        return event.type == "game.start"
+    # -- rule 3: anything happens after the game is complete ---------------
+    # History-stamped: every emission carries whether the game had already
+    # ended. Self-contained `never`; and because game.completed is the
+    # terminal event, any post-completion flip spawns a fresh instance that
+    # still violates immediately (no terminal-window false-green).
+    @registry.trigger("a card is flipped after the game is over",
+                      step_id="card.flipped.postgame",
+                      event_type="card.flipped", correlation_key="game_id")
+    def card_flipped_after_over(ctx, event):
+        return (event.type == "card.flipped"
+                and event.payload.get("after_completion") is True)
 
-    @registry.trigger("the game is complete",
-                      step_id="game.complete.is",
-                      event_type="game.complete",
-                      correlation_key="game_id")
-    def game_is_complete(ctx, event):
-        return event.type == "game.complete"
+    # -- general vocabulary (over-exposed; enriches authoring) -------------
+    @registry.trigger("a card is flipped",
+                      step_id="card.flipped.any",
+                      event_type="card.flipped", correlation_key="game_id")
+    def any_card_flipped(ctx, event):
+        return event.type == "card.flipped"
 
-    @registry.trigger("a game action occurs",
-                      step_id="game.action.is",
-                      event_type="game.action",
-                      correlation_key="game_id")
-    def game_action_occurs(ctx, event):
-        return event.type == "game.action"
+    @registry.trigger("the game is completed",
+                      step_id="game.completed.any",
+                      event_type="game.completed", correlation_key="game_id")
+    def game_completed(ctx, event):
+        return event.type == "game.completed"
 
     return registry
 

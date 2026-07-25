@@ -1,29 +1,122 @@
-{"type": "game.status", "event_time": 0.0, "bindings": {"game_id": "no-grow"}, "payload": {"status": "started", "grid_w": 24, "grid_h": 24}, "source": "snake-engine"}
-{"type": "snake.food", "event_time": 1.0, "bindings": {"game_id": "no-grow"}, "payload": {"score": 10}, "source": "corrupted-build"}
-{"type": "game.status", "event_time": 1.0, "bindings": {"game_id": "healthy-1"}, "payload": {"status": "started", "grid_w": 24, "grid_h": 24}, "source": "snake-engine"}
-{"type": "snake.move", "event_time": 2.0, "bindings": {"game_id": "healthy-1"}, "payload": {"direction": "right", "reversal_accepted": "false", "turn": "straight"}, "source": "snake-engine"}
-{"type": "snake.food", "event_time": 2.001, "bindings": {"game_id": "healthy-1"}, "payload": {"score": 10}, "source": "snake-engine"}
-{"type": "snake.grow", "event_time": 2.002, "bindings": {"game_id": "healthy-1"}, "payload": {"length": 4}, "source": "snake-engine"}
-{"type": "game.score", "event_time": 2.0029999999999997, "bindings": {"game_id": "healthy-1"}, "payload": {"score": 10, "points": 10}, "source": "snake-engine"}
-{"type": "snake.move", "event_time": 3.0, "bindings": {"game_id": "healthy-1"}, "payload": {"direction": "right", "reversal_accepted": "false", "turn": "straight"}, "source": "snake-engine"}
-{"type": "snake.food", "event_time": 3.001, "bindings": {"game_id": "healthy-1"}, "payload": {"score": 20}, "source": "snake-engine"}
-{"type": "snake.grow", "event_time": 3.002, "bindings": {"game_id": "healthy-1"}, "payload": {"length": 5}, "source": "snake-engine"}
-{"type": "game.score", "event_time": 3.0029999999999997, "bindings": {"game_id": "healthy-1"}, "payload": {"score": 20, "points": 10}, "source": "snake-engine"}
-{"type": "game.status", "event_time": 4.0, "bindings": {"game_id": "healthy-1"}, "payload": {"status": "over", "reason": "wall", "score": 20}, "source": "snake-engine"}
-{"type": "game.status", "event_time": 4.001, "bindings": {"game_id": "reversal-bug"}, "payload": {"status": "started", "grid_w": 24, "grid_h": 24}, "source": "snake-engine"}
-{"type": "snake.move", "event_time": 5.0, "bindings": {"game_id": "reversal-bug"}, "payload": {"direction": "right", "reversal_accepted": "false", "turn": "straight"}, "source": "snake-engine"}
-{"type": "snake.food", "event_time": 5.001, "bindings": {"game_id": "reversal-bug"}, "payload": {"score": 10}, "source": "snake-engine"}
-{"type": "snake.grow", "event_time": 5.002000000000001, "bindings": {"game_id": "reversal-bug"}, "payload": {"length": 4}, "source": "snake-engine"}
-{"type": "game.score", "event_time": 5.003000000000001, "bindings": {"game_id": "reversal-bug"}, "payload": {"score": 10, "points": 10}, "source": "snake-engine"}
-{"type": "snake.move", "event_time": 6.0, "bindings": {"game_id": "reversal-bug"}, "payload": {"direction": "left", "reversal_accepted": "true", "turn": "turn"}, "source": "corrupted-build"}
-{"type": "game.status", "event_time": 6.0, "bindings": {"game_id": "zombie"}, "payload": {"status": "started", "grid_w": 24, "grid_h": 24}, "source": "snake-engine"}
-{"type": "snake.move", "event_time": 7.0, "bindings": {"game_id": "zombie"}, "payload": {"direction": "right", "reversal_accepted": "false", "turn": "straight"}, "source": "snake-engine"}
-{"type": "snake.food", "event_time": 7.001, "bindings": {"game_id": "zombie"}, "payload": {"score": 10}, "source": "snake-engine"}
-{"type": "snake.grow", "event_time": 7.002000000000001, "bindings": {"game_id": "zombie"}, "payload": {"length": 4}, "source": "snake-engine"}
-{"type": "game.score", "event_time": 7.003000000000001, "bindings": {"game_id": "zombie"}, "payload": {"score": 10, "points": 10}, "source": "snake-engine"}
-{"type": "game.status", "event_time": 8.0, "bindings": {"game_id": "zombie"}, "payload": {"status": "over", "reason": "wall", "score": 10}, "source": "snake-engine"}
-{"type": "snake.move", "event_time": 9.0, "bindings": {"game_id": "zombie"}, "payload": {"direction": "right", "reversal_accepted": "false", "turn": "straight"}, "source": "corrupted-build"}
-{"type": "game.score", "event_time": 10.0, "bindings": {"game_id": "zombie"}, "payload": {"score": 999, "points": 989}, "source": "corrupted-build"}
-{"type": "snake.move", "event_time": 11.0, "bindings": {"game_id": "orphan"}, "payload": {"direction": "up", "reversal_accepted": "false", "turn": "straight"}, "source": "corrupted-build"}
-{"type": "game.score", "event_time": 12.0, "bindings": {"game_id": "orphan"}, "payload": {"score": 10, "points": 10}, "source": "corrupted-build"}
-{"type": "behave_rv.clock", "event_time": 12.001, "bindings": {}, "payload": {}, "source": "clock"}
+{"type": "game.status", "event_time": 0.033837080001831055, "bindings": {"game_id": "g-clean"}, "payload": {"status": "started", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 0.1939408779144287, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 0.3541140556335449, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 0.5087451934814453, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.food", "event_time": 0.5089371204376221, "bindings": {"game_id": "g-clean"}, "payload": {"score": 1}, "source": "snake-engine"}
+{"type": "game.grow", "event_time": 0.5090889930725098, "bindings": {"game_id": "g-clean"}, "payload": {"length": 4}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 0.6693530082702637, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 0.8295750617980957, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 0.9829039573669434, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 1.143113136291504, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 1.3011009693145752, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 1.457369089126587, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 1.6175780296325684, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.status", "event_time": 1.6178081035614014, "bindings": {"game_id": "g-clean"}, "payload": {"status": "over", "reason": "wall", "score": 1, "length": 4}, "source": "snake-engine"}
+{"type": "game.status", "event_time": 2.087455987930298, "bindings": {"game_id": "g-turn"}, "payload": {"status": "started", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 2.24767804145813, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 2.4079830646514893, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 2.565086841583252, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 2.7198638916015625, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 2.8801040649414062, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 3.040329933166504, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 3.200538158416748, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 3.3608930110931396, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 3.5149481296539307, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 3.675243854522705, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 3.835454225540161, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.status", "event_time": 3.8356540203094482, "bindings": {"game_id": "g-turn"}, "payload": {"status": "over", "reason": "wall", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.status", "event_time": 4.316149950027466, "bindings": {"game_id": "g-move-after-over"}, "payload": {"status": "started", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 4.472296953201294, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 4.632598876953125, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 4.79289698600769, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 4.953172922134399, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 5.113404035568237, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 5.273492813110352, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 5.433645963668823, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 5.59386420249939, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 5.749825954437256, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 5.904227018356323, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.status", "event_time": 5.904478073120117, "bindings": {"game_id": "g-move-after-over"}, "payload": {"status": "over", "reason": "wall", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 6.531713008880615, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "corrupted"}
+{"type": "game.status", "event_time": 6.532147169113159, "bindings": {"game_id": "g-point-after-over"}, "payload": {"status": "started", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 6.6919190883636475, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 6.852032899856567, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 7.004236936569214, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 7.1643078327178955, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 7.321406126022339, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 7.481737852096558, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 7.641909837722778, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 7.802132844924927, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 7.962296962738037, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 8.122495889663696, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.status", "event_time": 8.122643947601318, "bindings": {"game_id": "g-point-after-over"}, "payload": {"status": "over", "reason": "wall", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.food", "event_time": 8.750103950500488, "bindings": {"game_id": "g-point-after-over"}, "payload": {"score": 99}, "source": "corrupted"}
+{"type": "game.grow", "event_time": 8.90576720237732, "bindings": {"game_id": "g-point-after-over"}, "payload": {"length": 5}, "source": "corrupted"}
+{"type": "game.status", "event_time": 8.906033039093018, "bindings": {"game_id": "g-food-no-grow"}, "payload": {"status": "started", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 9.064575910568237, "bindings": {"game_id": "g-food-no-grow"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.food", "event_time": 9.383740186691284, "bindings": {"game_id": "g-food-no-grow"}, "payload": {"score": 1}, "source": "corrupted"}
+{"type": "game.status", "event_time": 11.893954038619995, "bindings": {"game_id": "g-reversal"}, "payload": {"status": "started", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 12.054380893707275, "bindings": {"game_id": "g-reversal"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 12.374639987945557, "bindings": {"game_id": "g-reversal"}, "payload": {"direction": "left", "prev_direction": "right"}, "source": "corrupted"}
+{"type": "behave_rv.clock", "event_time": 13.493575096130371, "bindings": {}, "payload": {}, "source": "clock"}
+{"type": "game.status", "event_time": 0.03556990623474121, "bindings": {"game_id": "g-clean"}, "payload": {"status": "started", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 0.19355082511901855, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 0.3471109867095947, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 0.5073940753936768, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.food", "event_time": 0.5076308250427246, "bindings": {"game_id": "g-clean"}, "payload": {"score": 1}, "source": "snake-engine"}
+{"type": "game.grow", "event_time": 0.5077838897705078, "bindings": {"game_id": "g-clean"}, "payload": {"length": 4}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 0.6682288646697998, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 0.8194692134857178, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 0.9772491455078125, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 1.1375019550323486, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 1.288635015487671, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 1.4463849067687988, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 1.6053619384765625, "bindings": {"game_id": "g-clean"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.status", "event_time": 1.605576992034912, "bindings": {"game_id": "g-clean"}, "payload": {"status": "over", "reason": "wall", "score": 1, "length": 4}, "source": "snake-engine"}
+{"type": "game.status", "event_time": 2.0737791061401367, "bindings": {"game_id": "g-turn"}, "payload": {"status": "started", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 2.23400616645813, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 2.3942148685455322, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 2.5478479862213135, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 2.704745054244995, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 2.8649470806121826, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 3.025169849395752, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 3.177532911300659, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 3.337815999984741, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 3.4978671073913574, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 3.658050060272217, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 3.818284034729004, "bindings": {"game_id": "g-turn"}, "payload": {"direction": "down", "prev_direction": "down"}, "source": "snake-engine"}
+{"type": "game.status", "event_time": 3.8183958530426025, "bindings": {"game_id": "g-turn"}, "payload": {"status": "over", "reason": "wall", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.status", "event_time": 4.298810005187988, "bindings": {"game_id": "g-move-after-over"}, "payload": {"status": "started", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 4.457056999206543, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 4.617264986038208, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 4.773679971694946, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 4.933969974517822, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 5.094159841537476, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 5.254299879074097, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 5.414443016052246, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 5.574573040008545, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 5.73476505279541, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 5.89494776725769, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.status", "event_time": 5.895134925842285, "bindings": {"game_id": "g-move-after-over"}, "payload": {"status": "over", "reason": "wall", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 6.51432991027832, "bindings": {"game_id": "g-move-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "corrupted"}
+{"type": "game.status", "event_time": 6.514480829238892, "bindings": {"game_id": "g-point-after-over"}, "payload": {"status": "started", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 6.674543857574463, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 6.834819793701172, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 6.995091915130615, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 7.150376081466675, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 7.310701131820679, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 7.470889091491699, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 7.631002902984619, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 7.787408828735352, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 7.93847393989563, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 8.098637819290161, "bindings": {"game_id": "g-point-after-over"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.status", "event_time": 8.098924160003662, "bindings": {"game_id": "g-point-after-over"}, "payload": {"status": "over", "reason": "wall", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.food", "event_time": 8.709808826446533, "bindings": {"game_id": "g-point-after-over"}, "payload": {"score": 99}, "source": "corrupted"}
+{"type": "game.grow", "event_time": 8.869976043701172, "bindings": {"game_id": "g-point-after-over"}, "payload": {"length": 5}, "source": "corrupted"}
+{"type": "game.status", "event_time": 8.870553970336914, "bindings": {"game_id": "g-food-no-grow"}, "payload": {"status": "started", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 9.027453899383545, "bindings": {"game_id": "g-food-no-grow"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.food", "event_time": 9.347784042358398, "bindings": {"game_id": "g-food-no-grow"}, "payload": {"score": 1}, "source": "corrupted"}
+{"type": "game.status", "event_time": 11.853029012680054, "bindings": {"game_id": "g-reversal"}, "payload": {"status": "started", "score": 0, "length": 3}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 12.013228178024292, "bindings": {"game_id": "g-reversal"}, "payload": {"direction": "right", "prev_direction": "right"}, "source": "snake-engine"}
+{"type": "game.move", "event_time": 12.325032949447632, "bindings": {"game_id": "g-reversal"}, "payload": {"direction": "left", "prev_direction": "right"}, "source": "corrupted"}
+{"type": "behave_rv.clock", "event_time": 13.434699058532715, "bindings": {}, "payload": {}, "source": "clock"}

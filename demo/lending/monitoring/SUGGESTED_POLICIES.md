@@ -1,33 +1,34 @@
 # Suggested policies
 
-Proposals I (the agent) drafted from the code's observable surface. You own
-policies: nothing here is active until you move it into `monitoring/policies/`
-and the gates are rerun.
+Proposals only. You own the policies: move an entry into
+`monitoring/policies/` yourself if you want it monitored. Each entry below
+compiles against the current vocabulary and produces zero violations on the
+healthy flows described in the request.
 
-## ADOPTED 2026-07-23: a loan may only be renewed after it was borrowed
+---
 
-Moved to `monitoring/policies/04_renewed_after_borrowed.feature` at the user's
-request on 2026-07-23. Now a user-owned policy.
+## Adopted (2026-07-25)
 
-**Observes:** `loan.status` (statuses `renewed`, `borrowed`), key `loan_id`
-**Why:** Rule 1 guards *return* against a missing borrow; the same integrity
-gap existed for renewal - a renew on a loan that was never borrowed is an
-equally impossible state. Caught with the same precedence shape.
+Both suggestions below were approved by the user and are now live policies:
 
-```gherkin
-Feature: renewal precedence
-  Scenario: a loan may only be renewed after it was borrowed
-    When a loan is "renewed"
-    Then a loan is "borrowed" before
-```
+- "a loan is renewed only after it was borrowed" -> `policies/04_renew_after_borrow.feature`
+- "a returned loan is never renewed" -> `policies/05_returned_never_renewed.feature`
 
-## ADOPTED 2026-07-23: a renewed loan is settled again within 21 seconds
+Their healthy and fault flows are seeded in `replay_check.py`; the returned
+-never-renewed fault arrives through the real borrow -> return -> renew path,
+after the close.
 
-Moved to `monitoring/policies/05_renewed_settled_within_21s.feature` at the
-user's request on 2026-07-23. Now a user-owned policy.
+---
 
-**Observes:** `loan.status` (statuses `renewed`, `returned`, `lost`), key `loan_id`
-**Why:** Rule 3 arms the 21-second deadline at *borrow* only, so a renewal
-satisfied it once and the loan was then unbounded. In a real library a renewal
-resets the term - a renewed loan should again be acted on within the window.
-This re-arms the deadline at each renewal, alongside rule 3 (both hold at once).
+## Out of fragment (noted, not proposed)
+
+- **"A book copy is never borrowed twice at once."** This relates two loans of
+  the same copy (a cross-entity relation on `book_copy_id`), which the
+  single-key fragment cannot express as written. It could become in-fragment by
+  re-keying: emit a copy-keyed availability event (`copy.status` keyed on
+  `book_copy_id`) and write a prohibition over that. That is additive
+  instrumentation on a different key; say the word and I will draft it.
+- **"No loan is renewed more than N times."** Counting/aggregate - out of
+  fragment. The nearest in-fragment shape is a per-loan `within`-style deadline
+  or an app-side counter that emits a dedicated `renew.limit_exceeded` marker
+  event a self-contained `never` can watch.

@@ -4,59 +4,108 @@ Every phrasing below can be used in a `.feature` policy under
 `monitoring/policies/`. Quoted `<placeholders>` take concrete values.
 Regenerate this file with `python monitoring/generate_steps_doc.py`.
 
-## `a move is made`
+## `a game starts`
 
-- **identity**: `game.move.any` (trigger)
-- **observes**: event `game.move`, entity key `game_id`
+- **identity**: `game.lifecycle.started` (trigger)
+- **observes**: event `game.status`, entity key `game_id`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a move is made never happens
+    Then a game starts never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a move is made has happened
+    Then a game starts has happened
 
   Scenario: <your policy name>  # precedence
-    When a move is made
-    Then a move is made before
+    When a game starts
+    Then a game starts before
 
   Scenario: <your policy name>  # deadline
-    When a move is made
-    Then a move is made within "30" seconds
+    When a game starts
+    Then a game starts within "30" seconds
 
 ```
 
-## `a move is made by "{player}"`
+## `a move is played`
 
-- **identity**: `game.move.byplayer` (trigger)
-- **observes**: event `game.move`, entity key `game_id`
+- **identity**: `game.move.any` (trigger)
+- **observes**: event `game.status`, entity key `game_id`
+
+Example scenarios:
+
+```gherkin
+  Scenario: <your policy name>  # prohibition
+    Then a move is played never happens
+
+  Scenario: <your policy name>  # eventuality
+    Then a move is played has happened
+
+  Scenario: <your policy name>  # precedence
+    When a move is played
+    Then a move is played before
+
+  Scenario: <your policy name>  # deadline
+    When a move is played
+    Then a move is played within "30" seconds
+
+```
+
+## `a move is played by "{player}"`
+
+- **identity**: `game.move.by` (trigger)
+- **observes**: event `game.status`, entity key `game_id`
 - **parameters**: `player`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a move is made by "<player>" never happens
+    Then a move is played by "<player>" never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a move is made by "<player>" has happened
+    Then a move is played by "<player>" has happened
 
   Scenario: <your policy name>  # precedence
-    When a move is made by "<player>"
-    Then a move is made by "<player>" before
+    When a move is played by "<player>"
+    Then a move is played by "<player>" before
 
   Scenario: <your policy name>  # deadline
-    When a move is made by "<player>"
-    Then a move is made by "<player>" within "30" seconds
+    When a move is played by "<player>"
+    Then a move is played by "<player>" within "30" seconds
+
+```
+
+## `the opening move is played by "{player}"`
+
+- **identity**: `game.move.opening_by` (trigger)
+- **observes**: event `game.status`, entity key `game_id`
+- **parameters**: `player`
+
+Example scenarios:
+
+```gherkin
+  Scenario: <your policy name>  # prohibition
+    Then the opening move is played by "<player>" never happens
+
+  Scenario: <your policy name>  # eventuality
+    Then the opening move is played by "<player>" has happened
+
+  Scenario: <your policy name>  # precedence
+    When the opening move is played by "<player>"
+    Then the opening move is played by "<player>" before
+
+  Scenario: <your policy name>  # deadline
+    When the opening move is played by "<player>"
+    Then the opening move is played by "<player>" within "30" seconds
 
 ```
 
 ## `the same player moves twice in a row`
 
-- **identity**: `game.move.repeat` (obligation)
-- **observes**: event `game.move`, entity key `game_id`
+- **identity**: `game.move.repeat` (trigger)
+- **observes**: event `game.status`, entity key `game_id`
 
 Example scenarios:
 
@@ -77,149 +126,100 @@ Example scenarios:
 
 ```
 
-## `a game is finished`
+## `a move is played after the game is decided`
 
-- **identity**: `game.status.finished` (trigger)
+- **identity**: `game.move.after_decided` (trigger)
 - **observes**: event `game.status`, entity key `game_id`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a game is finished never happens
+    Then a move is played after the game is decided never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a game is finished has happened
+    Then a move is played after the game is decided has happened
 
   Scenario: <your policy name>  # precedence
-    When a game is finished
-    Then a game is finished before
+    When a move is played after the game is decided
+    Then a move is played after the game is decided before
 
   Scenario: <your policy name>  # deadline
-    When a game is finished
-    Then a game is finished within "30" seconds
+    When a move is played after the game is decided
+    Then a move is played after the game is decided within "30" seconds
 
 ```
 
-## `a game is started`
+## `a game is decided`
 
-- **identity**: `game.status.started` (trigger)
+- **identity**: `game.decided.any` (trigger)
 - **observes**: event `game.status`, entity key `game_id`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a game is started never happens
+    Then a game is decided never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a game is started has happened
+    Then a game is decided has happened
 
   Scenario: <your policy name>  # precedence
-    When a game is started
-    Then a game is started before
+    When a game is decided
+    Then a game is decided before
 
   Scenario: <your policy name>  # deadline
-    When a game is started
-    Then a game is started within "30" seconds
+    When a game is decided
+    Then a game is decided within "30" seconds
 
 ```
 
-## `a game is won`
+## `a game is "{status}"`
 
-- **identity**: `game.status.won` (trigger)
+- **identity**: `game.status.is` (trigger)
 - **observes**: event `game.status`, entity key `game_id`
+- **parameters**: `status`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a game is won never happens
+    Then a game is "<status>" never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a game is won has happened
+    Then a game is "<status>" has happened
 
   Scenario: <your policy name>  # precedence
-    When a game is won
-    Then a game is won before
+    When a game is "<status>"
+    Then a game is "<status>" before
 
   Scenario: <your policy name>  # deadline
-    When a game is won
-    Then a game is won within "30" seconds
+    When a game is "<status>"
+    Then a game is "<status>" within "30" seconds
 
 ```
 
-## `a game is won by "{player}"`
+## `a game is over`
 
-- **identity**: `game.status.wonby` (trigger)
-- **observes**: event `game.status`, entity key `game_id`
-- **parameters**: `player`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then a game is won by "<player>" never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then a game is won by "<player>" has happened
-
-  Scenario: <your policy name>  # precedence
-    When a game is won by "<player>"
-    Then a game is won by "<player>" before
-
-  Scenario: <your policy name>  # deadline
-    When a game is won by "<player>"
-    Then a game is won by "<player>" within "30" seconds
-
-```
-
-## `a game is a draw`
-
-- **identity**: `game.status.draw` (trigger)
-- **observes**: event `game.status`, entity key `game_id`
+- **identity**: `game.over.any` (trigger)
+- **observes**: event `game.over`, entity key `game_id`
 
 Example scenarios:
 
 ```gherkin
   Scenario: <your policy name>  # prohibition
-    Then a game is a draw never happens
+    Then a game is over never happens
 
   Scenario: <your policy name>  # eventuality
-    Then a game is a draw has happened
+    Then a game is over has happened
 
   Scenario: <your policy name>  # precedence
-    When a game is a draw
-    Then a game is a draw before
+    When a game is over
+    Then a game is over before
 
   Scenario: <your policy name>  # deadline
-    When a game is a draw
-    Then a game is a draw within "30" seconds
-
-```
-
-## `a game ends as "{outcome}"`
-
-- **identity**: `game.ended.outcome` (trigger)
-- **observes**: event `game.ended`, entity key `game_id`
-- **parameters**: `outcome`
-
-Example scenarios:
-
-```gherkin
-  Scenario: <your policy name>  # prohibition
-    Then a game ends as "<outcome>" never happens
-
-  Scenario: <your policy name>  # eventuality
-    Then a game ends as "<outcome>" has happened
-
-  Scenario: <your policy name>  # precedence
-    When a game ends as "<outcome>"
-    Then a game ends as "<outcome>" before
-
-  Scenario: <your policy name>  # deadline
-    When a game ends as "<outcome>"
-    Then a game ends as "<outcome>" within "30" seconds
+    When a game is over
+    Then a game is over within "30" seconds
 
 ```
 

@@ -114,23 +114,24 @@ skills/rv/templates/          the monitoring/ scaffold installed into
                               gate, STEPS.md generator, CI snippet
 docs/HOW_IT_WORKS.md          the complete guide to the skill and the
                               behave-rv machinery behind it
-demo/                         nine projects built end-to-end BY agents
-                              using this skill (prompts included) - four
-                              services and five browser games with live
-                              RV dashboards; all gates run in CI
+demo/                         ten example projects built with this skill -
+                              five services and five browser games, each
+                              with a live RV dashboard; all gates run in CI
+experiment/                   an offline report: ten monitored apps, bugs
+                              planted in each, and how the monitor found
+                              them (open experiment/index.html)
 test/e2e.sh                   end-to-end validation of the templates and
                               gates against the published behave-rv package
 ```
 
-The demos are also the proof: [demo/README.md](demo/README.md) indexes
-nine projects, each testing a different part of the skill - four services
-(the full development loop and break protocol, brownfield instrumentation
-and the alias flow, the /rv consultation, and conflict detection with a
-user-driven policy repair) and five browser games (snake, blackjack,
-minesweeper, tic-tac-toe, memory) that ship with live RV dashboards and
-in-browser cheat injection, covering the terminal-window, at-most-once,
-history-stamping, and counting-projection patterns. Each project's
-PROMPTS.md holds the exact human prompts that produced every file in it.
+The [demo/](demo/README.md) folder holds ten example projects - five
+services (lending, parcels, bookings, devices, payments) and five browser
+games (snake, blackjack, minesweeper, tic-tac-toe, memory) - each with its
+monitored policies, its instrumentation, and a live RV dashboard you can
+open and watch. The [experiment/](experiment/index.html) folder is a
+self-contained offline report: the same ten apps with realistic bugs
+planted in their code, and a page-by-page account of how the runtime
+monitor did or did not catch each one.
 
 CI runs the end-to-end validation against the real PyPI `behave-rv` on every
 push and weekly - including a check that the stability gate actually catches
@@ -143,9 +144,8 @@ Runtime verification is usually retrofitted. This skill inverts that: the
 agent performs the instrumentation while it writes the code, the catalog is
 committed from the first commit, and every regeneration-happy rewrite is
 held to the contract by machine-checked gates - which is precisely what
-makes it safe to let an agent develop aggressively. The full framework,
-its measured evidence (a 619-mutant campaign with zero missed behaviour
-changes, among others), and its documentation live in the
+makes it safe to let an agent develop aggressively. The full framework and
+its documentation live in the
 [behave-rv repository](https://github.com/moraneus/behave-rv).
 
 ## License
