@@ -39,10 +39,15 @@ python monitoring/generate_steps_doc.py
 
 It renders, from the live registry: every phrasing and alias, its
 parameters, the event type and correlation key it observes, and ready-to-copy
-example scenarios for each applicable temporal form. This file is how the
-user writes policies without reading Python - keeping it complete and fresh
-is part of the definition of done for every change. It is generated so it
-cannot drift; treat a hand edit to it as a bug.
+example scenarios for each applicable temporal form. For each parameter it
+also lists the concrete values seen for that field in the committed
+representative trace, so the user writes the exact strings the app emits - a
+value the app never emits compiles but silently never matches. Those value
+lists only populate once a representative trace exists, so regenerate STEPS.md
+AFTER recording the trace, not only right after editing `steps.py`. This file
+is how the user writes policies without reading Python - keeping it complete
+and fresh is part of the definition of done for every change. It is generated
+so it cannot drift; treat a hand edit to it as a bug.
 
 ## Definition of done, per change
 

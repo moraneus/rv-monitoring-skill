@@ -88,6 +88,9 @@ request against existing code:
 3. **Expose steps.** Register or extend predicates in `monitoring/steps.py`
    (stable `step_id`s, pure predicates, aliases on rephrasing). Then
    regenerate the user's vocabulary: `python monitoring/generate_steps_doc.py`.
+   Regenerate it again once a representative trace is recorded (step 5): STEPS.md
+   lists the concrete values each parameter takes from that trace, so the user
+   writes the exact strings the app emits instead of guessing.
 4. **Propose.** New monitorable behaviour with no covering policy → add a
    suggestion to `monitoring/SUGGESTED_POLICIES.md`: the draft scenario, the
    rationale, and which events it observes.
