@@ -175,7 +175,11 @@ Feature: ...
 ​```
 ```
 
-Verify every suggestion compiles against the current registry before
+Verify every suggestion COMPILES against the current registry before
 proposing it (`compile_feature` on the draft - a refused suggestion is
-noise). When the user accepts one, move it into `monitoring/policies/`
+noise) - and MINI-REPLAY it against the described healthy flows before
+proposing it: a suggestion that violates on healthy traffic is a defect,
+not a proposal (the classic case: "never twice" transcribed as a scoped
+never, which fires on every first legitimate occurrence). Compiling is
+syntax; only a clean healthy-flow replay is soundness. When the user accepts one, move it into `monitoring/policies/`
 yourself only when they say so, then rerun the gates.
