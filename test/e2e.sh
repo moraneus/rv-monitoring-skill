@@ -130,5 +130,22 @@ python -m behave_rv docs operators | grep -q "temporal vocabulary"
 python -m behave_rv docs stability > /dev/null
 echo "python -m behave_rv docs OK (requires behave-rv >= 0.2.0)"
 
+echo "== 6. the replay gate pins the verdict SET, not counts (compensating-bug guard)"
+python - <<'EOF'
+# Two runs with identical counts but a different WHICH: an expected violation
+# vanishes just as an unexpected one appears. A count gate stays green; the
+# set-based gate the template ships must go red.
+def sig(pid, ent, verdict):
+    return (pid, tuple(sorted(ent.items())), verdict)
+expected = {sig("p1", {"id": "A"}, "violated"), sig("p2", {"id": "B"}, "satisfied")}
+actual = {sig("p1", {"id": "C"}, "violated"), sig("p2", {"id": "B"}, "satisfied")}
+assert len(expected) == len(actual)                                  # counts match
+viol = lambda s: len([x for x in s if x[2] == "violated"])
+assert viol(expected) == viol(actual)                                # violation counts match
+missing, unexpected = expected - actual, actual - expected
+assert missing and unexpected, "set gate failed to detect the count-preserving swap"
+print("set gate catches a count-preserving verdict swap a count gate would miss")
+EOF
+
 echo
 echo "e2e: all checks passed against $(python -c 'import behave_rv; print("behave-rv", behave_rv.__version__)')"

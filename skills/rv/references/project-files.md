@@ -59,12 +59,17 @@ so it cannot drift; treat a hand edit to it as a bug.
 5. `catalog diff --app --fail-on-app-risk` clean, or breaks reported to the
    user; `catalog save` only for intended contract changes, committed
    together.
-6. `replay_check.py` green (expectations updated only for intended
-   behaviour changes, stated in the report). The scripted traffic MUST
-   include every normal flow the user described, and those healthy flows
-   must produce ZERO violations - a violation on a described healthy flow
-   is a rule conflict to surface with options (see the joint-satisfiability
-   rule in policy-authoring.md), never a count to accept into the pins.
+6. `replay_check.py` green. Pin the exact SET of settled
+   `(policy, entity, verdict)` verdicts, never the totals: two compensating
+   bugs can keep the counts identical while WHICH verdicts occur changes, so
+   a count gate goes green on broken code. The scripted traffic MUST drive
+   every exposed operation at least once (an unexercised operation is one the
+   gate can never check) and include every normal flow the user described;
+   those healthy flows must produce ZERO violations - a violation on a
+   described healthy flow is a rule conflict to surface with options (see the
+   joint-satisfiability rule in policy-authoring.md), never a count to accept
+   into the pins. Expectations update only for intended behaviour changes,
+   stated in the report.
    For every scoped prohibition on an entity with a terminal, the fault
    seeds must include a post-terminal occurrence through the real closing
    path (the terminal-windows rule) - a prohibition proven only by seeds
