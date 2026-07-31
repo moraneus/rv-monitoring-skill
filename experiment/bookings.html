@@ -1,136 +1,78 @@
-<title>bookings - behave-rv experiment</title>
-<style>
-:root{--ink:#0d1418;--sub:#141f27;--card:#182430;--line:#243541;--tx:#dce8ee;
---mut:#8ba0ac;--faint:#5f7480;--accent:#3fd0c9;--ok:#3bb873;--risk:#d9a441;
---bad:#e35b52;--pend:#6b8794;
---mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
---sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
-@media(prefers-color-scheme:light){:root{--ink:#eef2f3;--sub:#e4eaec;--card:#fff;
---line:#d3dde1;--tx:#132029;--mut:#546570;--faint:#7d8f99;--accent:#0f8f88;}}
-:root[data-theme="dark"]{--ink:#0d1418;--sub:#141f27;--card:#182430;--line:#243541;
---tx:#dce8ee;--mut:#8ba0ac;--faint:#5f7480;--accent:#3fd0c9;}
-:root[data-theme="light"]{--ink:#eef2f3;--sub:#e4eaec;--card:#fff;--line:#d3dde1;
---tx:#132029;--mut:#546570;--faint:#7d8f99;--accent:#0f8f88;}
-*{box-sizing:border-box}
-body{margin:0;background:var(--ink);color:var(--tx);font-family:var(--sans);
-line-height:1.62;-webkit-font-smoothing:antialiased}
-.wrap{max-width:820px;margin:0 auto;padding:0 24px}
-h1,h2,h3{line-height:1.15;text-wrap:balance;font-weight:680;letter-spacing:-.01em}
-a{color:var(--accent);text-decoration:none}
-code,.mono{font-family:var(--mono);font-size:.86em}
-.tnum{font-variant-numeric:tabular-nums}
-.back{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12.5px;
-color:var(--mut);padding:16px 0}
-.back:hover{color:var(--accent)}
-header.top{border-bottom:1px solid var(--line);background:
-radial-gradient(120% 140% at 85% -30%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 60%)}
-.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
-color:var(--accent);margin:0 0 12px}
-header.top h1{font-size:clamp(27px,5vw,42px);margin:0 0 14px}
-.lede{font-size:clamp(15.5px,2vw,18px);color:var(--tx);max-width:60ch;margin:0}
-.masthead{padding:8px 0 40px}
-.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
-.tag{font-family:var(--mono);font-size:11px;letter-spacing:.04em;padding:4px 10px;
-border:1px solid var(--line);border-radius:999px;color:var(--mut)}
-.tag.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,transparent)}
-.tag.bad{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 40%,transparent)}
-.tag.risk{color:var(--risk);border-color:color-mix(in srgb,var(--risk) 40%,transparent)}
-section{padding:40px 0;border-bottom:1px solid var(--line)}
-.kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;
-color:var(--faint);margin:0 0 16px}
-h2{font-size:clamp(20px,3vw,26px);margin:0 0 14px}
-h3{font-size:16px;margin:22px 0 8px}
-p{margin:0 0 14px} .muted{color:var(--mut)} strong{color:var(--tx);font-weight:640}
-pre{background:var(--sub);border:1px solid var(--line);border-radius:10px;padding:13px 15px;
-overflow-x:auto;font-family:var(--mono);font-size:12.4px;line-height:1.55;margin:0 0 14px}
-pre .del{color:var(--bad)} pre .add{color:var(--ok)} pre .cx{color:var(--faint)}
-pre .kw{color:var(--accent)}
-.gherkin{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
-border-radius:9px;padding:13px 16px;margin:0 0 12px;font-family:var(--mono);font-size:12.4px;
-line-height:1.6;overflow-x:auto;white-space:pre}
-.gherkin .g-kw{color:var(--accent);font-weight:600}
-.gherkin .g-name{color:var(--mut)}
-.callout{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
-border-radius:10px;padding:16px 18px;margin:16px 0}
-.callout p{margin:0;font-size:14px}
-.chan{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 12px;background:var(--card)}
-.chan .ch{display:flex;align-items:center;gap:9px;margin:0 0 8px;font-family:var(--mono);
-font-size:11px;letter-spacing:.08em;text-transform:uppercase}
-.chan .ch .st{margin-left:auto;padding:2px 9px;border-radius:6px;font-weight:600;letter-spacing:.02em}
-.st.g{color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
-.st.r{color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
-.st.a{color:var(--risk);background:color-mix(in srgb,var(--risk) 14%,transparent)}
-.st.n{color:var(--mut);background:var(--sub)}
-.chan p{margin:0;font-size:13.5px;color:var(--mut)}
-.dot{width:9px;height:9px;border-radius:50%;flex:none}
-.d-ok{background:var(--ok)}.d-bad{background:var(--bad)}.d-risk{background:var(--risk)}.d-pend{background:var(--pend)}
-.evtmodel{font-family:var(--mono);font-size:12.4px;color:var(--mut);background:var(--sub);
-border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin:0 0 14px;overflow-x:auto}
-footer{padding:34px 0 64px}
-footer .wrap{color:var(--faint);font-family:var(--mono);font-size:12px}
-.nav-demos{display:flex;flex-wrap:wrap;gap:6px;padding:14px 0 0}
-.nav-demos a{font-family:var(--mono);font-size:11px;color:var(--mut);padding:4px 9px;
-border:1px solid var(--line);border-radius:6px}
-.nav-demos a:hover{color:var(--accent)}
-.nav-demos a.cur{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
-</style>
-<div class="wrap"><a class="back" href="index.html">← Back to the experiment report</a></div>
-<header class="top"><div class="wrap masthead">
-<p class="eyebrow">demo breakdown · /rv interview · 7 policies · 2 bugs</p>
+<!doctype html><html lang=en><head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>bookings - bug-detection experiment</title><style>
+:root{--bg:#f7f8fa;--card:#ffffff;--ink:#1c2230;--muted:#5b6472;--line:#e4e7ee;
+--accent:#4f46e5;--good:#0e9f6e;--warn:#c2740c;--bad:#d23b48;--code:#f2f3f7;}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1420;--card:#161d2c;--ink:#e6e9f0;--muted:#98a2b3;
+--line:#26304a;--accent:#8b8bf5;--good:#34d399;--warn:#f0a83c;--bad:#f2687a;--code:#111827;}}
+:root[data-theme=light]{--bg:#f7f8fa;--card:#fff;--ink:#1c2230;--muted:#5b6472;--line:#e4e7ee;--accent:#4f46e5;--good:#0e9f6e;--warn:#c2740c;--bad:#d23b48;--code:#f2f3f7;}
+:root[data-theme=dark]{--bg:#0f1420;--card:#161d2c;--ink:#e6e9f0;--muted:#98a2b3;--line:#26304a;--accent:#8b8bf5;--good:#34d399;--warn:#f0a83c;--bad:#f2687a;--code:#111827;}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);
+font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.wrap{max-width:900px;margin:0 auto;padding:2.4rem 1.4rem 4rem;}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+h1{font-size:2rem;line-height:1.2;margin:.2rem 0 .4rem;text-wrap:balance}
+h2{font-size:1.3rem;margin:2.4rem 0 .8rem;padding-bottom:.3rem;border-bottom:1px solid var(--line)}
+h3{font-size:1.05rem;margin:1.4rem 0 .4rem}
+.sub{color:var(--muted);font-size:1.02rem;margin:.2rem 0 1.4rem}
+.eyebrow{text-transform:uppercase;letter-spacing:.09em;font-size:.72rem;font-weight:700;color:var(--accent)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.9rem;margin:1.6rem 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem}
+.stat .n{font-size:1.9rem;font-weight:750;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat .l{color:var(--muted);font-size:.82rem;margin-top:.15rem}
+.good{color:var(--good)}.warn{color:var(--warn)}.bad{color:var(--bad)}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.92rem}
+th,td{text-align:left;padding:.55rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+td.c{font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:.12rem .5rem;border-radius:999px;font-size:.74rem;font-weight:650;border:1px solid transparent}
+.pill.g{color:var(--good);background:color-mix(in srgb,var(--good) 14%,transparent);border-color:color-mix(in srgb,var(--good) 30%,transparent)}
+.pill.w{color:var(--warn);background:color-mix(in srgb,var(--warn) 14%,transparent);border-color:color-mix(in srgb,var(--warn) 30%,transparent)}
+.pill.b{color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,transparent);border-color:color-mix(in srgb,var(--bad) 30%,transparent)}
+.pill.n{color:var(--muted);background:color-mix(in srgb,var(--muted) 12%,transparent);border-color:var(--line)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.2rem;margin:1rem 0}
+pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:.7rem .8rem;overflow-x:auto;
+font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre;margin:.5rem 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--code);padding:.05rem .3rem;border-radius:4px}
+.chip{font-size:.72rem;font-weight:650;padding:.1rem .45rem;border-radius:6px;border:1px solid var(--line);color:var(--muted)}
+.chip.t{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.back{font-size:.9rem;color:var(--muted)}
+.note{border-left:3px solid var(--accent);padding:.2rem 0 .2rem .9rem;color:var(--muted);margin:1rem 0}
+footer{margin-top:3rem;padding-top:1.2rem;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+</style></head>
+<body><div class=wrap>
+<p class=back><a href='index.html'>&larr; all demos</a></p>
+<div class=eyebrow>bug-detection experiment</div>
 <h1>bookings</h1>
-<p class="lede">A fitness-studio bookings monitor, designed live through the /rv interview. Its typo bug does the most damage of any in the corpus: it false-alarms two healthy rules, silences a third, and pages the operator - all at once.</p>
-<div class="tags"><span class="tag bad">2 bugs planted</span><span class="tag ok">2 found by user</span><span class="tag risk">live: mixed</span></div>
-<div class="nav-demos"><a href="lending.html" class="">lending</a><a href="parcels.html" class="">parcels</a><a href="bookings.html" class="cur">bookings</a><a href="devices.html" class="">devices</a><a href="payments.html" class="">payments</a><a href="snake.html" class="">snake</a><a href="blackjack.html" class="">blackjack</a><a href="minesweeper.html" class="">minesweeper</a><a href="tictactoe.html" class="">tic-tac-toe</a><a href="memory.html" class="">memory</a></div>
-</div></header>
+<p class=sub><span class="pill g">live violation</span> &nbsp; <span class='pill g'>stability flagged</span> &nbsp; <span class='pill g'>blind user found</span></p>
 
-<section><div class="wrap">
-<p class="kicker">What it is</p>
-<h2>A bookings service designed through a structured interview</h2>
-<p>A <code>BookingService</code> keyed by <code>booking_id</code>. The rules came from a three-round /rv interview that surfaced, among other things, the terminal-vs-nightmare conflict (a cancelled booking must stay watched so a later illegal check-in is caught).</p><p>Two rules are marked LOUD (paging): cancel-then-checkin and the 15-second promotion deadline. The rest are logged.</p>
-<div class="evtmodel"><strong>event model &nbsp;·&nbsp;</strong><code>booking.status</code> (eight lifecycle states) keyed by <code>booking_id</code>; the confirm event stamps <code>balance_owed</code>; the app's own capacity counter emits <code>booking.cap_exceeded</code>. No terminal - a 60s quiescence window stands in for end-of-day.</div>
-</div></section>
+<h2>The implanted bugs</h2>
+<div class=card><div><span class='chip t'>policy-targeted</span> <code>app/booking_service.py</code></div><p style='margin:.5rem 0 .3rem'>Off-by-one in the class-capacity check inside reserve(): the guard was changed from `len(seats) &gt; CLASS_CAPACITY` to `len(seats) &gt;= CLASS_CAPACITY`. Exactly CLASS_CAPACITY (12) seats is full but NOT over capacity, yet the app now emits the booking.cap_exceeded marker on the 12th reservation as well as the 13th.</p><p class=sub style='margin:.2rem 0'><b>Expected effect:</b> The over-capacity marker fires one reservation too early. In the pinned replay traffic (13 members reserved into C-FULL) it now trips on B-C12 (seat 12, legal) in addition to B-C13 (seat 13, the real breach), so policy 07 (&#x27;a booking never pushes its class over capacity&#x27;) reports an extra violation for B-C12 that the gate does not expect.</p></div><div class=card><div><span class='chip '>blind-spot probe</span> <code>app/booking_service.py</code></div><p style='margin:.5rem 0 .3rem'>Wrong status string in mark_no_show(): emits status &quot;no-show&quot; (hyphen) instead of the canonical &quot;no_show&quot; (underscore) that END_STATES and the catalog use. A plausible slip when aligning with a display/API label.</p><p class=sub style='margin:.2rem 0'><b>Expected effect:</b> A no-show booking no longer matches the &#x27;a booking reaches an end state&#x27; predicate, so policy 06 (&#x27;every booking eventually reaches an end state&#x27;) can never be satisfied for no-show bookings and the value silently stops matching any policy binding. Because policy 06 is an unbounded eventuality that only ever reports &#x27;pending&#x27; (never &#x27;violated&#x27;) in the bounded replay, the gate&#x27;s pinned violation set is unchanged and the fault slips through unseen.</p></div>
 
-<section><div class="wrap">
-<p class="kicker">The monitored rules</p>
-<h2>What the user asked the monitor to enforce</h2>
-<p class="muted">Verbatim from the committed <code>monitoring/policies/</code>. These are the human's own
-words; the engine owns the verdict.</p>
-<div class="gherkin"><span class="g-kw">Feature:</span> cancelled bookings
+<h2>Stability contract</h2>
+<p>The committed catalog diff flagged the changed emit path as an app behavior risk:</p>
+<p class=sub>Flagged functions: <code>booking_service.BookingService._status</code>, <code>booking_service.BookingService.reserve</code></p>
+<pre>  booking_service.BookingService._status#1: behavior-risk
+  booking_service.BookingService.reserve#1: behavior-risk
+# APP BEHAVIOR RISKS (2) - logic on an emit path changed
+      policies at risk: a booking is never confirmed while the member owes money, a booking is only checked in after it was confirmed, a booking is only marked attended after check-in, a cancelled booking is never checked in, a promoted booking is confirmed or cancelled within 15 seconds, every booking eventually reaches an end state
+      policies at risk: a booking never pushes its class over capacity
+FAIL: 2 break(s) (of which 2 app behavior risk(s), promoted by --fail-on-app-risk)</pre>
 
-  <span class="g-kw">Scenario:</span> a cancelled booking is never checked in
-    <span class="g-kw">Given </span>a booking is "cancelled"
-    <span class="g-kw">Then </span>a booking is "checked_in" never happens</div><div class="gherkin"><span class="g-kw">Feature:</span> check-in requires payment
+<h2>Runtime monitor</h2>
+<p>monitor emitted live violation(s).</p>
+<pre>POLICY &#x27;a cancelled booking is never checked in&#x27;  ENTITY booking_id=B-CANCEL  VERDICT violated @ t=39.0
+POLICY &#x27;a booking is only checked in after it was confirmed&#x27;  ENTITY booking_id=B-NOCONF  VERDICT violated @ t=42.0
+POLICY &#x27;a booking is only marked attended after check-in&#x27;  ENTITY booking_id=B-NOCHK  VERDICT violated @ t=47.0
+POLICY &#x27;a booking is never confirmed while the member owes money&#x27;  ENTITY booking_id=B-OWES  VERDICT violated @ t=50.0
+POLICY &#x27;a promoted booking is confirmed or cancelled within 15 seconds&#x27;  ENTITY booking_id=B-PROMO  VERDICT violated @ t=68.0
+POLICY &#x27;a booking never pushes its class over capacity&#x27;  ENTITY booking_id=B-C12  VERDICT violated @ t=79.001
+POLICY &#x27;a booking never pushes its class over capacity&#x27;  ENTITY booking_id=B-C13  VERDICT violated @ t=79.501</pre>
 
-  <span class="g-kw">Scenario:</span> only checked in after it was confirmed
-    <span class="g-kw">When </span>a booking is "checked_in"
-    <span class="g-kw">Then </span>a booking is "confirmed" before</div><div class="gherkin"><span class="g-kw">Feature:</span> waitlist promotion SLA
+<h2>Blind user (monitor only)</h2>
+<p>An agent that never saw the ground truth, working only from the monitor:</p>
+<ul><li>Capacity off-by-one: BookingService.reserve fires the booking.cap_exceeded marker with `if len(seats) &gt;= CLASS_CAPACITY` (CLASS_CAPACITY=12). Exactly 12 seats is AT capacity, not over it, so the legal 12th booking (B-C12) is falsely flagged (cap_exceeded with seat_count=12). Should be `&gt; CLASS_CAPACITY` / only the 13th seat. The replay gate caught this as an UNEXPECTED 7th violation (policy &#x27;a booking never pushes its class over capacity&#x27;, entity B-C12) turning the gate red (exit 1); the catalog stability diff independently flagged reserve on the cap_exceeded emit path as a behavior-risk. <span class='chip'>via both</span></li><li>Status value naming drift: mark_no_show emits status &#x27;no-show&#x27; (hyphen) but the end-state matcher END_STATES in monitoring/steps.py and the committed catalog.json both use &#x27;no_show&#x27; (underscore). A no-show booking therefore never matches &#x27;a booking reaches an end state&#x27;, so policy 06 (every booking eventually reaches an end state) silently leaves that booking pending instead of satisfied (tally shows satisfied=5 = 3 attended + 2 cancelled; the one no-show booking is missing). This is a silent-telemetry-gap: the replay gate cannot go red on a &#x27;has happened&#x27; eventuality in bounded no-terminal replay, but the catalog stability diff surfaced it, flagging mark_no_show as a changed function on the booking.status emit slice with &#x27;every booking eventually reaches an end state&#x27; as a policy at risk. <span class='chip'>via both</span></li></ul>
+<p class=sub>Two checks both FAILED (exit 1). replay_check.py: GATE FAIL, 7 violations vs expected 6, UNEXPECTED [(&#x27;a booking never pushes its class over capacity&#x27;,&#x27;B-C12&#x27;)]. `behave_rv catalog diff --fail-on-app-risk`: 2 app-behavior-risks (reserve-&gt;cap_exceeded path; _status path with mark_no_show/reserve changed). Trace confirms cap_exceeded emitted at seat_count=12 for B-C12 and 13 for B-C13, and status &#x27;no-show&#x27; (hyphen) present while catalog observed value is &#x27;no_show&#x27;. Did not read ground_truth/; modified no files.</p>
 
-  <span class="g-kw">Scenario:</span> a promoted booking is confirmed or cancelled within 15 seconds
-    <span class="g-kw">When </span>a booking is "promoted"
-    <span class="g-kw">Then </span>a booking is confirmed or cancelled within "15" seconds</div><div class="gherkin"><span class="g-kw">Feature:</span> payment discipline
-
-  <span class="g-kw">Scenario:</span> never confirmed while the member owes money
-    <span class="g-kw">Then </span>a booking is confirmed while the member owes never happens</div><div class="gherkin"><span class="g-kw">Feature:</span> class capacity
-
-  <span class="g-kw">Scenario:</span> a booking never pushes its class over capacity
-    <span class="g-kw">Then </span>a booking breaks the class capacity never happens</div>
-</div></section>
-
-<section><div class="wrap">
-<p class="kicker">The sabotage</p>
-<h2>The bugs planted in the app code</h2>
-<h3>Bug 1 - a one-letter typo in the confirm status</h3><pre><span class="del">- self._status(booking_id, "confirmed", balance_owed=...)</span>
-<span class="add">+ self._status(booking_id, "comfirmed", balance_owed=...)</span></pre><p>No <code>confirmed</code> event ever exists again. Three rules break at once: <em>check-in after confirmed</em> and <em>attended after check-in</em> <strong>false-alarm on every healthy booking</strong> (the prior confirm they require is missing), the promotion SLA <strong>pages</strong> because a confirm no longer counts as an answer, and <em>never-confirm-while-owing</em> goes <strong>dead</strong> - a real confirm-while-owing fault would now pass silently.</p><p class="muted"><strong>Policy in play:</strong> 02, 05 (loud) false-alarm; 04 dead &nbsp;·&nbsp; <strong>Trigger:</strong> any reserve → confirm flow &nbsp;·&nbsp; <strong>Class:</strong> normal-use</p><h3>Bug 2 - capacity off-by-one</h3><pre><span class="del">- if len(seats) &gt; CLASS_CAPACITY:   # over 12</span>
-<span class="add">+ if len(seats) &gt;= CLASS_CAPACITY:  # at 12</span></pre><p>With <code>CLASS_CAPACITY = 12</code>, the 12th (legal, at-capacity) reservation now emits the cap-exceeded marker - a false over-capacity verdict one seat early.</p><p class="muted"><strong>Policy in play:</strong> 07 - class never over capacity &nbsp;·&nbsp; <strong>Trigger:</strong> fill a class to exactly 12 &nbsp;·&nbsp; <strong>Class:</strong> subtle · edge</p>
-</div></section>
-
-<section><div class="wrap">
-<p class="kicker">Detection</p>
-<h2>How the failure surfaced</h2>
-<p class="muted">The same defect through the framework's three independent channels, plus what the blind
-user actually noticed.</p>
-<div class="chan"><div class="ch"><span class="dot d-risk"></span>Channel A - live runtime<span class="st a">mixed</span></div><p>Loud false alarms on healthy confirmed and promoted bookings (the promotion SLA paged), one rule silently dead, and the capacity alarm one seat early. The live board was actively misleading in both directions at once.</p></div><div class="chan"><div class="ch"><span class="dot d-bad"></span>Channel B - replay gate<span class="st r">red · exit 1</span></div><p><code>replay_check.py</code> failed with two missing violations and four unexpected ones - the count moved decisively.</p></div><div class="chan"><div class="ch"><span class="dot d-risk"></span>Channel C - stability contract<span class="st a">risk · exit 1</span></div><p>The stability strip read "risks", flagging the confirm and reserve emit sites as behavior-risk against the committed catalog.</p></div><div class="chan"><div class="ch"><span class="dot d-ok"></span>The blind user<span class="st g">found 2 / 2</span></div><p>Demonstrated both live and via the gate: identified the typo as the root of the false alarms and the dead rule, and found the off-by-one by filling a class to exactly its cap.</p></div>
-<div class="callout"><p><strong>A single typo in an emitted string can be more dangerous than a logic bug.</strong> It doesn't just hide a fault - it floods the operator with false pages on healthy traffic and silences a real rule, the fastest route to a monitor nobody trusts. The stability contract caught the drift; the false alarms were their own loud (if misleading) signal.</p></div>
-</div></section>
-
-<footer><div class="wrap">behave-rv 0.3.1 · demo: bookings · <a href="index.html">full experiment report ↗</a></div></footer>
+<footer>Generated from a controlled re-run of the behave-rv bug-detection experiment. Every result was measured on frozen demos with the monitoring layer hash-verified untouched.</footer>
+</div></body></html>
