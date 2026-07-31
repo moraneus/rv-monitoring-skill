@@ -93,7 +93,11 @@ request against existing code:
    writes the exact strings the app emits instead of guessing.
 4. **Propose.** New monitorable behaviour with no covering policy → add a
    suggestion to `monitoring/SUGGESTED_POLICIES.md`: the draft scenario, the
-   rationale, and which events it observes.
+   rationale, and which events it observes. Do not guess what is uncovered -
+   run `catalog coverage` (below) and let it name the emitted events, fields,
+   and values no policy watches; cover each, or record it as a deliberate
+   non-exposure so a skipped element is a visible decision, not an invisible
+   hole (needs behave-rv >= 0.5.0).
 5. **Gate.** Run, in order, and treat every non-zero exit as a defect to fix
    or a break to report (details:
    [references/stability.md](references/stability.md)):
@@ -104,6 +108,10 @@ request against existing code:
      --policies monitoring/policies --app <application .py files> \
      --fail-on-app-risk [--trace monitoring/traces/<representative>.jsonl]
    python monitoring/replay_check.py
+   # advisory: what does the app emit that no policy watches?
+   python -m behave_rv catalog coverage \
+     --steps monitoring/steps.py --policies monitoring/policies \
+     --app <application .py files> [--trace monitoring/traces/<representative>.jsonl]
    ```
 
    A policy that fails to compile is a repair signal, not an obstacle - the

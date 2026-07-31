@@ -19,6 +19,14 @@
             --policies monitoring/policies \
             --app __APP_SOURCES__ \
             --fail-on-app-risk
+      # advisory: report the emitted surface no policy watches (needs >= 0.5.0).
+      # Informational by default; add --fail-on-gap to make it blocking.
+      - name: Coverage - emitted surface no policy watches
+        run: |
+          python -m behave_rv catalog coverage \
+            --steps monitoring/steps.py \
+            --policies monitoring/policies \
+            --app __APP_SOURCES__
 
   rv-replay:
     runs-on: ubuntu-24.04
