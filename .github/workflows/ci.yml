@@ -30,7 +30,12 @@ jobs:
           for d in demo/*/; do
             [ -d "${d}monitoring" ] || continue
             echo "== ${d}"
-            (cd "$d" && python monitoring/replay_check.py > /dev/null)
+            # the gate must exit 0 AND actually run: an empty/degenerate
+            # replay_check would exit 0 with no output and pass vacuously, so
+            # require real output and a pinned EXPECTED set.
+            out=$(cd "$d" && python monitoring/replay_check.py)
+            echo "$out" | grep -q "GATE: PASS\|^PASS$"
+            grep -q "EXPECTED" "${d}monitoring/replay_check.py"
             # the app-surface files are exactly the modules the committed
             # catalog fingerprinted -- derive them so the check is self-describing
             apps=$(cd "$d" && python -c "import json;c=json.load(open('monitoring/catalog.json'));print(' '.join('app/%s.py'%m for m in sorted({s['module'] for s in c['app_surface']})))")
