@@ -48,3 +48,23 @@ Feature: well-formed attempts
     When the second card of an attempt is flipped
     Then the first card of an attempt is flipped before
 ```
+
+## From the coverage-confidence tools (monitor kill rate + catalog coverage)
+
+`tools/run_kill_rates.py` scored this demo's monitor at a 25.6% runtime kill
+rate, the lowest of the ten - most app mutations survive because much of the
+game's internal logic is unwatched. `catalog coverage` names the behavioural
+part of that gap: the `match.found` event and the `card.flipped.already_matched`
+field are emitted but no policy reads them. A `card.flipped.rematch` step
+already exists yet no policy uses it. Two additive policies would close the most
+valuable part of the gap (no new instrumentation needed):
+
+```gherkin
+Feature: matched cards stay matched
+  Scenario: a matched card is never flipped again
+    Then a matched card is flipped again never happens
+```
+
+The second gap - that no policy confirms `match.found` events - is worth a
+"every match is followed by both cards staying face up" rule once the event's
+fields are exposed as a step.
